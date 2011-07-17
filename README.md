@@ -4,12 +4,14 @@
       xxxxxx 
    * Usage
 
-     > xxxxxxx
+      xxxxxxx
 
 #Install
   * environment
     ###### Windows
+
      > xxxxxxxxxxx
 
     ###### Linux/Mac
+
      > xxxxxxxx
