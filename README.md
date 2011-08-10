@@ -1,10 +1,10 @@
 #Project
    *  Introduce
 
-      xxxxxx 
+      这个站主要是模仿meetup.com而基于drupal设计的一个网站，这个repository包含了主要的自定义模块
    * Usage
 
-      xxxxxxx
+      在使用时候，请先把代码在自己本地机器或者http://demo3.test.wulitou.org/测试完成，然后再commit code到这里。
 
 #Install
   * environment
