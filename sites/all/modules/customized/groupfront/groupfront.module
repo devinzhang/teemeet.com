@@ -1,0 +1,641 @@
+<?php
+
+/*
+ * Group Page Menu structure
+ * Home -> node/[nid] ->group/[group name]
+ * Members  -> node/[nid]/memebers  ->group/[group name]/members
+        -- My Profiles --> user/[uid];
+        -- All members --> node/[nid]/memebers -->group/[group name]/members
+   Photos ->  node/[nid]/photos
+   Pages ->  node/[nid]/pages  
+   Discussions   -> node/[nid]/discussions
+        --
+*/
+
+define('GROUPFRONT_PATH', drupal_get_path('module', 'groupfront'));
+ 
+function groupfront_init(){
+ drupal_add_css(drupal_get_path('module', 'groupfront').'/css/groupfront.css');
+ }
+/**
+ * Implementation of hook_menu().
+ */
+/* function groupfront_menu() {
+  $items = array();  
+  $items['home'] = array(
+    'title' => t('Welcome to Home'),
+    'page callback' => '_groupfront_home',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );
+*/
+ /* $items['sponsor'] = array(
+    'title' => t('Sponsors'),
+    'page callback' => 'groupfront_sponsor',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );  
+  
+  $items['photos'] = array(
+    'title' => t('photo'),
+    'page callback' => 'groupfront_photos',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );
+  
+  $items['grouptools'] = array(
+    'title' => t('Group Tools'),
+    'page callback' => 'groupfront_grouptools',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );
+  
+  $items['grouptools/emailmembers'] = array(
+    'title' => t('Email Members'),
+    'page callback' => 'groupfront_send_to_memebers',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );
+  
+  
+  $items['groupfront/ajax/upcoming/%'] = array(
+    'title' => t('Suggested Meetups'),
+    'page callback' => 'groupfront_ajax_upcoming_meetup',
+    'page arguments' => array(3),
+    'type' => MENU_CALLBACK,
+	'access arguments'=>array('access content'),
+  );
+  
+   $items['groupfront/ajax/suggestedmeetup/%'] = array(
+    'title' => t('Suggested Meetups'),
+    'page callback' => 'groupfront_ajax_suggested_meetup',
+    'page arguments' => array(3),
+    'type' => MENU_CALLBACK,
+	'access arguments'=>array('access content'),
+  );
+    
+  
+   
+    
+   
+  return $items;
+}*/
+
+
+/* impl  hook_token_values
+ */
+ 
+
+function groupfront_token_values($type, $object = NULL, $options = array()) {
+  if ($type == 'node') {
+    $node = $object;
+    $tokens['group_name']      = $node->title;
+    $tokens['group_nid']      = $node->nid;
+    return $tokens;
+  }
+}
+
+
+function groupfront_token_list($type='all'){
+	if($type=='node'){
+		$tokens['node']['group_name']=t('Group Name');		
+        $tokens['node']['group_nid']=t('Group Node.nid');		
+	}
+	return $tokens;
+}
+
+
+
+/**
+ * Implementation of hook_theme().
+ *
+ *
+ */ 
+function groupfront_theme() {
+  return array(
+   'groupfront_home' => array(
+	  'template' => 'frontpage-home',
+      'arguments' => array(
+            'slider_show'=>null,
+            'front_column' => '',
+            'front_recent_contents' => '',
+  			'front_tag_groups_top' =>'',
+  			'front_tag_groups' =>'',
+        ),
+	),
+    'what_memeber_are_saying' => array(
+      'arguments' => array(
+            'saying'=>null,
+           			
+        ),
+	),
+    'join_group_section' => array(
+      'template' => 'join-group-section',
+      'arguments' => array(
+            'group'=>null,          		
+        ),
+	),
+    'frontpage_group_meetups' => array(
+      'arguments' => array(
+            'group'=>null,          		
+        ),
+	),
+    
+    'frontpage_group_heartbeats' => array(
+      'arguments' => array(
+            'group'=>null,          		
+        ),
+	),
+    
+  );
+}
+
+
+function _groupfront_home () {
+    drupal_set_title('');
+
+    return 'hello world';
+}
+
+/* hook_block
+ *
+ */
+ 
+
+function groupfront_block($op = 'list', $delta = 0, $edit = array()){
+	switch($op){
+		case 'list':			
+			$blocks[0]['info']=t('Group Summary');
+			$blocks[0]['cache']=BLOCK_NO_CACHE;
+            $blocks[1]['info']=t('Group front menu');
+			$blocks[1]['cache']=BLOCK_NO_CACHE;
+	
+			return $blocks;
+		case 'view':
+			switch($delta){
+				case 0:
+					$block['subject']=t('Group Summary');
+					$block['content']=groupfront_group_summary();
+					break;
+				case 1:
+					$block['subject']=t('Group Front Menu');
+					$block['content']=groupfront_home_menu();
+					break;
+			
+				
+			}
+			return $block;
+	}
+}
+
+function groupfront_group_summary(){
+    $output = '';
+    $output .='<ul class="metaBox">';
+    $output .='<li class="clearfix linkable linewrappable"><a href="#">
+                <p>Playgroupers</p>69</a></li>';
+    
+    $output .='</ul>';
+    
+    
+    return $output; 
+}
+
+function groupfront_home_menu(){
+    $output = '';
+    $group_nid = arg(1);
+    drupal_add_js(drupal_get_path('module','groupfront').'/js/groupfront.js');
+    drupal_add_css(drupal_get_path('module','groupfront').'/css/groupfront.css');
+    
+    $output .= '<ul id="group-primary-menu" class="sf-menu">
+
+<li class="first select">
+<a href="'.url('node/'.$group_nid).'">Home</a>
+</li>
+<li class="">
+<a class="" href="'.url('og/users/'.$group_nid.'/list').'/">Members</a>
+
+</li>
+
+<li class="  " id="sponsorsNavItem">
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/sponsors/">
+Sponsors
+
+</a>
+</li>
+<li>
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/photos/">Photos</a>
+</li>
+<li>
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/about/">Pages</a>
+</li>
+
+<li class="hasKids">
+<a class="withKids" onclick="return false;" href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/#">
+Discussions
+</a>
+<ul>
+<li class="noAction">
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/messages/boards/">Message Board</a>
+</li>
+<li class="noAction">
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/messages/archive/">Mailing List</a>
+</li>
+</ul>
+</li>
+
+<li class="last hasKids">
+<a class="withKids" onclick="return false;" href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/#">More</a>
+<ul>
+<li class=" noAction">
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/polls/">Polls</a>
+</li>
+<li class="noAction">
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/files/">Files</a>
+</li>
+<li class="noAction last">
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/grow/">Promote</a>
+</li>
+</ul>
+</li>
+
+</ul>';
+$output .='<span class="calltoaction rightmenu giant">';
+$output .='<a href="'.url('og/subscribe/'.$group_nid).'">Join us!</a>';
+$output .='</span>';
+
+return $output;  
+}
+
+/* impl. of hook_preprocess_page
+ * this function only used to cutomized the the group home page 
+ *
+ */
+function groupfront_preprocess_page(&$vars){
+    $action = arg(2); 
+	if(arg(0)=='node' && is_numeric(arg(1)) && !isset($action) ) {
+		$node = $vars['node'];
+        $curr_title = drupal_get_title();
+        if($node->type == 'group') {
+            $is_member = og_is_group_member($node);
+            drupal_add_css(drupal_get_path('module', 'groupfront').'/css/groupfront.css');
+            drupal_add_js(GROUPFRONT_PATH.'/js/groupfront.js');
+            if($is_member) {
+                
+                $vars['content'] = '<div id="events-list-module" class="D_box">';
+                $vars['content'] .= '<h1 class="" id="welcome-message">Welcome to '.$node->title.'</h1>';
+                $vars['content'] .= '<a class="ghsprite push_wh" href="http://www.meetup.com/MTG-nova/suggestion/" id="lma-suggest">'.t('Suggest a New Meetup').'</a>';
+                $vars['content'] .= '<div class="closed" id="lma">';
+                        $vars['content'] .= '<div id="meetup-suggestion" style="display:none;">';
+                            $vars['content'] .= _groupfront_output_meetup_suggestion($node->nid);
+                        $vars['content'] .= '</div>';
+                        $vars['content'] .= _groupfront_output_meetup_tabs($node->nid);
+                $vars['content'] .= '</div>';
+                $vars['content'] .= '<div class="loader" id="ajax-loader" style="display:none;"></div>';
+                $vars['content'] .= '<div class="resetList event-list clearfix loadingAjax" id="ajax-container">';                
+                $vars['content'] .= _groupfront_output_upcoming_meetups(); 
+                $vars['content'] .= '</div>';
+                
+                $vars['content'] .= '</div>';
+                
+            } else{
+                    $vars['content'] = $node->og_description;
+                    $vars['content'] .= theme('what_memeber_are_saying','asdf');
+                    $vars['content'] .= theme('join_group_section',$node);                        
+                    $vars['content'] .= theme('frontpage_group_meetups',$node);                        
+                //   $vars['content'] .= $node->body;
+                    $vars['content'] .= theme('frontpage_group_heartbeats',$node);        
+                }
+        }
+   }
+}
+
+/* dispaly the creat meetup form 
+* @param, the ground audience nid
+*/
+function _groupfront_output_meetup_suggestion($gid){
+
+  $output = '';  
+  
+  $output .= drupal_get_form('groupfront_meetup_suggestion_form', $gid);
+  return $output; 
+}
+
+function groupfront_meetup_suggestion_form(&$form_state,$gid){
+  $form=array();
+  $form['title'] = array(
+  '#type' => 'textfield',
+  '#title' => t('What\'s your suggestion for a Meetup?'),
+  '#default_value' => '',
+  '#size' => 60,
+  '#maxlength' => 128,
+  '#required' => TRUE,
+);
+$form['body'] = array(
+  '#type' => 'textarea',
+  '#title' => t('More Details'),
+  '#default_value' =>'',
+  '#required' => false,
+);
+
+$form['gid'] = array(
+    '#type' => 'hidden', 
+    '#value' => $gid
+);
+
+
+date_popup_load();
+
+$form['event_start'] = array(
+ '#type' => 'date_popup',
+ '#date_format' => 'Y-m-d H:i',
+ '#title' => t('When'),
+  '#default_value' => '',
+  );
+ $form['submit'] = array(
+    '#type' => 'submit', 
+    '#value' => t('Send'),
+  );
+
+return $form; 
+
+}
+
+function groupfront_meetup_suggestion_form_submit($form, &$form_state) {
+    $value = $form_state['values'];
+	$title = $value['title'];
+	$body = $value['body'];	
+    $event_start = $value['event_start'];	
+    $gid = $value['gid'];	
+    
+    drupal_set_message($event_start);
+    global $user; 
+    // add node properties
+    $newNode = new StdClass;
+    $newNode->type = 'event';
+    $newNode->title = $title;
+    $newNode -> body = $body;
+    $newNode->event['has_end_date'] = 1;
+    $newNode->event['start_exploded']['day'] =  8;
+    $newNode->event['start_exploded']['month'] =  8;
+    $newNode->event['start_exploded']['year'] =  2013;
+    $newNode->event['start_exploded']['hour'] =  10;
+    $newNode->event['start_exploded']['minute'] =  10;
+    
+    
+    $newNode->og_groups[0]=$gid;
+    $newNode->uid = $user->uid;
+    $newNode->created = strtotime("now");
+    $newNode->changed = strtotime("now");
+    $newNode->status = 0;
+    $newNode->comment = 0;
+    $newNode->promote = 0;
+    $newNode->moderate = 0;
+    $newNode->sticky = 0;
+
+    // add CCK field data
+ //   $newNode->field_{YOUR_CUSTOM_FIELD_1}[0]['value'] = '{DATA_1}';
+ //   $newNode->field_{YOUR_CUSTOM_FIELD_2}[0]['value'] = '{DATA_2}';
+
+    // save node
+    node_save($newNode);    
+}
+
+
+
+
+/* display a meetup tabs in the group home page */
+
+function _groupfront_output_meetup_tabs($gid) {
+
+$output = '';
+$output .='<ul id="events-nav" class="resetList clearfix">
+<li class="selected"><a data-append="false" data-op="" data-pageto="0" class="page-meetups" id="upcomingTab" href="'.url('groupfront/ajax/upcoming/'.$gid).'">Upcoming <span class="tabcount">1</span></a></li>
+
+<li class=""><a data-append="false" data-op="suggested" data-pageto="0" class="page-meetups" id="mitmTab" href="'.url('groupfront/ajax/suggestedmeetup/'.$gid).'">Suggested <span class="tabcount">1</span></a></li>
+
+<li class=""><a data-append="false" data-op="past" data-pageto="0" class="page-meetups" id="pastTab" href="http://www.meetup.com/MTG-nova/events/past/">Past</a></li>
+
+<li class=""><a data-append="false" data-pageto="0" data-op="calendar" class="page-meetups" href="http://www.meetup.com/MTG-nova/events/calendar/">Calendar</a></li>
+</ul>';
+
+return $output;
+}
+
+/*call back  for the upcoming meetups */
+
+function _groupfront_output_upcoming_meetups(){
+   
+    $output =event_block_upcoming(10);
+  
+    return $output['content'];
+}
+
+/*menu call back, return the ajax call back  
+*@param $gid, group nid; 
+
+*/
+function groupfront_ajax_upcoming_meetup($gid){
+    $output = '';
+    $output = _groupfront_output_upcoming_meetups();
+    echo $output;
+} 
+
+function _groupfront_suggested_meetups($gid) {
+  
+  $nids = og_group_child_nids($gid);
+  
+  $counter = 0; 
+  foreach($nids as $seq => $nid){
+    $node = node_load($nid);
+        if($node->type == 'event' && $node->status == 0) {
+        $counter ++; 
+        if (event_is_later($node->event_start, $time, 'string')) {
+        $days_left = $node->days_left;
+        if ($days_left > 0) {
+          $timeleft = format_plural($days_left, '1 day', '@count days');
+        }
+        else {
+          $time_left = explode(':', $node->time_left);
+          if ($time_left[0] > 23) {
+            $timeleft = format_plural(floor($time_left[0] / 24), '1 day', '@count days');
+          }
+          else if ($time_left[0] >= 1) {
+            $timeleft = format_plural((int) $time_left[0], '1 hour', '@count hours');
+          }
+          else {
+            $timeleft = format_plural((int) $time_left[1], '1 minute', '@count minutes');
+          }
+        }
+      }
+      else {
+        $timeleft = t('Now');
+      }
+
+      $node->event['timeleft'] = $timeleft;
+      $node->event['node_type'] = node_get_types('name', $node);
+      $items[] = theme('event_upcoming_item', $node, $types);
+        }
+  }
+
+  if (!($count = count($items))) {
+    $items[] = t('No suggested events available');
+  }
+
+  $output .= theme('event_upcoming_block', $items);
+ 
+  
+  return array('count' =>  $counter, 'content' => $output);
+}
+
+
+/*menu call back, return the ajax call back  
+*@param $gid, group nid; 
+
+*/
+function groupfront_ajax_suggested_meetup($gid){
+    $output = '';
+    $ret= _groupfront_suggested_meetups($gid);
+    
+    echo $ret['content'];
+}
+
+
+
+
+/* theme function 
+*/
+function theme_what_memeber_are_saying(){
+$output =' ';
+$output .='<div class="D_boxsection ">
+	
+
+<h4 style="margin: 0pt 0pt 0.8em;">What members are saying! <span class="D_less"> (<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/about/comments/?op=all">See all group reviews</a>)</span></h4>
+<div class="line">
+
+
+
+<div class="unit size1of2">
+<div class="D_item D_narrow">
+
+<div class="D_image">
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/members/13613382/">
+<img alt="" src="./Community Playgroup at Christ Lutheran Church (Baltimore, MD) - Meetup_files/thumb_11654915.jpeg">
+</a>
+</div>
+
+<div style="padding-right: 1em;" class="D_info">
+<p>
+<span class="D_quot">“</span>&nbsp;Awesome.&nbsp;<span class="D_quot">”</span>
+</p>
+<div>
+
+&mdash;<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/members/13613382/">Janet</a><img width="0" alt="" class="brImage" src="./Community Playgroup at Christ Lutheran Church (Baltimore, MD) - Meetup_files/clear.gif">
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="unit size1of2 last">
+<div class="D_item D_narrow">
+
+<div class="D_image">
+<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/members/7999108/">
+<img alt="" src="./Community Playgroup at Christ Lutheran Church (Baltimore, MD) - Meetup_files/thumb_11693183.jpeg">
+</a>
+</div>
+
+<div style="" class="D_info">
+<p>
+<span class="D_quot">“</span>&nbsp;I didn\'t feel like a stranger the other moms/nannies were very nice. We will definitely attend again.&nbsp;<span class="D_quot">”</span>
+</p>
+<div>
+
+&mdash;<a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/members/7999108/">Ayanna</a><img width="0" alt="" class="brImage" src="./Community Playgroup at Christ Lutheran Church (Baltimore, MD) - Meetup_files/clear.gif">
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>';
+return $output; 
+}
+
+/* theme call back */
+
+function theme_frontpage_group_meetups($group) {
+    $output = '';
+    $output .= '<div class="D_box newBox eventBox" id="modbox_'.$group->nid.'">';
+        $output .='<div class="D_boxhead">';
+            $output .='<h1>'.t('Let\'s Meetup and…').'</h1>';           
+        $output .='</div>';
+        $nids = og_group_child_nids($group->nid);
+        $output .='<div class="eventList">';
+           if(!empty($nids)){
+            foreach ($nids as $nid){
+                $node = node_load($nid);
+                if($node->type == 'event'){
+                $output .= node_view($node,1);
+                }
+            }
+           }else{
+           $output .= t('No any activities');
+           }
+           $output .='</div>';
+    $output .= '</div';
+    return $output; 
+}
+
+/* theme group heartbeat information */
+function theme_frontpage_group_heartbeats($group){
+    $output = '';
+    $output .= '<div class="D_box newBox heartbeatBox" id="modbox_'.$group->nid.'">';
+    $output .='<div class="D_boxhead">';
+            $output .='<h1>'.t('Latest activity').'</h1>';
+    $output .='</div>';
+    $output .='<div class="heartbeat-list">';
+            $output .='这部分内容，需要 wannianchuan部分完成heartbeat功能后，提供api来调用内容';
+    $output .='</div>';
+    $output .= '</div';
+    return $output; 
+}
+
+/* menu callback */
+function groupfront_sponsor(){
+    $output = '';
+    $output .= 'sponsor page';
+    
+    return $output; 
+}
+
+/*menu callback */
+function groupfront_photos(){
+
+return 'photos';
+}
+
+/*menu callback 
+*
+*/
+
+function groupfront_grouptools(){
+$output ='';
+
+return $output; 
+}
+/*menu callback 
+*
+*/
+function groupfront_send_to_memebers(){
+    $output = '';
+    $output .= '这个地方需要允许小组的组织者，能发送邮件给所有的成员，
+        能自定义发送名单并保存名单，能发送给 在1，3，6，12个月内积极活动的人<br>以及在一定时间内不积极活动的人的。
+        有个字段得记录某个人的最后活动时间';
+        
+    return $output; 
+}
