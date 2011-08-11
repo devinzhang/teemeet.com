@@ -158,3 +158,10 @@ margin-left: 5px;
     padding-bottom: 4px;
     padding-top: 4px;
 }
+
+/* member profile in some group */
+
+.profile-contents ul.primary{
+margin-left: 0px; 
+} 
+

@@ -48,7 +48,7 @@ function usercenter_menu() {
         'type' => MENU_LOCAL_TASK, 
     );
   
-   
+/*   
     $items['user/%user/greetings'] = array(
     	'title' => t('Greetings'),
         'page callback' => 'usercenter_member_greetings',
@@ -58,7 +58,7 @@ function usercenter_menu() {
         'access arguments' => array(1),   
         'weight' => -13,
     ); 
-    $items['sponsorships'] = array(
+  */  $items['sponsorships'] = array(
     	'title' => t('Sponsor local Meetup Groups'),
         'page callback' => 'usercenter_sponsorships_page',
         'page arguments' => null,   
@@ -71,7 +71,7 @@ function usercenter_menu() {
     
     /* user profile center based on some group */
       
-   $items['group/%/member/%'] = array(
+   $items['member/%/ingroup/%'] = array(
     	'title' => t('Intro'),
         'page callback' => 'usercenter_group_member_intro',
         'page arguments' => array(1,3),   
@@ -81,12 +81,12 @@ function usercenter_menu() {
         'weight' => -9,
     );
     
-    $items['group/%/member/%/intro'] = array(
+    $items['member/%/ingroup/%/intro'] = array(
     	'title' => t('Intro'),
         'type' => MENU_DEFAULT_LOCAL_TASK,      
     );
     
-    $items['group/%/member/%/rsvp'] = array(
+    $items['member/%/ingroup/%/rsvp'] = array(
     	'title' => t('RSVPs'),
         'page callback' => 'usercenter_group_member_rsvp',
         'page arguments' => array(1,3),   
@@ -96,7 +96,7 @@ function usercenter_menu() {
         'weight' => -8,
     );
     
-     $items['group/%/member/%/photos'] = array(
+     $items['member/%/ingroup/%/photos'] = array(
     	'title' => t('Photos'),
         'page callback' => 'usercenter_group_member_photos',
         'page arguments' => array(1,3),   
@@ -106,7 +106,7 @@ function usercenter_menu() {
         'weight' => -7,
     );
     
-    $items['group/%/member/%/greetings'] = array(
+    $items['member/%/ingroup/%/greetings'] = array(
     	'title' => t('Greetings'),
         'page callback' => 'usercenter_group_member_greetings',
         'page arguments' => array(1,3),   
@@ -116,7 +116,7 @@ function usercenter_menu() {
         'weight' => -6,
     );
     
-   
+    
   
   
    
@@ -142,7 +142,6 @@ function usercenter_menu() {
         'type' => MENU_CALLBACK, 
         'file' => 'usercenter.sponsorships.inc',
     );
-    
     
     
     
@@ -203,6 +202,49 @@ function usercenter_theme() {
         ),
 	),
     
+    /*member profile themeing */
+    'usercenter_member_intro' => array(
+	  'template' => 'usercenter-member-intro',
+      'arguments' => array(
+            'user'=>null,
+            'group_profile' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    'usercenter_member_rsvp' => array(
+	  'template' => 'usercenter-member-rsvp',
+      'arguments' => array(
+            'user'=>null,
+            'rsvps' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    'usercenter_member_photos' => array(
+	  'template' => 'usercenter-member-photos',
+      'arguments' => array(
+            'user'=>null,
+            'photos' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    'usercenter_member_greetings' => array(
+	  'template' => 'usercenter-member-greetings',
+      'arguments' => array(
+            'user'=>null,
+            'greetings' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    
+    
   );
 }
 
@@ -243,18 +285,10 @@ function usercenter_user($op, &$edit, &$account, $category = NULL) {
 			break;
 
         case 'view' :
-		if (!in_array('administrator', array_values($account->roles))) {
-	/*		$account->content['summary']['#title'] = '';
-
-        	$account->content['summary']['homepage'] = array(
-                '#type' => 'user_profile_item',
-                '#title' => t(''),
-                '#value' => usercenter_main(),
-                '#attributes' => array('class' => 'login-history'),
-                '#weight' => 10,
-            );
-        */    
-		}
+            global $user; 
+            if($user->uid != $account->uid) {
+                drupal_goto('member/'.$account->uid.'/ingroup/63'); 
+            }
 		break;
         
 		case 'login':
@@ -276,7 +310,11 @@ function usercenter_block($op = 'list', $delta = 0, $edit = array()){
 			$blocks[0]['cache']=BLOCK_NO_CACHE;
             $blocks[1]['info']=t('User Profile Header');
 			$blocks[1]['cache']=BLOCK_NO_CACHE;
+            
+            $blocks[2]['info']=t('Profile Header in a group');
+			$blocks[2]['cache']=BLOCK_NO_CACHE;
 
+            
 	
 			return $blocks;
 		case 'view':
@@ -289,6 +327,12 @@ function usercenter_block($op = 'list', $delta = 0, $edit = array()){
                 case 1:
 					$block['subject']=t('User Profile Header');
 					$block['content']= usercenter_profile_header();
+
+					break;				
+                
+                case 2:
+					$block['subject']=t('Profile Header in a group');
+					$block['content']= usercenter_profile_header_ingroup();
 
 					break;				
 
@@ -352,12 +396,50 @@ function usercenter_profile_header(){
     return $output; 
 }
 
+
+/*create a block to show a member profile header in one group
+ * This profile header show the user name and avator
+ */
+function usercenter_profile_header_ingroup(){
+    $uid = arg(1);
+    $gid = arg(3); 
+    
+    $output = '';
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $user = user_load($uid);
+    $my_groups = $user->og_groups;
+    
+  //  $edit_links = array();
+  //  $edit_links =
+    
+    $group_title = $my_groups[$gid]['title'];
+    $is_group_organizer = $my_groups[$gid]['is_admin'];
+    $output .= '<div class="member-profile-header">';
+	$output .= '<div id="member_'.$user->uid.'" class="member-header">';
+        $output .= '<h1 class="fn">';
+            $output .= l($user->name, 'user/'.$user->uid);
+        $output .= '</h1>';
+        $output .= '<span id="role_'.$user->uid.'" class="D_memberProfileRole">';
+        $output .= $is_group_organizer? t('Organizer'): t('Member'). t(' of '). l($group_title,'node/'.$gid);
+        $output .= '</span>';    
+        $output .= '<ul class="D_actions">';
+            $output .= '<li class="canDo">'.l(t('Edit group profile'),'', array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
+            $output .= '<li class="canDo">'.l(t('Edit communication settings'),'',array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
+            $output .= '<li class="canDo">'.l(t('Leave this Meetup Group'),'').'</li>';
+            $output .= '</ul>';
+    $output .= '</div>';
+    $output .= '</div>';
+    
+    return $output; 
+}
+
+
 /*
 * http://drupal.org/node/269913
 */
 function usercenter_menu_alter(&$items) {
-   //$items['user/%user']['title'] = t('My Groups');
- // print_r($items['user/%user/edit']);
+  // $items['user/%user']['page callback'] = 'usercenter_member_profile';
+   
 }
 
 function usercenter_profile_alter(&$account) {
@@ -381,6 +463,19 @@ function usercenter_preprocess_user_profile(&$variables) {
   global $user; 
   $variables['user'] = $user;
 }
+
+/*menu alater call back 
+*
+* change the behavor of user profile
+* if the user is looking at his own profile, then keep the drupal default behavor
+* if the other user is view your profile , then need to redirect to the profile based on your group.
+*/
+function usercenter_member_profile($user) {
+
+    return $user->name; 
+    
+}
+
 
 
 /*define the impl*/
@@ -512,6 +607,4 @@ function usercenter_create_sponosr_node($values){
   node_validate($edit);
   $node = node_submit($edit);
   node_save($node);
-
-
 }
