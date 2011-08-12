@@ -1,0 +1,55 @@
+<?php
+/**
+ * @file
+ *   After an user join a group, he will get a group profile for this group.
+ *  here is the detail user case
+ * 1) when the user join a group , then create a new group file belong to this group
+ * 2) When the user leave this group, then delete this profile 
+ * 3) when this group was deleted, then delete this profile 
+ */
+ 
+ 
+/**
+ * Implementation of hook_og().
+ */
+function og_member_profile_og($op, $gid, $uid, $args) {
+  switch ($op) {
+    case 'user insert':
+      $account = user_load(array('uid' => $uid));
+      og_notifications_user_autosubscribe($account, $gid);
+      break;
+    case 'user delete':
+      $account = user_load(array('uid' => $uid));
+      og_notifications_user_unsubscribe($account, $gid);
+      break;
+    case 'user request':
+      // This and other notifications related ops drop down to the same case.
+      // These different ops have been provided for consistency and flexibility
+      // during use by other modules.
+    case 'user approve':
+    case 'admin create':
+    case 'admin new':
+    case 'user broadcast':
+      $destinations = is_array($uid) ? $uid : array($uid);
+      foreach ($destinations as $uid) {
+        notifications_lite_send($uid, $args['subject'], $args['body']);
+      }
+      break;
+  }
+}
+
+
+function og_member_profile_create_profile($account, $nid){
+    $edit = array();
+  $edit['type'] = 'sponsor';
+  $edit['uid'] = $values['uid'];// user who would be called the  creator of the node
+  $edit['name'] = $name;
+  $edit['promote'] = 0;
+  $edit['format'] = FILTER_FORMAT_DEFAULT;
+  $edit['status'] = 1;
+  $edit['title'] = t('Confidential Signature: ').$name;
+
+  node_validate($edit);
+  $node = node_submit($edit);
+  node_save($node);
+}

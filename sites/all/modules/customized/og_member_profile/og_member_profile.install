@@ -1,0 +1,87 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_install().
+ */
+function og_member_profile_install() {
+   drupal_install_schema('og_member_profile');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function og_member_profile_uninstall() {
+   drupal_uninstall_schema('og_member_profile');
+   
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function og_member_profile_schema() {
+    $schema['og_member_profile_question'] = array(
+        'description' => 'Stores a member profile  questions',
+        'fields' => array(
+            'qid' => array(
+               'type' => 'serial',
+               'size' => 'medium',
+               'unsigned' => TRUE,
+               'not null' => TRUE,
+               'description' => t("The serial number for a  question."),
+                ),
+            
+            'gid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The group node nid {gid}",
+                ),			 
+            'title' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => '',
+                'description' => 'The question title.',
+                ),               
+			
+		),		
+
+        'primary key' => array('qid'),
+         'indexes' => array(
+      	 'qid' => array('qid'),
+     	 ),
+    );
+    
+    $schema['og_member_profile_answer'] = array(
+        'description' => 'Stores each question answer value',
+    	'fields' => array(
+             'aid' => array(
+                'type' => 'serial',
+                'unsigned' => TRUE,
+                'not null' => TRUE),
+             'qid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0),
+            'answer' => array(
+                'type' => 'text',
+                'size' => 'normal'),
+            'uid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => t("who answer this questions?"),
+            ),
+
+        ),
+        'primary key' => array('aid'),
+   );
+
+   
+    return $schema;
+}
+
