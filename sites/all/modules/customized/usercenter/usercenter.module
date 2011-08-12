@@ -405,7 +405,7 @@ function usercenter_profile_header_ingroup(){
     $gid = arg(3); 
     
     $output = '';
-    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    drupal_add_css(drupal_get_path('module','usercenter').'/css/usercenter.css');
     $user = user_load($uid);
     $my_groups = $user->og_groups;
     
@@ -414,8 +414,8 @@ function usercenter_profile_header_ingroup(){
     
     $group_title = $my_groups[$gid]['title'];
     $is_group_organizer = $my_groups[$gid]['is_admin'];
-    $output .= '<div class="member-profile-header">';
-	$output .= '<div id="member_'.$user->uid.'" class="member-header">';
+  //  $output .= '<div class="member-profile-header">';
+	$output .= '<div id="member_'.$user->uid.'" class="member-profile-header">';
         $output .= '<h1 class="fn">';
             $output .= l($user->name, 'user/'.$user->uid);
         $output .= '</h1>';
@@ -428,7 +428,7 @@ function usercenter_profile_header_ingroup(){
             $output .= '<li class="canDo">'.l(t('Leave this Meetup Group'),'').'</li>';
             $output .= '</ul>';
     $output .= '</div>';
-    $output .= '</div>';
+ //   $output .= '</div>';
     
     return $output; 
 }

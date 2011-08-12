@@ -160,8 +160,96 @@ margin-left: 5px;
 }
 
 /* member profile in some group */
+.member-profile-header{
+ padding: 0 0.5em 0.65em;
+ width:100%;
+ height: auto;
+ 
+}
+.member-profile-contents{
+ width:100%;
+ height: auto;
+ 
+}
 
-.profile-contents ul.primary{
+.D_memberProfileRole{
+width:100%;
+float:left;
+}
+.member-profile-header ul.D_actions {
+margin: 0.5em 0 0;
+padding: 0 0 0 0 ;
+}
+.member-profile-contents ul.tabs{
 margin-left: 0px; 
+
 } 
 
+.divby6 .spans2 {
+    width: 33.32%;
+}
+
+.divby6 .spans4 {
+    width: 66.64%;
+}
+
+.D_memberProfileContentChunk {
+    border-top: 1px solid #DDDDDD;
+    clear: both;
+    margin-top: 0.85em;
+    padding-top: 1em;
+}
+
+ul.D_summaryList {
+    list-style: none outside none;
+}
+
+.D_group .D_image {
+    overflow: hidden;
+    width: 50px;
+    float:left;
+}
+.D_group .D_info{
+float:left;
+margin-left:0px;
+}
+
+#D_memberProfileInteract ul {
+    list-style: none outside none;
+    margin-left: 0;
+    padding-left: 0;
+}
+.D_summaryList .D_image, .D_summaryList .D_noimage {
+    float: left;
+    overflow: hidden;
+    text-align: center;
+    width: 80px;
+}
+
+#D_memberProfileActivityList {
+    margin-top: 0.5em;
+    padding-bottom: 0.7em;
+}
+
+.D_memberActivityList {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+.D_memberActivityList li span, .D_memberActivityList li a {
+    background: url("../images/activity_list.png") no-repeat scroll 0 0 transparent;
+    margin-bottom: 4px;
+    padding: 1px 0 1px 25px;
+}
+.D_memberActivityList .D_memberActivityListMeetups span, .D_memberActivityList .D_memberActivityListMeetups a {
+    background-position: 0 0;
+}
+.D_memberActivityList .D_memberActivityListCheckins span {
+    background-position: 0 -90px;
+}
+.D_memberActivityList .D_memberActivityListPhotos a {
+    background-position: 0 -36px;
+}
+.D_memberActivityList .D_memberActivityListGreetings a {
+    background-position: 0 -54px;
+}

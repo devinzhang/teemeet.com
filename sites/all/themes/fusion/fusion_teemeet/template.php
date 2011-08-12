@@ -80,4 +80,3 @@ function fusion_teemeet_menu_item($link, $has_children, $menu = '', $in_active_t
 function fusion_teemeet_preprocess_node(&$vars) {
 
 }
-

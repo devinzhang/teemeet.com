@@ -7,9 +7,10 @@
 function usercenter_group_member_intro($uid, $group){
     $output = '';
     drupal_set_title('');
+    
     $account = user_load($uid); 
     $output .= usercenter_profile_header_ingroup();
-    $output .= '<div class="profile-contents isTabbed ">';
+    $output .= '<div class="member-profile-contents isTabbed ">';
         $output .=_usercenter_group_member_tabs($uid, $group);
         $output .= '<div class="profile-body">';
         $output .= theme('usercenter_member_intro',$account, '', $group);    
@@ -26,7 +27,7 @@ function usercenter_group_member_rsvp($uid,$group){
     drupal_set_title('');
      $account = user_load($uid); 
     $output .= usercenter_profile_header_ingroup();
-    $output .= '<div class="profile-contents isTabbed ">';
+    $output .= '<div class="member-profile-contents isTabbed ">';
     $output .=_usercenter_group_member_tabs($uid,$group);
         $output .= '<div class="profile-body">';
         $output .= theme('usercenter_member_rsvp',$account, '', $group);    
@@ -45,7 +46,7 @@ function usercenter_group_member_photos($uid,$group){
     drupal_set_title('');
      $account = user_load($uid); 
     $output .= usercenter_profile_header_ingroup();
-    $output .= '<div class="profile-contents isTabbed ">';
+    $output .= '<div class="member-profile-contents isTabbed ">';
     $output .=_usercenter_group_member_tabs($uid,$group);
          $output .= '<div class="profile-body">';
         $output .= theme('usercenter_member_photos',$account, '', $group);    
@@ -64,7 +65,7 @@ function usercenter_group_member_greetings($uid,$group){
     drupal_set_title('');
     $account = user_load($uid); 
     $output .= usercenter_profile_header_ingroup();
-    $output .= '<div class="profile-contents isTabbed ">';
+    $output .= '<div class="member-profile-contents isTabbed ">';
     $output .=_usercenter_group_member_tabs($uid,$group);
         $output .= '<div class="profile-body">';
         $output .= theme('usercenter_member_greetings',$account, '', $group);    

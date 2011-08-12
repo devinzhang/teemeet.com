@@ -27,11 +27,8 @@
 <h4>Follow me on:</h4>
 
 <div style="padding-top: 0.25em; padding-bottom: 0.25em;">
-<img title="" alt="" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/facebook-16x16g.png">
-<img title="" alt="" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/twitter-16x16g.png">
-<img title="" alt="" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/flickr-16x16g.png">
-<img title="" alt="" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/linkedin-16x16g.png">
-<img title="" alt="" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/tumblr-16x16g.png">
+<img title="" alt="" src="<?php global $base_url ; echo $base_url.'/'.drupal_get_path('module','usercenter').'/images/qq.jpeg'; ?>?">
+<img title="" alt="" src="<?php global $base_url ; echo $base_url.'/'.drupal_get_path('module','usercenter').'/images/sina.jpeg'; ?>?">
 </div>
 
 <p class="D_less">
@@ -75,7 +72,7 @@
 
 
 
-<a title="Send an Email" class="" href="http://www.meetup.com/Beijing-Soccer-Lovers/message/?recipientId=20252341"><img height="16" width="15" class="D_icon mailTip" alt="Send an Email" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/icon_envelope.gif"></a> <a class="" href="http://www.meetup.com/Beijing-Soccer-Lovers/message/?recipientId=20252341"> Send email</a>
+<a title="Send an Email" class="" href="http://www.meetup.com/Beijing-Soccer-Lovers/message/?recipientId=20252341"><img height="16" width="15" class="D_icon mailTip" alt="Send an Email" src="<?php global $base_url ; echo $base_url.'/'.drupal_get_path('module','usercenter').'/images/icon_envelope.gif'; ?>"></a> <a class="" href="http://www.meetup.com/Beijing-Soccer-Lovers/message/?recipientId=20252341"> Send email</a>
 
 </li>
 
@@ -85,54 +82,11 @@
 <div class="D_memberProfileContentChunk">
 <h4>Interested in new groups about</h4>
 
- 
-
- 
- 
- 
- 
- 
-
-
-
-
- 
-
-
-
-
-
-
-
-
-	
-		
-	
-	
-
-
-
-
 
 
 <div id="topicList1">
 <span class="meetup-topic"><a class="topic-id-235 topic-link J_onClick  topic-info-hover" href="http://coffee.meetup.com/cities/us/md/potomac/">Coffee</a></span>, <span class="meetup-topic"><a class="topic-id-17201 topic-link J_onClick  topic-info-hover" href="http://20s-30s-social.meetup.com/cities/us/md/potomac/"><span class="first-word J_onClick topic-info-hover"> 20's</span> &amp; 30's Social</a></span>
 </div> 
-
-	
-	
-		
-			
-				
-				
-					
-				
-			
-		
-		
-	
-
-
 
 <ul class="D_actions">
 
@@ -170,17 +124,18 @@
 </form>
 
 <ul style="margin-top: 0.75em;" class="D_summaryList  D_narrow">
+<?php foreach($user->og_groups as $gid=>$group): ?>
 
 <li class="D_group">
 
 <div class="D_image">
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/" title="Meetup Group: Beijing Soccer Lovers"><img style="width: 50px;" title="" alt="" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/noPhoto_50.png"></a>
+<a href="http://www.meetup.com/Beijing-Soccer-Lovers/" title="Meetup Group: Beijing Soccer Lovers"><img style="width: 50px;" title="" alt="" src="<?php global $base_url ; echo $base_url.'/'.drupal_get_path('module','usercenter').'/images/noPhoto_50.png'; ?>"></a>
 </div>
 <div class="D_info">
-<div style="font-size: 0.9em ! important;" class="D_name"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/" class="omnCamp omngj_sj3">Beijing Soccer Lovers</a></div>
+<div style="font-size: 0.9em ! important;" class="D_name"><a href="<?php echo url('node/'.$gid); ?>" class="omnCamp omngj_sj3"><?php echo $group['title']; ?></a></div>
 
 <div class="D_affiliation">
-ceshi zhanghoa
+暂未实现小组用户会员别名
 </div>
 
 <ul class="D_actions">
@@ -188,20 +143,8 @@ ceshi zhanghoa
 </ul>
 </div>
 </li>
+<?php endforeach; ?> 
 
-<li class="D_group last">
-
-<div class="D_image">
-<a href="http://www.meetup.com/MTG-nova/" title="Meetup Group: Magic: The Gathering - Northern Virginia and DC"><img style="width: 50px;" title="" alt="" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/thumb_12261863.jpeg"></a>
-</div>
-<div class="D_info">
-<div style="font-size: 0.9em ! important;" class="D_name"><a href="http://www.meetup.com/MTG-nova/" class="omnCamp omngj_sj3">Magic: The Gathering - Northern Virginia and DC</a></div>
-
-<ul class="D_actions">
-<li><a class="omnCamp omngj_sj3" href="http://www.meetup.com/MTG-nova/members/20252341/">View profile</a></li>
-</ul>
-</div>
-</li>
 
 </ul>
 
