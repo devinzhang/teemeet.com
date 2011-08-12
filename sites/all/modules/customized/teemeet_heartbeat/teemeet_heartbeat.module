@@ -1,0 +1,49 @@
+<?php
+/**
+ * Implementation of hook_heartbeat_register_access_types().
+ */
+function teemeet_heartbeat_heartbeat_register_access_types() {
+  return array(
+    // Site activity stream is kind of a copy of HeartbeatPublic.
+    // It is only to show you how it's done.
+    0 => array(
+      'name' => 'Site user activity',
+      'class' => 'SiteUserActivity',
+      'path' => 'site_user_activity.inc',
+      'module' => 'teemeet_heartbeat',
+      'access' => TRUE
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_token_list().
+ */
+ /*
+function teemeet_heartbeat_token_list($type='all') {
+	$tokens = array();
+  if ($type == 'heartbeat_message') {
+    //Define a custom avatar
+    $tokens['heartbeat_message']['avatar'] = t("The avatar of the user");
+  }
+  return $tokens;
+} 
+*/
+
+/**
+ * Implementation of hook_token_values().
+ */
+ /*
+function teemeet_heartbeat_token_values($type, $object = NULL, $options = array()) {
+  $values = array();
+  switch ($type) {
+    case 'heartbeat_message':
+      $account = user_load($object->uid);
+      $values['avatar'] = $account->picture;
+
+      break;
+  }
+
+  return $values;
+}
+*/

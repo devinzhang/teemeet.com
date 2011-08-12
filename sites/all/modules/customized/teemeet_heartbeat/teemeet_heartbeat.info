@@ -1,0 +1,10 @@
+name = Teemeet Heartbeat
+description = Heartbeat of the teemeet.com
+core = 6.x	
+dependencies[] = heartbeat
+dependencies[] = rules
+dependencies[] = rules_admin
+dependencies[] = hrules
+dependencies[] = signup
+dependencies[] = signup_rules
+package = teemeet.com
