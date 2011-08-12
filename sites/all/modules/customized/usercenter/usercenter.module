@@ -342,6 +342,7 @@ function usercenter_block($op = 'list', $delta = 0, $edit = array()){
 	}
 }
 
+
 function usercenter_account_menu(){
 
    drupal_add_js(drupal_get_path('module','usercenter') . '/js/usercenter.js');

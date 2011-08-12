@@ -174,33 +174,7 @@
 	<div class="D_colbody">
 		
 <div id="D_memberProfileMain">
- 
- 
- 
- 
- 
-
- 
-
-
-
-
 <div class="D_boxcols divby3" id="D_memberProfileMeta">
-	
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
 
 <div class="D_col first">
 	<div class="D_colbody">
@@ -218,29 +192,13 @@
 
 	</div>
 </div>
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
 <div class="D_col">
 	<div class="D_colbody">
 		
 
 <div class="D_memberProfileContentItem">
 <h4>Member of this<br> Meetup Group since</h4>
-<p>August 8, 2011</p>
+<p><?php echo format_date($user->og_groups[$current_gid]['created'],'custom','M d, Y'); ?></p>
 </div>
 
 
