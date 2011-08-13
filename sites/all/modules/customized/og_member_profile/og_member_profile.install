@@ -45,7 +45,13 @@ function og_member_profile_schema() {
                 'default' => '',
                 'description' => 'The question title.',
                 ),               
-			
+			 'weight' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "question order",
+                ),		
 		),		
 
         'primary key' => array('qid'),
@@ -80,7 +86,93 @@ function og_member_profile_schema() {
         ),
         'primary key' => array('aid'),
    );
+    
+    $schema['og_member_profile'] = array(
+        'description' => 'Stores each members profile contents',
+    	'fields' => array(
+            'pid' => array(
+                'type' => 'serial',
+                'unsigned' => TRUE,
+                'not null' => TRUE),
+            'gid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0),
+            
+            'uid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => t("who's profile for this group"),
+            ),
+           
+           'introduction' => array(
+                'type' => 'text',
+                'size' => 'normal',
+            ),
+            
+            'photo_fid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => t("The photo file id fid "),
+            ),
+            'show_photo' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 1,
+                'description' => t("if allow to show the photo in this group"),
+            ),            
+           
+              
+           'websiteurl' => array(
+                'description' => t('extra- website url'),
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => false,
+            ),
+            'websitename' => array(
+                'description' => t('extra- website name'),
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => false,
+            ),
+            'additional' => array(
+                'description' => t('extra- additional'),
+                'type' => 'text',
+                'size' => 'normal',
+            ),
+            'notifyme' => array(
+                'type' => 'int',               
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,           
+                'description' => t("notify me status, 0 for not notify , 1 for notify me"),
+            ),    
+            
+            'social' => array(               
+                'type' => 'varchar',
+                'length' => 255,            
+                'description' => t("follow me on each social site ,such as qq, weibo"),
+            ),        
+             'status' => array(
+                'type' => 'int',               
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,           
+                'description' => t("profile status, 0 for not publish , 1 for publish"),
+            ),       
+            
 
+        ),
+        'primary key' => array('pid'),
+   );
+
+   
    
     return $schema;
 }

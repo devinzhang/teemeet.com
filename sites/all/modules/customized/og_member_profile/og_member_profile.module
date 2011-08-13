@@ -1,14 +1,183 @@
 <?php
 /**
  * @file
- *   After an user join a group, he will get a group profile for this group.
+ *   After an user join a group, he will get a member profile for this group.  member profile is a node type which build based on cck
  *  here is the detail user case
  * 1) when the user join a group , then create a new group file belong to this group
  * 2) When the user leave this group, then delete this profile 
  * 3) when this group was deleted, then delete this profile 
  */
+
  
+define('MEMBER_PROFILE_NODE_TYPE','membergroupprofile');
+define('MEMBER_PROFILE_QUESTIONS_TBL','og_member_profile_question');
+define('MEMBER_PROFILE_ANSWERS_TBL','og_member_profile_answer');
+define('MEMBER_PROFILE_TBL','og_member_profile');
+
+/**
+ * Implementation of hook_menu().
+ */
+function og_member_profile_menu() {
+  $items = array(); 
+ $items['grouptool/%/manage/settings/members'] = array(
+    	'title' => t('Group Member Settings'),
+        'page callback' => 'og_member_profile_setting_member',
+        'page arguments' => array(1),   
+        'type' => MENU_CALLBACK,        
+        'access callback' =>'is_group_admin',
+        'access arguments' => array(1),   
+        'file' => 'og_member_profile.manage.inc',
+        
+    ); 
+   $items['member/%/ingroup/%/profile'] = array(
+    	'title' => t('Your Teemeet Group profile'),
+        'page callback' => 'og_member_profile_edit',
+        'page arguments' => array(1,3),   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'og_member_profile.manage.inc',     
+        
+    );
+    
+    return $items;
+
+}   
+
+function is_group_admin($gid){
+$node = node_load($gid); 
+return og_is_group_admin($node); 
+}
+
+/* impl. hook_form_alter
+** if the user is joining a group, then add the extra profile questions
+**
+*/
+
+function og_member_profile_form_alter(&$form, &$form_state, $form_id) {
  
+  if ($form_id == 'og_confirm_subscribe') {
+    $group_name = $form['#parameters'][3]->title; 
+    $gid = $form['gid']['#value'];
+    
+    $form['introduce'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Introduce yourself'),
+      '#weight' => 5,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+    
+    $request_introduction = variable_get('group_'.$gid.'_profile_requrement_introduction',1);
+     if(!$request_introduction) {
+        unset($form['request']);
+     } else {
+         unset($form['request']);
+         $form['introduce']['request'] = array(
+            '#type' => 'textarea', 
+            '#title' => t('Introduction'), 
+            '#required' => TRUE,           
+        ); 
+     }
+     
+     
+     $request_photo = variable_get('group_'.$gid.'_profile_requrement_photo',1);
+     if($request_introduction) {
+      $form['introduce']['image'] = array(
+            '#type' => 'image_upload_element',
+            '#title' => t('Add profile photo'),
+            '#description' => _profile_form_explanation($field),
+            '#default_value' => '', // {files} object
+            '#image_preview_size' => '200x200',
+            '#file_validators' => array(         
+                  'file_validate_extensions' => array('txt gif jpg jpeg'),
+                ),
+          );
+     }
+     
+     /* need the profile questions ? */
+     $request_questons = variable_get('group_'.$gid.'_profile_requrement_question',0);
+     if($request_questons){
+       
+        $questons = og_member_profile_get_questions($gid);
+       
+        if(!empty($questons)){
+            $form['questions'] = array(
+              '#type' => 'fieldset',
+              '#title' => t('Profile questions'),
+              '#weight' => 7,
+              '#collapsible' => TRUE,
+              '#collapsed' => FALSE,
+            );
+    
+    
+            foreach($questons as $qid=>$question ){
+            $form['questions']['field_question_'.$qid] = array(
+              '#type' => 'textfield', 
+              '#title' => $question->title, 
+              '#default_value' =>'',
+              '#size' => 60, 
+              '#maxlength' => 128, 
+              '#required' => true,
+              '#weight' => $question->weight,
+            );
+            }
+        }        
+     }
+     
+     /*privacy setting */
+      $form['settings'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Settings'),
+      '#weight' => 10,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+     $form['settings']['notify'] = array(
+      '#type' => 'markup', 
+       '#prefix' => '<div><h3>'.t('Message boards').'</h3>',       
+      '#value' => $group_name . t(' uses a Message board to keep in touch between Meetups.'),
+      '#suffix' => '</div>',
+      '#weight' => 6,
+    );    
+    
+    $form['settings']['notifyme'] = array(
+     '#type' => 'checkbox',      
+     '#title' => t('Email me when this Meetup Group\'s message board is updated'),
+         '#weight' => 9,
+    );    
+    $form['actions']['#weight'] = 30; 
+    
+    $form['#submit'][] = 'og_member_profile_form_submit';
+    
+   }
+}
+
+
+function og_member_profile_form_submit($form, &$form_state) {
+    $values = $form_state['values'];
+    $notifyme = $values['notifyme'];
+    $introduce = $values['request'];
+    $gid = $values['gid'];
+    global $user; 
+    /*insert the answer to the db */
+     foreach($values as $key => $value){
+        //field_question_2
+        if(substr($key,0,15) == 'field_question_' ){
+            list($a, $b, $qid) = explode('_', $key);
+            
+            db_query("INSERT INTO ".MEMBER_PROFILE_ANSWERS_TBL." (qid, answer, uid) VALUES (%d, '%s', %d )", $qid,$value, $user->uid);
+        }
+    }
+    
+    /* insert the data into database */
+    $exist = db_result(db_query("select gid from ".MEMBER_PROFILE_TBL." where gid=%d and uid=%d",$gid,$user->uid));
+    if(!$exist) {
+    db_query("INSERT INTO ".MEMBER_PROFILE_TBL." (gid, uid, introduction, photo_fid, show_photo, notifyme ) VALUES (%d, %d , '%s', %d , %d, %d)", $gid,$user->uid, $introduce,'',1, $notifyme);
+    }
+    
+}
+
+
 /**
  * Implementation of hook_og().
  */
@@ -16,7 +185,7 @@ function og_member_profile_og($op, $gid, $uid, $args) {
   switch ($op) {
     case 'user insert':
       $account = user_load(array('uid' => $uid));
-      og_notifications_user_autosubscribe($account, $gid);
+    //  og_notifications_user_autosubscribe($account, $gid);
       break;
     case 'user delete':
       $account = user_load(array('uid' => $uid));
@@ -38,16 +207,84 @@ function og_member_profile_og($op, $gid, $uid, $args) {
   }
 }
 
+/* helper function, get all the question for a group 
+ **@param $gid, the groupd nig
+ ** @param $summary,  boolen, 
+ **@return , an array, if $summary=false,, then return the whole quesiton keyed by qid, if true, only return weight and title, keyed by weight.
+ **
+ **
+ */
 
-function og_member_profile_create_profile($account, $nid){
-    $edit = array();
-  $edit['type'] = 'sponsor';
-  $edit['uid'] = $values['uid'];// user who would be called the  creator of the node
-  $edit['name'] = $name;
+function  og_member_profile_get_questions($gid,$summary=false){
+    $questions = array(); 
+    $result = db_query ("select * from ".MEMBER_PROFILE_QUESTIONS_TBL." where gid=%d", $gid);
+    while ($question = db_fetch_object($result)) {
+        if($summary){
+        $questions[$question->weight] = $question->title;
+        }else {
+        $questions[$question->qid] = $question;
+        }
+    }
+    return $questions; 
+}
+
+/* helper function, get all the question's answer for a user in a group 
+ **@param $gid, the groupd nid
+ **@param $uid, the user uid
+ ** @param $summary,  boolen, 
+ **@return , an array, if $summary=false,, then return the whole answer keyed by qid, if true, only return weight and title, keyed by weight.
+ **[3] => stdClass Object
+        (
+            [aid] => 4
+            [qid] => 3
+            [answer] => 是的，新测试
+            [uid] => 55
+            [gid] => 130
+            [title] => devin_1设置第二个问题来问你
+            [weight] => 2
+        )
+
+ **
+ */
+
+function  og_member_profile_get_answers($gid, $uid, $summary=false){
+    $answers = array(); 
+    $result = db_query ("select aw.*, qu.* from ".MEMBER_PROFILE_ANSWERS_TBL." as aw join ".MEMBER_PROFILE_QUESTIONS_TBL." as qu on aw.qid = qu.qid where qu.gid=%d and aw.uid=%d", $gid, $uid);
+    while ($answer = db_fetch_object($result)) {
+        if($summary){
+        $answers[$answer->qid ]= $answer->answer;
+        }else {
+        $answers[$answer->qid] = $answer;
+        }
+    }
+    return $answers; 
+}
+
+/* helper function, get all the profile for a user in a group 
+ **@param $gid, the groupd nid
+ **@param $uid, the user uid
+ **@return, a profile record
+ */
+
+function  og_member_profile_get_profile($gid, $uid){
+    
+    $result = db_query ("select * from ".MEMBER_PROFILE_TBL." where gid=%d and uid=%d", $gid, $uid);
+    return db_fetch_object($result); 
+}
+
+/* Call this function to create a member profile node
+**
+**
+*/
+function og_member_profile_create_profile_node($account, $group){
+  $edit = array();
+  $edit['type'] = MEMBER_PROFILE_NODE_TYPE;
+  $edit['uid'] = $account->uid;// user who would be called the  creator of the node
+  $edit['name'] = $$account->name;
   $edit['promote'] = 0;
   $edit['format'] = FILTER_FORMAT_DEFAULT;
-  $edit['status'] = 1;
-  $edit['title'] = t('Confidential Signature: ').$name;
+  $edit['status'] = 0; // after the group adminastrator approve the request, then it will published
+  $edit['title'] = $name;
 
   node_validate($edit);
   $node = node_submit($edit);
