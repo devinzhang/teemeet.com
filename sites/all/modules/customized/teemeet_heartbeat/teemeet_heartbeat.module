@@ -13,6 +13,14 @@ function teemeet_heartbeat_heartbeat_register_access_types() {
       'module' => 'teemeet_heartbeat',
       'access' => TRUE
     ),
+
+    1 => array(
+      'name' => 'Group user activity',
+      'class' => 'GroupUserActivity',
+      'path' => 'group_user_activity.inc',
+      'module' => 'teemeet_heartbeat',
+      'access' => TRUE
+    ),
   );
 }
 
