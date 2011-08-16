@@ -7,4 +7,5 @@ dependencies[] = rules_admin
 dependencies[] = hrules
 dependencies[] = signup
 dependencies[] = signup_rules
+dependencies[] = views
 package = teemeet.com
