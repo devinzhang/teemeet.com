@@ -1,9 +1,9 @@
 array (
-  9 => 
+  12 => 
   array (
     'message' => 'New Member !user joined !avatar !time',
     'message_concat' => '',
-    'message_id' => 'user_approved_by_group_admin',
+    'message_id' => 'og_user_approved_by_admin',
     'concat_args' => 
     array (
       'type' => 'single',
@@ -17,14 +17,11 @@ array (
       array (
         0 => '0',
         1 => '0',
-        2 => '0',
-        3 => '0',
-        4 => '0',
       ),
       'merge_separator_t' => '0',
       'merge_end_separator_t' => '0',
     ),
-    'description' => 'Log a message when user approved to a group by admin',
+    'description' => 'og user approved by admin',
     'perms' => '1',
     'custom' => 1,
     'variables' => 
@@ -32,11 +29,6 @@ array (
     ),
     'attachments' => 
     array (
-      'flags' => 
-      array (
-      ),
-      'heartbeat_comments' => 0,
-      'comment_comments' => 0,
     ),
   ),
 )
