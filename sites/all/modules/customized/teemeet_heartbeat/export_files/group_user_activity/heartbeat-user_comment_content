@@ -4,7 +4,7 @@ array (
     'message' => 'NEW COMMENT
 !user
 commented on !content
-!time',
+!time !picture',
     'message_concat' => '',
     'message_id' => 'og_user_comment_centent',
     'concat_args' => 
