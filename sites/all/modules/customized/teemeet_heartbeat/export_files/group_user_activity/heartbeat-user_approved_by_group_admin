@@ -1,0 +1,34 @@
+array (
+  12 => 
+  array (
+    'message' => 'New Member !user joined !avatar !time',
+    'message_concat' => '',
+    'message_id' => 'og_user_approved_by_admin',
+    'concat_args' => 
+    array (
+      'type' => 'single',
+      'group_by' => 'none',
+      'group_target' => '',
+      'group_by_target' => '',
+      'group_num_max' => '',
+      'merge_separator' => '',
+      'merge_end_separator' => '',
+      'roles' => 
+      array (
+        0 => '0',
+        1 => '0',
+      ),
+      'merge_separator_t' => '0',
+      'merge_end_separator_t' => '0',
+    ),
+    'description' => 'og user approved by admin',
+    'perms' => '1',
+    'custom' => 1,
+    'variables' => 
+    array (
+    ),
+    'attachments' => 
+    array (
+    ),
+  ),
+)

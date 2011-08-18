@@ -15,35 +15,3 @@ function teemeet_heartbeat_heartbeat_register_access_types() {
     ),
   );
 }
-
-/**
- * Implementation of hook_token_list().
- */
- /*
-function teemeet_heartbeat_token_list($type='all') {
-	$tokens = array();
-  if ($type == 'heartbeat_message') {
-    //Define a custom avatar
-    $tokens['heartbeat_message']['avatar'] = t("The avatar of the user");
-  }
-  return $tokens;
-} 
-*/
-
-/**
- * Implementation of hook_token_values().
- */
- /*
-function teemeet_heartbeat_token_values($type, $object = NULL, $options = array()) {
-  $values = array();
-  switch ($type) {
-    case 'heartbeat_message':
-      $account = user_load($object->uid);
-      $values['avatar'] = $account->picture;
-
-      break;
-  }
-
-  return $values;
-}
-*/
