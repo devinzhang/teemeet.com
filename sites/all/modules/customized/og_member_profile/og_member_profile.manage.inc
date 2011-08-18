@@ -274,7 +274,9 @@ function og_member_profile_edit_form(&$form_state, $uid, $gid) {
    
  /* follow */
  
- 
+ /* hidden data */
+ $form['uid'] = array('#type' => 'hidden', '#value' => $uid);
+ $form['gid'] = array('#type' => 'hidden', '#value' => $gid);
             
   /*submit */
   
@@ -284,4 +286,35 @@ $form['submit'] = array(
     '#weight' => 40,
 );
   return $form;     
+}
+
+function og_member_profile_edit_form_submit($form, &$form_state) {
+    $values = $form_state['values'];
+    $notifyme = $values['notifyme'];
+    $introduce = $values['request'];
+    $gid = $values['gid'];
+    $uid = $values['uid'];
+    
+    db_query("update ".MEMBER_PROFILE_TBL." set introduction='%s',websiteurl='%s', websitename='%s', additional='%s', notifyme=%d where gid=%d and uid=%d",
+                $introduce, 
+                $gid, 
+                $uid,
+                $values['websiteurl'],
+                $values['websitename'],
+                $values['additional'],
+                
+                );
+    
+    /*insert the answer to the db */
+     foreach($values as $key => $value){
+        //field_question_2
+        if(substr($key,0,15) == 'field_question_' ){
+            list($a, $b, $qid) = explode('_', $key);
+            
+            db_query("update ".MEMBER_PROFILE_ANSWERS_TBL." set value='%s' where qid=%d and uid=$d",$value, $qid, $uid);
+        }
+    }
+    
+   
+
 }
