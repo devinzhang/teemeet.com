@@ -152,6 +152,12 @@ function og_member_profile_schema() {
                 'not null' => TRUE,
                 'default' => 0,           
                 'description' => t("notify me status, 0 for not notify , 1 for notify me"),
+            ), 
+            
+            'membertitle' => array(               
+                'type' => 'varchar',
+                'length' => 255,            
+                'description' => t("each group meber can be assigned a title"),
             ),    
             
             'social' => array(               

@@ -202,9 +202,8 @@ function usercenter_theme() {
     'usercenter_member_intro' => array(
 	  'template' => 'usercenter-member-intro',
       'arguments' => array(
-            'user'=>null,
-            'group_profile' => null,
-            'current_gid' => '',            
+            'account'=>null,          
+            'curr_group' =>null,            
         ),
       'path'=>drupal_get_path('module','usercenter').'/tpl',
 	),
@@ -212,7 +211,7 @@ function usercenter_theme() {
     'usercenter_member_rsvp' => array(
 	  'template' => 'usercenter-member-rsvp',
       'arguments' => array(
-            'user'=>null,
+            'account'=>null,
             'rsvps' => null,
             'current_gid' => '',            
         ),
@@ -232,7 +231,7 @@ function usercenter_theme() {
     'usercenter_member_greetings' => array(
 	  'template' => 'usercenter-member-greetings',
       'arguments' => array(
-            'user'=>null,
+            'account'=>null,
             'greetings' => null,
             'current_gid' => '',            
         ),
@@ -401,29 +400,49 @@ function usercenter_profile_header_ingroup(){
     $uid = arg(1);
     $gid = arg(3); 
     
-    $output = '';
-    drupal_add_css(drupal_get_path('module','usercenter').'/css/usercenter.css');
-    $user = user_load($uid);
-    $my_groups = $user->og_groups;
+    global $user; 
+   
     
+    $output = '';
+    drupal_add_js(drupal_get_path('module','usercenter') . '/js/usercenter.js');
+    drupal_add_js(drupal_get_path('module','usercenter') . '/js/jquery.editinplace.js');
+    drupal_add_css(drupal_get_path('module','usercenter').'/css/usercenter.css');
+    
+    $account = user_load($uid);
+    $my_groups =  $account->og_groups;
+    $group_node = node_load($gid); 
+    $is_admin = og_is_group_admin($group_node );
   //  $edit_links = array();
   //  $edit_links =
     
     $group_title = $my_groups[$gid]['title'];
     $is_group_organizer = $my_groups[$gid]['is_admin'];
   //  $output .= '<div class="member-profile-header">';
-	$output .= '<div id="member_'.$user->uid.'" class="member-profile-header">';
+	$output .= '<div id="member_'. $account->uid.'" class="member-profile-header">';
         $output .= '<h1 class="fn">';
-            $output .= l($user->name, 'user/'.$user->uid);
+            $output .= l( $account->name, 'user/'. $account->uid);
         $output .= '</h1>';
-        $output .= '<span id="role_'.$user->uid.'" class="D_memberProfileRole">';
+        $output .= '<span id="role_'.$account->uid.'" class="D_memberProfileRole">';
         $output .= $is_group_organizer? t('Organizer'): t('Member'). t(' of '). l($group_title,'node/'.$gid);
         $output .= '</span>';    
         $output .= '<ul class="D_actions">';
-            $output .= '<li class="canDo">'.l(t('Edit group profile'),'member/'.$uid.'/ingroup/'.$gid.'/profile', array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
+            if($user->uid == $uid ) {// the user is view his/her profiles
+                $output .= '<li class="canDo">'.l(t('Edit group profile'),'member/'.$uid.'/ingroup/'.$gid.'/profile', array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
+            } elseif($is_admin) {
+                $output .= '<li class="canDo">'.l(t('Manage member roles'),'member/'.$uid.'/ingroup/'.$gid.'/settingrole', array('attributes'=>array('class'=>'manageRole J_onClick'))).'</li>';
+            }
+            if($user->uid == $uid ) {// the user is view his/her profiles             
             $output .= '<li class="canDo">'.l(t('Edit communication settings'),'',array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
-            $output .= '<li class="canDo">'.l(t('Leave this Meetup Group'),'').'</li>';
+            } elseif($is_admin) {
+             $output .= '<li class="canDo">'.l(t('Remove member'),'',array('attributes'=>array('class'=>'removeMember'))).'</li>';
+             }
+              if($user->uid == $uid ) {// the user is view his/her profiles
+                    $output .= '<li class="canDo">'.l(t('Leave this Meetup Group'),'').'</li>';
+             } elseif($is_admin) {
+                $output .= '<li class="canDo">'.l(t('Remove member from mailing list '),'').'</li>';
+             }
             $output .= '</ul>';
+            
     $output .= '</div>';
  //   $output .= '</div>';
     

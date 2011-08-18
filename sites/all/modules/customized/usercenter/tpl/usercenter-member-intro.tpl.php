@@ -13,7 +13,7 @@
 <div id="image_20252341">
 <div>
 
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/members/20252341/photos/"><img src="<?php global $base_url; echo $base_url.'/'.$user->picture; ?>" alt="" class="D_memberProfilePhoto photo"></a>
+<a href="http://www.meetup.com/Beijing-Soccer-Lovers/members/20252341/photos/"><img src="<?php global $base_url; echo $base_url.'/'.$account->picture; ?>" alt="" class="D_memberProfilePhoto photo"></a>
 
 </div>
 
@@ -21,7 +21,26 @@
 
 </div>
 
-<p class="title">Title: ceshi zhanghoa</p>
+<p class="title">
+<?php
+$is_admin = og_is_group_admin($curr_group);
+$group_member_profile = $account->og_groups[$curr_group->nid]['member_profile'];
+if(isset($group_member_profile->membertitle)){
+    if($is_admin){
+        echo '<span id="member_title_edit" class="editable_member_title" link="'.url('member/'.$account->uid.'/ingroup/'.$curr_group->nid.'/edittitle').'">'.$group_member_profile->membertitle.'</span>';;
+    } else {
+        echo t('Title').':'.$group_member_profile->membertitle;
+   }
+} else {
+    if($is_admin){
+       echo '<span id="member_title_edit" class="editable_member_title" link="'.url('member/'.$account->uid.'/ingroup/'.$curr_group->nid.'/edittitle').'">'.t('Give member a custom title').'</span>';;
+    }else {
+        echo t('No title yet');
+    }
+}
+?>
+
+</p>
 
 <div class="D_memberProfileContentChunk">
 <h4>Follow me on:</h4>
@@ -124,7 +143,7 @@
 </form>
 
 <ul style="margin-top: 0.75em;" class="D_summaryList  D_narrow">
-<?php foreach($user->og_groups as $gid=>$group): ?>
+<?php foreach($account->og_groups as $gid=>$group): ?>
 
 <li class="D_group">
 
@@ -154,22 +173,6 @@
 
 	</div>
 </div>
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
 <div class="D_col spans4 last">
 	<div class="D_colbody">
 		
@@ -198,28 +201,12 @@
 
 <div class="D_memberProfileContentItem">
 <h4>Member of this<br> Meetup Group since</h4>
-<p><?php echo format_date($user->og_groups[$current_gid]['created'],'custom','M d, Y'); ?></p>
+<p><?php echo format_date($account->og_groups[$curr_group->nid]['created'],'custom','M d, Y'); ?></p>
 </div>
 
 
 	</div>
 </div>
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
 <div class="D_col last">
 	<div class="D_colbody">
 		
@@ -237,13 +224,30 @@
 
 <div class="D_memberProfileContentItem">
 <h4>Introduction</h4>
-
-<p>&amp;#25105;&amp;#26159;<img width="0" alt="" class="brImage" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/clear.gif">&amp;#26469;&amp;#25171;<img width="0" alt="" class="brImage" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/clear.gif">&amp;#37233;&amp;#27833;<img width="0" alt="" class="brImage" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/clear.gif">&amp;#30340;&amp;#12290;<img width="0" alt="" class="brImage" src="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/clear.gif"></p>
-
+<p><?php
+$group_member_profile = $account->og_groups[$curr_group->nid]['member_profile'];
+echo $group_member_profile->introduction;
+?>
+</p>
 </div>
 
 <div class="D_memberProfileContentItem">
-<h4>What devin is saying about this Meetup Group</h4>
+<?php
+$qa =  $account->og_groups[$curr_group->nid]['group_qa'];
+foreach ($curr_group->questions as $qid => $q) {
+echo '<h4>'.$q.'</h4>';
+echo '<p class="D_empty">'.isset($qa[$qid])? $qa[$qid] : t('No answer yet').'</p>';
+}
+?>
+
+
+
+
+</div>
+
+
+<div class="D_memberProfileContentItem">
+<h4><?php echo t('What @name is saying about this Meetup Group',array('@name'=>$account->name)) ?>;</h4>
  <p><span class="D_empty">devin has not left a group review yet.</span> <a href="http://www.meetup.com/Beijing-Soccer-Lovers/about/comments/?op=all">Click here to read other members' group reviews.</a></p> 
 </div>
 

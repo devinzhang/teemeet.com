@@ -14,6 +14,16 @@ define('MEMBER_PROFILE_QUESTIONS_TBL','og_member_profile_question');
 define('MEMBER_PROFILE_ANSWERS_TBL','og_member_profile_answer');
 define('MEMBER_PROFILE_TBL','og_member_profile');
 
+
+/* hook_init
+*/
+function og_member_profile_init() {
+  // We have to perform a load in order to assure that the $user->member_profiles bits are present.
+  
+  
+}
+
+
 /**
  * Implementation of hook_menu().
  */
@@ -32,6 +42,16 @@ function og_member_profile_menu() {
    $items['member/%/ingroup/%/profile'] = array(
     	'title' => t('Your Teemeet Group profile'),
         'page callback' => 'og_member_profile_edit',
+        'page arguments' => array(1,3),   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'og_member_profile.manage.inc',     
+        
+    );
+    
+    $items['member/%/ingroup/%/edittitle'] = array(
+    	'title' => t('Edit Title'),
+        'page callback' => 'og_member_profile_edit_title',
         'page arguments' => array(1,3),   
         'type' => MENU_CALLBACK,                
         'access arguments' => array('access user profiles'), 
@@ -207,6 +227,41 @@ function og_member_profile_og($op, $gid, $uid, $args) {
   }
 }
 
+
+/**
+ * Implementation of hook_user().
+ */
+function og_member_profile_user($op, &$edit, &$account, $category = NULL) {
+	switch($op) {		
+        case 'load' : 
+           
+            if(!empty($account->og_groups)){          
+                $groups = $account->og_groups ;
+                $member_profile = array();
+                foreach($groups as $gid => $group) {
+                    $account->og_groups[$gid]['member_profile'] = og_member_profile_get_profile($gid, $account->uid);
+                    $answers = og_member_profile_get_answers($gid,$account->uid,TRUE );     
+                    $account->og_groups[$gid]['group_qa']=$answers;
+                }    
+              
+            }            
+		break;        
+		}
+}
+
+/*hook_nodeapi
+**
+**
+*/
+function og_member_profile_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
+  switch ($op) {
+    case 'load':
+      if (og_is_group_type($node->type)) {
+        $node->questions = og_member_profile_load_extra_group_setting($node->nid);
+      }      
+      break;
+    }
+}
 /* helper function, get all the question for a group 
  **@param $gid, the groupd nig
  ** @param $summary,  boolen, 
@@ -252,7 +307,7 @@ function  og_member_profile_get_answers($gid, $uid, $summary=false){
     $result = db_query ("select aw.*, qu.* from ".MEMBER_PROFILE_ANSWERS_TBL." as aw join ".MEMBER_PROFILE_QUESTIONS_TBL." as qu on aw.qid = qu.qid where qu.gid=%d and aw.uid=%d", $gid, $uid);
     while ($answer = db_fetch_object($result)) {
         if($summary){
-        $answers[$answer->qid ]= $answer->answer;
+        $answers[$answer->qid]= $answer->answer;
         }else {
         $answers[$answer->qid] = $answer;
         }
@@ -272,6 +327,12 @@ function  og_member_profile_get_profile($gid, $uid){
     return db_fetch_object($result); 
 }
 
+/* load all the extra group setting information 
+ ** such as the group questions
+ */
+function og_member_profile_load_extra_group_setting($gid) {
+    return og_member_profile_get_questions($gid,true);
+}
 /* Call this function to create a member profile node
 **
 **

@@ -4,17 +4,18 @@
 ** this file to handle the member profiles in one group
 */
 
-function usercenter_group_member_intro($uid, $group){
+function usercenter_group_member_intro($uid, $gid){
     $output = '';
     drupal_set_title('');
     
-    $account = user_load($uid); 
+    $account = user_load($uid);   
     $output .= usercenter_profile_header_ingroup();
-    $
+  
+    $group = node_load($gid); 
     $output .= '<div class="member-profile-contents isTabbed ">';
-        $output .=_usercenter_group_member_tabs($uid, $group);
+        $output .=_usercenter_group_member_tabs($uid, $gid);
         $output .= '<div class="profile-body">';
-        $output .= theme('usercenter_member_intro',$account, '', $group);    
+        $output .= theme('usercenter_member_intro',$account, $group);    
 
         $output .= '</div>';
     $output .= '</div>';
@@ -23,13 +24,14 @@ function usercenter_group_member_intro($uid, $group){
 }
 
 
-function usercenter_group_member_rsvp($uid,$group){
+function usercenter_group_member_rsvp($uid,$gid){
     $output = '';
     drupal_set_title('');
      $account = user_load($uid); 
     $output .= usercenter_profile_header_ingroup();
     $output .= '<div class="member-profile-contents isTabbed ">';
-    $output .=_usercenter_group_member_tabs($uid,$group);
+    $output .=_usercenter_group_member_tabs($uid,$gid);
+     $group = node_load($gid);
         $output .= '<div class="profile-body">';
         $output .= theme('usercenter_member_rsvp',$account, '', $group);    
 
@@ -42,13 +44,14 @@ function usercenter_group_member_rsvp($uid,$group){
 }
 
 
-function usercenter_group_member_photos($uid,$group){
+function usercenter_group_member_photos($uid,$gid){
     $output = '';
     drupal_set_title('');
      $account = user_load($uid); 
     $output .= usercenter_profile_header_ingroup();
     $output .= '<div class="member-profile-contents isTabbed ">';
-    $output .=_usercenter_group_member_tabs($uid,$group);
+    $output .=_usercenter_group_member_tabs($uid,$gid);
+     $group = node_load($gid);
          $output .= '<div class="profile-body">';
         $output .= theme('usercenter_member_photos',$account, '', $group);    
 
@@ -61,12 +64,13 @@ function usercenter_group_member_photos($uid,$group){
 }
 
 
-function usercenter_group_member_greetings($uid,$group){
+function usercenter_group_member_greetings($uid,$gid){
     $output = '';
     drupal_set_title('');
     $account = user_load($uid); 
     $output .= usercenter_profile_header_ingroup();
     $output .= '<div class="member-profile-contents isTabbed ">';
+     $group = node_load($gid);
     $output .=_usercenter_group_member_tabs($uid,$group);
         $output .= '<div class="profile-body">';
         $output .= theme('usercenter_member_greetings',$account, '', $group);    
@@ -77,13 +81,13 @@ function usercenter_group_member_greetings($uid,$group){
 
 }
 
-function _usercenter_group_member_tabs($uid,$group) {
+function _usercenter_group_member_tabs($uid,$gid) {
     $output = '';
     $output .= '<ul class="tabs primary">';
-            $output .= '<li class="">'.l(t('Intr'),'member/'.$uid.'/ingroup/'.$group.'/intro').'</li>';
-            $output .= '<li class="">'.l(t('RSVPs'),'member/'.$uid.'/ingroup/'.$group.'/rsvp').'</li>';
-            $output .= '<li class="">'.l(t('Photos'),'member/'.$uid.'/ingroup/'.$group.'/photos').'</li>';
-            $output .= '<li class="">'.l(t('Greetings'),'member/'.$uid.'/ingroup/'.$group.'/greetings').'</li>';
+            $output .= '<li class="">'.l(t('Intr'),'member/'.$uid.'/ingroup/'.$gid.'/intro').'</li>';
+            $output .= '<li class="">'.l(t('RSVPs'),'member/'.$uid.'/ingroup/'.$gid.'/rsvp').'</li>';
+            $output .= '<li class="">'.l(t('Photos'),'member/'.$uid.'/ingroup/'.$gid.'/photos').'</li>';
+            $output .= '<li class="">'.l(t('Greetings'),'member/'.$uid.'/ingroup/'.$gid.'/greetings').'</li>';
     $output .= '</ul>';
     return $output;         
 }
