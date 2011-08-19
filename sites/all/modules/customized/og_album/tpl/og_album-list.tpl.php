@@ -1,6 +1,6 @@
 <div class="D_box photoBox" id="D_allAlbumsList">
-	<div class="D_boxbody">
-        <div class="D_boxhead">
+	<div class="boxbody">
+        <div class="boxhead">
             <h1><?php echo t('Photos');?></h1>
             <ul class="D_actions">
             <?php 
@@ -21,7 +21,7 @@
             <div id="groupListContainer" class="D_groupList_shopping">
                 <ul class="D_summaryList">
                 <?php foreach($albums as $aid => $album): ?>      
-                        <?php // print_r($album); ?>
+                        <?php //print_r($album); ?>
                     <li class="D_group J_groupHover position_1 first">
                         <div class="D_image">
                              <a href="<?php echo url('node/'.$album->nid); ?>">

@@ -129,3 +129,20 @@ function og_album_photo_upload_form_submit($form, &$form_state) {
   drupal_goto('album/ingroup/'.$value['gid']);
     
 }
+
+/** menu callback to get a photo's all information
+** @para $nid, the node nid
+** @return , json format 
+*/
+function og_album_ajax_get_photo($nid){
+    $node = node_load($nid);
+    drupal_json($node);
+}
+
+/*menu callback 
+** upload a photo into a albrm directly
+** @aid, the album nid
+*/
+function og_album_upload_directly($aid) {
+    
+}
