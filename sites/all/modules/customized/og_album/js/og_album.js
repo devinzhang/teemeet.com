@@ -37,6 +37,8 @@ $(document).ready(function() {
         }
 
     });
+    
+    $("a[rel='example1']").colorbox();
 
     
 });

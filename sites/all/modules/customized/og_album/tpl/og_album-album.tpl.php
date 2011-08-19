@@ -2,6 +2,7 @@
 <div class="D_backTo"><a href="<?php echo url('album/ingroup/'.$album->album['gid']); ?>">Back to all photo albums</a></div>
 <h1>
 <?php echo $album->title; ?>
+
 </h1>
 
 <ul id="albumActions" class="D_actions">
@@ -49,7 +50,8 @@
 <span id="sequence">1</span> <?php echo t('of'); ?> <?php echo $album->album['photo_size']; ?>
 </span>
 </li>
-<li><a id="D_photoGallery_slideshowView" href="">Play slideshow</a></li>
+<li><a href="<?php global $base_url; echo $base_url.'/'.$album->album['cover_image_path']; ?>" rel="example1" title="">Play slideshow</a>
+</li>
 
 <li><a class="D_signal D_signal_appear_to_D_photoGallery_allSizesDialog" id="D_photoGallery_allSizes" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/all_sizes/48697661">All sizes</a></li>
 
@@ -111,7 +113,10 @@ Move
             $i=0;
             global $base_url; 
             foreach($photos as $nid =>$photo) {
-            $i ++; 
+            $i ++;
+            echo '<a href="'.$base_url.'/'.$photo->photo['filepath'].'" rel="example1" title="Me and my grandfather on the Ohoopee."></a>';
+
+
             echo '<li><img nid="'.$photo->nid.'" seq="'.$i.'" src="'.$base_url.'/'.$photo->photo['filepath'].'" link="'.url('album/ajax/photo/'.$photo->nid).'"> </li>';
             }
         ?>
