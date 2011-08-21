@@ -1,0 +1,142 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_install().
+ */
+function og_album_install() {
+   drupal_install_schema('og_album');
+   
+   //initlize the preset 
+   // Preset
+  $imagecachepreset = imagecache_preset_save(array('presetname' => 'album_cover_150x115'));
+  // Action
+  $imagecacheaction = new stdClass ();
+  $imagecacheaction->presetid = $imagecachepreset['presetid'];
+  $imagecacheaction->module = 'imagecache';
+  $imagecacheaction->action = 'imagecache_scale_and_crop';
+  $imagecacheaction->data = array('width' => '150', 'height' => '115' );
+  drupal_write_record('imagecache_action', $imagecacheaction);
+  
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function og_album_uninstall() {
+   drupal_uninstall_schema('og_album');
+   
+   imagecache_preset_delete(imagecache_preset_by_name('album_cover_150x115'));
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function og_album_schema() {
+    $schema['og_album'] = array(
+        'description' => 'Stores all the albums information',
+        'fields' => array(
+            'aid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The node id of the album node.",
+                ),			 
+                
+            'uid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The uid of the creator.",
+                ),			 
+            'gid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The group nid",
+            ),            
+            'cover_fid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The group cover image file id",
+            ),                 
+			'weight' => array(
+			    'type' => 'int',
+				'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,		
+                'description' => t('the orders in the albums list'),                
+			),		
+		),		
+
+        'primary key' => array('aid'),
+         'indexes' => array(      	
+         'aid' => array('aid'),
+     	 ),
+    );
+    
+    $schema['og_album_photos'] = array(
+        'description' => 'Stores each photos connected with its album',
+    	'fields' => array(            
+            'pid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => t('the photo node nid'),                
+            ),
+            'aid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The node id of the album node.",
+            ),
+            'fid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The image file id",
+            ), 
+            
+         ),
+         'primary key' => array('pid'),
+         'indexes' => array(      	
+         'pid' => array('pid'),
+     	 ),
+   );
+   /*
+   $schema['og_album_photo_tag'] = array(
+        'description' => 'Stores tag information of a photo',
+    	'fields' => array(
+            
+            'pid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => t('the photo node nid'),                
+            ),
+            'aid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The node id of the album node.",
+            ),	
+         ),
+         'primary key' => array('pid'),
+         'indexes' => array(      	
+         'pid' => array('pid'),
+     	 ),
+   );
+   */
+    return $schema;
+}
+
