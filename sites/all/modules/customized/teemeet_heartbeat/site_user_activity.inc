@@ -32,7 +32,7 @@ class SiteUserActivity extends HeartbeatAccess {
    */
   public function dressUpMessages(HeartbeatParser $heartbeat) {
     $sql = " AND ua.access > 0 ";
-    $sql .= " AND ua.message_id = 'user_signup_event' ";
+    $sql .= " AND ua.message_id = 'custom_user_signup_event' ";
     //$sql .= " AND ua.message_id = 'heartbeat_add_content_story' ";
     $heartbeat->raw_messages = $this->resultSql($sql);
     return $heartbeat;

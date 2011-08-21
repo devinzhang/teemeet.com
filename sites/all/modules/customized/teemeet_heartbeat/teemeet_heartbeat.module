@@ -1,4 +1,7 @@
 <?php
+
+include_once('teemeet_heartbeat.features.inc');
+
 /**
  * Implementation of hook_heartbeat_register_access_types().
  */
