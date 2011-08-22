@@ -1,9 +1,0 @@
-; $Id$
-name = Multi-Avator
-description = This module allow an user to upload many avators and select one as the primary avator.
-dependencies[] = upload_element
-dependencies[] = imagecache
-dependencies[] = jquery_ui
-package = "teemeet.com"
-
-core = 6.x

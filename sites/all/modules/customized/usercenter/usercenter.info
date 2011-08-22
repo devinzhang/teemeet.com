@@ -1,6 +1,0 @@
-; $Id$
-name = User Personal Home page
-description = This module create a homepage for each user.
-package = "teemeet.com"
-
-core = 6.x
