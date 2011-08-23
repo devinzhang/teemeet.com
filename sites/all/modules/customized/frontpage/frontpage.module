@@ -1,0 +1,247 @@
+<?php
+
+/*  这个模块主要实现如下功能
+ * 1) 默认的首页， 如果是用户为匿名用户访问，则访问到是一般的首页内容，有推荐的小组等 
+ * 2） 如果是用户为登录用户，则首页为用户自己的首页，定制推送的内容
+*/
+
+/**
+ * Implementation of hook_menu().
+ */
+function frontpage_menu() {
+  $items = array();  
+   $items['home'] = array(
+    'title' => t('Welcome to Home'),
+    'page callback' => '_frontpage_home',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+    'type' => 'MENU_CALLBACK',
+  );
+   $items['myhome/%'] = array(
+        'title' => 'Home',
+    	'title callback' => 'frontpage_page_title',
+        'title arguments' => array(1),    
+        'page callback' => 'frontpage_myhome',
+        'page arguments' => array(1),
+        'parent' => '',
+        'access arguments' => array('access content'),
+   
+    );
+
+   
+  return $items;
+}
+
+function frontpage_page_title($uid){
+    $account = user_load($uid);
+   return $account->name; 
+}
+
+/**
+ * Implementation of hook_theme().
+ *
+ *
+ */ 
+function frontpage_theme() {
+  return array(
+   'frontpage_home' => array(
+	  'template' => 'frontpage-home',
+      'arguments' => array(
+            'slider_show'=>null,
+            'front_column' => '',
+            'front_recent_contents' => '',
+  			'front_tag_groups_top' =>'',
+  			'front_tag_groups' =>'',
+        ),
+	),
+    
+    'frontpage_recommended_groups' => array(
+      'arguments' => array(
+            'groups'=>null,          		
+        ),
+	),
+    
+  );
+}
+
+
+function _frontpage_home () {
+    
+    $output = '';
+    drupal_add_css(drupal_get_path('module','frontpage').'/frontpage.css');
+    drupal_set_title('');
+    global $user;
+    if($user->uid > 0) {    
+        $output .= _frontpage_home_explore();     
+     return $output;
+    } else {
+    drupal_goto('node');
+    }
+   
+}
+function _frontpage_home_explore(){
+
+    $output = '';
+    $output .= '<div class="D_boxhead">
+	
+<h2 id="J_yourInterests">发现聚会</h2>
+
+</div>';
+    $output .= '<div class="D_boxsection ">	
+                    <div class="J_ajaxProgress" id="J_interests">
+                        <div class="serendipityLabel">
+                        <p>您说您对以下的话题感兴趣，等有人发起类似的话题时候，我们将通过邮件通知您</p>
+                        </div>
+                    </div>
+
+                </div>            
+';
+    
+    return $output; 
+
+}
+
+
+/* menu callback
+ *
+ */
+ 
+ function frontpage_myhome($account) {
+    $output = '';
+    $output .=_frontpage_home_explore();
+    
+    return $output; 
+    
+ }
+
+
+
+/* hook_menu_alter
+* http://drupal.org/node/269913
+*/
+function frontpage_menu_alter(&$items) {
+  /*  global $user; 
+    if($user->uid >0) {
+        $items['user/%']['title'] = $user->name;
+    }
+  print_r($items['user/%user/']);*/
+}
+
+
+
+/* hook_block
+ *
+ */
+ 
+
+function frontpage_block($op = 'list', $delta = 0, $edit = array()){
+	switch($op){
+		case 'list':			
+			$blocks[0]['info']=t('Top header left menu');
+			$blocks[0]['cache']=BLOCK_NO_CACHE;
+            $blocks[1]['info']=t('Top header right menu');
+			$blocks[1]['cache']=BLOCK_NO_CACHE;
+            $blocks[2]['info']=t('Home Page Welcome block');
+			$blocks[2]['cache']=BLOCK_NO_CACHE;
+            $blocks[3]['info']=t('Goings-on around your city');
+			$blocks[3]['cache']=BLOCK_NO_CACHE;
+	
+    
+			return $blocks;
+		case 'view':
+			switch($delta){
+				case 0:
+					$block['subject']=t('Top header left menu');
+					$block['content']=frontpage_top_left_menu();
+					break;
+				case 1:
+					$block['subject']=t('Top header right menu');
+					$block['content']=frontpage_top_right_menu();
+					break;
+			    case 2:
+					$block['subject']=t('Home Page Welcome block');
+					$block['content']=frontpage_home_welcome();
+					break;
+				case 3:
+					$block['subject']=t('Goings-on around your city');
+					$block['content']=frontpage_goingon_potomac();
+					break;
+			}
+			return $block;
+	}
+}
+
+/* block call back 
+ * 
+ * notice: this part code is dirty, will be refined later.
+ */
+function frontpage_top_left_menu(){
+    $output ='';
+    $output .='<div id="C_tabs">
+
+<a href="'.url('og').'">
+<span class="C_tabContent">
+<span class="C_topBig">
+发现
+</span>
+<span class="C_topSm">
+一个聚会
+</span>
+</span>
+</a>
+
+
+<a href="'.url('group/create').'" class="omnCamp omnic_sn1" id="tabs_start">
+
+<span class="C_startContainer C_tabContent">
+<span class="C_topBig">
+创建</span>
+<span class="C_topSm">
+一个小组
+</span>
+</span>
+</a>
+
+<a href="'.url('sponsorships').'" class="omnCamp omnrg_perksheader last" id="tabs_sponsor">
+<span class="C_startContainer C_tabContent">
+<span class="C_topBig">
+赞助</span>
+<span class="C_topSm">
+小组
+</span>
+</span>
+</a>
+</div>';
+return $output; 
+}
+
+function frontpage_top_right_menu(){
+
+}
+
+function frontpage_home_welcome(){
+ drupal_add_css(drupal_get_path('module','frontpage').'/frontpage.css');
+    $output = '';
+    global $user;
+    $has_group = false; 
+    foreach ($user->og_groups as $key => $val) {
+          $links[$key] = l($val['title'], "node/$key") . theme('og_format_subscriber_status', $val);
+           $has_group = true;
+    }
+    $my_groups = theme('item_list', $links);
+
+    $output .='<div class="D_boxbody">
+            <div class="D_boxhead">	
+            <h1>'.t('欢迎回来,').$user->name. '</h1>';
+    $group_output =  $has_group ? $my_groups :  '<strong>您还没有加入任何小组!</strong><br>我们下面准备了一些信息，以方便您找到感兴趣的小组.';      
+    $output .= '<div style="margin-top: 1em;" class="storytime">'. $group_output;
+$output .= '</div></div></div>';
+
+ return $output; 
+}
+
+function frontpage_goingon_potomac(){
+    $output = '';
+    $output .= '<h3>There are <span class="pop">801</span> Meetups happening near Potomac this week, including:</h3>';
+    return $output;
+}

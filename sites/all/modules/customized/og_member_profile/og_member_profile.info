@@ -1,0 +1,6 @@
+name = Organic groups member profile
+description = After an user join a group, he will get a group profile for this group.
+core = 6.x
+package = "teemeet.com"
+dependencies[] = og
+

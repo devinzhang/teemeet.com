@@ -1,0 +1,7 @@
+; $Id: devel.info,v 1.5.2.1 2008/06/13 03:25:20 weitzman Exp $
+name = Group Extensions
+description = Function Set of Group.
+package = Meet Up
+version = "6.x-0.1"
+core = "6.x"
+

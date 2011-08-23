@@ -1,0 +1,255 @@
+
+#block-usercenter-0{
+width: 164px;
+}
+
+#block-usercenter-0 .inner .content {
+    -moz-border-radius: 5px 5px 5px 5px;
+    background: none repeat scroll 0 0 white;
+    padding: 1px 0 0;
+    position: relative;
+}
+    
+#block-usercenter-0 ul{
+    list-style-type: none;
+    margin: 0 0 1em;
+    overflow: hidden;
+    padding: 0;
+    margin-bottom: 0.75em;
+    
+}
+
+#block-usercenter-0 .item-list ul{
+list-style-type: none;
+margin-bottom:0px;
+}
+#block-usercenter-0 .item-list ul li {
+    display: block;
+    height: 1%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+#block-usercenter-0 .item-list ul li:first-child {
+    border-top: 0 none;
+}
+#block-usercenter-0 .item-list ul li.first a {
+    -moz-border-radius: 5px 5px 0 0;
+    border-top: medium none;
+}
+
+#block-usercenter-0 .item-list ul li.select a {
+    background: url("../images/nav_bite.gif") no-repeat scroll right center white !important;
+    color: #222222 !important;
+}
+
+
+/*
+#block-usercenter-0 .item-list ul li :first{ 
+ border-top: 0 none;
+ 
+}
+ */
+#block-usercenter-0 .item-list ul li a{
+    background-color: #B5D0F2;
+    border-top: 1px solid #FFFFFF;
+    color: #2A6798;
+    display: block;
+    font-weight: bold;
+    margin: 0 !important;
+    padding: 6px 8px;
+    text-decoration: none;
+}
+
+#block-usercenter-0 .item-list ul li.last a {
+    -moz-border-radius: 0 0 5px 5px;
+}
+
+
+#block-usercenter-1{
+margin-bottom:0;
+}
+
+/* user profile header */
+.member-header{
+display:inline;
+}
+
+.D_memberProfileHdrThumbnail{
+float:left;
+}
+
+.member-header h1.fn{
+float:left;
+text-align:left;
+}
+
+
+.D_memberProfileHdrThumbnail img {
+    float: left;
+    margin-right: 1.25em;
+    min-height: 60px;
+}
+
+img {
+    border: medium none;
+}    
+
+
+/* account page */
+.page-account  .content-group .inner {
+    -moz-border-radius: 0px px 0px 0px;
+    background: transparent;   
+}
+
+.page-account #breadcrumbs{
+display:none;
+}
+.D_boxsection  {
+width: 100%;
+float:left;
+ -moz-border-radius: 5px 5px 5px 5px;
+    background: none repeat scroll 0 0 white;
+    margin-bottom: 1em;
+    
+    
+    font-size: 1em;
+    line-height: 1.4em;
+    padding: 0.9em 0.5em;
+
+}
+.D_box {
+    -moz-border-radius: 5px 5px 5px 5px;
+    background: none repeat scroll 0 0 white;
+    margin-bottom: 1em;
+    padding: 1px 0 0;
+    position: relative;
+}    
+
+.D_boxbody ..D_boxhead{
+ border-top: 1px solid #CCCCCC;
+}
+
+
+.divby3 {
+display:inline;
+}
+
+.D_boxsection  .spans2 {
+    width: 66.666%;
+    float:left;
+}
+
+.divby3 .spans1{
+    width: 33.33%;
+    float:left;
+}
+
+.divby3 .spans1 .D_colbody{
+margin-left: 5px;
+}
+
+.divby3 .spans1 .D_colbody img{
+   border: medium none;
+}
+
+.D_personalInformation td {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+/* member profile in some group */
+.member-profile-header{
+ padding: 0 0.5em 0.65em;
+ width:100%;
+ height: auto;
+ 
+}
+.member-profile-contents{
+ width:100%;
+ height: auto;
+ 
+}
+
+.D_memberProfileRole{
+width:100%;
+float:left;
+}
+.member-profile-header ul.D_actions {
+margin: 0.5em 0 0;
+padding: 0 0 0 0 ;
+}
+.member-profile-contents ul.tabs{
+margin-left: 0px; 
+
+} 
+
+.divby6 .spans2 {
+    width: 33.32%;
+}
+
+.divby6 .spans4 {
+    width: 66.64%;
+}
+
+.D_memberProfileContentChunk {
+    border-top: 1px solid #DDDDDD;
+    clear: both;
+    margin-top: 0.85em;
+    padding-top: 1em;
+}
+
+ul.D_summaryList {
+    list-style: none outside none;
+}
+
+.D_group .D_image {
+    overflow: hidden;
+    width: 50px;
+    float:left;
+}
+.D_group .D_info{
+float:left;
+margin-left:0px;
+}
+
+#D_memberProfileInteract ul {
+    list-style: none outside none;
+    margin-left: 0;
+    padding-left: 0;
+}
+.D_summaryList .D_image, .D_summaryList .D_noimage {
+    float: left;
+    overflow: hidden;
+    text-align: center;
+    width: 80px;
+}
+
+#D_memberProfileActivityList {
+    margin-top: 0.5em;
+    padding-bottom: 0.7em;
+}
+
+.D_memberActivityList {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+.D_memberActivityList li span, .D_memberActivityList li a {
+    background: url("../images/activity_list.png") no-repeat scroll 0 0 transparent;
+    margin-bottom: 4px;
+    padding: 1px 0 1px 25px;
+}
+.D_memberActivityList .D_memberActivityListMeetups span, .D_memberActivityList .D_memberActivityListMeetups a {
+    background-position: 0 0;
+}
+.D_memberActivityList .D_memberActivityListCheckins span {
+    background-position: 0 -90px;
+}
+.D_memberActivityList .D_memberActivityListPhotos a {
+    background-position: 0 -36px;
+}
+.D_memberActivityList .D_memberActivityListGreetings a {
+    background-position: 0 -54px;
+}
