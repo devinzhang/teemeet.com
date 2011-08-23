@@ -28,6 +28,27 @@ function group_extensions_menu()
         'file' => 'group_form.inc',
     );
     
+    $items['group/%/comments'] = array(
+    	'title' => t('All Group Reviews'),
+        'page callback' => 'group_extensions_comments_list',
+        'page arguments' => array(1),                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'group.comment.inc',
+    );
+    $items['groupextension/ajax/postcomment']=array(
+		'title'=>t('Post Comment'),
+		'page callback'=>'group_extensions_ajax_postcomment',
+		'page arguments'=>null,
+		'access callback'=>TRUE,
+        'type' => MENU_CALLBACK,
+        'file' => 'group.comment.inc',
+	);
+    
+    
+   
+   
+    
     return $items;    
 }
 

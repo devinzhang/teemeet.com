@@ -13,26 +13,27 @@
 <div id="image_20252341">
 <div>
 
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/members/20252341/photos/"><img src="<?php global $base_url; echo $base_url.'/'.$account->picture; ?>" alt="" class="D_memberProfilePhoto photo"></a>
+<a href=""><img src="<?php global $base_url; echo $base_url.'/'.$account->picture; ?>" alt="" class="D_memberProfilePhoto photo"></a>
 
 </div>
 
-<span class="D_inlineAction D_firstInlineAction"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/members/20252341/photos/">Manage photos</a></span>
+<span class="D_inlineAction D_firstInlineAction"><a href="<?php echo url('user/'.$account->uid.'/photos'); ?>">Manage photos</a></span>
 
 </div>
 
 <p class="title">
 <?php
 $is_admin = og_is_group_admin($curr_group);
+$is_member = og_is_group_member($curr_group->nid, $include_admins = false, $account->uid);
 $group_member_profile = $account->og_groups[$curr_group->nid]['member_profile'];
 if(isset($group_member_profile->membertitle)){
-    if($is_admin){
+    if($is_admin && $is_member){
         echo '<span id="member_title_edit" class="editable_member_title" link="'.url('member/'.$account->uid.'/ingroup/'.$curr_group->nid.'/edittitle').'">'.$group_member_profile->membertitle.'</span>';;
     } else {
         echo t('Title').':'.$group_member_profile->membertitle;
    }
 } else {
-    if($is_admin){
+    if($is_admin && $is_member){
        echo '<span id="member_title_edit" class="editable_member_title" link="'.url('member/'.$account->uid.'/ingroup/'.$curr_group->nid.'/edittitle').'">'.t('Give member a custom title').'</span>';;
     }else {
         echo t('No title yet');
@@ -248,7 +249,7 @@ echo '<p class="D_empty">'.isset($qa[$qid])? $qa[$qid] : t('No answer yet').'</p
 
 <div class="D_memberProfileContentItem">
 <h4><?php echo t('What @name is saying about this Meetup Group',array('@name'=>$account->name)) ?>;</h4>
- <p><span class="D_empty">devin has not left a group review yet.</span> <a href="http://www.meetup.com/Beijing-Soccer-Lovers/about/comments/?op=all">Click here to read other members' group reviews.</a></p> 
+ <p><span class="D_empty"><?php echo t('@name has not left a group review yet.',array('@name'=>$account->name)); ?></span> <a href="<?php echo url('group/'.$curr_group->nid.'/comments'); ?>">Click here to read other members' group reviews.</a></p> 
 </div>
 
 </div>

@@ -325,7 +325,7 @@ function og_member_profile_edit_title($uid, $gid) {
   // $q_nid = $_POST['element_id'];
    $q_title = $_POST['update_value'];
   db_query("update ".MEMBER_PROFILE_TBL." set membertitle='%s' where gid=%d and uid=%d",
-               $q_title,
+                $q_title,
                 $gid, 
                 $uid           
                 );

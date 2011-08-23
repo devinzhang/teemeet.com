@@ -6,6 +6,7 @@
  * 1) when the user join a group , then create a new group file belong to this group
  * 2) When the user leave this group, then delete this profile 
  * 3) when this group was deleted, then delete this profile 
+ * 4) add a comment for a group
  */
 
  
