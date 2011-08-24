@@ -58,12 +58,12 @@ function og_album_schema() {
                 'default' => 0,
                 'description' => "The group nid",
             ),            
-            'cover_fid' => array(
+            'album_thumbnail' => array(
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'not null' => TRUE,
                 'default' => 0,
-                'description' => "The group cover image file id",
+                'description' => "The album thumbnail image file id",
             ),                 
 			'weight' => array(
 			    'type' => 'int',
@@ -103,7 +103,16 @@ function og_album_schema() {
                 'not null' => TRUE,
                 'default' => 0,
                 'description' => "The image file id",
-            ), 
+            ),
+            
+            'is_group_photo' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "is this photo was the group photo, 1 yes, 0 no ",
+            ),
+            
             
          ),
          'primary key' => array('pid'),

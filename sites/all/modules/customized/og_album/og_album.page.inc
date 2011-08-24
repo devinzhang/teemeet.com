@@ -13,11 +13,12 @@ function og_album_album_list($gid){
     drupal_add_css(drupal_get_path('module','og_album').'/css/og_album.css');
     $output = '';
     $albums = og_album_get_albums($gid);
+    $is_group_admin = og_album_is_group_admin($gid);
     if(empty($albums) && !og_album_is_group_admin($gid)){
     drupal_set_message(t('Since there are no albums, photos can\'t be added'),'warning');
     }   
     $group = node_load($gid); 
-    $output .= theme('og_album_list', $group, $albums);    
+    $output .= theme('og_album_list', $group, $albums, $is_group_admin);    
     return $output;
 }
 
@@ -144,5 +145,5 @@ function og_album_ajax_get_photo($nid){
 ** @aid, the album nid
 */
 function og_album_upload_directly($aid) {
-    
+        echo drupal_get_form('og_album_upload_photo_directly_form', $aid); 
 }

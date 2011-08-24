@@ -1,5 +1,5 @@
 <div class="D_boxhead">	
-<div class="D_backTo"><a href="<?php echo url('album/ingroup/'.$album->album['gid']); ?>">Back to all photo albums</a></div>
+<div class="D_backTo"><?php echo l(t('Back to all photo albums'),'album/ingroup/'.$album->album['gid']);?></div>
 <h1>
 <?php echo $album->title; ?>
 
@@ -9,11 +9,12 @@
 
 <li class="canDo makeRelative">
 
-<object width="70" height="17" style="width: 85px; height: 17px; z-index: 9999;" class="swfupload" data="http://static2.meetupstatic.com/31672825809160128912/script/swfupload/flash/swfupload.swf" type="application/x-shockwave-flash" id="SWFUpload_0"><param value="transparent" name="wmode"><param value="http://static2.meetupstatic.com/31672825809160128912/script/swfupload/flash/swfupload.swf" name="movie"><param value="high" name="quality"><param value="false" name="menu"><param value="always" name="allowScriptAccess"><param value="movieName=SWFUpload_0&amp;uploadURL=http%3A%2F%2Fupload.meetup.com%2F&amp;useQueryString=false&amp;requeueOnError=true&amp;httpSuccess=200&amp;assumeSuccessTimeout=0&amp;params=existingOrNew%3Dexisting%26amp%3BphotoAlbumId%3D2900971%26amp%3Bop%3Dsubmit%26amp%3BformUpload%3Dtrue%26amp%3Btoken%3D13137567441310.050077365114285954%26amp%3BmemberId%3D17790561%26amp%3BchapterId%3D2281951%26amp%3Bsig%3D74166f%26amp%3BsigTimeStamp%3D1313756744107%26amp%3BsigTimeValid%3D30&amp;filePostName=FileName_1&amp;fileTypes=*.jpg%3B*.jpeg%3B*.jpe%3B*.gif%3B*.png%3B*.JPG%3B*.JPEG%3B*.JPE%3B*.GIF%3B*.PNG&amp;fileTypesDescription=Images%20Only&amp;fileSizeLimit=10%20MB&amp;fileUploadLimit=497&amp;fileQueueLimit=497&amp;debugEnabled=false&amp;buttonImageURL=%2FBeijing-Soccer-Lovers%2Fphotos%2F2900971%2F&amp;buttonWidth=70&amp;buttonHeight=17&amp;buttonText=&amp;buttonTextTopPadding=0&amp;buttonTextLeftPadding=0&amp;buttonTextStyle=color%3A%20%23000000%3B%20font-size%3A%2016pt%3B&amp;buttonAction=-110&amp;buttonDisabled=false&amp;buttonCursor=-2" name="flashvars"></object>
-<a id="add-photo-action" class="sprite sprite_action photo_add_icon" title="Add photos" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/upload/?photoAlbumId=2900971">Add photos</a>
+
+<a id="add-photo-action" class="colorbox-inline sprite sprite_action photo_add_icon" title="Add photos" href="?width=600&height=300&inline=true#add-album-photo"><?php echo t('Add photos'); ?></a>
 
 </li>
 
+<?php if($is_album_admin): ?>
 <li class="canDo">
 <a class="sprite sprite_action pencil_icon" title="Rename album" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/?op=rename&amp;photoAlbumId=2900971">Rename album</a>
 </li>
@@ -24,6 +25,8 @@
 <a class="sprite sprite_action photos_icon" title="Reorder album" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/?op=reorderAlbum&amp;photoAlbumId=2900971">Reorder album</a>
 </li>
 
+<?php endif; ?>
+
 </ul>
 
 </div>
@@ -31,11 +34,13 @@
 <!--body part -->
 <div class="clearfix" id="D_photoGallery_wrapper">
     <div id="D_photoGallery_photoCaptionWrapper">
-    <span id="D_photoGallery_photoCaption">ceshi 1</span>
+    <span id="D_photoGallery_photoCaption"><?php echo $album->title;?><?php if($is_album_admin){echo '<div id="node-title-ctrl"></div>';} ?> <></span>
+    <?php if($is_album_admin): ?>
     <a class="D_inlineAction D_signal D_signal_appear_to_D_photoGallery_editCaptionDialog" id="D_photoGallery_editCaptionLink" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/2900971/#">
     Edit caption
     </a>
     <a class="D_inlineAction D_signal D_signal_appear_to_D_photoGallery_deleteCaptionDialog" id="D_photoGallery_deleteCaptionLink" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/2900971/#">Delete caption</a>
+    <?php endif; ?>
     </div>
 </div>
 <!-- next row -->

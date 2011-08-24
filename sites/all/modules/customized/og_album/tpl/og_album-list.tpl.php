@@ -2,11 +2,13 @@
 	<div class="boxbody">
         <div class="boxhead">
             <h1><?php echo t('Photos');?></h1>
+            <?php if($is_group_admin): ?>
             <ul class="D_actions">
             <?php 
             echo '<li>'.l('Upload Photos','album/ingroup/'.$current_group->nid.'/upload').'</li>';
             ?>
             </ul>
+            <?php endif; ?>
         </div>
         <div class="D_boxsection isNotDivided ">
             <div class="D_listControls">

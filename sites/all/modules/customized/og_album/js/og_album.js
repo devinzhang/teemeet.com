@@ -9,7 +9,7 @@ $(document).ready(function() {
         visible: 1,
         speed: 800,
         circular: false,   
-
+        
         afterEnd: function(a) {
           var $img = $(a).children('img');
           $("#sequence").html($img.attr('seq'));
@@ -25,7 +25,7 @@ $(document).ready(function() {
 	                    },
 	            success: function(data){   
 	                if(data.title==''){
-                        $("#D_photoGallery_photoCaption").html('Add Caption');
+                        $("#node-title-ctrl").html(drupal.t('Add Caption'));
                         $("#D_photoGallery_photoCaption a").remove();
                     }else{
                        $("#D_photoGallery_photoCaption").html(data.title);
@@ -39,7 +39,31 @@ $(document).ready(function() {
     });
     
     $("a[rel='example1']").colorbox();
-
+    
+    
+    $.ajax({
+	            url: $("#D_photoViewer ul li:first img").attr('link'),
+	            type: "GET", 
+	            dataType: "json",	  
+                async: true,                
+	            timeout: 9000, 
+	            error: function(xhr, status, error){
+	                // alert('status=' + xhr.statusText + '   status=' + status + '  error=' + error);
+	                   wait = true; 
+	                    },
+	            success: function(data){   
+	                if(data.title==''){
+                        
+                        $("#node-title-ctrl").html(drupal.t('Add Caption'));
+                        
+                        $("#D_photoGallery_photoCaption a").remove();
+                    }else{
+                        $("#node-title-ctrl").remove();
+                       $("#D_photoGallery_photoCaption").html(data.title);
+                    }
+                    
+                    }               
+    }); 
     
 });
 

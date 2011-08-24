@@ -50,8 +50,9 @@ function og_album_menu() {
     	'title' => t('Album'),
         'page callback' => 'og_album_photo_upload',
         'page arguments' => array(2),   
-        'type' => MENU_CALLBACK,                
-        'access arguments' => array('upload photo'), 
+        'type' => MENU_CALLBACK,
+        'access callback' => 'og_album_is_group_admin',        
+        'access arguments' => array(2), 
         'file' => 'og_album.page.inc',     
         
     );
@@ -109,6 +110,13 @@ function og_album_is_owner($uid,$fid){
     return $user->uid == $uid; 
 }
 
+/* if the user is the image owner */
+function og_album_is_album_admin($uid,$node){
+    
+    return $node->uid == $uid; 
+}
+
+
 /**
  * Implementation of hook_theme().
  *
@@ -116,19 +124,22 @@ function og_album_is_owner($uid,$fid){
  */
 function og_album_theme() {
   return array(
-   'og_album_list' => array(  // theme one avator profile
+   'og_album_list' => array(  // theme one album list
 	  'template' => 'og_album-list',
       'arguments' => array(
             'current_group'=>null,
             'albums'=>null, 
+            'is_group_admin'=>FALSE, // if the current user was the group onwer
+            
         ),
        'path'=>drupal_get_path('module','og_album').'/tpl',
 	),
-  'og_album_album' => array(  // theme one avator profile
+  'og_album_album' => array(  // theme one album
 	  'template' => 'og_album-album',
       'arguments' => array(
             'album'=>null,             
             'photos'=>null, 
+            'is_album_admin'=>FALSE, // if the current user was a album admin
         ),
        'path'=>drupal_get_path('module','og_album').'/tpl',
 	),
@@ -170,14 +181,22 @@ function og_album_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
             drupal_add_js(drupal_get_path('module', 'og_album').'/js/og_album.js');
             drupal_add_css(drupal_get_path('module','og_album').'/css/og_album.css');
             $photos = og_album_get_photos($node->nid);  
-           
+            global $user; 
+            $is_album_admin = og_album_is_album_admin($user->uid, $node); 
             $node->content['slider']= array(
-                '#value'=> theme('og_album_album', $node, $photos),
+                '#value'=> '<div style="display:none;"> <div id="add-album-photo" >'.drupal_get_form('og_album_upload_photo_directly_form', $node->nid).'</div></div>'. theme('og_album_album', $node, $photos,$is_album_admin),
                 
             );
         }
         
-      
+        if($node->nid ==144){
+        
+        $img_path = $node->field_group_photo[0]['filepath'];
+         $node->content['slider']= array(
+                '#value'=> theme('imagecache','album_cover_150x115', $img_path,'','', array('class'=>'album-thumb')),
+                
+            ); 
+        }
       break;      
       
     }
@@ -275,6 +294,55 @@ function og_album_get_photo_attributes($pid){
     }
     return $photo;
 }
+
+
+
+/* submit a new image form 
+ *
+ */
+ 
+function og_album_upload_photo_directly_form(&$form_state, $aid) {
+ $form=array();   
+ $form['image'] = array(
+    '#type' => 'image_upload_element',
+    '#title' => t('Add photo'),
+    '#default_value' => '', // {files} object
+    '#image_preview_size' => '200x200',
+    '#file_validators' => array(         
+    'file_validate_extensions' => array('txt gif jpg jpeg'),
+        ),
+  );
+  $form['aid'] = array(
+    '#type' => 'hidden', 
+    '#value' => $aid
+    
+  );
+  
+$form['submit'] = array(
+    '#type' => 'submit', 
+    '#value' => t('Submit'),
+);
+
+  return $form;
+}
+
+function og_album_upload_photo_directly_form_submit($form, &$form_state) {
+    $value = $form_state['values'];
+    $aid = $value['aid'];
+    global $user; 
+    
+    if($value['image']) {
+      $image_id = upload_element_save($value['image'], 'upload_element', FILE_EXISTS_RENAME, 'imagecache_preset');
+      $img_path=db_result(db_query("select f.filepath from {files} as f where f.fid=%d ", $image_id));
+      $pid = og_album_create_photo_node($img_path,$user); 
+      db_query("INSERT INTO ".OG_ALBUM_PHOTOS_TABLE." (pid, aid, fid) VALUES (%d, %d, %d)", $pid, $aid, $image_id);
+      
+    }
+  
+  drupal_goto('node/'.$aid);
+                    
+}
+
 
 
 /*create a album node

@@ -15,7 +15,7 @@
     global $user; 
     drupal_add_css(drupal_get_path('module','group_extensions').'/css/group_extensions.css');
     $output = '';
-    $has_comment = _group_extensions_get_my_group_review($gid, $user->uid); 
+    $has_comment = group_extensions_get_my_group_review($gid, $user->uid); 
     
     if(!$has_comment) {
     $output .= drupal_get_form('group_extensions_comment_form',$gid);
@@ -127,39 +127,6 @@ function _group_extensions_get_group_comments($gid){
 	}
     $output .= '</ul>';
 	return $output;
-}
-
-/* Get all one user's comment for a group node
- * @param $gid, group node nid
- * @param $uid, the user uid
- * return, if there is a value, return , otherwise, 0
- */
-function _group_extensions_get_my_group_review($gid, $uid){
-	$output = '';
-
-		// Pre-process variables.
-		$nid = $gid;
-	
-		$query = 'SELECT c.cid as cid, c.pid, c.nid, c.subject, c.comment, c.format, c.timestamp, c.name, c.mail, c.homepage, u.uid, u.name AS registered_name, u.signature, u.signature_format, u.picture, u.data, c.thread, c.status FROM {comments} c INNER JOIN {users} u ON c.uid = u.uid WHERE c.nid = %d and c.uid=%d';
-        
-		// Start a form, for use with comment control.
-		$result = db_query($query,$gid, $uid);
-
-		$num_rows = FALSE;
-		
-		global $base_path;
-		$a= null; 
-		while ($comment = db_fetch_object($result)) {
-			$num_rows = TRUE;
-            $a = $comment; 
-		}
-
-		if($num_rows) {           
-			return $a; 
-		} else {
-        echo 'false';
-			return FALSE;
-		}	
 }
 
 
