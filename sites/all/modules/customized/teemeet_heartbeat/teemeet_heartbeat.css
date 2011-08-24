@@ -1,0 +1,38 @@
+#block-heartbeat-siteuseractivity .block-title {
+  width:370px;
+  padding-top:20px;
+  padding-bottom:15px;
+  border-bottom:1px solid #ccc;
+  font-size:2em;
+}
+
+.custom_user_signup_event {
+  width:370px;
+  border-bottom:1px dotted #ccc;
+  margin-top:10px;
+}
+
+.custom_user_signup_event .picture {
+  float:left;
+}
+
+.custom_user_signup_event .picture img {
+  max-width:70px;
+  max-height:70px;
+}
+
+.custom_user_signup_event .teemeet-message-front {
+  width:280px;
+  float:left;
+  margin-left:10px;
+}
+
+.custom_user_signup_event .teemeet-message-front .user {
+  font-size:1.5em;
+}
+
+.custom_user_signup_event .teemeet-message-front .activity-time {
+  float:right;
+  font-size:0.8em;
+  color:#999;
+}
