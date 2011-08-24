@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Implementation of hook_init().
+ */
+function teemeet_heartbeat_init() {
+  drupal_add_css(drupal_get_path('module', 'teemeet_heartbeat') . '/teemeet_heartbeat.css');
+}
+
 include_once('teemeet_heartbeat.features.inc');
 
 /**
@@ -17,4 +24,28 @@ function teemeet_heartbeat_heartbeat_register_access_types() {
       'access' => TRUE
     ),
   );
+}
+
+function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $stream) {
+
+  foreach ($messages as $key => $message) {
+    /*
+	print "<pre>";
+	print_r($message);
+	print "</pre>";
+	exit;
+  */
+    $messages[$key]->display_time = FALSE;
+
+    if ($message->message_id == 'custom_user_signup_event') {
+      $timeago = '<span class="activity-time">' . t('@time ago', array('@time' => format_interval(($_SERVER['REQUEST_TIME'] - $message->timestamp), 1))) . '</span>';
+
+      $message->message = $message->variables['@picture'];
+      $message->message .= '<div class="teemeet-message-front">';
+      $message->message .= $message->variables['@user'] . $timeago . '<br/>';
+      $message->message .= 'is going to a meetup with ' . $message->variables['@group'];
+      $message->message .= '</div>';
+    }
+  }
+
 }
