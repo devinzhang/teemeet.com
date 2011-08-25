@@ -147,3 +147,27 @@ function og_album_ajax_get_photo($nid){
 function og_album_upload_directly($aid) {
         echo drupal_get_form('og_album_upload_photo_directly_form', $aid); 
 }
+
+/* set a photo as a group cover page or a album thumbnail
+ * @param , $pid, the photo nid
+ **
+ */
+function og_album_set_photo_property($pid){
+    $output = '';
+    $output .= '<div id="D_photoGallery_orgControls">';
+    $output .= drupal_get_form('og_album_set_photo_property_form',$pid); 
+    $output .= '</div>';
+    return $output; 
+}
+
+function og_album_set_photo_property_form(&$form_state, $pid) {
+ $form=array();   
+  $form['pid'] = array(
+    '#type' => 'hidden', 
+    '#value' => $pid
+    
+  );
+  
+ 
+ return $form; 
+}

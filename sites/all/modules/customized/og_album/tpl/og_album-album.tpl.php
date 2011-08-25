@@ -55,26 +55,13 @@
 <span id="sequence">1</span> <?php echo t('of'); ?> <?php echo $album->album['photo_size']; ?>
 </span>
 </li>
-<li><a href="<?php global $base_url; echo $base_url.'/'.$album->album['cover_image_path']; ?>" rel="example1" title="">Play slideshow</a>
+<li><a class="cboxElement" href="<?php global $base_url; echo $base_url.'/'.$album->album['cover_image_path']; ?>" rel="example1" title="">Play slideshow</a>
 </li>
 
 <li><a class="D_signal D_signal_appear_to_D_photoGallery_allSizesDialog" id="D_photoGallery_allSizes" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/all_sizes/48697661">All sizes</a></li>
 
-<li class="D_dropdown" id="D_photoGallery_orgControlsWrapper"><span><a class="J_onClick D_dropdownToggler D_dropdownParent" href="">Use photo as</a></span>
-<div class="jsStartHidden D_dropdownContent" id="D_photoGallery_orgControls">
-<ul>
+<li class="D_dropdown" id="D_photoGallery_orgControlsWrapper"><span><a class="colorbox-inline J_onClick D_dropdownToggler D_dropdownParent" href="?width=300&height=100&inline=true#photo_controls">Use photo as</a></span>
 
-<li>
-<label class="actionAvailable" id="D_photoGallery_makeGroupPhoto"><input type="checkbox"> Group photo</label>
-</li>
-
-<li>
-<label title="This is the album thumbnail" id="D_photoGallery_makeAlbumThumbnail"><input type="checkbox" disabled="true" checked="true"> Album thumbnail</label>
-</li>
-
-</ul>
-<p><a class="J_onClick D_dropdownToggler" href="">close</a></p>
-</div>
 </li>
 
 <li><a class="D_signal D_signal_appear_to_D_photoGallery_confirmDeletePhotoDialog" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/?op=delete&amp;photoId=48697661&amp;photoAlbumId=2900971" id="D_photoGallery_deletePhoto">Delete</a></li>
@@ -119,7 +106,7 @@ Move
             global $base_url; 
             foreach($photos as $nid =>$photo) {
             $i ++;
-            echo '<a href="'.$base_url.'/'.$photo->photo['filepath'].'" rel="example1" title="Me and my grandfather on the Ohoopee."></a>';
+            echo '<a class="cboxElement" href="'.$base_url.'/'.$photo->photo['filepath'].'" rel="example1" title="Me and my grandfather on the Ohoopee."></a>';
 
 
             echo '<li><img nid="'.$photo->nid.'" seq="'.$i.'" src="'.$base_url.'/'.$photo->photo['filepath'].'" link="'.url('album/ajax/photo/'.$photo->nid).'"> </li>';

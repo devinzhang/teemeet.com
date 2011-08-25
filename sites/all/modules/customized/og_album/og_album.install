@@ -63,7 +63,7 @@ function og_album_schema() {
                 'unsigned' => TRUE,
                 'not null' => TRUE,
                 'default' => 0,
-                'description' => "The album thumbnail image file id",
+                'description' => "The album thumbnail image node nid",
             ),                 
 			'weight' => array(
 			    'type' => 'int',
@@ -75,9 +75,7 @@ function og_album_schema() {
 		),		
 
         'primary key' => array('aid'),
-         'indexes' => array(      	
-         'aid' => array('aid'),
-     	 ),
+       
     );
     
     $schema['og_album_photos'] = array(
@@ -116,9 +114,7 @@ function og_album_schema() {
             
          ),
          'primary key' => array('pid'),
-         'indexes' => array(      	
-         'pid' => array('pid'),
-     	 ),
+         
    );
    /*
    $schema['og_album_photo_tag'] = array(
@@ -141,9 +137,7 @@ function og_album_schema() {
             ),	
          ),
          'primary key' => array('pid'),
-         'indexes' => array(      	
-         'pid' => array('pid'),
-     	 ),
+         
    );
    */
     return $schema;
