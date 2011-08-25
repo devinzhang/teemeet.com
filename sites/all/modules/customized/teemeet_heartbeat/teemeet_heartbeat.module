@@ -14,8 +14,6 @@ include_once('teemeet_heartbeat.features.inc');
  */
 function teemeet_heartbeat_heartbeat_register_access_types() {
   return array(
-    // Site activity stream is kind of a copy of HeartbeatPublic.
-    // It is only to show you how it's done.
     0 => array(
       'name' => 'Site user activity',
       'class' => 'SiteUserActivity',
@@ -26,6 +24,17 @@ function teemeet_heartbeat_heartbeat_register_access_types() {
   );
 }
 
+/**
+ * Implementation of hook_heartbeat_theme_alter().
+ *
+ * Take out messages you want to retheme.
+ * This can be by adding buttons, html controls, repositioning elements, ...
+ * In this example we add buttons and place icons for some message types.
+ * In other cases, a custom avatar is used.
+ *
+ * @param $messages Array of heartbeat activity messages
+ * @param $stream HeartbeatAccess as the object that holds the current stream scope
+ */
 function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $stream) {
 
   foreach ($messages as $key => $message) {
@@ -35,15 +44,50 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
 	print "</pre>";
 	exit;
   */
+    $timeago = '<span class="activity-time">';
+    $timeago .= t('@time ago', array('@time' => format_interval(($_SERVER['REQUEST_TIME'] - $message->timestamp), 1)));
+    $timeago .= '</span>';
+
     $messages[$key]->display_time = FALSE;
 
     if ($message->message_id == 'custom_user_signup_event') {
-      $timeago = '<span class="activity-time">' . t('@time ago', array('@time' => format_interval(($_SERVER['REQUEST_TIME'] - $message->timestamp), 1))) . '</span>';
-
       $message->message = $message->variables['@picture'];
       $message->message .= '<div class="teemeet-message-front">';
       $message->message .= $message->variables['@user'] . $timeago . '<br/>';
       $message->message .= 'is going to a meetup with ' . $message->variables['@group'];
+      $message->message .= '</div>';
+    }
+
+    if ($message->message_id == 'custom_add_node') {
+      $message->message = '<div class="teemeet-message-type">';
+      $message->message .= 'new ' . $message->variables['@node_type'];
+      $message->message .= '</div>';
+      $message->message .= '<div class="teemeet-message-content">';
+      $message->message .= $message->variables['@user_picture'];
+      $message->message .= $message->variables['@username'] . ' has added ' . $message->variables['@node_title'] . '<br/>';
+      $message->message .= $timeago;
+      $message->message .= '</div>';
+    }
+
+    if ($message->message_id == 'custom_add_comment') {
+      $message->message = '<div class="teemeet-message-type">';
+      $message->message .= 'new comment';
+      $message->message .= '</div>';
+      $message->message .= '<div class="teemeet-message-content">';
+      $message->message .= $message->variables['@picture'];
+      $message->message .= $message->variables['@user'] . ' commented on ' . $message->variables['@content'] . '<br/>';
+      $message->message .= $timeago;
+      $message->message .= '</div>';
+    }
+
+    if ($message->message_id == 'custom_user_approved') {
+      $message->message = '<div class="teemeet-message-type">';
+      $message->message .= 'new member';
+      $message->message .= '</div>';
+      $message->message .= '<div class="teemeet-message-content">';
+      $message->message .= $message->variables['@avatar'];
+      $message->message .= $message->variables['@user'] . ' joined' . '<br/>';
+      $message->message .= $timeago;
       $message->message .= '</div>';
     }
   }

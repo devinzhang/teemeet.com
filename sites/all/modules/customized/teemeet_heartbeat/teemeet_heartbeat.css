@@ -36,3 +36,37 @@
   font-size:0.8em;
   color:#999;
 }
+
+
+#block-heartbeat-ogheartbeat .block-title {
+  padding-bottom:15px;
+}
+
+#block-heartbeat-ogheartbeat .teemeet-message-type {
+  text-transform:uppercase;
+  padding:5px 0;
+}
+
+#block-heartbeat-ogheartbeat .picture {
+  width:30px;
+  float:right;
+}
+
+#block-heartbeat-ogheartbeat .picture img {
+  max-width:30px;
+  max-height:30px;
+}
+
+#block-heartbeat-ogheartbeat .user {
+  font-size:1.3em;
+}
+
+#block-heartbeat-ogheartbeat .activity-time {
+  color:#6f7a8b;
+  font-size:10px;
+}
+
+#block-heartbeat-ogheartbeat .beat-item {
+  border:dotted #ccc;
+  border-width:1px 0;
+}
