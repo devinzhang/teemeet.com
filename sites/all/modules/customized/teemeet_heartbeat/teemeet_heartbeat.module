@@ -21,6 +21,13 @@ function teemeet_heartbeat_heartbeat_register_access_types() {
       'module' => 'teemeet_heartbeat',
       'access' => TRUE
     ),
+    1 => array(
+      'name' => 'Latest activity',
+      'class' => 'LatestActivity',
+      'path' => 'latest_activity.inc',
+      'module' => 'teemeet_heartbeat',
+      'access' => TRUE
+    ),
   );
 }
 
@@ -42,7 +49,14 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
 	print "<pre>";
 	print_r($message);
 	print "</pre>";
+	print "<pre>";
+	print_r($stream);
+	print "</pre>";
 	exit;
+  */
+  /*
+  print $stream->stream->name;
+  exit;
   */
     $timeago = '<span class="activity-time">';
     $timeago .= t('@time ago', array('@time' => format_interval(($_SERVER['REQUEST_TIME'] - $message->timestamp), 1)));
@@ -59,6 +73,7 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
     }
 
     if ($message->message_id == 'custom_add_node') {
+      if ($stream->stream->name == 'ogheartbeat') {
       $message->message = '<div class="teemeet-message-type">';
       $message->message .= 'new ' . $message->variables['@node_type'];
       $message->message .= '</div>';
@@ -67,9 +82,17 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
       $message->message .= $message->variables['@username'] . ' has added ' . $message->variables['@node_title'] . '<br/>';
       $message->message .= $timeago;
       $message->message .= '</div>';
+      } else {
+      $message->message = $message->variables['@user_picture'];
+      $message->message .= '<div class="teemeet-message-content">';
+      $message->message .= $message->variables['@username'] . ' has added ' . $message->variables['@node_title'] . '<br/>';
+      $message->message .= $timeago;
+      $message->message .= '</div>';
+      }
     }
 
     if ($message->message_id == 'custom_add_comment') {
+      if ($stream->stream->name == 'ogheartbeat') {
       $message->message = '<div class="teemeet-message-type">';
       $message->message .= 'new comment';
       $message->message .= '</div>';
@@ -78,17 +101,32 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
       $message->message .= $message->variables['@user'] . ' commented on ' . $message->variables['@content'] . '<br/>';
       $message->message .= $timeago;
       $message->message .= '</div>';
+      } else {
+      $message->message = $message->variables['@picture'];
+      $message->message .= '<div class="teemeet-message-content">';
+      $message->message .= $message->variables['@user'] . ' commented on ' . $message->variables['@content'] . '<br/>';
+      $message->message .= $timeago;
+      $message->message .= '</div>';
+      }
     }
 
     if ($message->message_id == 'custom_user_approved') {
-      $message->message = '<div class="teemeet-message-type">';
-      $message->message .= 'new member';
-      $message->message .= '</div>';
-      $message->message .= '<div class="teemeet-message-content">';
-      $message->message .= $message->variables['@avatar'];
-      $message->message .= $message->variables['@user'] . ' joined' . '<br/>';
-      $message->message .= $timeago;
-      $message->message .= '</div>';
+      if ($stream->stream->name == 'ogheartbeat') {
+        $message->message = '<div class="teemeet-message-type">';
+        $message->message .= 'new member';
+        $message->message .= '</div>';
+        $message->message .= '<div class="teemeet-message-content">';
+        $message->message .= $message->variables['@avatar'];
+        $message->message .= $message->variables['@user'] . ' joined' . '<br/>';
+        $message->message .= $timeago;
+        $message->message .= '</div>';
+      } else {
+        $message->message = $message->variables['@avatar'];
+        $message->message .= '<div class="teemeet-message-content clearfix">';
+        $message->message .= $message->variables['@user'] . ' joined the group' . '<br/>';
+        $message->message .= $timeago;
+        $message->message .= '</div>';
+      }
     }
   }
 

@@ -70,3 +70,35 @@
   border:dotted #ccc;
   border-width:1px 0;
 }
+
+
+#block-heartbeat-latestactivity .block-title {
+  padding-top:20px;
+  padding-bottom:15px;
+  border-bottom:1px solid #ccc;
+  font-size:1.9em;
+}
+
+#block-heartbeat-latestactivity .picture {
+  width:50px;
+  float:left;
+}
+
+#block-heartbeat-latestactivity .picture img {
+  max-width:50px;
+  max-height:50px;
+  margin-left:55px;
+  padding-right:10px;
+}
+
+#block-heartbeat-latestactivity .teemeet-message-content {
+  border-left:1px #ccc dotted;
+  margin-left:115px;
+  padding-left:10px;
+  font-size:16px;
+}
+
+#block-heartbeat-latestactivity .teemeet-message-content .activity-time {
+  font-size:10px;
+  color:#888b94;
+}
