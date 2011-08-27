@@ -167,3 +167,18 @@ width: 100%;
     width: 227px;
 }
 
+#photo_controls {
+    z-index: 1500;
+    -moz-border-radius: 0 0 5px 5px;
+    background: none repeat scroll 0 0 #F0FAEB;
+    border-color: #EEEEEE;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    color: #272727;
+    font-size: 0.9em;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0 0.5em 0.5em;
+    position: absolute;
+}
+

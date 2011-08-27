@@ -23,7 +23,15 @@ $(document).ready(function() {
 	                // alert('status=' + xhr.statusText + '   status=' + status + '  error=' + error);
 	                   wait = true; 
 	                    },
-	            success: function(data){   
+	            success: function(data){  
+                    if(data.status) {
+                    $("#edit-pid").val(data.node.nid);
+                    $("#edit-album-thumbnail").attr('checked', data.set_form.is_ablum_thumbnail);;
+                    $("#edit-group-cover").attr('checked', data.set_form.is_group_photo);;
+                    
+                    
+                    }
+                    
 	                if(data.title==''){
                         $("#node-title-ctrl").html('Add Caption');
                         $("#D_photoGallery_photoCaption a").remove();
@@ -39,7 +47,25 @@ $(document).ready(function() {
     });
     
    $("a[rel='example1']").colorbox({transition:"fade"});
+    
 
+    $("#D_photoGallery_orgControlsWrapper a").click(function(){
+        
+        $('#photo_controls').slideDown('slow', function() {
+            // Animation complete.
+        })
+        return false;
+    });
+    
+    $("A#close-set-photo").click(function(){
+            $('#photo_controls').slideUp('slow', function() {
+                // Animation complete.
+            });
+            return false;
+    });
+    
+    
+    
     
     
 });

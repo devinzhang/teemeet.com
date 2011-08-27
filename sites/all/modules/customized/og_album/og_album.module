@@ -85,6 +85,26 @@ function og_album_menu() {
         'file' => 'og_album.page.inc',     
         
     );
+    //ahah callback to set the photo priority
+    $items['album/ajax/setgroupphoto'] = array(
+    	'title' => t('set photo as group photo'),
+        'page callback' => 'og_album_ahah_set_group_photo',
+        'page arguments' => null,   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('upload photo'), 
+        
+        
+    );
+    //ahah callback to set the album thumbnail
+    $items['album/ajax/setthumbnail'] = array(
+    	'title' => t('set photo as album thumbnail'),
+        'page callback' => 'og_album_ahah_set_album_thumbnail',
+        'page arguments' => null,   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('upload photo'), 
+       
+        
+    );
     
     
     
@@ -149,6 +169,8 @@ function og_album_theme() {
       'arguments' => array(
             'album'=>null,             
             'photos'=>null, 
+            'first_node'=>null, 
+            'set_photo_form' =>null, 
             'is_album_admin'=>FALSE, // if the current user was a album admin
         ),
        'path'=>drupal_get_path('module','og_album').'/tpl',
@@ -193,8 +215,10 @@ function og_album_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
             $photos = og_album_get_photos($node->nid);  
             global $user; 
             $is_album_admin = og_album_is_album_admin($user->uid, $node); 
+            $first_node = array_shift($photos); 
+            $set_photo_form = og_album_set_photo_property($node->nid, $first_node->nid); 
             $node->content['slider']= array(
-                '#value'=> '<div style="display:none;"> <div id="add-album-photo" >'.drupal_get_form('og_album_upload_photo_directly_form', $node->nid).'</div>'.og_album_set_photo_property($node->nid).'</div>'. theme('og_album_album', $node, $photos,$is_album_admin),
+                '#value'=> '<div style="display:none;"> <div id="add-album-photo" >'.drupal_get_form('og_album_upload_photo_directly_form', $node->nid).'</div></div>'. theme('og_album_album', $node, $photos, $first_node, $set_photo_form, $is_album_admin),
                 
             );
         }
@@ -359,43 +383,116 @@ function og_album_upload_photo_directly_form_submit($form, &$form_state) {
  * @param , $pid, the photo nid
  **
  */
-function og_album_set_photo_property($aid){
+function og_album_set_photo_property($aid,$pid){
     $output = '';
-    $output .= '<div id="photo_controls">';
-    $output .= drupal_get_form('og_album_set_photo_property_form',$pid); 
+    $output .= '<div id="photo_controls" style="display:none;">';
+    $output .= drupal_get_form('og_album_set_photo_property_form',$aid, $pid); 
     $output .= '</div>';
     return $output; 
 }
 
-function og_album_set_photo_property_form(&$form_state, $pid) {
+function og_album_set_photo_property_form(&$form_state, $aid, $pid) {
  $form=array();   
  $album_thumbnail = db_result(db_query("select album_thumbnail from ".OG_ALBUM_TABLE." where aid=%d",$pid )); 
+ $is_group_photo = db_result(db_query("select is_group_photo from ".OG_ALBUM_PHOTOS_TABLE." where pid =%d", $pid) ); 
+ 
   $form['pid'] = array(
     '#type' => 'hidden', 
     '#value' => $pid   
   );
+  $form['aid'] = array(
+    '#type' => 'hidden', 
+    '#value' => $aid   
+  );
+  
   $form['group_cover'] = array(
     '#type' => 'checkbox',
     '#title' => t('Group Photo'),
+    '#default_value' => $is_group_photo,
+    '#ahah' => array(
+      'path' => 'album/ajax/setgroupphoto',
+      'wrapper' => 'checkboxe',
+      'effect' => 'fade',
+    ), 
+   
    );
     
   $form['album_thumbnail'] = array(
     '#type' => 'checkbox',
     '#title' => t('Album thumbnail'),
+    '#ahah' => array(
+      'path' => 'album/ajax/setthumbnail',
+      'wrapper' => 'checkboxe',
+      'effect' => 'fade',
+    ), 
+    '#default_value' => ($album_thumbnail == $pid),
+    
     );
-    $form['album_thumbnail'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Album thumbnail'),
-    );
-    $form['photo_property_submit'] = array(
-    '#type' => 'submit', 
-    '#value' => t('Submit'),
-);
-
-  
- 
+   
+    $form['close'] = array(
+    //'#type' => '',
+    
+    '#value' => l(t('Close'),'',array('attributes'=>array('id'=>'close-set-photo'))),
+); 
  return $form; 
 }
+/* ahah call back
+**
+*/
+function og_album_ahah_set_group_photo() {   
+  $form_state = array('storage' => NULL, 'submitted' => FALSE);  
+  $form_build_id = $_POST['form_build_id'];  
+  $form = form_get_cache($form_build_id, $form_state);      
+  // Preparing for #5.
+  $args = $form['#parameters'];
+  $form_id = array_shift($args);
+  $form_state['post'] = $form['#post'] = $_POST;
+  $form['#programmed'] = $form['#redirect'] = FALSE;
+
+  // Step #5.
+  $form = drupal_rebuild_form($form_id, $form_state, $args, $form_build_id);
+  $pid = $form['#parameters'][1]['post']['pid'];
+  $aid = $form['#parameters'][1]['post']['aid'];
+  $is_group_photo = isset($form['#parameters'][1]['post']['group_cover']) ? 1 : 0 ;  
+  $is_album_thumbnail = isset($form['#parameters'][1]['post']['album_thumbnail']) ? 1 : 0 ;  
+   
+  
+    db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d", 0 ); 
+    db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where pid=%d", $is_group_photo, $pid ); 
+   
+   
+ drupal_json(array('status' => TRUE, 'data' => 'g-p='.$is_group_photo.'pid'.$pid.'aiid'.$aid.'al_th'.$is_album_thumbnail));   
+ 
+ } 
+ 
+/* ahah call back
+**
+*/
+function og_album_ahah_set_album_thumbnail() {   
+  $form_state = array('storage' => NULL, 'submitted' => FALSE);  
+  $form_build_id = $_POST['form_build_id'];  
+  $form = form_get_cache($form_build_id, $form_state);      
+  // Preparing for #5.
+  $args = $form['#parameters'];
+  $form_id = array_shift($args);
+  $form_state['post'] = $form['#post'] = $_POST;
+  $form['#programmed'] = $form['#redirect'] = FALSE;
+
+  // Step #5.
+  $form = drupal_rebuild_form($form_id, $form_state, $args, $form_build_id);
+  $pid = $form['#parameters'][1]['post']['pid'];
+  $aid = $form['#parameters'][1]['post']['aid'];
+  $is_group_photo = isset($form['#parameters'][1]['post']['group_cover']) ? 1 : 0 ;  
+  $is_album_thumbnail = isset($form['#parameters'][1]['post']['album_thumbnail']) ? 1 : 0 ;  
+  if($is_album_thumbnail) { // if this photo was set as a album thumbnail
+        db_query("UPDATE ".OG_ALBUM_TABLE." SET album_thumbnail=%d where aid=%d", $pid, $aid ); 
+  } 
+    
+ drupal_json(array('status' => TRUE, 'data' => 'g-p='.$is_group_photo.'pid'.$pid.'aiid'.$aid.'al_th'.$is_album_thumbnail));   
+ 
+ } 
+
+
 
 function og_album_set_photo_property_form_submit($form, &$form_state) {
     $value = $form_state['values'];

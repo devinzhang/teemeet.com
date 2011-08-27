@@ -34,7 +34,7 @@
 <!--body part -->
 <div class="clearfix" id="D_photoGallery_wrapper">
     <div id="D_photoGallery_photoCaptionWrapper">
-    <span id="D_photoGallery_photoCaption"><?php echo $album->title;?><?php if($is_album_admin){echo '<div id="node-title-ctrl"></div>';} ?> <></span>
+    <span id="D_photoGallery_photoCaption"><?php echo $first_node->title;?><?php if($is_album_admin){echo '<div id="node-title-ctrl"></div>';} ?> <></span>
     <?php if($is_album_admin): ?>
     <a class="D_inlineAction D_signal D_signal_appear_to_D_photoGallery_editCaptionDialog" id="D_photoGallery_editCaptionLink" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/2900971/#">
     Edit caption
@@ -55,12 +55,13 @@
 <span id="sequence">1</span> <?php echo t('of'); ?> <?php echo $album->album['photo_size']; ?>
 </span>
 </li>
-<li><a class="cboxElement" href="<?php global $base_url; echo $base_url.'/'.$album->album['cover_image_path']; ?>" rel="example1" title="">Play slideshow</a>
+<li><a href="<?php global $base_url; echo $base_url.'/'.$first_node->photo['filepath']; ?>" rel="example1" title="">Play slideshow</a>
 </li>
 
 <li><a class="D_signal D_signal_appear_to_D_photoGallery_allSizesDialog" id="D_photoGallery_allSizes" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/all_sizes/48697661">All sizes</a></li>
 
 <li class="D_dropdown" id="D_photoGallery_orgControlsWrapper"><span><a class="colorbox-inline J_onClick D_dropdownToggler D_dropdownParent" href="?width=300&height=100&inline=true#photo_controls">Use photo as</a></span>
+<?php print $set_photo_form; ?>
 
 </li>
 
@@ -102,13 +103,16 @@ Move
     <div id="D_photoViewer">
      <ul>
         <?php 
-            $i=0;
             global $base_url; 
+          
+            echo '<li><img nid="'.$first_node->nid.'" seq="1" src="'.$base_url.'/'.$first_node->photo['filepath'].'" link="'.url('album/ajax/photo/'.$first_node->nid).'"> </li>';
+            
+            
+            $i=1;
+           
             foreach($photos as $nid =>$photo) {
             $i ++;
-            echo '<a class="cboxElement" href="'.$base_url.'/'.$photo->photo['filepath'].'" rel="example1" title="Me and my grandfather on the Ohoopee."></a>';
-
-
+            echo '<a href="'.$base_url.'/'.$photo->photo['filepath'].'" rel="example1" title="Me and my grandfather on the Ohoopee."></a>';
             echo '<li><img nid="'.$photo->nid.'" seq="'.$i.'" src="'.$base_url.'/'.$photo->photo['filepath'].'" link="'.url('album/ajax/photo/'.$photo->nid).'"> </li>';
             }
         ?>
