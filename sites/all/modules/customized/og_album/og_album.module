@@ -237,6 +237,29 @@ function og_album_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
 }
 
 
+/**
+ * Implementation of hook_user().
+ * loading the group photos
+ */
+function og_album_user($op, &$edit, &$account, $category = NULL) {
+	switch($op) {		
+        case 'load' : 
+           
+            if(!empty($account->og_groups)){          
+                $groups = $account->og_groups ;
+                $member_profile = array();
+                foreach($groups as $gid => $group) {
+                    $group_photo_path = og_album_get_group_photo($gid);
+                    $account->og_groups[$gid]['group_photo_path'] = $group_photo_path;
+                    
+                }    
+              
+            }            
+		break;        
+		}
+}
+
+
 /*Helper function to retrieve the information  */
 
 /*  retrieve one groups's all albums
@@ -456,8 +479,11 @@ function og_album_ahah_set_group_photo() {
   $is_group_photo = isset($form['#parameters'][1]['post']['group_cover']) ? 1 : 0 ;  
   $is_album_thumbnail = isset($form['#parameters'][1]['post']['album_thumbnail']) ? 1 : 0 ;  
    
-  
-    db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d", 0 ); 
+  //first need to clear all the exist group photo in all the albums of this group
+  $gid = db_result(db_query("select gid from ".OG_ALBUM_TABLE." where aid=%d", $aid));
+  $aids = db_fetch_array(db_query('select aid from '.OG_ALBUM_TABLE.' where gid=%d',$gid));
+   
+    db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where aid in ( ".implode( ',' ,  $aids ).")", 0 ); 
     db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where pid=%d", $is_group_photo, $pid ); 
    
    
@@ -491,7 +517,23 @@ function og_album_ahah_set_album_thumbnail() {
  drupal_json(array('status' => TRUE, 'data' => 'g-p='.$is_group_photo.'pid'.$pid.'aiid'.$aid.'al_th'.$is_album_thumbnail));   
  
  } 
-
+/* Get the group photos
+ * @param, $gid, the group nid
+ * @return , image path; 
+ */
+ 
+function og_album_get_group_photo($gid){
+    $img_path='';
+    $aids = db_fetch_array(db_query('select aid from '.OG_ALBUM_TABLE.' where gid=%d',$gid));
+    if(!empty($aids)){
+    $fid = db_result(db_query("select fid from ".OG_ALBUM_PHOTOS_TABLE." where is_group_photo=%d and aid in ( ".implode( ',' ,  $aids ).")",1));
+    if($fid) {
+         $img_path=db_result(db_query("select f.filepath from {files} as f where f.fid=%d ", $fid));
+    }
+    }
+   
+   return $img_path;
+}
 
 
 function og_album_set_photo_property_form_submit($form, &$form_state) {

@@ -250,33 +250,7 @@ function usercenter_theme() {
 function usercenter_user($op, &$edit, &$account, $category = NULL) {
 	switch($op) {
 		case 'register':
-		/*	// user registration form.
-			
-			if($role == 'donor' || $role =='surrogatemother') {
-				if(in_array('agent', array_values($user->roles))) { //the agent is to add a donor or surrogate
-
-					$fields['agent_id'] = array(
-                    '#type' => 'hidden',
-                    '#value' => $user->uid,
-					);
-				} else {
-					$agent_list[0]=t('No Agent');
-					$agent_list = _agent_get_agent_list();
-
-
-					$fields['agent_id'] = array(
-                    '#type' => 'select',
-                    '#title' => t('My agent'),
-            		'#options' => $agent_list,
-                    '#description' => t('Please select your agent if you have, otherwise,leave it ablank'),
-                    '#default_value' => 0,
-					);
-
-				}
-
-				return $fields;
-			}
-            */
+		
 			break;
 
         case 'view' :

@@ -13,7 +13,13 @@
 <div id="image_20252341">
 <div>
 
-<a href=""><img src="<?php global $base_url; echo $base_url.'/'.$account->picture; ?>" alt="" class="D_memberProfilePhoto photo"></a>
+<a href="">
+<?php //in the product site, need to use this code instead the below <img part
+//$img_path = $account->picture;
+//echo theme('imagecache','avator_100x100', $img_path,'','', array('class'=>'D_memberProfilePhoto'));
+?>
+
+<img width="100px" src="<?php global $base_url; echo $base_url.'/'.$account->picture; ?>" alt="" class=""></a>
 
 </div>
 
@@ -143,23 +149,38 @@ if(isset($group_member_profile->membertitle)){
 </ul>
 </form>
 
-<ul style="margin-top: 0.75em;" class="D_summaryList  D_narrow">
-<?php foreach($account->og_groups as $gid=>$group): ?>
+<ul class="D_summaryList  D_narrow">
+<?php  foreach($account->og_groups as $gid=>$group): ?>
 
 <li class="D_group">
 
 <div class="D_image">
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/" title="Meetup Group: Beijing Soccer Lovers"><img style="width: 50px;" title="" alt="" src="<?php global $base_url ; echo $base_url.'/'.drupal_get_path('module','usercenter').'/images/noPhoto_50.png'; ?>"></a>
+<a href="" title=""><img style="width: 50px;" title="" alt="" src="<?php 
+global $base_url ; 
+if($group['group_photo_path'] != ''){
+    echo $base_url.'/'.$group['group_photo_path'];
+}else{
+    echo $base_url.'/'.drupal_get_path('module','usercenter').'/images/noPhoto_50.png'; 
+}
+?>">
+</a>
+
 </div>
 <div class="D_info">
 <div style="font-size: 0.9em ! important;" class="D_name"><a href="<?php echo url('node/'.$gid); ?>" class="omnCamp omngj_sj3"><?php echo $group['title']; ?></a></div>
 
 <div class="D_affiliation">
-暂未实现小组用户会员别名
+<?php if($group['is_admin']) {
+echo t('Orgnizor');
+} else {
+echo $group['member_profile']->membertitle;
+}
+
+?>
 </div>
 
 <ul class="D_actions">
-<li><a class="omnCamp omngj_sj3" href="./other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup_files/other_profile-devin - Beijing Soccer Lovers (Beijing) - Meetup.htm">View profile</a></li>
+<li><a class="omnCamp omngj_sj3" href="">View profile</a></li>
 </ul>
 </div>
 </li>
@@ -201,7 +222,7 @@ if(isset($group_member_profile->membertitle)){
 		
 
 <div class="D_memberProfileContentItem">
-<h4>Member of this<br> Meetup Group since</h4>
+<h4>Member of this Meetup Group since</h4>
 <p><?php echo format_date($account->og_groups[$curr_group->nid]['created'],'custom','M d, Y'); ?></p>
 </div>
 
@@ -255,8 +276,8 @@ echo '<p class="D_empty">'.isset($qa[$qid])? $qa[$qid] : t('No answer yet').'</p
     if($has_comment){
         echo '<span class="D_empty">' . $has_comment->comment.'</span>';
     } else {    
- echo '<span class="D_empty">'. t('@name has not left a group review yet.',array('@name'=>$account->name)).'</span>';
- echo l(t('Click here to read other members\' group reviews'),'group/'.$curr_group->nid.'/comments' );
+        echo '<span class="D_empty">'. t('@name has not left a group review yet.',array('@name'=>$account->name)).'</span>';
+        echo l(t('Click here to read other members\' group reviews'),'group/'.$curr_group->nid.'/comments' );
     }
 ?>    
  </p> 
