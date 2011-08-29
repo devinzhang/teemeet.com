@@ -47,14 +47,14 @@ function usercenter_group_member_rsvp($uid,$gid){
 function usercenter_group_member_photos($uid,$gid){
     $output = '';
     drupal_set_title('');
-     $account = user_load($uid); 
+    $account = user_load($uid); 
     $output .= usercenter_profile_header_ingroup();
     $output .= '<div class="member-profile-contents isTabbed ">';
     $output .=_usercenter_group_member_tabs($uid,$gid);
      $group = node_load($gid);
          $output .= '<div class="profile-body">';
-        $output .= theme('usercenter_member_photos',$account, '', $group);    
-
+        //$output .= theme('usercenter_member_photos',$account, '', $group);    
+         $output .= multi_avator_member_photos(); 
         $output .= '</div>';
    
     $output .= '</div>';
@@ -70,10 +70,18 @@ function usercenter_group_member_greetings($uid,$gid){
     $account = user_load($uid); 
     $output .= usercenter_profile_header_ingroup();
     $output .= '<div class="member-profile-contents isTabbed ">';
-     $group = node_load($gid);
-    $output .=_usercenter_group_member_tabs($uid,$group);
+    $group = node_load($gid);
+    $output .=_usercenter_group_member_tabs($uid,$gid);
         $output .= '<div class="profile-body">';
-        $output .= theme('usercenter_member_greetings',$account, '', $group);    
+    //    $output .= theme('usercenter_member_greetings',$account, '', $group);  
+    if(module_exists('guestbook')) {
+        global $user; 
+        if($user->uid != $uid){
+            $output .= guestbook_page_form($account);
+        }
+        $output .= module_invoke('guestbook', 'page', $uid);
+    }
+    
         $output .= '</div>';
     $output .= '</div>';
     
