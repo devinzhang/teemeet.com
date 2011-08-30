@@ -1,0 +1,12 @@
+; $Id: guestbook.info,v 1.4 2008/08/13 21:56:58 sun Exp $
+name = Guestbook
+description = Provides a site guestbook and guestbooks for users.
+core = 6.x
+package = "teemeet.com"
+
+; Information added by drupal.org packaging script on 2011-01-16
+version = "6.x-2.0"
+core = "6.x"
+project = "guestbook"
+datestamp = "1295157382"
+

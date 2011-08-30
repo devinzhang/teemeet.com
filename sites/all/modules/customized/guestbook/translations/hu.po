@@ -1,0 +1,411 @@
+# Hungarian translation of guestbook (6.x-2.x-dev)
+# Copyright (c) 2009 by the Hungarian translation team
+# Generated from files:
+#  guestbook.module,v 1.19 2009/03/10 23:14:36 sun
+#  guestbook_user.inc,v 1.3 2009/01/10 21:11:29 sun
+#  guestbook.info,v 1.4 2008/08/13 21:56:58 sun
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: guestbook (6.x-2.x-dev)\n"
+"POT-Creation-Date: 2009-06-12 19:52+0200\n"
+"PO-Revision-Date: 2009-06-02 12:43+0200\n"
+"Last-Translator: Balogh Zoltán\n"
+"Language-Team: Hungarian http://forditas.mindworks.hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: guestbook.module:114
+msgid "Disabled"
+msgstr "Tiltott"
+
+#: guestbook.module:114
+msgid "Enabled"
+msgstr "Engedélyezett"
+
+#: guestbook.module:701
+msgid "Delete"
+msgstr "Törlés"
+
+#: guestbook.module:701
+msgid "Cancel"
+msgstr "Mégsem"
+
+#: guestbook.module:173
+msgid "Mode"
+msgstr "Mód"
+
+#: guestbook.module:914
+msgid "View user profile."
+msgstr "Felhasználói profil megtekintése."
+
+#: guestbook.module:189
+msgid "Title"
+msgstr "Cím"
+
+#: guestbook.module:981
+msgid "never"
+msgstr "soha"
+
+#: guestbook.module:665
+msgid "Reply"
+msgstr "Válasz"
+
+#: guestbook.module:449,774
+msgid "E-mail"
+msgstr "Email"
+
+#: guestbook.module:456
+msgid "Homepage"
+msgstr "Honlap"
+
+#: guestbook.module:112
+msgid "Status"
+msgstr "Állapot"
+
+#: guestbook.module:248
+msgid "Comments"
+msgstr "Hozzászólások"
+
+#: guestbook.module:809
+msgid "Edit comment"
+msgstr "Hozzászólás szerkesztése"
+
+#: guestbook.module:464
+msgid "Message"
+msgstr "Üzenet"
+
+#: panels/guestbook_user.inc:28
+msgid "User"
+msgstr "Felhasználó"
+
+#: guestbook.module:442
+msgid "Name"
+msgstr "Név"
+
+#: guestbook.module:469,555
+msgid "Send"
+msgstr "Küldés"
+
+#: guestbook.module:242
+msgid "Toggle display"
+msgstr "Megjelenés választó"
+
+#: guestbook.module:386
+msgid "user"
+msgstr "felhasználó"
+
+#: guestbook.module:67,185,311,846,880
+msgid "Site guestbook"
+msgstr "Webhely vendégkönyv"
+
+#: guestbook.module:93
+msgid "Read @username's guestbook."
+msgstr "@username vendégkönyvének olvasása."
+
+#: guestbook.module:94
+msgid "View recent guestbook entries"
+msgstr "Legutóbbi vendégkönyv bejegyzések megtekintése"
+
+#: guestbook.module:97,33; guestbook.info:0; panels/guestbook_user.inc:44
+msgid "Guestbook"
+msgstr "Vendégkönyv"
+
+#: guestbook.module:108,223,47; panels/guestbook_user.inc:9,24
+msgid "User guestbook"
+msgstr "Felhasználói vendégkönyv"
+
+#: guestbook.module:118
+msgid "Send email notification"
+msgstr "Email értesítő küldése"
+
+#: guestbook.module:119
+msgid ""
+"Uncheck if you don't wish to be notified of new entries to your "
+"guestbook."
+msgstr ""
+"Kikapcsolva nem lesz értesítés az új vendégkönyv "
+"bejegyzésekről."
+
+#: guestbook.module:124,197
+msgid "Intro text"
+msgstr "Bevezető szöveg"
+
+#: guestbook.module:128
+msgid "The text that appears on top of your guestbook."
+msgstr "A vendégkönyv oldal tetején megjelenő szöveg."
+
+#: guestbook.module:163
+msgid "Adds a site guestbook and individual user guestbooks."
+msgstr "Webhely és felhasználói szintű vendégkönyveket biztosít."
+
+#: guestbook.module:176
+msgid "Site and user guestbooks"
+msgstr "Webhely és felhasználói vendégkönyvek"
+
+#: guestbook.module:177
+msgid "Site guestbook only"
+msgstr "Csak webhely vendégkönyv"
+
+#: guestbook.module:178
+msgid "User guestbooks only"
+msgstr "Csak felhasználói vendégkönyvek"
+
+#: guestbook.module:193
+msgid "The site guestbook's page title."
+msgstr "A webhely vendégkönyv oldalának címe."
+
+#: guestbook.module:201
+msgid "The text that appears on top of the site guestbook."
+msgstr "A webhely vendégkönyvének tetején megjelenő szöveg."
+
+#: guestbook.module:205
+msgid ""
+"Send an notification to the following e-mail address about new "
+"guestbook entries"
+msgstr ""
+"Új vendégkönyv bejegyzés esetén értesítés küldése a "
+"következő email címekre"
+
+#: guestbook.module:206
+msgid "Leave blank if you don't wish to be notified"
+msgstr "Üresen hagyva nem lesz értesítés"
+
+#: guestbook.module:215,852
+msgid "User guestbooks"
+msgstr "Felhasználói vendégkönyvek"
+
+#: guestbook.module:216
+msgid ""
+"Users can individually disable their guestbook or add an intro text on "
+"the user account page."
+msgstr ""
+"A felhasználók le tudják tiltani a vendégkönyvüket, vagy "
+"bevezető szöveget írhatnak hozzá a profiljukban."
+
+#: guestbook.module:221
+msgid "User link to profile or guestbook"
+msgstr "A felhasználói hivatkozás a profilra, vagy a vendégkönyvre mutat"
+
+#: guestbook.module:222
+msgid ""
+"When displaying a user should the link show the user profile or the "
+"user guestbook?"
+msgstr ""
+"Amikor egy felhasználó neve megjelenik, a hivatkozás a "
+"felhasználó profiljára vagy a vendégkönyvére mutasson?"
+
+#: guestbook.module:223
+msgid "User profile"
+msgstr "Felhasználói profil"
+
+#: guestbook.module:230
+msgid "Display options"
+msgstr "Megjelenítési beállítások"
+
+#: guestbook.module:234
+msgid "Entries per page"
+msgstr "Bejegyzések egy oldalon"
+
+#: guestbook.module:238
+msgid "The number of guestbook entries per page."
+msgstr "A vendégkönyv bejegyzések száma oldalanként."
+
+#: guestbook.module:245
+msgid "Submission date"
+msgstr "Beküldés dátuma"
+
+#: guestbook.module:246
+msgid "Anonymous poster e-mail"
+msgstr "Név nélküli beküldő email címe"
+
+#: guestbook.module:247
+msgid "Anonymous poster website"
+msgstr "Név nélküli beküldő honlapja"
+
+#: guestbook.module:253
+msgid "Position of pager"
+msgstr "Lapozó helyzete"
+
+#: guestbook.module:256
+msgid "Above the entries"
+msgstr "A bejegyzések felett"
+
+#: guestbook.module:257
+msgid "Below the entries"
+msgstr "A bejegyzések alatt"
+
+#: guestbook.module:258
+msgid "Above and below the entries"
+msgstr "A bejegyzések felett és alatt"
+
+#: guestbook.module:265
+msgid "Posting settings"
+msgstr "Beküldési beállítások"
+
+#: guestbook.module:271
+msgid "Display filter tips"
+msgstr "Alapszintű HTML-szerkesztési tippek megjelenítése"
+
+#: guestbook.module:273
+msgid "If enabled filter tips are displayed below the message textarea."
+msgstr ""
+"Bekapcsolva alapszintű HTML-szerkesztési tippek jelennek meg az "
+"üzenet szövegdoboza alatt."
+
+#: guestbook.module:277
+msgid "Anonymous poster fields"
+msgstr "Név nélküli beküldő mezői"
+
+#: guestbook.module:279
+msgid "Additional information that anonymous posters may supply."
+msgstr "Bővebb információk melyet a név nélküli beküldő megadhat."
+
+#: guestbook.module:287
+msgid "Location of entry submission form"
+msgstr "A bejegyzés beküldő űrlap helyzete"
+
+#: guestbook.module:290
+msgid "Above entries"
+msgstr "A bejegyzések felett"
+
+#: guestbook.module:291
+msgid "Below entries"
+msgstr "A bejegyzések alatt"
+
+#: guestbook.module:292
+msgid "Separate page"
+msgstr "Külön oldalon"
+
+#: guestbook.module:387
+msgid "entries"
+msgstr "bejegyzések"
+
+#: guestbook.module:388,847
+msgid "last update"
+msgstr "utolsó módosítás"
+
+#: guestbook.module:576
+msgid "New guestbook entry at !site"
+msgstr "!site oldalon új vendégkönyv bejegyzés"
+
+#: guestbook.module:623,626,57,73
+msgid "Add guestbook entry"
+msgstr "Vendégkönyv bejegyzés hozzáadása"
+
+#: guestbook.module:642
+msgid "You must be logged in to post a comment."
+msgstr "A hozzászólás beküldéséhez be kell jelentkezni."
+
+#: guestbook.module:646
+msgid "You are not allowed to post in this guestbook."
+msgstr "A vendégkönyvbe írás nem engedélyezett."
+
+#: guestbook.module:698
+msgid "Are you sure you want to delete this guestbook entry?"
+msgstr "Valóban törölhető ez a vendégkönyv bejegyzés?"
+
+#: guestbook.module:781
+msgid "Website"
+msgstr "Honlap"
+
+#: guestbook.module:798
+msgid "Delete entry"
+msgstr "Bejegyzés törlése"
+
+#: guestbook.module:809
+msgid "Add comment"
+msgstr "Új hozzászólás"
+
+#: guestbook.module:833
+msgid "Comment by"
+msgstr "Hozzászólt"
+
+#: guestbook.module:888
+msgid "@username's guestbook"
+msgstr "@username vendégkönyve"
+
+#: guestbook.module:894
+msgid "My guestbook"
+msgstr "Saját vendégkönyv"
+
+#: guestbook.module:915
+msgid "Visit !username's profile"
+msgstr "!username profiljának megtekintése"
+
+#: guestbook.module:1006
+msgid "Entry is spam: "
+msgstr "A bejegyzés reklámszemét: "
+
+#: guestbook.module:847,857
+msgid "1 entry"
+msgid_plural "@count entries"
+msgstr[0] "1 bejegyzés"
+msgstr[1] "@count bejegyzés"
+
+#: guestbook.module:148
+msgid "access site guestbook"
+msgstr "webhely vendégkönyv elérése"
+
+#: guestbook.module:149
+msgid "access user guestbooks"
+msgstr "felhasználói vendégkönyvek elérése"
+
+#: guestbook.module:150
+msgid "post in site guestbook"
+msgstr "írás a webhely vendégkönyvébe"
+
+#: guestbook.module:151
+msgid "post in user guestbooks"
+msgstr "írás a felhasználói vendégkönyvekbe"
+
+#: guestbook.module:42
+msgid "Guestbooks"
+msgstr "Vendégkönyvek"
+
+#: guestbook.module:0
+msgid "guestbook"
+msgstr "guestbook"
+
+#: guestbook.info:0
+msgid "Provides a site guestbook and guestbooks for users."
+msgstr "Webhely és felhasználói szintű vendégkönyveket biztosít."
+
+#: guestbook.module:548
+msgid "Your message has been added."
+msgstr "Az üzenet hozzáadva."
+
+#: guestbook.module:633
+msgid "Edit guestbook entry"
+msgstr "Vendégkönyv bejegyzés szerkesztése"
+
+#: guestbook.module:744
+msgid "Nobody has signed this guestbook yet."
+msgstr "Senki nem írt még a vendégkönyvbe."
+
+#: guestbook.module:803
+msgid "Edit entry"
+msgstr "Bejegyzés szerkesztése"
+
+#: guestbook.module:152
+msgid "moderate all guestbooks"
+msgstr "minden vendégkönyv moderálása"
+
+#: guestbook.module:153
+msgid "moderate own guestbook"
+msgstr "saját vendégkönyv moderálása"
+
+#: panels/guestbook_user.inc:27
+msgid "The guestbook of a user."
+msgstr "Egy felhasználó vendégkönyve."
+
+#: panels/guestbook_user.inc:29
+msgid "User context"
+msgstr "Felhasználói környezet"
+
+#: panels/guestbook_user.inc:53
+msgid "\"@s\" guestbook"
+msgstr "„@s” vendégkönyv"
+

@@ -1,0 +1,321 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Guestbook 5\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-02-13 15:54+0100\n"
+"Last-Translator: Roman Klein <klein.roman@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-Country: Czech republic\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Team: \n"
+
+#: guestbook.module:31
+msgid "guestbooks"
+msgstr "kniha návšťěv"
+
+#: guestbook.module:38
+#: ;604;634
+msgid "site guestbook"
+msgstr "hlavní kniha návštěv"
+
+#: guestbook.module:50
+msgid "my guestbook"
+msgstr "Moje kniha návštěv"
+
+#: guestbook.module:66
+#: ;418;421
+msgid "Add guestbook entry"
+msgstr "Vložit nový příspěvek"
+
+#: guestbook.module:86
+msgid "Read %username's guestbook."
+msgstr "Číst knihu návštěv uživatele %username"
+
+#: guestbook.module:87
+msgid "view recent guestbook entries"
+msgstr "zobrazit aktuální příspěvky"
+
+#: guestbook.module:89
+msgid "Guestbook"
+msgstr "Kniha návštěv"
+
+#: guestbook.module:92
+msgid "History"
+msgstr "Historie"
+
+#: guestbook.module:103
+msgid "Status"
+msgstr "Status"
+
+#: guestbook.module:105
+msgid "enabled"
+msgstr "povoleno"
+
+#: guestbook.module:105
+msgid "disabled"
+msgstr "vypnuto"
+
+#: guestbook.module:108
+#: ;171
+msgid "Intro text"
+msgstr "Úvodní text"
+
+#: guestbook.module:112
+msgid "The text that appears on top of your guestbook."
+msgstr "Text, který se zobrazí v hlavičce knihy návštěv."
+
+#: guestbook.module:126
+msgid "Send an notification to the following e-mail address about new guestbook entries"
+msgstr "Zasílat oznámení o nových příspěvcích na následující e-mail"
+
+#: guestbook.module:127
+msgid "Leave blank if you don't wish to be notified"
+msgstr "Ponechte prázdné pokud nechcete být upozorňování."
+
+#: guestbook.module:137
+msgid "Adds a site guestbook and individual user guestbooks."
+msgstr "Přidá hlavní guestbook a individuální uživatelský guestbook."
+
+#: guestbook.module:151
+msgid "Mode"
+msgstr "Mód"
+
+#: guestbook.module:154
+msgid "site and user guestbooks"
+msgstr "hlavní a uživatelský guestbook"
+
+#: guestbook.module:155
+msgid "site guestbook only"
+msgstr "jen hlavni guestbook"
+
+#: guestbook.module:156
+msgid "user guestbooks only"
+msgstr "jen uživatelské guestbooky"
+
+#: guestbook.module:161
+msgid "Site guestbook"
+msgstr "Hlavní kniha návštěv"
+
+#: guestbook.module:164
+msgid "Title"
+msgstr "Nadpis"
+
+#: guestbook.module:168
+msgid "The site guestbook's page title."
+msgstr "Nadpis stránky s přehledem guestbooků."
+
+#: guestbook.module:175
+msgid "The text that appears on top of the site guestbook."
+msgstr "Text, který se zobrazí v hlavičce knihy návštěv."
+
+#: guestbook.module:180
+msgid "User guestbooks"
+msgstr "Uživatelská kniha návštěv."
+
+#: guestbook.module:181
+msgid "Users can individually disable their guestbook or add an intro text on the user account page."
+msgstr "Uživatelé si mohou vypnout jejich knihu návštěv nebo přidat úvodní text na jejich uživatelskou stránku."
+
+#: guestbook.module:186
+msgid "Display options"
+msgstr "Nastavení zobrazení"
+
+#: guestbook.module:189
+msgid "Entries per page"
+msgstr "Počet příspěvků na stránce."
+
+#: guestbook.module:193
+msgid "The number of guestbook entries for each page."
+msgstr "Počet příspěvku, které se zobrazí na každé straně knihy návštěv."
+
+#: guestbook.module:196
+msgid "Toggle display"
+msgstr "Zobrazit"
+
+#: guestbook.module:199
+msgid "Submission date"
+msgstr "Datum zaslání"
+
+#: guestbook.module:200
+msgid "Anonymous poster e-mail"
+msgstr "E-mail anonymního uživatele"
+
+#: guestbook.module:201
+msgid "Anonymous poster website"
+msgstr "Webové stránka anonymního uživatele"
+
+#: guestbook.module:202
+msgid "Comments"
+msgstr "Komentáře"
+
+#: guestbook.module:205
+msgid "Position of pager"
+msgstr "Pozice pageru"
+
+#: guestbook.module:208
+msgid "Above the entries"
+msgstr "Nad příspěvky"
+
+#: guestbook.module:209
+msgid "Below the entries"
+msgstr "Pod příspěvky"
+
+#: guestbook.module:210
+msgid "Above and below the entries"
+msgstr "Nad i pod příspěvky"
+
+#: guestbook.module:215
+msgid "Posting settings"
+msgstr "Nastavení odesílání"
+
+#: guestbook.module:220
+msgid "Display filter tips"
+msgstr "Zobrazit nápovědu k filtrům"
+
+#: guestbook.module:222
+msgid "If enabled filter tips are displayed below the message textarea."
+msgstr "Pokud je nápověda zapnuta, pak se zobrazí pod formulářem."
+
+#: guestbook.module:225
+msgid "Anonymous poster fields"
+msgstr "Políčka formuláře pro anonymního uživatele"
+
+#: guestbook.module:227
+msgid "Additional information that anonymous posters may supply."
+msgstr "Další informace, které může anonymní uživatel doplnit."
+
+#: guestbook.module:233
+msgid "Location of entry submission form"
+msgstr "Poloha formuláře pro psaní příspěvků"
+
+#: guestbook.module:236
+msgid "Above entries"
+msgstr "Nad příspěvky"
+
+#: guestbook.module:237
+msgid "Below entries"
+msgstr "Pod příspěvky"
+
+#: guestbook.module:238
+msgid "Separate page"
+msgstr "Samostatná stránka"
+
+#: guestbook.module:311
+msgid "user"
+msgstr "uživatel"
+
+#: guestbook.module:312
+msgid "entries"
+msgstr "příspěvky"
+
+#: guestbook.module:313
+#: ;605
+msgid "last update"
+msgstr "poslední update"
+
+#: guestbook.module:348
+msgid "Name"
+msgstr "Jméno"
+
+#: guestbook.module:353
+msgid "E-Mail"
+msgstr "E-mail"
+
+#: guestbook.module:358
+msgid "Homepage"
+msgstr "Homepage"
+
+#: guestbook.module:364
+msgid "Message"
+msgstr "Zpráva"
+
+#: guestbook.module:367
+msgid "send"
+msgstr "odeslat"
+
+#: guestbook.module:429
+msgid "You must be logged in to post a comment."
+msgstr "Musíte být přihlášení pro psaní komentářů."
+
+#: guestbook.module:432
+msgid "You are not allowed to post in this guestbook."
+msgstr "Nemáte dovoleno posílat příspěvky do této knihy návštěv."
+
+#: guestbook.module:446
+msgid "Comment"
+msgstr "Komentář"
+
+#: guestbook.module:482
+msgid "Are you sure you want to delete this guestbook entry?"
+msgstr "Jste si opravdu jistí, že chcete příspěvek smazat?"
+
+#: guestbook.module:485
+msgid "Delete"
+msgstr "Smazat"
+
+#: guestbook.module:485
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: guestbook.module:574
+msgid "delete entry"
+msgstr "smazat příspěvek"
+
+#: guestbook.module:575
+msgid "add comment"
+msgstr "přidat komentář"
+
+#: guestbook.module:575
+msgid "edit comment"
+msgstr "upravit komentář"
+
+#: guestbook.module:594
+msgid "Comment by"
+msgstr "Komentoval"
+
+#: guestbook.module:610
+msgid "user guestbooks"
+msgstr "uživatelské guestbooky"
+
+#: guestbook.module:640
+msgid "%name's guestbook"
+msgstr "Kniha návštěv uživatele %name"
+
+#: guestbook.module:689
+msgid "never"
+msgstr "nikdy"
+
+#: guestbook.module:605
+#: ;615
+msgid "1 entry"
+msgid_plural "%count entries"
+msgstr[0] "1 příspěvek"
+msgstr[1] "%count příspěvků"
+
+#: guestbook.module:123
+msgid "access site guestbook"
+msgstr "Přistup k hlavnímu guestbooku"
+
+#: guestbook.module:123
+msgid "access user guestbooks"
+msgstr "Přistup k uživatelkému guestbooku"
+
+#: guestbook.module:123
+msgid "post in site guestbook"
+msgstr "přispívat do hlavního guestbooku"
+
+#: guestbook.module:123
+msgid "post in user guestbooks"
+msgstr "přispívat do uživatelského guestbooku"
+
+#: guestbook.module:123
+msgid "administer all guestbooks"
+msgstr "administrovat všechny knihy návštěv"
+
+#: guestbook.module:0
+msgid "guestbook"
+msgstr "kniha návštěv"
+

@@ -1,0 +1,154 @@
+# LANGUAGE translation of Drupal (c:\moduli-contributed\guestbook.module)
+# Copyright jonhattan <jon@poliforma.org>
+# Generated from file: guestbook.module,v 1.1.4.3 2005/04/18 13:42:20 hba
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guestbook 4.5.0\n"
+"POT-Creation-Date: 2005-04-20 16:47+0200\n"
+"PO-Revision-Date: 2005-04-22 12:18+0100\n"
+"Last-Translator: jonhattan <jon@poliforma.org>\n"
+"Language-Team: jonhattan <jon@poliforma.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+
+#: c:\moduli-contributed\guestbook.module:10
+msgid "guestbooks"
+msgstr "libros de visitas"
+
+#: c:\moduli-contributed\guestbook.module:27
+msgid "my guestbook"
+msgstr "mi libro de visitas"
+
+#: c:\moduli-contributed\guestbook.module:49
+msgid "Read %username's guestbook."
+msgstr "Leer el libro de visitas de %username"
+
+#: c:\moduli-contributed\guestbook.module:51
+msgid "view recent guestbook entries"
+msgstr "ver entradas recientes en el libro de visitas"
+
+#: c:\moduli-contributed\guestbook.module:54
+msgid "History"
+msgstr "Histórico"
+
+#: c:\moduli-contributed\guestbook.module:54;250;281
+msgid "Guestbook"
+msgstr "Libro de visitas"
+
+#: c:\moduli-contributed\guestbook.module:74
+msgid "Adds individual user guestbooks and a site guestbook."
+msgstr "Añade libros de visitas individuales para los usuarios y un libro de visitas del sitio."
+
+#: c:\moduli-contributed\guestbook.module:172
+msgid "Add questbook entry:"
+msgstr "Añadir entrada al libro de visitas:"
+
+#: c:\moduli-contributed\guestbook.module:182
+msgid "send"
+msgstr "enviar"
+
+#: c:\moduli-contributed\guestbook.module:216
+msgid "delete entry"
+msgstr "borrar entrada"
+
+#: c:\moduli-contributed\guestbook.module:229
+msgid "comment"
+msgstr "comentario"
+
+#: c:\moduli-contributed\guestbook.module:232
+msgid "add comment"
+msgstr "añadir comentario"
+
+#: c:\moduli-contributed\guestbook.module:236
+msgid "edit comment"
+msgstr "editar comentario"
+
+#: c:\moduli-contributed\guestbook.module:246;278
+msgid "Home"
+msgstr "Página principal"
+
+#: c:\moduli-contributed\guestbook.module:247;279
+msgid "Guestbooks"
+msgstr "Libros de visitas"
+
+#: c:\moduli-contributed\guestbook.module:248
+msgid "%name's guestbook"
+msgstr "libro de visitas de %name"
+
+#: c:\moduli-contributed\guestbook.module:266
+msgid "Site Guestbook"
+msgstr "Libro de visitas del sitio"
+
+#: c:\moduli-contributed\guestbook.module:268
+msgid "User Guestbooks"
+msgstr "Libros de visitas de Usuarios"
+
+#: c:\moduli-contributed\guestbook.module:272
+msgid "last update"
+msgstr "Última actualización"
+
+#: c:\moduli-contributed\guestbook.module:289
+msgid "entry"
+msgstr "entrada"
+
+#: c:\moduli-contributed\guestbook.module:290
+msgid "entries"
+msgstr "entradas"
+
+#: c:\moduli-contributed\guestbook.module:297
+msgid "never"
+msgstr "nunca"
+
+#: c:\moduli-contributed\guestbook.module:301
+msgid "minute"
+msgstr "minuto"
+
+#: c:\moduli-contributed\guestbook.module:303
+msgid "minutes"
+msgstr "minutos"
+
+#: c:\moduli-contributed\guestbook.module:305
+msgid "hour"
+msgstr "hora"
+
+#: c:\moduli-contributed\guestbook.module:307
+msgid "hours"
+msgstr "horas"
+
+#: c:\moduli-contributed\guestbook.module:309
+msgid "day"
+msgstr "día"
+
+#: c:\moduli-contributed\guestbook.module:311
+msgid "days"
+msgstr "días"
+
+#: c:\moduli-contributed\guestbook.module:64
+msgid "access guestbooks"
+msgstr "acceder al libro de visitas"
+
+#: c:\moduli-contributed\guestbook.module:64
+msgid "administer all guestbooks"
+msgstr "administrar todos los libros de visitas"
+
+#: c:\moduli-contributed\guestbook.module:0
+msgid "guestbook"
+msgstr "libro de visitas"
+
+#added by hand
+msgid "Add entry in %username's guestbook:"
+msgstr "Añadir entrada en el libro de visitas de %username:"
+
+msgid "this will be not visible for other users"
+msgstr "no será visible para otros usuarios"
+
+msgid "E-mail:"
+msgstr "Correo-e:"
+
+msgid "Website:"
+msgstr "Web:"

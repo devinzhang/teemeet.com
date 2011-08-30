@@ -1,0 +1,317 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Guestbook 4.7.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2006-06-09 00:53+0100\n"
+"Last-Translator: Pieter-Jan de Vries <pieter@alacarteinternet.nl>\n"
+"Language-Team: JumpingJack <jjf62@gmx.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: guestbook.module:31
+msgid "guestbooks"
+msgstr "gastenboeken"
+
+#: guestbook.module:38
+#: ;604;634
+msgid "site guestbook"
+msgstr "site gastenboek"
+
+#: guestbook.module:50
+msgid "my guestbook"
+msgstr "mijn gastenboek"
+
+#: guestbook.module:66
+#: ;418;421
+msgid "Add guestbook entry"
+msgstr "Schrijf iets in het gastenboek"
+
+#: guestbook.module:86
+msgid "Read %username's guestbook."
+msgstr "Gastenboek van %username lezen"
+
+#: guestbook.module:87
+msgid "view recent guestbook entries"
+msgstr "toon recente gastenboek inzendingen"
+
+#: guestbook.module:89
+msgid "Guestbook"
+msgstr "Gastenboek"
+
+#: guestbook.module:92
+msgid "History"
+msgstr "Historie"
+
+#: guestbook.module:100
+msgid "User guestbook"
+msgstr "Gebruikersgastenboek"
+
+#: guestbook.module:103
+msgid "Status"
+msgstr "Status"
+
+#: guestbook.module:105
+msgid "enabled"
+msgstr "geactiveerd"
+
+#: guestbook.module:105
+msgid "disabled"
+msgstr "gedeactiveerd"
+
+#: guestbook.module:108
+#: ;171
+msgid "Intro text"
+msgstr "Introductietekst"
+
+#: guestbook.module:112
+msgid "The text that appears on top of your guestbook."
+msgstr "De tekst die bovenaan je gastenboek verschijnt."
+
+#: guestbook.module:137
+msgid "Adds a site guestbook and individual user guestbooks."
+msgstr "Maakt een sitegastenboek en gebruikersgastenboeken beschikbaar."
+
+#: guestbook.module:151
+msgid "Mode"
+msgstr "Modus"
+
+#: guestbook.module:154
+msgid "site and user guestbooks"
+msgstr "site- en gebruikersgastenboeken"
+
+#: guestbook.module:155
+msgid "site guestbook only"
+msgstr "alleen het sitegastenboek"
+
+#: guestbook.module:156
+msgid "user guestbooks only"
+msgstr "alleen het gebruikersgastenboek"
+
+#: guestbook.module:161
+msgid "Site guestbook"
+msgstr "Sitegastenboek"
+
+#: guestbook.module:164
+msgid "Title"
+msgstr "Titel"
+
+#: guestbook.module:168
+msgid "The site guestbook's page title."
+msgstr "De titel van het sitegastenboek."
+
+#: guestbook.module:175
+msgid "The text that appears on top of the site guestbook."
+msgstr "De tekst die bovenaan het sitegastenboek wordt weergegeven."
+
+#: guestbook.module:180
+msgid "User guestbooks"
+msgstr "Gebruikersgastenboeken"
+
+#: guestbook.module:181
+msgid "Users can individually disable their guestbook or add an intro text on the user account page."
+msgstr "Gebruikers kunnen hun eigen gastenboek (de)activeren of een introductietekst opgeven op de gebruikersaccountpagina."
+
+#: guestbook.module:186
+msgid "Display options"
+msgstr "Weergave-opties"
+
+#: guestbook.module:189
+msgid "Entries per page"
+msgstr "Inzendingen per pagina"
+
+#: guestbook.module:193
+msgid "The number of guestbook entries for each page."
+msgstr "Het aantal gastenboekinzendingen per pagina."
+
+#: guestbook.module:196
+msgid "Toggle display"
+msgstr "Weergave aan/uit schakelen"
+
+#: guestbook.module:199
+msgid "Submission date"
+msgstr "Datum inzending"
+
+#: guestbook.module:200
+msgid "Anonymous poster e-mail"
+msgstr "E-mailadres van anonieme inzenders"
+
+#: guestbook.module:201
+msgid "Anonymous poster website"
+msgstr "Webseite van anonieme inzenders"
+
+#: guestbook.module:202
+msgid "Comments"
+msgstr "Commentaar"
+
+#: guestbook.module:205
+msgid "Position of pager"
+msgstr "Navigatorpostie"
+
+#: guestbook.module:208
+msgid "Above the entries"
+msgstr "Boven de inzendingen"
+
+#: guestbook.module:209
+msgid "Below the entries"
+msgstr "Onder de inzendingen"
+
+#: guestbook.module:210
+msgid "Above and below the entries"
+msgstr "Boven en onder de inzendingen"
+
+#: guestbook.module:215
+msgid "Posting settings"
+msgstr "Inzendinginstellingen"
+
+#: guestbook.module:220
+msgid "Display filter tips"
+msgstr "Toon filtertips"
+
+#: guestbook.module:222
+msgid "If enabled filter tips are displayed below the message textarea."
+msgstr "Indien geactiveerd, worden filtertips onder het tekstingavegebied weergegeven."
+
+#: guestbook.module:225
+msgid "Anonymous poster fields"
+msgstr "Velden voor anonieme inzenders"
+
+#: guestbook.module:227
+msgid "Additional information that anonymous posters may supply."
+msgstr "Aanvullende informatie die anonieme inzenders mogen verschaffen."
+
+#: guestbook.module:233
+msgid "Location of entry submission form"
+msgstr "Positie van het inzendformulier"
+
+#: guestbook.module:236
+msgid "Above entries"
+msgstr "Boven de inzendingen"
+
+#: guestbook.module:237
+msgid "Below entries"
+msgstr "Onder de inzendingen"
+
+#: guestbook.module:238
+msgid "Separate page"
+msgstr "Aparte pagina"
+
+#: guestbook.module:311
+msgid "user"
+msgstr "gebruiker"
+
+#: guestbook.module:312
+msgid "entries"
+msgstr "inzendingen"
+
+#: guestbook.module:313
+#: ;605
+msgid "last update"
+msgstr "laatste wijziging"
+
+#: guestbook.module:348
+msgid "Name"
+msgstr "Naam"
+
+#: guestbook.module:353
+msgid "E-Mail"
+msgstr "E-mailadres"
+
+#: guestbook.module:358
+msgid "Homepage"
+msgstr "Homepage"
+
+#: guestbook.module:364
+msgid "Message"
+msgstr "Inzendingtekst"
+
+#: guestbook.module:367
+msgid "send"
+msgstr "inzenden"
+
+#: guestbook.module:429
+msgid "You must be logged in to post a comment."
+msgstr "U moet zijn ingelogd om commentaar te kunnen geven."
+
+#: guestbook.module:432
+msgid "You are not allowed to post in this guestbook."
+msgstr "U bent niet geautoriseerd om in het gastenboek te schrijven."
+
+#: guestbook.module:446
+msgid "Comment"
+msgstr "commentaar"
+
+#: guestbook.module:482
+msgid "Are you sure you want to delete this guestbook entry?"
+msgstr "Weet u zeker dat u deze gastenboekinzendig wilt verwijderen?"
+
+#: guestbook.module:485
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: guestbook.module:485
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: guestbook.module:574
+msgid "delete entry"
+msgstr "inzending verwijderen"
+
+#: guestbook.module:575
+msgid "add comment"
+msgstr "commentaar toevoegen"
+
+#: guestbook.module:575
+msgid "edit comment"
+msgstr "commentaar wijzigen"
+
+#: guestbook.module:594
+msgid "Comment by"
+msgstr "Commentaar van"
+
+#: guestbook.module:610
+msgid "user guestbooks"
+msgstr "gebruikersgastenboeken"
+
+#: guestbook.module:640
+msgid "%name's guestbook"
+msgstr "%name's gastenboek"
+
+#: guestbook.module:689
+msgid "never"
+msgstr "nooit"
+
+#: guestbook.module:605
+#: ;615
+msgid "1 entry"
+msgid_plural "%count entries"
+msgstr[0] "één inzending"
+msgstr[1] "%count inzendingen"
+
+#: guestbook.module:123
+msgid "access site guestbook"
+msgstr "toegang tot sitegastenboek"
+
+#: guestbook.module:123
+msgid "access user guestbooks"
+msgstr "toegang tot gebruikersgastenboeken"
+
+#: guestbook.module:123
+msgid "post in site guestbook"
+msgstr "schrijven in sitegastenboek"
+
+#: guestbook.module:123
+msgid "post in user guestbooks"
+msgstr "schrijven in gebruikersgastenboeken"
+
+#: guestbook.module:123
+msgid "administer all guestbooks"
+msgstr "alle gastenboeken administreren "
+
+#: guestbook.module:0
+msgid "guestbook"
+msgstr "gastenboek"
+

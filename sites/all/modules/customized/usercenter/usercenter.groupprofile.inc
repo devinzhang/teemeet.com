@@ -75,11 +75,8 @@ function usercenter_group_member_greetings($uid,$gid){
         $output .= '<div class="profile-body">';
     //    $output .= theme('usercenter_member_greetings',$account, '', $group);  
     if(module_exists('guestbook')) {
-        global $user; 
-        if($user->uid != $uid){
-            $output .= guestbook_page_form($account);
-        }
-        $output .= module_invoke('guestbook', 'page', $uid);
+       
+        $output .= module_invoke('guestbook', 'page', $account, 'remove');
     }
     
         $output .= '</div>';

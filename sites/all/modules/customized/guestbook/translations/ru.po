@@ -1,0 +1,317 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Guestbook 4.7.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2006-04-21 23:54+0100\n"
+"Last-Translator: Alim Alchagirov <alim@alchagirov.ru>\n"
+"Language-Team: Alim Alchagirov <alim@alchagirov.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: Russia\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: guestbook.module:31
+msgid "guestbooks"
+msgstr "Гостевые книги"
+
+#: guestbook.module:38
+#: ;604;634
+msgid "site guestbook"
+msgstr "Гостевая сайта"
+
+#: guestbook.module:50
+msgid "my guestbook"
+msgstr "Моя гостевая"
+
+#: guestbook.module:66
+#: ;418;421
+msgid "Add guestbook entry"
+msgstr "Добавить запись"
+
+#: guestbook.module:86
+msgid "Read %username's guestbook."
+msgstr "Прочитать гостевую книгу пользователя %username"
+
+#: guestbook.module:87
+msgid "view recent guestbook entries"
+msgstr "Посмотреть последние записи гостевой"
+
+#: guestbook.module:89
+msgid "Guestbook"
+msgstr "Гостевая"
+
+#: guestbook.module:92
+msgid "History"
+msgstr "Журнал записей"
+
+#: guestbook.module:100
+msgid "User guestbook"
+msgstr "Гостевая пользователя"
+
+#: guestbook.module:103
+msgid "Status"
+msgstr "Статус"
+
+#: guestbook.module:105
+msgid "enabled"
+msgstr "Включена"
+
+#: guestbook.module:105
+msgid "disabled"
+msgstr "Выключена"
+
+#: guestbook.module:108
+#: ;171
+msgid "Intro text"
+msgstr "Шапка"
+
+#: guestbook.module:112
+msgid "The text that appears on top of your guestbook."
+msgstr "Текст шапки гостевой"
+
+#: guestbook.module:137
+msgid "Adds a site guestbook and individual user guestbooks."
+msgstr "Добавляет гостевую сайта и индивидуальные гостевые пользователей"
+
+#: guestbook.module:151
+msgid "Mode"
+msgstr "Включить"
+
+#: guestbook.module:154
+msgid "site and user guestbooks"
+msgstr "Гостевые сайта и пользователей"
+
+#: guestbook.module:155
+msgid "site guestbook only"
+msgstr "Только гостевую сайта"
+
+#: guestbook.module:156
+msgid "user guestbooks only"
+msgstr "Только гостевые пользователей"
+
+#: guestbook.module:161
+msgid "Site guestbook"
+msgstr "Гостевая сайта"
+
+#: guestbook.module:164
+msgid "Title"
+msgstr "Название"
+
+#: guestbook.module:168
+msgid "The site guestbook's page title."
+msgstr "Название гостевой сайта"
+
+#: guestbook.module:175
+msgid "The text that appears on top of the site guestbook."
+msgstr "Текст шапки гостевой сайта"
+
+#: guestbook.module:180
+msgid "User guestbooks"
+msgstr "Гостевые пользователей"
+
+#: guestbook.module:181
+msgid "Users can individually disable their guestbook or add an intro text on the user account page."
+msgstr "Пользователи могут сами включать/выключать свои персональные гостевые книги и выбирать текст шапки"
+
+#: guestbook.module:186
+msgid "Display options"
+msgstr "Настройки внешнего вида"
+
+#: guestbook.module:189
+msgid "Entries per page"
+msgstr "Записей на странице"
+
+#: guestbook.module:193
+msgid "The number of guestbook entries for each page."
+msgstr "Число записей, выводимых на каждую страницу гостевой"
+
+#: guestbook.module:196
+msgid "Toggle display"
+msgstr "Показывать"
+
+#: guestbook.module:199
+msgid "Submission date"
+msgstr "Время создания записи"
+
+#: guestbook.module:200
+msgid "Anonymous poster e-mail"
+msgstr "Адреса электронной почты анонимных посетителей"
+
+#: guestbook.module:201
+msgid "Anonymous poster website"
+msgstr "Адреса домашних страниц анонимных посетителей"
+
+#: guestbook.module:202
+msgid "Comments"
+msgstr "Комментарии"
+
+#: guestbook.module:205
+msgid "Position of pager"
+msgstr "Расположение пэйджера"
+
+#: guestbook.module:208
+msgid "Above the entries"
+msgstr "Над записями"
+
+#: guestbook.module:209
+msgid "Below the entries"
+msgstr "Под записями"
+
+#: guestbook.module:210
+msgid "Above and below the entries"
+msgstr "Над и под записями"
+
+#: guestbook.module:215
+msgid "Posting settings"
+msgstr "Настройки ввода текста"
+
+#: guestbook.module:220
+msgid "Display filter tips"
+msgstr "Показывать подсказки для форматирования ввода"
+
+#: guestbook.module:222
+msgid "If enabled filter tips are displayed below the message textarea."
+msgstr "Если включено, под полем ввода текста показываются подсказки для выбранного формата ввода"
+
+#: guestbook.module:225
+msgid "Anonymous poster fields"
+msgstr "Дополнительные поля для анонимного посетителя"
+
+#: guestbook.module:227
+msgid "Additional information that anonymous posters may supply."
+msgstr "Дополнительная информация, которую может оставить о себе анонимный посетитель"
+
+#: guestbook.module:233
+msgid "Location of entry submission form"
+msgstr "Положение формы ввода текста"
+
+#: guestbook.module:236
+msgid "Above entries"
+msgstr "Над записями"
+
+#: guestbook.module:237
+msgid "Below entries"
+msgstr "Под записями"
+
+#: guestbook.module:238
+msgid "Separate page"
+msgstr "На отдельной странице"
+
+#: guestbook.module:311
+msgid "user"
+msgstr "Пользователь"
+
+#: guestbook.module:312
+msgid "entries"
+msgstr "Записей"
+
+#: guestbook.module:313
+#: ;605
+msgid "last update"
+msgstr "Последнее обновление"
+
+#: guestbook.module:348
+msgid "Name"
+msgstr "Имя"
+
+#: guestbook.module:353
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: guestbook.module:358
+msgid "Homepage"
+msgstr "Домашняя страница"
+
+#: guestbook.module:364
+msgid "Message"
+msgstr "Запись"
+
+#: guestbook.module:367
+msgid "send"
+msgstr "послать"
+
+#: guestbook.module:429
+msgid "You must be logged in to post a comment."
+msgstr "Для комментирования необходима авторизация"
+
+#: guestbook.module:432
+msgid "You are not allowed to post in this guestbook."
+msgstr "Вам не разрешено добавлять записи в гостевую"
+
+#: guestbook.module:446
+msgid "Comment"
+msgstr "Комментарий"
+
+#: guestbook.module:482
+msgid "Are you sure you want to delete this guestbook entry?"
+msgstr "Вы уверены, что хотите удалить эту запись?"
+
+#: guestbook.module:485
+msgid "Delete"
+msgstr "Удалить"
+
+#: guestbook.module:485
+msgid "Cancel"
+msgstr "Отменить"
+
+#: guestbook.module:574
+msgid "delete entry"
+msgstr "Удалить запись"
+
+#: guestbook.module:575
+msgid "add comment"
+msgstr "Добавить комментарий"
+
+#: guestbook.module:575
+msgid "edit comment"
+msgstr "Редактировать комментарий"
+
+#: guestbook.module:594
+msgid "Comment by"
+msgstr "Комментарий"
+
+#: guestbook.module:610
+msgid "user guestbooks"
+msgstr "Гостевые пользователей"
+
+#: guestbook.module:640
+msgid "%name's guestbook"
+msgstr "Гостевая пользователя %name"
+
+#: guestbook.module:689
+msgid "never"
+msgstr "никогда"
+
+#: guestbook.module:605
+#: ;615
+msgid "1 entry"
+msgid_plural "%count entries"
+msgstr[0] "Одна запись"
+msgstr[1] "%count записей"
+
+#: guestbook.module:123
+msgid "access site guestbook"
+msgstr "Просмотр гостевой сайта"
+
+#: guestbook.module:123
+msgid "access user guestbooks"
+msgstr "Просмотр гостевых пользователей"
+
+#: guestbook.module:123
+msgid "post in site guestbook"
+msgstr "Оставлять записи в гостевой сайта"
+
+#: guestbook.module:123
+msgid "post in user guestbooks"
+msgstr "Оставлять записи в гостевых пользователей"
+
+#: guestbook.module:123
+msgid "administer all guestbooks"
+msgstr "Администрировать гостевые"
+
+#: guestbook.module:0
+msgid "guestbook"
+msgstr "Гостевые"
+

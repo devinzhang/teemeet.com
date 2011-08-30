@@ -1,0 +1,90 @@
+<?php
+// $Id: guestbook.install,v 1.12 2010/04/02 13:47:52 sun Exp $
+
+/**
+ * Implementation of hook_schema().
+ */
+function guestbook_schema() {
+  $schema['guestbook'] = array(
+    'fields' => array(
+      'id' => array('type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+      'recipient' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+      'author' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+      'anonname' => array('type' => 'varchar', 'length' => '128', 'not null' => FALSE, 'default' => ''),
+      'anonemail' => array('type' => 'varchar', 'length' => '128', 'not null' => FALSE, 'default' => ''),
+      'anonwebsite' => array('type' => 'varchar', 'length' => '128', 'not null' => FALSE, 'default' => ''),
+      'message' => array('type' => 'text', 'not null' => TRUE),
+      'commentauthor' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+      'comment' => array('type' => 'text', 'not null' => TRUE),
+      'created' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+    ),
+    'indexes' => array(
+      'recipient' => array('recipient'),
+      'commentauthor' => array('commentauthor'),
+      'created' => array('created'),
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}
+
+/**
+ * Implementation of hook_install().
+ */
+function guestbook_install() {
+  drupal_install_schema('guestbook');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function guestbook_uninstall() {
+  drupal_uninstall_schema('guestbook');
+  db_query("DELETE FROM {variable} WHERE name LIKE 'guestbook_%%'");
+}
+
+function guestbook_update_6001() {
+  $ret = array();
+
+  db_drop_primary_key($ret, 'guestbook');
+  db_change_field($ret, 'guestbook', 'id', 'id',
+    array('type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+    array('primary key' => array('id')));    
+  db_change_field($ret, 'guestbook', 'anonname', 'anonname',
+    array('type' => 'varchar', 'length' => '128', 'not null' => FALSE));    
+
+  return $ret;
+}
+
+/**
+ * Rename permission "administer all guestbooks" to "moderate all guestbooks".
+ */
+function guestbook_update_6200() {
+  $ret = array();
+  $result = db_query("SELECT rid, perm FROM {permission} ORDER BY rid");
+  while ($role = db_fetch_object($result)) {
+    $renamed_permission = strtr($role->perm, array('administer all guestbooks' => 'moderate all guestbooks'));
+    if ($renamed_permission != $role->perm) {
+      $ret[] = update_sql("UPDATE {permission} SET perm = '$renamed_permission' WHERE rid = " . $role->rid);
+    }
+  }
+  return $ret;
+}
+
+/**
+ * Add default value for {guestbook}.anon* columns.
+ */
+function guestbook_update_6201() {
+  $ret = array();
+  db_change_field($ret, 'guestbook', 'anonname', 'anonname', array(
+    'type' => 'varchar', 'length' => '128', 'not null' => FALSE, 'default' => '',
+  ));
+  db_change_field($ret, 'guestbook', 'anonemail', 'anonemail', array(
+    'type' => 'varchar', 'length' => '128', 'not null' => FALSE, 'default' => '',
+  ));
+  db_change_field($ret, 'guestbook', 'anonwebsite', 'anonwebsite', array(
+    'type' => 'varchar', 'length' => '128', 'not null' => FALSE, 'default' => '',
+  ));
+  return $ret;
+}
+
