@@ -1,5 +1,5 @@
 ; $Id$
-name = User Personal Home page
+name = User Personal Home Center
 description = This module create a homepage for each user.
 package = "teemeet.com"
 

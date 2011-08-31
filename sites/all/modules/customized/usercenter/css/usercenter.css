@@ -269,3 +269,57 @@ ul.D_summaryList li {
     border-color: #C4CCC0;
     float:left;
 }
+
+/*theme greeting */
+ul.D_summaryList {
+    list-style: none outside none;
+    margin: 0 -0.5em;
+    padding: 0 0.5em;
+}
+.D_summaryList .D_yell {
+ border-color: #C4CCC0;
+ width: 100%;
+}
+
+ul.D_summaryList li {
+    border-color: #DDDDDD;
+    border-style: dotted;
+    border-width: 0 0 1px;
+    margin: 0 0 0.75em;
+    padding: 0 0 0.75em;
+    vertical-align: top;
+
+}
+
+.D_summaryList .D_yell .speaker {
+    color: #777777;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.D_summaryList .D_image, .D_summaryList .D_noimage {
+    float: left;
+    overflow: hidden;
+    text-align: center;
+    width: 80px;
+}
+.D_summaryList .D_info, .D_item .D_info {
+    margin: 0 0 0 90px;
+    padding: 0;
+}
+.D_summaryList ul.D_actions, .D_summaryList .FIXME_expand {
+    margin: 0;
+}
+
+ul.D_actions {
+    font-size: 0.85em;
+    list-style: none outside none;
+    margin: 0.5em 0 0;
+    padding: 0;
+}
+.D_quot {
+    color: #CCCCCC;
+    font-family: georgia,serif;
+    font-size: 3em;
+    line-height: 0.15em;
+    vertical-align: bottom;
+}

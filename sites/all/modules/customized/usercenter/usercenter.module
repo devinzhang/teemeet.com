@@ -116,9 +116,6 @@ function usercenter_menu() {
         'weight' => -6,
     );
     
-   
-  
-    
     
     //create a sponsor
     $items['sponsor/create'] = array(
@@ -238,7 +235,17 @@ function usercenter_theme() {
       'path'=>drupal_get_path('module','usercenter').'/tpl',
 	),
     
+     'greetings' => array(
+      'arguments' => array('uid', 'entries', 'limit'),
+      'file' => drupal_get_path('module','usercenter').'/usercenter.greeting.inc',
+    ),
     
+     'greeting_entry' => array(
+      'arguments' => array('uid', 'entry', 'zebra', 'confirm_delete'),
+      'file' => drupal_get_path('module','usercenter').'/usercenter.greeting.inc',
+    ),
+    
+ 
     
   );
 }
