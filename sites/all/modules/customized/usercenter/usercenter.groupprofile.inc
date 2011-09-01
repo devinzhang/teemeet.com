@@ -71,7 +71,7 @@ function usercenter_group_member_greetings($uid,$gid){
     $output = '';
     drupal_set_title('');
     drupal_add_js(drupal_get_path('module','usercenter') . '/js/greeting.js');
-    drupal_add_css(drupal_get_path('module','jquery_ui') . '/jquery.ui/demos/demos.css');
+    
     jquery_ui_add(array('ui.dialog'));
     $account = user_load($uid);
     $output .= usercenter_profile_header_ingroup();

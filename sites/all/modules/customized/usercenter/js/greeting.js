@@ -9,8 +9,7 @@ $(document).ready(function() {
      $(li).css('background-color','#fee');
      $("#dialog").dialog({
       buttons : {
-        "Confirm" : function() {                     
-          
+        "Confirm" : function() {
            $.ajax({
 	            url: link,
 	            type: "GET", 
@@ -23,15 +22,14 @@ $(document).ready(function() {
 	               $(li).hide('slow').empty();
 	            }                
 			}); 
+             $(this).dialog("close");
         },
         "Cancel" : function() {
           $(this).dialog("close");
           $(li).css('background-color','#fff');
         }
       },
-      beforeClose: function() {
-         $(li).css('background-color','#fff');
-      }
+      close: function(event, ui) {$(li).css('background-color','#fff'); }     
     });
      $("#dialog").dialog("open");
 

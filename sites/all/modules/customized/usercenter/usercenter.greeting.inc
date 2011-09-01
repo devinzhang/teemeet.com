@@ -109,9 +109,7 @@ function theme_greetings($uid, $entries, $limit = 20) {
 		$output = '<li> <div class="greeting-empty">'. t('Nobody has signed this greeting yet.') .'</div></li>';
 	}
 
-	return '<ul class="D_summaryList">'. $output ."</ul>" .'<div id="dialog" title="Confirmation Required">
-  Are you sure about this?
-</div>';
+	return '<ul class="D_summaryList">'. $output ."</ul>" .'<div style="display:none;" id="dialog" title="'.t('Confirmation Required').'">'.t('Are you sure delete this?').'</div>';
 }
 
 
@@ -142,15 +140,15 @@ function theme_greeting_entry($uid, $entry, $zebra, $confirm_delete = false) {
     
 	if(($user->uid == $entry['author']) || ($user->uid == $uid)) {
 		$output .= '<li class="canDo">';
-		$output .= l(t('Delete this Greeting'),'usercenter/ajax/greeting/'.$entry['id'].'/delete'), 'attributes'=>array('id'=>$entry['id'], 'class'=>"delete-greeting-link")));
+		$output .= l(t('Delete this Greeting'),'usercenter/ajax/greeting/'.$entry['id'].'/delete',array( 'attributes'=>array('id'=>$entry['id'], 'class'=>"delete-greeting-link")));
 		$output .= '</li>';
 	}
-
+/*  // this will be enabled in the future
 	$output .= '<li class="canDo">';
 	$output .= l(t('Report as spam'),'');
 	$output .= '</li>';
 	$output .= '</ul>';
-
+*/
 	$output .= '</div>';
 	$output .= '</li>';
 	return $output;
@@ -161,7 +159,7 @@ function theme_greeting_entry($uid, $entry, $zebra, $confirm_delete = false) {
  */
 
 function usercenter_ajax_delete_greetings($id) {
-  $id = $form_state['values']['id'];
+  
   db_query("delete from {greetings} where id=%d", $id);
   $entry = db_fetch_object(db_query("select * from {greetings} where id=%d", $id)); 
   module_invoke_all('greeting_delete', $entry);
