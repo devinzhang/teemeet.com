@@ -216,7 +216,33 @@ return $output;
 }
 
 function frontpage_top_right_menu(){
+    $output = '';
+    global $user;
+    global $base_url; 
+    $path = drupal_get_path('module','frontpage');
+    $img_path= $path.'/images/house.gif';
+    drupal_add_js($path.'/js/frontpage.js'); 
+   
+    $output .= '<ul class="menu">'; 
+ //   $output .= '<li class="leaf first">'.l($user->name, 'myhome/'.$user->uid).'</li>';
+    $output .= '<li class="leaf C_userNavItem_less"><a href="">'.t('What\'s New').'</a><span class="unreadCount">1</span></li>';
+    $output .= '<li class="leaf C_userNavItem_less">'.l(t('Help'),'').'</li>';
+    $output .= '<li class="leaf hasDropDown"><a href="">'.t('My Groups').'</a>';
+    $output .= '<div class="C_arrowTab"></div>';
+    $output .= '<div style="width: 310px;" id="C_groupsMenu"><ul class="myGroupsSection">';
+        $output .= '<li><a class="C_groupsMenuItem" href="">Beijing Soccer Lovers</a></li>';
+        $output .= '<li><a class="C_groupsMenuItem" href="">teemeet</a></li>';
 
+    $output .= '</ul></div>';
+    $output .= '</li>';
+    $output .= '<li class="leaf ">'.l(t('Account'),'').'</li>';
+    $output .= '<li class="leaf ">'.l(t('Log in'),'user/login').'</li>';
+    $output .= '<li class="leaf last">'.l(t('Log out'),'logout').'</li>';
+    $output .= '</ul>';
+     $output .= '<div id="C_welcome"><a href="'.$base_url.'"><img alt="Home" class="D_icon" src="'.$img_path.'"></a> <a href="'.$base_url.'">'.$user->name.'</a></div>';
+
+    
+    return $output; 
 }
 
 function frontpage_home_welcome(){

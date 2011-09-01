@@ -159,9 +159,8 @@ function theme_greeting_entry($uid, $entry, $zebra, $confirm_delete = false) {
  */
 
 function usercenter_ajax_delete_greetings($id) {
-  
-  db_query("delete from {greetings} where id=%d", $id);
   $entry = db_fetch_object(db_query("select * from {greetings} where id=%d", $id)); 
+  db_query("delete from {greetings} where id=%d", $id);  
   module_invoke_all('greeting_delete', $entry);
   drupal_json(array('status'=>1));
 }
