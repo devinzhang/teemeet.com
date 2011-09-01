@@ -1,0 +1,8 @@
+/* define the whole web site jquery dialog css */
+
+#dialog1-overlay
+{
+  background:blue;
+  opacity:0.8;
+  filter:alpha(opacity=80);
+}

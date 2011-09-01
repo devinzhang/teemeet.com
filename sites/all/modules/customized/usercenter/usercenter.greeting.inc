@@ -50,16 +50,14 @@ function usercenter_greeting_form_submit($form, &$form_state) {
 	 $message = $form_state['values']['message'];
      $now = time(); 
 	 db_query("INSERT INTO {greetings} (recipient, message, author, created)
-	 VALUES(%d, '%s', %d, %d)", $recipient, $message, $author, $now);
-     
-    // if(module_exists('heartbeat')) {
+	 VALUES(%d, '%s', %d, %d)", $recipient, $message, $author, $now);     
+    $account = user_load($author); 
         $entry = new stdClass();
         $entry->recipient = $recipient;
         $entry->author = $author; 
+        $entry ->picture = $account->picture;
         $entry->message = $message ;        
         $entry->created = $now; 
-     //   usercenter_add_greeting_heartbeat($entry);
-    // }
      
       module_invoke_all('greeting_insert', $entry);
 
@@ -144,7 +142,7 @@ function theme_greeting_entry($uid, $entry, $zebra, $confirm_delete = false) {
     
 	if(($user->uid == $entry['author']) || ($user->uid == $uid)) {
 		$output .= '<li class="canDo">';
-		$output .= l(t('Delete this Greeting'),$_GET['q'],array('query'=>array('id'=>$entry['id'],'op'=>'delete'), 'attributes'=>array('id'=>$entry['id'], 'class'=>"delete-greeting-link")));
+		$output .= l(t('Delete this Greeting'),'usercenter/ajax/greeting/'.$entry['id'].'/delete'), 'attributes'=>array('id'=>$entry['id'], 'class'=>"delete-greeting-link")));
 		$output .= '</li>';
 	}
 
@@ -161,62 +159,11 @@ function theme_greeting_entry($uid, $entry, $zebra, $confirm_delete = false) {
 /* menu callback to delete a greetings
  ** @param, $id, the greeting entry id
  */
-function usercenter_group_member_greetings_delete($id) {
 
-	return drupal_get_form('usercenter_group_member_greetings_delete_confirm_form',$id);
-}
-
-function usercenter_group_member_greetings_delete_confirm_form(&$form_state,$id) {
-	$form['id'] = array(
-    '#type' => 'hidden',
-    '#value' => $id,
-	);
-
-	$warning = t('');
-    
-
-	return confirm_form($form,
-	t('Wait! Are you sure you want to delete this greeting?'),
-    $_GET['q'],
-	$warning,
-	t('Yes'),
-	t('No,Keep it'));
-}
-
-function usercenter_group_member_greetings_delete_confirm_form_submit($form, &$form_state) {
+function usercenter_ajax_delete_greetings($id) {
   $id = $form_state['values']['id'];
-  db_query("delete from {greetings} where id=%d", $id);    
+  db_query("delete from {greetings} where id=%d", $id);
+  $entry = db_fetch_object(db_query("select * from {greetings} where id=%d", $id)); 
   module_invoke_all('greeting_delete', $entry);
-}
-
-/* call the heartbeat to create a new activity when user post a new greetting
-**
-**
-*/
-function usercenter_add_greeting_heartbeat($entry) {
-
-    $message_id = 'custom_add_greeting';
-    $variables = array(
-      '@recipient' => l(heartbeat_user_load($entry->recipient)->name, 'user/' . $entry->recipient),
-      '@author' => l(heartbeat_user_load($entry->author)->name, 'user/' . $entry->author),
-      '@message' => $entry->message,
-      '@group' => 'ceshi',
-      // You could easily set the the time of the activity with
-      // the time of node creation. (devel generate, imports, ...)
-      'time' => $entry->created,
-    );
-
-    heartbeat_api_log($message_id, $entry->author, $entry->recipient, 0, 0, $variables);
-   
-    
-}
-
-
-/* call the heartbeat to create a new activity when user delete a new greetting
-**
-**
-*/
-
-function usercenter_del_greeting_heartbeat($entry) {
-
+  drupal_json(array('status'=>1));
 }

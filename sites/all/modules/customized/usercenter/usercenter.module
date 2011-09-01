@@ -116,6 +116,17 @@ function usercenter_menu() {
         'weight' => -6,
     );
     
+    $items['usercenter/ajax/greeting/%/delete'] = array(
+    	'title' => t('Delete Greetings'),
+        'page callback' => 'usercenter_ajax_delete_greetings',
+        'page arguments' => array(3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.greeting.inc',        
+        'weight' => -6,
+    );
+    
+    
     
     //create a sponsor
     $items['sponsor/create'] = array(
