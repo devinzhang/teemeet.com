@@ -1,4 +1,97 @@
+#block-frontpage-1 {
+float:right; 
+margin-top: -60px;
+margin-bottom: 0px;
+}
 
+#block-frontpage-1 .content{
+margin-top: 10px;
+text-align: right; 
+}
+
+#block-frontpage-1 #C_welcome {
+    color: #666666;
+    float: right;
+    font-size: 0.9em;
+    font-weight: bold;
+    position: relative;
+    width:auto;
+    display:inline; 
+}
+#block-frontpage-1 #C_welcome  a{
+    color: #666666;
+   float:left;
+}
+#block-frontpage-1 #C_welcome  a.icon{
+width: 30px;
+padding: 0 0 0 0;
+margin-top: 7px;
+}
+#block-frontpage-1 #C_welcome  a.text{
+width: auto;
+}
+
+
+#block-frontpage-1 ul#frontpage-top-right-menu {
+    float: right;
+    margin-bottom: 0 !important;
+    margin-left: 5px;
+    padding: 0 !important;
+    position: relative;
+    list-style: none outside none;
+}
+#block-frontpage-1 ul  li.leaf{
+    display: inline;
+    font-size: 0.9em;
+    margin: 0 0 0 0.8em;
+    padding: 0;
+    margin-left:0px;
+}
+
+#block-frontpage-1 ul  li.left a{
+padding: 0.4em 0.5em;
+}
+
+#block-frontpage-1 ul  li.C_userNavItem_less a{
+  color: #AAAAAA;  
+}
+#block-frontpage-1 ul  li.whats-new {
+width: auto;
+
+}
+
+#block-frontpage-1 ul  li.whats-new  a{
+padding-right: 0px; 
+
+}
+
+#block-frontpage-1 ul  li.C_userNavItem_less .unreadCount {
+    -moz-border-radius: 4px 4px 4px 4px;
+    background: none repeat scroll 0 0 #E51937;
+    color: #FFFFFF;
+
+    font-family: arial,sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    line-height: 150%;
+    padding: 2px;
+    width:2em;
+ 
+}
+.hasDropDown .C_arrowTab {
+    background-image: url("../images/arrow_tab.gif");
+    height: 19px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+    width: 18px;
+
+}
+
+
+
+/* theme block -frontpage -2 */
 #block-frontpage-2 {
     -moz-border-radius: 5px 5px 5px 5px;
     background: none repeat scroll 0 0 white;

@@ -216,30 +216,37 @@ return $output;
 }
 
 function frontpage_top_right_menu(){
+    drupal_add_css(drupal_get_path('module','frontpage').'/frontpage.css');
     $output = '';
     global $user;
-    global $base_url; 
+    global $base_url;  
     $path = drupal_get_path('module','frontpage');
-    $img_path= $path.'/images/house.gif';
+    $img_path= $base_url.'/'.$path.'/images/house.gif';
     drupal_add_js($path.'/js/frontpage.js'); 
    
-    $output .= '<ul class="menu">'; 
+    $output .= '<ul id="frontpage-top-right-menu" class="sf-menu">'; 
  //   $output .= '<li class="leaf first">'.l($user->name, 'myhome/'.$user->uid).'</li>';
-    $output .= '<li class="leaf C_userNavItem_less"><a href="">'.t('What\'s New').'</a><span class="unreadCount">1</span></li>';
+    $output .= '<li class="leaf first">'.'<div id="C_welcome"><a class="icon" href="'.url('myhome/'.$user->uid).'"><img alt="Home" class="D_icon" src="'.$img_path.'"></a> <a class="text" href="'.url('myhome/'.$user->uid).'">'.$user->name.'</a></div>'.'</li>';
+ 
+    $output .= '<li class="whats-new leaf C_userNavItem_less"><a href="">'.t('What\'s New');
+    //    $output .= '<span class="unreadCount">1</span>';
+    $output .= '</a></li>';
     $output .= '<li class="leaf C_userNavItem_less">'.l(t('Help'),'').'</li>';
-    $output .= '<li class="leaf hasDropDown"><a href="">'.t('My Groups').'</a>';
-    $output .= '<div class="C_arrowTab"></div>';
-    $output .= '<div style="width: 310px;" id="C_groupsMenu"><ul class="myGroupsSection">';
-        $output .= '<li><a class="C_groupsMenuItem" href="">Beijing Soccer Lovers</a></li>';
-        $output .= '<li><a class="C_groupsMenuItem" href="">teemeet</a></li>';
-
-    $output .= '</ul></div>';
+    $output .= '<li class="leaf hasDropDown"><a href="'.url('user/'.$user->uid.'/mygroups').'">'.t('My Groups').'</a>';    
+        $output .= '<ul style="z-index: 5001;  " class="myGroupsSection">';
+            $output .= '<li><a class="C_groupsMenuItem" href="">Beijing Soccer Lovers</a></li>';
+            $output .= '<li><a class="C_groupsMenuItem" href="">teemeet</a></li>';
+        $output .= '</ul>';
+        
     $output .= '</li>';
     $output .= '<li class="leaf ">'.l(t('Account'),'').'</li>';
-    $output .= '<li class="leaf ">'.l(t('Log in'),'user/login').'</li>';
+    if($user->uid) {
     $output .= '<li class="leaf last">'.l(t('Log out'),'logout').'</li>';
+    } else {
+    $output .= '<li class="leaf ">'.l(t('Log in'),'user/login').'</li>';
+    }
     $output .= '</ul>';
-     $output .= '<div id="C_welcome"><a href="'.$base_url.'"><img alt="Home" class="D_icon" src="'.$img_path.'"></a> <a href="'.$base_url.'">'.$user->name.'</a></div>';
+   //  $output .= '<div id="C_welcome"><a href="'.url('myhome/'.$user->uid).'"><img alt="Home" class="D_icon" src="'.$img_path.'"></a> <a href="'.url('myhome/'.$user->uid).'">'.$user->name.'</a></div>';
 
     
     return $output; 
