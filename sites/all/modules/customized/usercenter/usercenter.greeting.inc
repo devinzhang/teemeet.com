@@ -5,7 +5,8 @@
  */
 function usercenter_greeting_form(&$form_state, $uid) {
 	global $user;
-
+     
+      
 	$form = array();
 	$form['recipient'] = array(
     '#type' => 'value',
@@ -44,7 +45,9 @@ function usercenter_greeting_form_validate($form, &$form_state) {
 
 function usercenter_greeting_form_submit($form, &$form_state) {
 	global $user;
-
+      if(isset($GLOBALS['current_group'])) {
+        $in_group_gid = $GLOBALS['current_group']->nid; 
+      }
 	 $recipient = $form_state['values']['recipient'];
 	 $author = $form_state['values']['author'];
 	 $message = $form_state['values']['message'];
@@ -58,6 +61,7 @@ function usercenter_greeting_form_submit($form, &$form_state) {
         $entry ->picture = $account->picture;
         $entry->message = $message ;        
         $entry->created = $now; 
+        $entry->curr_gid = $in_group_gid; 
      
       module_invoke_all('greeting_insert', $entry);
 

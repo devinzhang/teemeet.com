@@ -274,7 +274,13 @@ function usercenter_user($op, &$edit, &$account, $category = NULL) {
         case 'view' :
             global $user; 
             if($user->uid != $account->uid) {
-                drupal_goto('member/'.$account->uid.'/ingroup/63'); 
+                if(empty($account->og_groups)) {
+                    drupal_goto('user/'.$account->uid); 
+                }else{
+                $first_group = array_shift($account->og_groups);
+                
+                drupal_goto('member/'.$account->uid.'/ingroup/'.$first_group['nid']); 
+                }
             }
 		break;
         

@@ -105,12 +105,18 @@ padding-right: 0px;
     font-size: 1em;
     overflow: hidden;
     padding: 0 0.5em 0.65em;
+    width: 100%;
+    border-right: 0px solid #CCCCCC;
+    float: left;   
+    margin-right: 0;
 }
+
  .D_boxsection {
     border-top: 1px solid #CCCCCC;
     font-size: 1em;
     line-height: 1.4em;
     padding: 0.9em 0.5em;
+    float:left;
 }
 .home  #content-group{
 width: 59%;

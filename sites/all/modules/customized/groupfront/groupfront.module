@@ -14,21 +14,103 @@
 
 define('GROUPFRONT_PATH', drupal_get_path('module', 'groupfront'));
  
-function groupfront_init(){
- drupal_add_css(drupal_get_path('module', 'groupfront').'/css/groupfront.css');
- }
+function groupfront_init()
+{   
+    //若为Group相关页面，把Group信息写到$GLOBALS['current_group']里面
+    $uri = substr(request_uri(), 1);
+    $router = menu_get_item(); 
+    /*if(strstr(request_uri(), 'mytestgroup'))
+    {
+        print_r($router);die;
+    }*/
+
+    if($router['page_arguments'][0]->type == 'group') //若为小组类型
+    {
+        $GLOBALS['current_group'] = $router['page_arguments'][0];
+    }
+    if(empty($router)) //若当前请求的路由为空，则判断是否是小组页面
+    {                
+        $q = explode('/', $_GET['q']);        
+        $og = array_shift($q); 
+        $newRouter = implode('/', $q);        
+        if($path = drupal_lookup_path('source', $og))
+        {     
+            $router = menu_get_item($path);
+            $GLOBALS['current_group'] = $router['page_arguments'][0];//写入小组path信息      
+            $q = drupal_lookup_path('source', $newRouter);     
+            $_GET['q'] = $q ? $q : $newRouter;       
+           // $_GET['q'] = drupal_lookup_path('source', $newRouter);     
+        }        
+    }
+    //
+    /*if(isset($GLOBALS['current_group']))
+    {
+        $uriArray = explode('/', $uri);
+        $_GET['ogpath'] = $uriArray[0]; 
+    }*/ //todo delete this
+    
+
+    
+/*if(strstr(request_uri(), 'test'))
+{
+    print_r($_GET['q']);
+    print_r($GLOBALS['current_group']);die;
+}*/ 
+    drupal_add_css(drupal_get_path('module', 'groupfront').'/css/groupfront.css');
+}
+
+function groupfront_url($path)
+{       
+    return preg_match('/$http/', $path) ? url($path) : '/' . $GLOBALS['current_group']->path . '/' . ltrim(url($path), '/');
+}
+
+//定义views调用函数
+function groupfront_views($field)
+{    
+    if(!isset($GLOBALS['current_group'])) return;
+    $nidList = '';
+    foreach($GLOBALS['current_group']->$field as $item)
+    {
+        $nidList .= $item['nid'] . '+';
+    }
+    return rtrim($nidList, '+');
+}
 /**
  * Implementation of hook_menu().
  */
-/* function groupfront_menu() {
+function groupfront_menu() {
   $items = array();  
-  $items['home'] = array(
+  $items['about'] = array(
     'title' => t('Welcome to Home'),
-    'page callback' => '_groupfront_home',
-    'page arguments' => null,
+    'page callback' => 'groupfront_page',
+    'page arguments' => array('about'),
+    //'file' => 'groupfront_page.inc',
 	'access arguments'=>array('access content'),
   );
-*/
+  
+  $items['grow'] = array(
+    'title' => t('Welcome to Home'),
+    'page callback' => 'groupfront_page',
+    'page arguments' => array('grow'),
+    //'file' => 'groupfront_page.inc',
+	'access arguments'=>array('access content'),
+  );  
+  $items['messages/archive'] = array(
+    'title' => t('Welcome to Home'),
+    'page callback' => 'groupfront_page',
+    'page arguments' => array('messages-archive'),
+    //'file' => 'groupfront_page.inc',
+	'access arguments'=>array('access content'),
+  );
+  
+  $items['members/profile'] = array(
+    'title' => t('Welcome to Home'),
+    'page callback' => 'groupfront_page',
+    'page arguments' => array('messages-archive'),
+    //'file' => 'groupfront_page.inc',
+	'access arguments'=>array('access content'),
+  );
+   
  /* $items['sponsor'] = array(
     'title' => t('Sponsors'),
     'page callback' => 'groupfront_sponsor',
@@ -75,11 +157,11 @@ function groupfront_init(){
   );
     
   
-   
+   */
     
    
   return $items;
-}*/
+}
 
 
 /* impl  hook_token_values
@@ -150,17 +232,6 @@ function groupfront_theme() {
   );
 }
 
-
-function _groupfront_home () {
-    drupal_set_title('');
-
-    return 'hello world';
-}
-
-/* hook_block
- *
- */
- 
 
 function groupfront_block($op = 'list', $delta = 0, $edit = array()){
 	switch($op){
@@ -271,7 +342,7 @@ return $output;
  *
  */
 function groupfront_preprocess_page(&$vars){
-    $action = arg(2); 
+    /*$action = arg(2); 
 	if(arg(0)=='node' && is_numeric(arg(1)) && !isset($action) ) {
 		$node = $vars['node'];
         $curr_title = drupal_get_title();
@@ -306,7 +377,7 @@ function groupfront_preprocess_page(&$vars){
                     $vars['content'] .= theme('frontpage_group_heartbeats',$node);        
                 }
         }
-   }
+   }*/
 }
 
 /* dispaly the creat meetup form 
@@ -638,4 +709,24 @@ function groupfront_send_to_memebers(){
         有个字段得记录某个人的最后活动时间';
         
     return $output; 
+}
+
+function groupfront_page($page)
+{
+    if($node = $GLOBALS['current_group'])
+    {           
+        require dirname(__FILE__) . '/group-page/' . $page . '.tpl.php';
+        return $string;
+        //ob_end_flush();
+        //echo ob_get_flush();die;
+        //$output = ob_get_flush();
+        //return $output;
+        //return file_get_contents( dirname(__FILE__) . '/group-page/' . $page . '.tpl.php');
+    }
+    //return ;
+}
+
+function groupfront_form__alter()
+{
+    
 }
