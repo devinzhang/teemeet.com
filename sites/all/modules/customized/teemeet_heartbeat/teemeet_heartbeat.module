@@ -1,5 +1,7 @@
 <?php
 
+include_once('teemeet_heartbeat.features.inc');
+
 /**
  * Implementation of hook_init().
  */
@@ -7,7 +9,19 @@ function teemeet_heartbeat_init() {
   drupal_add_css(drupal_get_path('module', 'teemeet_heartbeat') . '/teemeet_heartbeat.css');
 }
 
-include_once('teemeet_heartbeat.features.inc');
+/**
+ * Implementation of hook_token_list().
+ */
+function teemeet_heartbeat_token_list($type='all') {
+  /*
+  print '<pre>';
+  print_r($type);
+  print '</pre>';
+  */
+  if ($type == 'user') {
+    $tokens['user']['test'] = t('test');
+  }
+}
 
 /**
  * Implementation of hook_heartbeat_register_access_types().
@@ -29,6 +43,38 @@ function teemeet_heartbeat_heartbeat_register_access_types() {
       'access' => TRUE
     ),
   );
+}
+
+/**
+ * Implementation of hook_greeting_insert().
+ */
+function teemeet_heartbeat_greeting_insert($entry) {
+    $message_id = 'custom_add_greeting';
+    $variables = array(
+      '@recipient' => l(heartbeat_user_load($entry->recipient)->name, 'user/' . $entry->recipient),
+      '@author' => l(heartbeat_user_load($entry->author)->name, 'user/' . $entry->author),
+      '@message' => $entry->message,
+      '@group' => 'ceshi',
+      '@time' => $entry->created,
+    );
+
+    heartbeat_api_log($message_id, $entry->author, $entry->recipient, 0, 0, $variables);
+}
+
+/**
+ * Implementation of hook_greeting_delete().
+ */
+function teemeet_heartbeat_greeting_delete($entry) {
+    $message_id = 'custom_delete_greeting';
+    $variables = array(
+      '@recipient' => l(heartbeat_user_load($entry->recipient)->name, 'user/' . $entry->recipient),
+      '@author' => l(heartbeat_user_load($entry->author)->name, 'user/' . $entry->author),
+      '@message' => $entry->message,
+      '@group' => 'ceshi',
+      '@time' => $entry->created,
+    );
+
+    heartbeat_api_log($message_id, $entry->author, $entry->recipient, 0, 0, $variables);
 }
 
 /**
