@@ -276,7 +276,7 @@ function theme_group_extensions_member($member){
         </div>
 <div class="memberInfo hasOnlyEmail">
 <div id="memberInfo_20252341" class="D_title">';
-$output .= '<a class="memName" href="http://www.meetup.com/Beijing-Soccer-Lovers/members/20252341/">'.$user->name.'</a>';
+$output .= '<a class="memName" href="'.url( $current_group->path.'/member/'.$member->uid.'/ingroup/'.$current_group->nid).'">'.$user->name.'</a>';
 $output .= '<span id="role_20252341" class="memRole">
 
 </span>
