@@ -355,7 +355,7 @@ function groupfront_preprocess_page(&$vars){
                 
                 $vars['content'] = '<div id="events-list-module" class="D_box">';
                 $vars['content'] .= '<h1 class="" id="welcome-message">Welcome to '.$node->title.'</h1>';
-                $vars['content'] .= '<a class="ghsprite push_wh" href="">'.t('Suggest a New Meetup').'</a>';
+                $vars['content'] .= '<a id="lma-suggest" class="ghsprite push_wh" href="">'.t('Suggest a New Meetup').'</a>';
                 $vars['content'] .= '<div class="closed" id="lma">';
                         $vars['content'] .= '<div id="meetup-suggestion" style="display:none;">';
                             $vars['content'] .= _groupfront_output_meetup_suggestion($node->nid);

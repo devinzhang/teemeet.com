@@ -17,11 +17,7 @@
   <![endif]-->
   <?php print $local_styles; ?>
   <?php print $scripts; ?>
-  <script type="text/javascript">(function(){var hash=window.location.hash.replace("#","");if(hash){var ops={calendar:"http://www.meetup.com/SacSwim/events/calendar/",drafts:"http://www.meetup.com/SacSwim/events/drafts/",making:"http://www.meetup.com/SacSwim/events/suggested/",past:"http://www.meetup.com/SacSwim/events/past/",suggested:"http://www.meetup.com/SacSwim/events/suggested/",unofficial:"http://www.meetup.com/SacSwim/events/unofficial/",upcoming:"http://www.meetup.com/SacSwim/"},loc=window.location,url=[loc.protocol,"//",loc.host,loc.pathname].join(""),target=ops[hash];if(target&&url!==target){loc.replace(target)}}})();</script>
-<script src="http://static1.meetupstatic.com/884236050070803923549903/script/Meetup/packed/Meetup.Base.jquery.js" type="text/javascript"></script>
-<script type="text/javascript">Meetup.isSecure=false;var LOG={};LOG.info=function(){return};LOG.error=function(){return};var Member={id:0,name:"",lat:"0.0",lon:"0.0",radius:"50",country:"us",zip:"",isCoord:false,isOrganizingAny:false,twitterAccount:false,status:1,isOwner:false,isCOOrg:false,groupsLink:"http://www.meetup.com/members/0/groups/",groupCount:0,isEvtOrg:false,isMember:false,memberThumb:"http://img1.meetupstatic.com/39194172310009655/img/noPhoto_50.gif",isVisitor:false,accessToken:""};var memberId=Member.id;var topicId=3361;var Chapter={id:1082327,name:"Sacramento Swimming Enthusiasts",lat:"38.57",lon:"-121.47",city:"Sacramento",state:"CA",country:"us",zip:"95816",domain:"",threshold:-1,previewUrl:"http://www.meetup.com/SacSwim/?op=preview",groupApiUrl:"http://www.meetup.com/SacSwim/api/",localTime:"August 6, 2011 20:16:11",forceUrl:false,groupUrl:"http://www.meetup.com/SacSwim/"};var chapterId=Chapter.id;Meetup.Language="en_US";if(typeof(Meetup.Copy)!="object"){Meetup.Copy={}}Meetup.Copy.CharCounter={};Meetup.Copy.dlogCloseThis="Close this";Meetup.Copy.CharCounter.upToXChars="Up to {CHAR_COUNT} characters.";Meetup.Copy.monthNames=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];Meetup.Copy.dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];if(Meetup.Data===undefined){Meetup.Data={}}Meetup.Data.secureUrl="http://www.meetup.com/";Meetup.Data.secureApiUrl="http://www.meetup.com/api/";if(typeof Meetup==="undefined"){Meetup={}}if(Meetup.Data.grouphome===undefined){Meetup.Data.grouphome={}}if(Meetup.Data.grouphome.modulePreference===undefined){Meetup.Data.grouphome.modulePreference={}}Meetup.Data.themeCSS="http://www.meetup.com/theme/1297925954/?chapterId=1082327&external=true";Meetup.Data.grouphome.baseUrl="http://www.meetup.com/SacSwim/";Meetup.Data.grouphome.layoutVersion="4";Meetup.Data.grouphome.isOrg=false;Meetup.Data.grouphome.isPrivate=false;var COOKIE_DOMAIN=".meetup.com";if(""!=""){COOKIE_DOMAIN=""}if(typeof Meetup.Styles=="undefined"){Meetup.Styles={}}Meetup.Styles.boxBackgroundColor="#E1F2E8";</script>
-<meta name="keywords" content="USA,California,Sacramento,Swimming,swimmers,group,club,event,community,meetup" />
-<meta name="description" content="Meet others in your local area interested in swimming. In the pool and out in the real world open water style. We&#039;ll work out regularly to stay fit, discuss swimming techniques, health benefits and ga" />
+
 <link rel="stylesheet" href="http://static2.meetupstatic.com/5784067448294103359835360/style/meetup_jquery_ui.css" type="text/css" />
 <link rel="stylesheet" href="http://static1.meetupstatic.com/0649981367410798082298064/style/meetup.css" type="text/css" />
 <!--[if IE 6]>
@@ -32,7 +28,7 @@
 		<link rel="stylesheet" href="http://static2.meetupstatic.com/74513332436582209025/style/base_ie.css" type="text/css" />
 	<![endif]-->
 
-<link rel="stylesheet" href="http://static1.meetupstatic.com/549553553979963562427959/style/bagelbase_mar.css" type="text/css" />
+
 <link rel="stylesheet" href="http://static2.meetupstatic.com/9659051690118168059/style/new_layout.css" type="text/css" />
 <link rel="stylesheet" href="http://static1.meetupstatic.com/8309909721544940250642/style/module.css" type="text/css" />
 <!--link rel="stylesheet" href="http://www.meetup.com/theme/1297925954/?chapterId=1082327&external=true" type="text/css" /-->
@@ -240,7 +236,7 @@
               </div>
             </form>
           </div>
-          <div class="D_boxsection isFacebook">
+          <!--div class="D_boxsection isFacebook">
             <div class="orbox">
               <div class="orword"> or </div>
             </div>
@@ -250,7 +246,7 @@
                 <fb:intl>Log in using Facebook</fb:intl>
               </fb:login-button>
             </div>
-          </div>
+          </div -->
         </div>
         <div id="paneSignup">
           <div  class="D_boxhead">
@@ -303,6 +299,7 @@
               </div>
             </form>
           </div>
+          <!--
           <div class="D_boxsection isFacebook">
             <div class="orbox">
               <div class="orword"> or </div>
@@ -314,147 +311,12 @@
               </fb:login-button>
             </div>
           </div>
-          <div class="D_boxsection tos"> By clicking the "Sign up using Facebook" or "Sign up" buttons above, you agree to Meetup's <a href="http://www.meetup.com/terms/" target="_blank">Terms of Service</a> </div>
+          -->
+         
         </div>
       </div>
     </div>
   </div>
 </div>
-<script type="text/javascript"> 
-Meetup.Copy.characterLeft="1 character left";Meetup.Copy.charactersLeft="{NUM_CHARS} characters left";Meetup.Copy.noCharactersLeft="No more characters left.";Meetup.Copy.characterOver="(1 character over)";Meetup.Copy.charactersOver="({NUM_CHARS} characters over)";Meetup.Copy.removeRSVP="Can't go";Meetup.Copy.updateRSVP="Update";Meetup.Data.googleMapKey="ABQIAAAAsy0hHdLv8lt7dUhh_8Q2nhT9dWrIyy2PXg-qM7aW-4MZzb3j6xQO9Ylaxb0g9dvE--f66B7pFHaapg";Meetup.Data.LayoutVersion=4;Meetup.Data.ghIconColor="bk";Meetup.Data.memberLang="en";Meetup.Data.isUpcoming=true;Meetup.Data.page=null;Meetup.Data.isSuggestionOpen=false;Meetup.Data.calendarRoot="http://www.meetup.com/SacSwim/events/";Meetup.Data.venueRoot="http://www.meetup.com/SacSwim/venue/";Meetup.Data.chapterWho="swimmers";Meetup.Data.chapterUrlname="SacSwim";Meetup.Copy.seeResult="Your post will appear on __PT__ in a moment.";Meetup.Copy.errorSharing="Sorry, there was a problem posting your message. Please try again later.";Meetup.Copy.notYou="Change";Meetup.Copy.numGoing='<span class="rsvp-count-number">__COUNT__</span> swimmers going';Meetup.Copy.zeroGoing="Be the first to say you're going";Meetup.Copy.numWaiting='<span class="rsvp-count-number">__RSVP_COUNT__</span> going &middot <span class="rsvp-count-number">__WAIT_COUNT__</span> waiting';Meetup.Copy.numSpots="__COUNT__ spots available";Meetup.Copy.oneSpot="1 spot available";Meetup.Copy.noSpotsWL="No spots left";Meetup.Copy.noSpots="No spots left";Meetup.Data.path_twitter_tie="http://www.meetup.com/twitter_connect/";Meetup.Data.path_img_facebook="http://img1.meetupstatic.com/192008639833446537662/img/externalservice/socialmediaicons/facebook-16x16.png";Meetup.Data.path_img_facebook_g="http://img1.meetupstatic.com/61619264790717889890851/img/externalservice/socialmediaicons/facebook-16x16g.png";Meetup.Data.path_img_twitter="http://img1.meetupstatic.com/13191465716213475/img/externalservice/socialmediaicons/twitter-16x16.png";Meetup.Data.path_img_twitter_g="http://img2.meetupstatic.com/696188756139167243428083971/img/externalservice/socialmediaicons/twitter-16x16g.png";Meetup.Data.fbname="";Meetup.Data.noPhoto="http://img1.meetupstatic.com/39194172310009655/img/noPhoto_50.gif";Meetup.Copy.cancel="cancel";Meetup.Copy.titlePrompt="Title:";Meetup.Copy.descriptionPrompt="Description:";Meetup.Copy.timePrompt="Time:";Meetup.Copy.allDay="All day";Meetup.Copy.startsAtPrompt="Starts at:";Meetup.Copy.submit="Submit";Meetup.Copy.addToCalendarPrompt="Add to Calendar:";Meetup.Copy.errorGeneric="Sorry, there was a problem saving your data.  Please try again in a minute.";Meetup.Copy.errorTitleMissing="You must enter a title.";Meetup.Copy.oneMoreRsvp="1 more RSVP until&hellip;";Meetup.Copy.xMoreRsvps="__COUNT__ more RSVPs until&hellip;";Meetup.Copy.errFull="Sorry, this Meetup is full!";Meetup.Copy.errInvalidGuest="Please enter a valid number of guests.";Meetup.Copy.errTooManyGuests="You can't bring that many guests.";Meetup.Copy.errPast="This Meetup already happened!";Meetup.Copy.errGeneric="An error occurred.";Meetup.Data.calScript="http://static2.meetupstatic.com/375309602028658/script/jquery/Meetup/CalendarQuickAdd.js";Meetup.Copy.memberLike="Members who like this";Meetup.Copy.memberWant="Members who want this";Meetup.Copy.justNow="just now";Meetup.Copy.suggestAMeetup="Suggest a new Meetup";Meetup.Copy.cancelLMA="No thanks";Meetup.Copy.postDeleted="The post has been deleted";Meetup.Copy.undo="undo";Meetup.Copy.emailSent="Email Sent";Meetup.Copy.sendingEmail="Sending Email";if(!mc){var mc=Meetup.Copy}mc.noThanks="No thanks.";mc.login="Log in";mc.signUpToday="Sign up today!";mc.or="or";mc.toReceiveTopicUpdates="To receive updates about {TOPIC_NAME} Meetups in your area.";mc.imInterestedInThis="Notify me!";mc.wellEmailYou="We'll email when groups start nearby.";mc.meetupGroupsWorldwide="Meetup Groups worldwide";mc.meetupGroupsNearYou="Meetup Groups near you";mc.alreadyInterested="You're already interested in this!";if(typeof(Meetup)=="undefined"){Meetup={}}Meetup.pageName="GROUP: home";
-</script> 
-<script src="http://static1.meetupstatic.com/209101726573579077045/script/Meetup/packed/grouphome.js" type="text/javascript"></script> 
-<script type="text/javascript"> 
- 
-Meetup.DOMReady.ready(function() {
-Meetup.Script.include([ "http://static1.meetupstatic.com/082899144013760729961/script/Meetup/packed/Modules.jquery.js", "http://static1.meetupstatic.com/246471989912363528614/script/jquery/plug-in/actionDropdown.js"]
- 
-,function() {
- 
-$('#C_page').actionDropdown();
- 
-FeedPager.init( $( "#grouphome_feed_10538121" ), "http://www.meetup.com/SacSwim/module/render/?moduleId=10538121&m_nochrome=true" );
-}
- 
-);
-});
- 
-connect(window, "onload",function() {
-Meetup.Script.include([ "http://static1.meetupstatic.com/41330693538953738449500/script/jquery/Meetup/TopicInfo.js", "http://static1.meetupstatic.com/25848261219440578973/script/jquery/Meetup/Validator.js"]
- 
-,function() {
- 
-$("form.J_signupForm").each(function(){
-var MUVR = Meetup.UI.ValidatorRules;
-var signupVal = new Meetup.UI.Validator(this);
-var id = this.id;
-signupVal.addRule(MUVR.notEmpty, $get(id+"_realname"));
-signupVal.addRule(MUVR.notEmpty, $get(id+"_email"));
-signupVal.addRule(MUVR.isEmail, $get(id+"_email"));
-signupVal.addRule(MUVR.notEmpty, $get(id+"_password"));
-signupVal.addRule(MUVR.isMinLength, $get(id+"_password"), 6);
-});
-//Meetup.DomDeco.applyByTagAndClass('input', 'horizUrfInput', Meetup.DomDeco.TextInputTip);
- 
- 
-}
- 
-);
-});
- 
-$(function(){Meetup.GroupHome.init()});$(function(){$("#module_10538121").feedpopup()});$(function(){if($("#duesSignal")){$("#chapterDuesDialog").Dialog()}if($("#refundSignal")){$("#refundBox").Dialog()}});$(function(){$(".D_splain").Splain()});$(function(){Meetup.GA.load("member","","","","")});
-</script> 
-<script type="text/javascript" src="http://static2.meetupstatic.com/654226392224242/script/Meetup/Facebook2.js"></script>
-<div id="fb-root"></div>
-<script type="text/javascript"> 
- 
-if (Meetup.Data === undefined) {
-Meetup.Data = {};
-}
- 
-Meetup.Data.path_api = "http://www.meetup.com/api/";
-Meetup.Data.path_fb_tie = "http://www.meetup.com/facebook_account_tie/";
- 
-Meetup.Data.path_xdpath = "http://www.meetup.com/fbconnect/xd.html";
- 
- 
-Meetup.Facebook.afterAuthUri = "http://www.meetup.com/fb/?country=us&zip=95816&rg=ghurf";
-Meetup.Facebook.returnUri = "http://www.meetup.com/SacSwim/join/";
-/*
-Meetup.Facebook.onButtonLogin = function () {
-if (Meetup.Facebook.isJoining) {
-var oper = (Meetup.Facebook.returnUri.indexOf("?") > -1) ? "&" : "?";
-Meetup.Facebook.returnUri = Meetup.Facebook.returnUri + oper + "returnUri=" + Meetup.Facebook.returnUriSecondary;
-}
-//else {
-// Meetup.Facebook.returnUri
-//}
-Meetup.Facebook.extendedPerms(Meetup.Facebook.extendedPermissionList, Meetup.Facebook.returnUri);
-};
-*/
-//var fbd = Meetup.Dispatcher.init("meetupBody")
-//fbd.registerFunc("doFB", Meetup.Facebook.onButtonLogin);
- 
- 
-Meetup.Facebook.template = 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-{
-	'name': "Sacramento Swimming Enthusiasts",
-	'href': "http:\/\/www.meetup.com\/SacSwim\/i3\/socialmedia"
- 
-	,'caption': "288 swimmers in Sacramento, CA"
- 
- 
- 
-	,'media': [{
-	'type': 'image',
-	'src': "http:\/\/photos2.meetupstatic.com\/photos\/event\/e\/3\/2\/d\/thumb_21538157.jpeg"
- 
-	,'href': "http:\/\/www.meetup.com\/SacSwim\/i3\/socialmedia"
- 
-}]
- 
-}
-;
-Meetup.Facebook.fbSrcCode = "fb_ghm";
-Meetup.Twitter.srcCode = "ghme";
- 
-Meetup.Twitter.template =  
- 
-{
-	'name': "Sacramento Swimming Enthusiasts",
-	'href': "http:\/\/www.meetup.com\/SacSwim\/i3\/socialmedia"
- 
-	,'caption': "Check out Sacramento Swimming Enthusiasts on Meetup"
- 
- 
- 
-}
-;
- 
-(function() {
-var e = document.createElement('script');
-e.async = true;
-e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js#appId=308de2e49a5be660d94a6dc5d68f6dab&xbfml=1';
-document.getElementById('fb-root').appendChild(e);
-}());
-window.fbAsyncInit = function () {
-Meetup.Facebook.init("308de2e49a5be660d94a6dc5d68f6dab", null  );
-}
-</script> 
-<!--[if gte IE 8]>
-<script type="text/javascript">
-Meetup.Facebook.isIE8 = true;
-</script>
-<![endif]-->
-
 </body>
 </html>
