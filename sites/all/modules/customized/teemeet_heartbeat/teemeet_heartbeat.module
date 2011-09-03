@@ -42,6 +42,13 @@ function teemeet_heartbeat_heartbeat_register_access_types() {
       'module' => 'teemeet_heartbeat',
       'access' => TRUE
     ),
+    2 => array(
+      'name' => 'My groups activity',
+      'class' => 'MyGroupsActivity',
+      'path' => 'my_groups_activity.inc',
+      'module' => 'teemeet_heartbeat',
+      'access' => TRUE
+    ),
   );
 }
 
