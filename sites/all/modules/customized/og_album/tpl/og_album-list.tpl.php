@@ -15,24 +15,24 @@
                 <div class="D_listControl">
                     <label>Sort by:</label>
                         <span class="D_radio">
-                            <a href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/all_albums/?sort=activity" class="selected">Activity</a>
-                            <a href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/all_albums/?sort=create">Created</a>
+                            <a href="" class="selected">Activity</a>
+                            <a href="">Created</a>
                         </span>
                 </div>
             </div>
             <div id="groupListContainer" class="D_groupList_shopping">
                 <ul class="D_summaryList">
                 <?php foreach($albums as $aid => $album): ?>      
-                        <?php //print_r($album); ?>
+                        <?php //print_r($current_group); ?>
                     <li class="D_group J_groupHover position_1 first">
                         <div class="D_image">
-                             <a href="<?php echo url('node/'.$album->nid); ?>">
+                             <a href="<?php echo url( $current_group->path.'/node/'.$album->nid); ?>">
                             <img title="soccer" src="<?php global $base_url; echo $base_url.'/'.$album->album['cover_image_path']; ?> " alt="">
                             </a>
                         </div>
                         <div class="D_info">
                             <div class="D_name J_help">
-                                <a href="<?php echo url('node/'.$album->nid); ?>">
+                                <a href="<?php echo url($current_group->path.'/node/'.$album->nid); ?>">
                                 <?php echo $album->title; ?>
                                 </a>
                             </div>

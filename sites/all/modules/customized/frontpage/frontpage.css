@@ -142,3 +142,68 @@ span.pop {
     overflow: hidden;
     padding: 0.5em;
 }
+
+/* front page featured group */
+.D_maybeItsTime span {
+    display: block;
+    
+}
+.D_photoGroup {
+    color: #FFFFFF;
+    float: left;
+    margin-bottom: 1px;
+    margin-right: 1px;
+    position: relative;
+}
+.D_photoGroup a.D_photoGroup_link {
+    color: #FFFFFF;
+    display: block;
+    height: 200px;
+    width: 248px;
+}
+.D_photoGroup span {
+    display: block;
+}
+
+.D_photoGroup .D_photoGroup_bkg {
+    background-color: #111111;
+    bottom: 5px;
+    height: 85px;
+    left: 5px;
+    opacity: 0.65;
+    position: absolute;
+    width: 239px;
+    z-index: 1;
+}
+
+
+.D_photoGroup .D_photoGroup_caption {
+    bottom: 5px;
+    height: 85px;
+    left: 5px;
+    overflow: hidden;
+    position: absolute;
+    width: 239px;
+    z-index: 2;
+}
+
+.D_photoGroup .D_photoGroup_caption .D_photoGroup_caption_body {
+    padding: 2px 5px;
+}
+
+.D_photoGroup .D_photoGroup_caption .D_photoGroup_location {
+    color: #FFFFFF;
+    font-size: 0.9em;
+    text-decoration: none !important;
+}
+
+.D_photoGroup .D_photoGroup_caption .D_photoGroup_name, .D_photoGroup .D_photoGroup_caption .D_photoGroup_name a {
+    color: #EEEEEE;
+    font-weight: bold;
+}
+.D_photoGroup .D_photoGroup_caption .D_photoGroup_lastMeetup {
+    color: #CCCCCC;
+    font-size: 0.8em;
+    margin-top: 0.15em;
+    text-decoration: none !important;
+}
