@@ -28,7 +28,6 @@
 		<link rel="stylesheet" href="http://static2.meetupstatic.com/74513332436582209025/style/base_ie.css" type="text/css" />
 	<![endif]-->
 
-
 <link rel="stylesheet" href="http://static2.meetupstatic.com/9659051690118168059/style/new_layout.css" type="text/css" />
 <link rel="stylesheet" href="http://static1.meetupstatic.com/8309909721544940250642/style/module.css" type="text/css" />
 <!--link rel="stylesheet" href="http://www.meetup.com/theme/1297925954/?chapterId=1082327&external=true" type="text/css" /-->

@@ -351,8 +351,7 @@ function groupfront_preprocess_page(&$vars){
             $is_member = og_is_group_member($node);
             drupal_add_css(drupal_get_path('module', 'groupfront').'/css/groupfront.css');
             drupal_add_js(drupal_get_path('module', 'groupfront').'/js/groupfront.js');
-            if($is_member) {
-                
+            if($is_member) {                
                 $vars['content'] = '<div id="events-list-module" class="D_box">';
                 $vars['content'] .= '<h1 class="" id="welcome-message">Welcome to '.$node->title.'</h1>';
                 $vars['content'] .= '<a id="lma-suggest" class="ghsprite push_wh" href="">'.t('Suggest a New Meetup').'</a>';
