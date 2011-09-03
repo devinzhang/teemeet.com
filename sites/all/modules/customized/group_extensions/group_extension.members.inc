@@ -82,7 +82,7 @@ function group_extensions_allmembers_page_title($gid){
 
 function group_extensions_leadship_page_title($gid){
  //   $cnt = _group_extensions_get_all_members($gid, TRUE);
-        $cnt = 1; 
+    $cnt = 1; 
     return t('The Leadship Team (@cnt)',array('@cnt'=>$cnt));
 }
 /* menu callback */

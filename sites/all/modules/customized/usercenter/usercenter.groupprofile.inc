@@ -37,7 +37,6 @@ function usercenter_group_member_rsvp($uid,$gid){
      $group = node_load($gid);
         $output .= '<div class="profile-body">';
         $output .= theme('usercenter_member_rsvp',$account, '', $group);
-
         $output .= '</div>';
 
     $output .= '</div>';
@@ -59,7 +58,6 @@ function usercenter_group_member_photos($uid,$gid){
          //$output .= theme('usercenter_member_photos',$account, '', $group);
          $output .= multi_avator_member_photos();
         $output .= '</div>';
-
     $output .= '</div>';
 
     return $output;

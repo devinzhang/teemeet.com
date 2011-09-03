@@ -65,8 +65,7 @@ function group_extensions_menu()
 		'access callback'=>TRUE,
         'type' => MENU_LOCAL_TASK,
         'file' => 'group_extension.members.inc',
-	);
-    
+	);    
     
     return $items;    
 }

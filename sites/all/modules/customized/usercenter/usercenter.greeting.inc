@@ -158,7 +158,6 @@ function theme_greeting_entry($uid, $entry, $zebra, $confirm_delete = false) {
 	$output .= '</div>';
 	$output .= '</li>';
 	return $output;
-
 }
 /* menu callback to delete a greetings
  ** @param, $id, the greeting entry id
