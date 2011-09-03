@@ -93,12 +93,14 @@ function usercenter_group_member_greetings($uid,$gid){
 
 function _usercenter_group_member_tabs($uid,$gid) {
     $output = '';
+    $current_group = $GLOBALS['current_group'];
+      
     drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
     $output .= '<ul class="tabs primary">';
-            $output .= '<li class="">'.l(t('Intr'),'member/'.$uid.'/ingroup/'.$gid.'/intro').'</li>';
-            $output .= '<li class="">'.l(t('RSVPs'),'member/'.$uid.'/ingroup/'.$gid.'/rsvp').'</li>';
-            $output .= '<li class="">'.l(t('Photos'),'member/'.$uid.'/ingroup/'.$gid.'/photos').'</li>';
-            $output .= '<li class="">'.l(t('Greetings'),'member/'.$uid.'/ingroup/'.$gid.'/greetings').'</li>';
+            $output .= '<li class="">'.l(t('Intr'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/intro').'</li>';
+            $output .= '<li class="">'.l(t('RSVPs'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/rsvp').'</li>';
+            $output .= '<li class="">'.l(t('Photos'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/photos').'</li>';
+            $output .= '<li class="">'.l(t('Greetings'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/greetings').'</li>';
     $output .= '</ul>';
     return $output;
 }

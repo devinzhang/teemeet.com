@@ -121,6 +121,8 @@ function theme_greeting_entry($uid, $entry, $zebra, $confirm_delete = false) {
 	global $user;
 	$output = '';
 	$author = user_load($entry['author']);
+    $current_group = $GLOBALS['current_group'];
+    
 	global $base_url;
 	$output .= '<li class="D_yell" id="greeting-entry-'.$entry['id'].'">';
 	$output .= '<div class="D_image">';
@@ -132,13 +134,13 @@ function theme_greeting_entry($uid, $entry, $zebra, $confirm_delete = false) {
 	$output .= '<p><span class="D_quot">“</span>&nbsp;'.$entry['message'].'&nbsp;<span class="D_quot">”</span></p> ';
 	$output .= '</div>';
 	$output .= '<div class="speaker">';
-	$output .= '<div class="memName">&mdash; '.l($entry['name'],'user/'.$entry['author']).'<span class="nobr D_less">('.format_date($entry['created']).')</span></div>';
+	$output .= '<div class="memName">&mdash; '.l($entry['name'],$current_group->path.'/member/'.$entry['author'].'/ingroup/'.$current_group->nid).'<span class="nobr D_less">('.format_date($entry['created']).')</span></div>';
 	$output .= '</div>';
 
 	$output .= '<ul class="D_actions">';
 	if($user->uid != $entry['author']) {
 		$output .= '<li class="canDo">';
-		$output .= l(t('Send @name a Greeting', array('@name' => $author->name)),'member/'.$entry['author'].'/ingroup/0/greetings');
+		$output .= l(t('Send @name a Greeting', array('@name' => $author->name)),$current_group->path.'/member/'.$entry['author'].'/ingroup/'.$current_group->nid.'/greetings');
 		$output .= '</li>';
 	}
     
