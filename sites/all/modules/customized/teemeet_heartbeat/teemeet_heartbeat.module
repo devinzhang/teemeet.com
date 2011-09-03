@@ -65,7 +65,7 @@ function teemeet_heartbeat_greeting_insert($entry) {
       '@time' => $entry->created,
     );
 
-    heartbeat_api_log($message_id, $entry->author, $entry->recipient, 0, 0, $variables);
+    heartbeat_api_log($message_id, $entry->author, $entry->recipient, $entry->curr_gid, 0, $variables);
 }
 
 /**
@@ -81,7 +81,7 @@ function teemeet_heartbeat_greeting_delete($entry) {
       '@time' => $entry->created,
     );
 
-    heartbeat_api_log($message_id, $entry->author, $entry->recipient, 0, 0, $variables);
+    heartbeat_api_log($message_id, $entry->author, $entry->recipient, $entry->gid, 0, $variables);
 }
 
 /**
