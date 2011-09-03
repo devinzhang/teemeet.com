@@ -17,7 +17,7 @@ function og_album_album_list($gid){
     if(empty($albums) && !og_album_is_group_admin($gid)){
     drupal_set_message(t('Since there are no albums, photos can\'t be added'),'warning');
     }   
-    $group = node_load($gid); 
+    $group = $GLOBALS['current_group'];
     $output .= theme('og_album_list', $group, $albums, $is_group_admin);    
     return $output;
 }

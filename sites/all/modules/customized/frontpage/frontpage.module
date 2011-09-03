@@ -76,9 +76,56 @@ function _frontpage_home () {
         $output .= _frontpage_home_explore();     
      return $output;
     } else {
-    drupal_goto('node');
-    }
-   
+        $output = frontpage_featured_groups();
+    return $output; 
+    }   
+}
+
+function frontpage_featured_groups(){
+    $output = '';
+    $output .='<div class="D_boxhead">';
+        $output .='<h3 style="font-size: 1.6em; line-height: 1.2em; color: rgb(51, 51, 51);" class="D_maybeItsTime">';
+        $output .='<span>'.t('Do something • Learn something').'</span>';
+        $output .='<span>'.t('Share something • Change something').'</span>';
+        $output .='</h3>';
+    $output .='</div>';
+    $output .= '<div class="D_boxsection isNotDivided ">';
+        $sql = "select nid from {node} where type='group' and status=1 and promote=1";
+        $result = pager_query($sql, 10, 0, "SELECT COUNT(*) FROM {node} WHERE type='group' and status=1 and promote=1");
+        while ($entry = db_fetch_object($result)) {
+            $node = node_load($entry->nid);
+            $output .= _output_group_teaser($node);
+        }
+    
+    $output .= '</div';
+    return $output; 
+}
+
+/* priviate funciton theme a group teaser 
+** @param $node, the group node
+**/
+
+function _output_group_teaser($node) {
+    $output = '';
+    $output .= '<div style="background: url(&quot;http://photos4.meetupstatic.com/photos/event/5/c/5/9/event_40043641.jpeg&quot;) no-repeat scroll center center rgb(102, 102, 102);" class="D_photoGroup">';
+    $output .= '<a class="D_photoGroup_link" href="'.$node->path.'">';
+    $output .= '<span class="D_photoGroup_bkg"></span>
+<span class="D_photoGroup_caption">
+<span class="D_photoGroup_caption_body">
+<span class="D_photoGroup_name">'. $node->field_site_title[0]['value'].
+
+'</span>
+<span class="D_photoGroup_location">
+'.$node->field_location[0]['country_name'].' • '.$node->field_location[0]['province_name'].' • '.$node->field_location[0]['lid'].'
+</span>
+
+<span class="D_photoGroup_lastMeetup">Latest Meetup: Jul 14, 2011</span>
+
+</span>
+</span>
+</a>
+</div>';
+    return $output; 
 }
 
 /* priviate function to get an user's personal heartbeat;
@@ -262,28 +309,31 @@ function frontpage_top_right_menu(){
    
     $output .= '<ul id="frontpage-top-right-menu" class="sf-menu">'; 
  //   $output .= '<li class="leaf first">'.l($user->name, 'myhome/'.$user->uid).'</li>';
-    $output .= '<li class="leaf first">'.'<div id="C_welcome"><a class="icon" href="'.url('myhome/'.$user->uid).'"><img alt="Home" class="D_icon" src="'.$img_path.'"></a> <a class="text" href="'.url('myhome/'.$user->uid).'">'.$user->name.'</a></div>'.'</li>';
- 
+     if($user->uid) {
+        $output .= '<li class="leaf first">'.'<div id="C_welcome"><a class="icon" href="'.url('myhome/'.$user->uid).'"><img alt="Home" class="D_icon" src="'.$img_path.'"></a> <a class="text" href="'.url('myhome/'.$user->uid).'">'.$user->name.'</a></div>'.'</li>';
+    }
     $output .= '<li class="whats-new leaf C_userNavItem_less"><a href="">'.t('What\'s New');
     //    $output .= '<span class="unreadCount">1</span>';
     $output .= '</a></li>';
     $output .= '<li class="leaf C_userNavItem_less">'.l(t('Help'),'').'</li>';
+   
+   if($user->uid) {
     $output .= '<li class="leaf hasDropDown"><a href="'.url('user/'.$user->uid.'/mygroups').'">'.t('My Groups').'</a>';    
         $output .= '<ul style="z-index: 5001;  " class="myGroupsSection">';
             $output .= '<li><a class="C_groupsMenuItem" href="">Beijing Soccer Lovers</a></li>';
             $output .= '<li><a class="C_groupsMenuItem" href="">teemeet</a></li>';
-        $output .= '</ul>';
-        
+        $output .= '</ul>';        
     $output .= '</li>';
-    $output .= '<li class="leaf ">'.l(t('Account'),'').'</li>';
+    }
     if($user->uid) {
+    $output .= '<li class="leaf ">'.l(t('Account'),'').'</li>';
     $output .= '<li class="leaf last">'.l(t('Log out'),'logout').'</li>';
     } else {
     $output .= '<li class="leaf ">'.l(t('Log in'),'user/login').'</li>';
+    $output .= '<li class="leaf ">'.l(t('Sign up'),'user/register').'</li>';
     }
     $output .= '</ul>';
-   //  $output .= '<div id="C_welcome"><a href="'.url('myhome/'.$user->uid).'"><img alt="Home" class="D_icon" src="'.$img_path.'"></a> <a href="'.url('myhome/'.$user->uid).'">'.$user->name.'</a></div>';
-
+  
     
     return $output; 
 }
