@@ -341,20 +341,21 @@ return $output;
  * this function only used to cutomized the the group home page 
  *
  */
-function groupfront_preprocess_page(&$vars){
-    /*$action = arg(2); 
+function groupfront_preprocess_page(&$vars){  
+   
+
 	if(arg(0)=='node' && is_numeric(arg(1)) && !isset($action) ) {
 		$node = $vars['node'];
         $curr_title = drupal_get_title();
         if($node->type == 'group') {
             $is_member = og_is_group_member($node);
             drupal_add_css(drupal_get_path('module', 'groupfront').'/css/groupfront.css');
-            drupal_add_js(GROUPFRONT_PATH.'/js/groupfront.js');
+            drupal_add_js(drupal_get_path('module', 'groupfront').'/js/groupfront.js');
             if($is_member) {
                 
                 $vars['content'] = '<div id="events-list-module" class="D_box">';
                 $vars['content'] .= '<h1 class="" id="welcome-message">Welcome to '.$node->title.'</h1>';
-                $vars['content'] .= '<a class="ghsprite push_wh" href="http://www.meetup.com/MTG-nova/suggestion/" id="lma-suggest">'.t('Suggest a New Meetup').'</a>';
+                $vars['content'] .= '<a class="ghsprite push_wh" href="">'.t('Suggest a New Meetup').'</a>';
                 $vars['content'] .= '<div class="closed" id="lma">';
                         $vars['content'] .= '<div id="meetup-suggestion" style="display:none;">';
                             $vars['content'] .= _groupfront_output_meetup_suggestion($node->nid);
@@ -377,7 +378,7 @@ function groupfront_preprocess_page(&$vars){
                     $vars['content'] .= theme('frontpage_group_heartbeats',$node);        
                 }
         }
-   }*/
+   }
 }
 
 /* dispaly the creat meetup form 

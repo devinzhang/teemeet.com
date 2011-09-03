@@ -1,0 +1,60 @@
+<?php
+
+?>
+
+<div id="node-<?php print $node->nid; ?>" class="node event-list-item <?php print $node_classes; ?>">
+ <?php if(!$page) : ?>
+    <!-- teaser start -->
+    <div class="unit status-wrap">
+		<div data-currentrsvp="{&quot;response&quot; : &quot;&quot;,&quot;guests&quot; : &quot;&quot;,&quot;comment&quot; : &quot;&quot;,&quot;share&quot; : true}" data-eventinfo="{&quot;eventid&quot; : &quot;nkmxpypkbxb&quot;,&quot;maxattendees&quot; : 17,&quot;hasWL&quot; : false,&quot;guests&quot; : {&quot;guestlimit&quot; : 5,&quot;spotsleft&quot; : 16},&quot;payment&quot; : {&quot;fee&quot; : 0.0,&quot;formattedfee&quot; : &quot;$0.00&quot;,&quot;price&quot; : &quot;Price&quot;,&quot;required&quot; : false,&quot;online&quot; : false},&quot;shorturl&quot; : &quot;http://meetu.ps/1HWz5&quot;,&quot;isghome&quot; : true,&quot;ispending&quot; : false,&quot;rsvpsclosed&quot; : &quot;false&quot;,&quot;refundpolicy&quot; : {&quot;eventname&quot; : &quot;Playgroup (2nd Session) CANCELLED&quot;,&quot;norefund&quot; : false,&quot;eventcancel&quot; : false,&quot;reschedule&quot; : false,&quot;cancelwithin&quot; : false,&quot;canceldays&quot; : 0,&quot;custom&quot; : &quot;&quot;}}" class="rsvpbox-outer">
+            <a class="D_submit_grad" href="">Count me in</a>
+        </div>
+        <div id="spots-left-" class="sub-rsvp-action event-subinfo">
+					16 spots available
+		</div>
+	</div>
+	<div itemtype="http://data-vocabulary.org/Event" itemscope="" class="unit lastUnit event-section">
+		<span style="display: none;" itemprop="eventType">Meetup</span>		
+		<a itemprop="url" class="event-title" href="<?php print $node_url; ?>"><span itemprop="summary"><?php print $title; ?></span></a>		
+		<div class="line event-wrap">
+            <a href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/events/nkmxpypkbxb/">
+					<img class=" unit event-map" src="./Community Playgroup at Christ Lutheran Church (Baltimore, MD) - Meetup_files/staticmap">
+				</a>
+			<div class="unit lastUnit event-stacked">
+				<div class="event-stack event-when complete line">
+							<time datetime="2011-07-18T10:15:00-04:00" itemprop="startDate"><?php print $node->event['start']; ?></time>	
+				</div>
+				<div class="event-stack event-where complete line">
+                    <span itemprop="location">
+                        <a target="blank" href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/venue/861987/?popup=true">Christ Lutheran Church</a>
+                            - 701 S. Charles Street Baltimore, MD
+						</span></div>
+				<div class="event-stack event-who">					
+						<a id="eventcount_" href="http://www.meetup.com/Playgroup-at-Christ-Lutheran-Church/events/nkmxpypkbxb/">
+							<span class="rsvp-count-number rsvp-count-going"><?php print $node->signup_total; ?></span> attending</a>					
+				</div>
+			</div>
+		</div>
+		<div class="eventDatas">
+					<div class="line eventData eventEditors">
+						<a class="thumb25" href="<?php print url('user/'.$uid);?>"><?php print $picture; ?><?php print $name; ?></a> is hosting this Meetup
+					</div>
+				<div class="eventData">
+                    <div itemprop="description" class="event-desc event-desc-oldview">				
+						<?php print $node->content['body']['#value']; ?>
+					</div>
+				</div>
+		</div>
+			<div class="help-plan">Talk about this Meetup - <a href="<?php print $node->links['comment_add']['href']; ?>">Post a comment</a></div>	
+			<ul class="resetList event-comments jsStartHidden">		
+				
+			</ul>
+	</div>	
+    <!-- teaser content end -->
+  			
+ <?php else: ?>
+  <div class="content">
+    <?php print $content ?>
+  </div>
+  <?php endif; ?>
+</div><!-- /node-<?php print $node->nid; ?> -->

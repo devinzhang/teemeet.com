@@ -16,6 +16,13 @@ function fusion_teemeet_preprocess_maintenance_page(&$vars) {
  */
 function fusion_teemeet_preprocess_page(&$vars) {
  
+  /*if(strstr(request_uri(), 'mytestgroup'))
+  {
+    $vars['template_files'][] = 'page-group-mytestgroup';
+  } */
+ 
+ 
+ 
 // Add per content type pages
   if (isset($vars['node'])) {
     // Add template naming suggestion. It should alway use hyphens.
@@ -47,6 +54,24 @@ function fusion_teemeet_preprocess_page(&$vars) {
       $vars['primary_links_tree'] = theme('links', $vars['primary_links'], array('class' => 'menu'));
     }
   }
+  
+    //init   
+    if(!empty($GLOBALS['current_group']))  
+    {
+        $vars['group'] = $GLOBALS['current_group'];   
+        $vars['template_files'][] = 'page-group';
+    }
+    
+    if(strstr(request_uri(), 'search'))
+    {
+        $vars['template_files'][] = 'page-group';
+    } 
+    
+    if(isset($_COOKIE['debug']))
+    {
+        print_r($vars['template_files']);
+    }
+   
 }
 
 /* hook_menu_item 
@@ -79,4 +104,24 @@ function fusion_teemeet_menu_item($link, $has_children, $menu = '', $in_active_t
  */
 function fusion_teemeet_preprocess_node(&$vars) {
 
+}
+
+function sponsor_list($node)
+{
+    //cache_get()
+    foreach($node->field_sponsor_list as $sponsor)
+    {
+        $list[] = node_load($sponsor[nid]);
+    }
+    return $list;
+}
+
+function comment_list($node)
+{     
+    $resouce = db_query('select * from {comments} where nid = %d order by timestamp desc', $node->nid);
+    while($r = db_fetch_object($resouce))
+    {
+        $return[] = $r;
+    }
+    return $return;
 }
