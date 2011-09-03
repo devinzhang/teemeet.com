@@ -45,6 +45,7 @@ function usercenter_greeting_form_validate($form, &$form_state) {
 
 function usercenter_greeting_form_submit($form, &$form_state) {
 	global $user;
+      $in_group_gid = 0;
       if(isset($GLOBALS['current_group'])) {
         $in_group_gid = $GLOBALS['current_group']->nid; 
       }
@@ -52,8 +53,8 @@ function usercenter_greeting_form_submit($form, &$form_state) {
 	 $author = $form_state['values']['author'];
 	 $message = $form_state['values']['message'];
      $now = time(); 
-	 db_query("INSERT INTO {greetings} (recipient, message, author, created)
-	 VALUES(%d, '%s', %d, %d)", $recipient, $message, $author, $now);     
+	 db_query("INSERT INTO {greetings} (recipient, message, author, gid, created)
+	 VALUES(%d, '%s', %d, %d, %d)", $recipient, $message, $author,  $in_group_gid,  $now);     
     $account = user_load($author); 
         $entry = new stdClass();
         $entry->recipient = $recipient;
@@ -63,8 +64,8 @@ function usercenter_greeting_form_submit($form, &$form_state) {
         $entry->created = $now; 
         $entry->curr_gid = $in_group_gid; 
      
-      module_invoke_all('greeting_insert', $entry);
-
+    module_invoke_all('greeting_insert', $entry);
+   drupal_goto($GLOBALS['current_group']->path.'/member/'.$recipient.'/ingroup/'.$GLOBALS['current_group']->nid.'/greetings');
       
 }
 

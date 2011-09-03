@@ -52,6 +52,14 @@ function usercenter_schema() {
                 'description' => "The author uid  of the greeting.",
 				
 			),	
+             'gid' => array(
+			    'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "group nid",
+				
+			),	
             'created' => array(
                 'type' => 'int', 
                 'unsigned' => TRUE, 
