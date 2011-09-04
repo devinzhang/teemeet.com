@@ -1,7 +1,9 @@
-<? require 'inc/func_group.php'; ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<?php
+require 'inc/func_group.php'; 
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<?php print $language->language; ?>" xml:lang="<?php print $language->language; ?>">
+
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=8" />
   <title><?php print $head_title; ?></title>
   <?php print $head; ?>
   <?php print $styles; ?>
@@ -17,23 +19,6 @@
   <![endif]-->
   <?php print $local_styles; ?>
   <?php print $scripts; ?>
-
-<link rel="stylesheet" href="http://static2.meetupstatic.com/5784067448294103359835360/style/meetup_jquery_ui.css" type="text/css" />
-<link rel="stylesheet" href="http://static1.meetupstatic.com/0649981367410798082298064/style/meetup.css" type="text/css" />
-<!--[if IE 6]>
-				<link rel="stylesheet" href="http://static1.meetupstatic.com/87101548361737691066016/style/sprites_ie.css" type="text/css" />
-			<![endif]-->
-
-<!--[if lt IE 8]>
-		<link rel="stylesheet" href="http://static2.meetupstatic.com/74513332436582209025/style/base_ie.css" type="text/css" />
-	<![endif]-->
-
-<link rel="stylesheet" href="http://static2.meetupstatic.com/9659051690118168059/style/new_layout.css" type="text/css" />
-<link rel="stylesheet" href="http://static1.meetupstatic.com/8309909721544940250642/style/module.css" type="text/css" />
-<!--link rel="stylesheet" href="http://www.meetup.com/theme/1297925954/?chapterId=1082327&external=true" type="text/css" /-->
-<!-- for event --><link rel="stylesheet" href="http://static1.meetupstatic.com/93805775721321463/style/eventDetails.css" type="text/css" />
-<link rel="stylesheet" type="text/css" media="print" href="http://static2.meetupstatic.com/01979620359177082566/style/print.css" />
-<!--link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.meetup.com/SacSwim/events/rss/Sacramento+Swimming+Enthusiasts/" /-->
 </head>
 
 <? if(!$group): ?>
@@ -43,69 +28,17 @@
 <? endif; ?>
 
 
-
-<body id="meetupBody" class="<?php print $body_classes; ?> humble">
-<div class="interstitialblock" id="interstitialblock"><!--[if lte IE 6.5]><iframe src="javascript:false;"></iframe><![endif]--></div>
-<script type="text/javascript">document.body.className += (!document.body.className) ? 'hasJS' : ' hasJS';</script>
-
-<div id="C_page">
-
-
-<? if($group): ?>
-  <div id="C_contextHead">
-    <div id="C_contextHeadBody">
-      <div id="C_contextTitle">
-        <? echo output_group_sitetitle($group); ?>
+<body id="<?php print $body_id; ?>" class="<?php print $body_classes; ?>">
+  <div id="page" class="page">
+    <div id="page-inner" class="page-inner">
+      <div id="skip">
+        <a href="#main-content-area"><?php print t('Skip to Main Content Area'); ?></a>
       </div>
-    </div>
-  </div>
-  <div class="navTop menu" id="C_navTop">
-  <? echo output_group_menu(); ?>
-  </div>
-<? endif; ?> 
-  
-  <div id="C_pageBody">
-    <div id="C_context">
-      <div id="C_document" class=""> 
-       <div id="content-region" class="content-region row nested">
-                          <div id="content-region-inner" class="content-region-inner inner">
-                            <a name="main-content-area" id="main-content-area"></a>
-                            <?php print theme('grid_block', $tabs, 'content-tabs'); ?>
-                            <div id="content-inner" class="content-inner block">
-                              <div id="content-inner-inner" class="content-inner-inner inner">
-                                <?php if ($title): ?>
-                                <h1 class="title"><?php print $title; ?></h1>
-                                <?php endif; ?>
-                                <?php if ($content): ?>
-                                <div id="content-content" class="content-content">
-                                  <?php print $content; ?>
-                                  <?php print $feed_icons; ?>
-                                </div><!-- /content-content -->
-                                <?php endif; ?>
-                              </div><!-- /content-inner-inner -->
-                            </div><!-- /content-inner -->
-                          </div><!-- /content-region-inner -->
-                        </div><!-- /content-region -->
 
-      </div>
-      
-      <? if($group): ?>
-      <div id="C_nav" >
-        <? echo $sidebar_first; ?>
-        <? include 'inc/left-sidebar.tpl.php'; ?>
-      </div><!-- end C_nav -->
-      <? endif; ?>
-      
-      
-    </div>
-    <!-- C_context --> 
-  </div>
-  <!-- C_pageBody --> 
-</div>
-<!-- C_page -->
+      <!-- header-top row: width = grid_width -->
+      <?php print theme('grid_row', $header_top, 'header-top', 'full-width', $grid_width); ?>
 
-<div id="C_header">
-        <!-- header-group row: width = grid_width -->
+      <!-- header-group row: width = grid_width -->
       <div id="header-group-wrapper" class="header-group-wrapper full-width">
         <div id="header-group" class="header-group row <?php print $grid_width; ?>">
           <div id="header-group-inner" class="header-group-inner inner clearfix">
@@ -135,187 +68,108 @@
             </div><!-- /header-site-info -->
             <?php endif; ?>
 
-            
-            <?php print theme('grid_block', $primary_links_tree, 'primary-menu'); ?>
+             
           </div><!-- /header-group-inner -->
         </div><!-- /header-group -->
       </div><!-- /header-group-wrapper -->
-
-</div>
-<!-- end C_header -->
-
-<div id="C_footer">
-  <div id="C_footerBody">
-    <div class="C_footerRow">
-      <ul class="utility C_footerSection">
-        <li><a href="http://www.meetup.com/about/">About Meetup</a></li>
-        <li><a href="http://www.meetup.com/jobs/"><span style="color:#FFFF99;">We're hiring!</span></a></li>
-        <li> <a href="http://www.meetup.com/boards/">Discuss Meetup</a> </li>
-        <li><a href="http://meetupblog.meetup.com/">Meetup HQ Blog</a></li>
-        <li><a href="http://www.meetup.com/meetup_api/">Meetup API</a></li>
-      </ul>
-      <ul class="utility C_footerSection">
-        <li><a href="http://www.meetup.com/everywhere/">Meetup Everywhere</a></li>
-        <li><a href="http://www.meetup.com/sponsorships/" class="omnCamp omnrg_perksfooter">Sponsor Meetup Groups</a></li>
-        <li><a href="http://www.meetup.com/help/">Help</a></li>
-        <li><a href="http://www.meetup.com/privacy/"><span style="color:#FFFF99;">Privacy</span></a> <span class="D_less">Updated 5/23/2010</span></li>
-        <li><a href="http://www.meetup.com/terms/"><span style="color:#FFFF99;">Terms of service</span></a> <span class="D_less">Updated 5/23/2010</span></li>
-      </ul>
-      <ul class="meta C_footerSection">
-        <li>&copy; 2011 Meetup <br />
-          <a href="http://www.meetup.com/terms/#tm">Trademarks</a> belong to their respective owners.</li>
-        <li>Meetup is proudly <a href="http://nytm.org/made" target="_blank">Made in NYC</a>!</li>
-        <br />
-        <li id="C_langChange"> Change language:
-          <form id="C_langForm" action="http://www.meetup.com/account/language/" method="post">
-            <select id="C_langs" name="lang">
-              <option class="en_US" value="en_US">English</option>
-              <option class="de" value="de">Deutsch</option>
-              <option class="es" value="es">Espa&ntilde;ol</option>
-              <option class="fr" value="fr">Fran&ccedil;ais</option>
-              <option class="it" value="it">Italiano</option>
-              <option class="pt" value="pt">Portugu&ecirc;s</option>
-            </select>
-            <noscript>
-            <input type="submit" name="submitButton" value="Set language" class="D_submit"  />
-            </noscript>
-          </form>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-<!-- end C_footer -->
-
-<div id="dialogHello">
-  <div class="D_box calltoaction">
-    <div class="D_boxbody">
-      <div id="helloPanes">
-        <div id="paneLogin">
-          <div  class="D_boxhead">
-            <h1>Log in</h1>
-            <ul class="D_actions">
-              <li class="canDo"> Not registered with us yet? <a href="https://secure.meetup.com/register/" class="J_signupLink J_onClick inHelloSignup omnCamp omnrg_login">Sign up</a> </li>
-            </ul>
-          </div>
-          <div class="D_boxsection isMeetup">
-            <form action="https://secure.meetup.com/login/" method="post" id="loginForm" class="loginForm">
-              <div class="D_form embiggen">
-                <div class="element">
-                  <div class="label">
-                    <label>Email address:</label>
+      <? if($group): ?>
+              <div id="C_contextHead">
+                <div id="C_contextHeadBody">
+                  <div id="C_contextTitle">
+                    <? echo output_group_sitetitle($group); ?>
                   </div>
-                  <div class="input">
-                    <input type="text" id="email" name="email" value="" tabindex="101" class="text" />
-                  </div>
-                </div>
-                <div class="element">
-                  <div class="label">
-                    <label> Password: </label>
-                    <p class="explain"> <a href="http://www.meetup.com/account/forgot/"> Forgot your password? </a> </p>
-                  </div>
-                  <div class="input">
-                    <input type="password" id="password" name="password" tabindex="102" class="text" />
-                  </div>
-                  <div class="input">
-                    <table summary="" class="inputs">
-                      <tr class="last">
-                        <td><input type="checkbox" id="rememberme" name="rememberme" tabindex="103" /></td>
-                        <td><label for="rememberme"> Remember me on this computer </label></td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-                <div class="footElement" style="text-align: left;">
-                  <input type="submit" name="submitButton" value="Log in" class="D_submit" tabindex="104"  />
-                  <input type="hidden" name="returnUri" value="" />
-                  <input type="hidden" name="op" value="login"/>
-                  <input type="hidden" name="apiAppName" value="" />
                 </div>
               </div>
-            </form>
-          </div>
-          <!--div class="D_boxsection isFacebook">
-            <div class="orbox">
-              <div class="orword"> or </div>
-            </div>
-            <p class="explain">Log in to Meetup with your Facebook account.</p>
-            <div class="fbButton">
-              <fb:login-button v="2" perms="email" size="" onlogin="Meetup.Facebook.onLoginButtonClick();">
-                <fb:intl>Log in using Facebook</fb:intl>
-              </fb:login-button>
-            </div>
-          </div -->
-        </div>
-        <div id="paneSignup">
-          <div  class="D_boxhead">
-            <h1>Sign up</h1>
-            <ul class="D_actions">
-              <li class="canDo">Meetup members, <a href="https://secure.meetup.com/login/?returnUri=http%3A%2F%2Fwww.meetup.com%2FSacSwim%2Fjoin%2F" class="J_loginLink J_onClick inHelloLogin">Log in</a></li>
-            </ul>
-          </div>
-          <div class="D_boxsection isMeetup">
-            <form action="https://secure.meetup.com/register/" class="signUp J_signupForm" method="post" id="baseSignUp">
-              <div class="D_form embiggen">
-                <div class="element">
-                  <div class="label">
-                    <label>Your real name</label>
-                  </div>
-                  <div class="input">
-                    <input type="text" name="realname" id="baseSignUp_realname" value="" size="" maxlength="" class="text" title="Your real name" />
-                  </div>
-                </div>
-                <div class="element">
-                  <div class="label">
-                    <label>Your email</label>
-                  </div>
-                  <div class="input">
-                    <input type="text" name="email" id="baseSignUp_email" value="" class="text " title="Your email" />
-                    <p class="explain hideOnValidating">We hate spam too. We won't share your address!</p>
-                  </div>
-                </div>
-                <div class="element">
-                  <div class="label">
-                    <label>Pick a password</label>
-                  </div>
-                  <div class="input">
-                    <input type="password" class="text " name="password" id="baseSignUp_password" value="" title="Pick a password" />
-                  </div>
-                </div>
-                <input type="hidden" name="country" value="us" />
-                <input type="hidden" name="zip" value="95816" />
-                <div class="footElement" style="text-align: left;">
-                  <input type="submit" name="submitButton" value="Sign up" class="D_submit"  />
-                  <input type="hidden" id="htmlEmail" name="emailPrefs" value="1" />
-                  <input type="hidden" name="submit" value="Submit" />
-                  <input type="hidden" name="number" value="28" />
-                  <input type="hidden" name="c" value="1082327" />
-                  <input type="hidden" name="fromWaitingList" value="" />
-                  <input type="hidden" name="urlkey" value="swimming" />
-                  <input type="hidden" name="inv_code" value="" />
-                  <input type="hidden" name="returnUri" value="http://www.meetup.com/SacSwim/join/" />
-                </div>
+              <div class="navTop menu" id="C_navTop">
+              
               </div>
-            </form>
-          </div>
-          <!--
-          <div class="D_boxsection isFacebook">
-            <div class="orbox">
-              <div class="orword"> or </div>
-            </div>
-            <div class="isFacebook_button">
-              <p class="explain">Join this Meetup Group even quicker with your Facebook account.</p>
-              <fb:login-button v="2" perms="email" size="" onlogin="Meetup.Facebook.onLoginButtonClick();">
-                <fb:intl>Sign up using Facebook</fb:intl>
-              </fb:login-button>
-            </div>
-          </div>
-          -->
-         
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        <?php print theme('grid_block', $primary_links_tree, 'primary-menu'); ?>      
+      <? endif; ?> 
+
+      
+      <!-- preface-top row: width = grid_width -->
+      <?php print theme('grid_row', $preface_top, 'preface-top', 'full-width', $grid_width); ?>
+
+      <!-- main row: width = grid_width -->
+      <div id="main-wrapper" class="main-wrapper full-width">
+        <div id="main" class="main row <?php print $grid_width; ?>">
+          <div id="main-inner" class="main-inner inner clearfix">
+            <?php print theme('grid_row', $sidebar_first, 'sidebar-first', 'nested', $sidebar_first_width); ?>
+
+            <!-- main group: width = grid_width - sidebar_first_width -->
+            <div id="main-group" class="main-group row nested <?php print $main_group_width; ?>">
+              <div id="main-group-inner" class="main-group-inner inner">
+                <?php print theme('grid_row', $preface_bottom, 'preface-bottom', 'nested'); ?>
+
+                <div id="main-content" class="main-content row nested">
+                  <div id="main-content-inner" class="main-content-inner inner">
+                    <!-- content group: width = grid_width - (sidebar_first_width + sidebar_last_width) -->
+                    <div id="content-group" class="content-group row nested <?php print $content_group_width; ?>">
+                      <div id="content-group-inner" class="content-group-inner inner">
+                        <?php print theme('grid_block', $breadcrumb, 'breadcrumbs'); ?>
+
+                        <?php if ($content_top || $help || $messages): ?>
+                        <div id="content-top" class="content-top row nested">
+                          <div id="content-top-inner" class="content-top-inner inner">
+                            <?php print theme('grid_block', $help, 'content-help'); ?>
+                            <?php print theme('grid_block', $messages, 'content-messages'); ?>
+                            <?php print $content_top; ?>
+                          </div><!-- /content-top-inner -->
+                        </div><!-- /content-top -->
+                        <?php endif; ?>
+
+                        <div id="content-region" class="content-region row nested">
+                          <div id="content-region-inner" class="content-region-inner inner">
+                            <a name="main-content-area" id="main-content-area"></a>
+                            <?php print theme('grid_block', $tabs, 'content-tabs'); ?>
+                            <div id="content-inner" class="content-inner block">
+                              <div id="content-inner-inner" class="content-inner-inner inner">
+                                <?php if ($title): ?>
+                                <h1 class="title"><?php print $title; ?></h1>
+                                <?php endif; ?>
+                                <?php if ($content): ?>
+                                <div id="content-content" class="content-content">
+                                  <?php print $content; ?>
+                                  <?php print $feed_icons; ?>
+                                </div><!-- /content-content -->
+                                <?php endif; ?>
+                              </div><!-- /content-inner-inner -->
+                            </div><!-- /content-inner -->
+                          </div><!-- /content-region-inner -->
+                        </div><!-- /content-region -->
+
+                        <?php print theme('grid_row', $content_bottom, 'content-bottom', 'nested'); ?>
+                      </div><!-- /content-group-inner -->
+                    </div><!-- /content-group -->
+
+                    <?php print theme('grid_row', $sidebar_last, 'sidebar-last', 'nested', $sidebar_last_width); ?>
+                  </div><!-- /main-content-inner -->
+                </div><!-- /main-content -->
+
+                <?php print theme('grid_row', $postscript_top, 'postscript-top', 'nested'); ?>
+              </div><!-- /main-group-inner -->
+            </div><!-- /main-group -->
+          </div><!-- /main-inner -->
+        </div><!-- /main -->
+      </div><!-- /main-wrapper -->
+
+      <!-- postscript-bottom row: width = grid_width -->
+      <?php print theme('grid_row', $postscript_bottom, 'postscript-bottom', 'full-width', $grid_width); ?>
+
+      <!-- footer row: width = grid_width -->
+      <?php print theme('grid_row', $footer, 'footer', 'full-width', $grid_width); ?>
+
+      <!-- footer-message row: width = grid_width -->
+      <div id="footer-message-wrapper" class="footer-message-wrapper full-width">
+        <div id="footer-message" class="footer-message row <?php print $grid_width; ?>">
+          <div id="footer-message-inner" class="footer-message-inner inner clearfix">
+            <?php print theme('grid_block', $footer_message, 'footer-message-text'); ?>
+          </div><!-- /footer-message-inner -->
+        </div><!-- /footer-message -->
+      </div><!-- /footer-message-wrapper -->
+
+    </div><!-- /page-inner -->
+  </div><!-- /page -->
+  <?php print $closure; ?>
 </body>
 </html>

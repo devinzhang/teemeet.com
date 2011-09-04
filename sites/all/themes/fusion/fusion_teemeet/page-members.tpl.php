@@ -59,9 +59,10 @@
               <?php print $header; ?>
             </div><!-- /header-site-info -->
             <?php endif; ?>
-
             
-            <?php print theme('grid_block', $primary_links_tree, 'primary-menu'); ?>
+             <? if($group): ?>             
+                <?php print theme('grid_block', $primary_links_tree, 'primary-menu'); ?>      
+            <? endif; ?> 
           </div><!-- /header-group-inner -->
         </div><!-- /header-group -->
       </div><!-- /header-group-wrapper -->

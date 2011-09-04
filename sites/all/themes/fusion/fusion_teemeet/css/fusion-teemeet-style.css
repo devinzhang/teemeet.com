@@ -877,7 +877,8 @@ input.list-add-to-cart:focus {
 
 /* header top menu */
 #header-site-info-inner{
-width: 200px;
+width: 100px;
+z-index:200;
 }
 #block-menu-menu-header-top-right-menu{
 float:right; 
@@ -1232,3 +1233,83 @@ color: ##272727;
     cursor: pointer;
     padding: 0.25em 0.65em 0.15em;
 }
+
+/* theme group front page menu */
+body.humble #C_contextHead {
+    padding: 2em 0 1.25em;
+    background-color: #3E4F2E;
+    border-top-color: #171C13 !important;
+}
+.navTop {
+    border-bottom: 1px solid #647F4C !important;
+    border-top: 1px solid #647F4C !important;
+    background-color: #4F3C2A;
+    color: #FFFFFF;
+}
+.navTop {
+    position: relative;
+    width: 100%;
+    z-index: 4000;
+}
+html > body #C_navTopBody {
+    max-width: 80em;
+    min-width: 62em;
+    width: auto;
+}
+
+#C_navTopBody {
+    height: 100%;
+    margin: 0 auto;
+}
+.navTop ul.C_contextNav {
+    list-style-type: none;
+    padding: 0;
+}
+.C_contextNav, .C_contextNav ul {
+    line-height: 1.5em;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+ul {
+    margin-bottom: 0.75em;
+    padding-left: 1.5em;
+}
+.C_contextNav li {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.navTop ul.C_contextNav li {
+    display: block;
+    height: 1%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.navTop ul.C_contextNav {
+    list-style-type: none;
+}
+#C_page ul.C_contextNav a:link, #C_page ul.C_contextNav a:hover, #C_page ul.C_contextNav a:visited, #C_page ul.C_contextNav a, .navTop, .C_contextNav li a, .navTop ul.C_contextNav li span {
+    background-color: #4F3C2A;
+    color: #FFFFFF;
+}
+.navTop ul.C_contextNav li.first a {
+    border-left: 1px solid #DDDDDD;
+}
+.menu ul li a, .menu ul li.first a, .menu ul li.hasKids a:hover, .menu ul li.ie6over li a, .menu ul li:hover li a, .menu ul li span {
+    border-color: #647F4C !important;
+}
+.navTop ul.C_contextNav li a, .navTop ul.C_contextNav li span {
+    background-color: #B5D0F2;
+    border-left: 1px solid #DDDDDD;
+    color: #2A6798;
+    font-weight: bold;
+    margin: 0 !important;
+    padding: 0.6em 1em;
+    text-decoration: none;
+}
+
+
+    

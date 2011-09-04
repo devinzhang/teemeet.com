@@ -61,11 +61,13 @@
             <?php endif; ?>
 
             
-            <?php print theme('grid_block', $primary_links_tree, 'primary-menu'); ?>
+           
           </div><!-- /header-group-inner -->
         </div><!-- /header-group -->
       </div><!-- /header-group-wrapper -->
-
+          <? if($group): ?>             
+                <?php print theme('grid_block', $primary_links_tree, 'primary-menu'); ?>      
+            <? endif; ?> 
       <!-- preface-top row: width = grid_width -->
       <?php print theme('grid_row', $preface_top, 'preface-top', 'full-width', $grid_width); ?>
 

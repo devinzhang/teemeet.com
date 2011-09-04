@@ -32,10 +32,8 @@ function fusion_teemeet_preprocess_page(&$vars) {
   
   }
   /* build a primay links for a group node,
-  here we created the primay links dynamaclly */
-  
- 
-    
+  here we created the primay links dynamaclly */ 
+  //  print($GLOBALS['current_group']->path);
     // Generate links tree & add Superfish class if dropdown enabled, else make standard primary links
   $vars['primary_links_tree'] = '';
   
@@ -49,8 +47,8 @@ function fusion_teemeet_preprocess_page(&$vars) {
         $vars['primary_links_tree'] = menu_tree(variable_get('menu_primary_links_source', 'primary-links'));
       }
       $vars['primary_links_tree'] = preg_replace('/<ul class="menu/i', '<ul class="menu sf-menu', $vars['primary_links_tree'], 1);
-    }
-    else {
+      
+    }else {
       $vars['primary_links_tree'] = theme('links', $vars['primary_links'], array('class' => 'menu'));
     }
   }
@@ -73,7 +71,6 @@ function fusion_teemeet_preprocess_page(&$vars) {
     }
    
 }
-
 /* hook_menu_item 
 *
 *
@@ -94,10 +91,18 @@ function fusion_teemeet_menu_item($link, $has_children, $menu = '', $in_active_t
  // Add semi-unique class  
  $class .= ' ' . preg_replace("/[^a-zA-Z0-9]/", "", strip_tags($link));    
  return '<li class="'. $class .'" id="' . $id . '">'. $link . $menu ."</li>\n";
- 
- 
+  
  }
 */
+
+/*
+function fusion_teemeet_menu_item_link($link) {
+  if($link['menu_name'] == 'menu-group-page-nav'){
+    $link['link_path']= $GLOBALS['current_group']->path.'/'. $link['link_path'];
+  }
+}
+*/
+
 
 /**
  * Node preprocessing
