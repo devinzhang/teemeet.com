@@ -261,12 +261,88 @@ function groupfront_block($op = 'list', $delta = 0, $edit = array()){
 
 function groupfront_group_summary(){
     $output = '';
-    $output .='<ul class="metaBox">';
-    $output .='<li class="clearfix linkable linewrappable"><a href="#">
-                <p>Playgroupers</p>69</a></li>';
+    drupal_add_css(drupal_get_path('module', 'groupfront').'/css/groupfront.css');
+    if(isset($GLOBALS['current_group'])) {
+        $group = $GLOBALS['current_group'];
+        
+        $output .= '<div class="D_box newBox" id="C_metabox">
+                        <div class="D_boxsection isNotDivided ">
+                            <div class="D_metasection">
+                                <a href="'.$group->path.'"><img width="180" height="135" src="'.$group->picture.'" class="photo"</a>
+                            </div>
+                        <div class="D_metasection location vcard">
+                            <span class="fn org" style="display: none;">
+                                <a class="url" href="'.$group->path.'">'.$group->title.'</a>
+                            </span>
+                            <div class="adr">
+                                <a href="">
+                                    <span class="locality">'.$group->location['city'].'</span>,
+                                    <span class="region">'.$group->location['country_name'].'</span>                                    
+                                </a>                                
+                             </div>
+                            <div class="founded">'.t('Founded @date', array('@date'=>date('Y-m-d', $group->created))).' <br></div>
+                        </div>
+                        <div class="D_metasection">
+                            <div class="D_button">
+                                <a style="display: block; font-weight: normal;" id="group-desc-bubble-pivot" class="descriptionBubbleToggle" href="http://www.meetup.com/Beijing-Soccer-Lovers/profile/#">Read more about us…</a>
+                            </div>
+                        </div>
+                        <ul class="metaBox">
+                            <li class="clearfix linkable linewrappable">
+                                <a href="'.url($group->path.'/groupextension/allmembers/'.$group->nid).'">
+                                    <p>'.t('Members').'</p> 1
+                                </a>
+                            </li>
+<li class="clearfix linkable">
+<a class="page-meetups" data-op="calendar" data-append="false" data-pageto="0" href="http://www.meetup.com/Beijing-Soccer-Lovers/events/calendar/">
+<p>Our calendar</p>
+<img class="D_icon" src="./Your Meetup Group profile - Beijing Soccer Lovers (Beijing) - Meetup_files/date2.png">
+</a>
+</li>
+<li class="clearfix">
+<p>Follow us</p>
+<div style="text-align: right;">
+<a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/settings/optional/?returnUri=http%3A%2F%2Fwww.meetup.com%2FBeijing-Soccer-Lovers%2Fprofile%2F#webLinks">
+<img alt="facebook icon" src="./Your Meetup Group profile - Beijing Soccer Lovers (Beijing) - Meetup_files/facebook-16x16g.png">
+<img alt="twitter icon" src="./Your Meetup Group profile - Beijing Soccer Lovers (Beijing) - Meetup_files/twitter-16x16g.png">
+<img alt="flickr icon" src="./Your Meetup Group profile - Beijing Soccer Lovers (Beijing) - Meetup_files/flickr-16x16g.png">
+<img alt="linkedin icon" src="./Your Meetup Group profile - Beijing Soccer Lovers (Beijing) - Meetup_files/linkedin-16x16g.png">
+<img alt="tumblr icon" src="./Your Meetup Group profile - Beijing Soccer Lovers (Beijing) - Meetup_files/tumblr-16x16g.png">
+<img alt="other site icon" src="./Your Meetup Group profile - Beijing Soccer Lovers (Beijing) - Meetup_files/website-16x16g.png">
+</a>
+</div>
+<a style="display: block; font-size: 0.83em; text-align: left;" href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/settings/optional/?returnUri=http%3A%2F%2Fwww.meetup.com%2FBeijing-Soccer-Lovers%2Fprofile%2F#webLinks">
+Add your group\'s links
+</a>
+</li>
+</ul>
+<div class="D_metasection organizerMeta D_metasectionWithBorder D_metasectionAfterMetaBox">
+<div class="photo">
+<a href="http://www.meetup.com/Beijing-Soccer-Lovers/profile/?returnUri=http%3A%2F%2Fwww.meetup.com%2FBeijing-Soccer-Lovers%2F%3Fsuccess%3DchapterProfile&amp;s=changePhoto#yourPhoto"><img title="" src="./Your Meetup Group profile - Beijing Soccer Lovers (Beijing) - Meetup_files/noPhoto_80.gif"></a>
+</div>
+<div class="D_metaLabel">
+Organizer:
+</div>
+<div class="names">
+<a style="font-weight: bold;" href="'.url($group->path.'/member/'.$group->uid.'/ingroup/'.$group->nid).'">'.$group->name.'</a>
+</div>
+<div class="bottomStop">
+<a href="http://www.meetup.com/Beijing-Soccer-Lovers/members/?op=leaders">View The Leadership Team</a><br>
+</div>
+</div>
+<div id="evnteditPref" class="D_metasection D_metasectionWithBorder D_metasectionAfterMetaBox">
+Members can suggest Meetups
+<a id="change-add-meetup" href="http://www.meetup.com/Beijing-Soccer-Lovers/profile/#">
+Change
+</a>
+</div>
+<div class="D_metasection contact-us D_metasectionAfterMetaBox">
+<a style="display: block; font-weight: normal;" href="http://www.meetup.com/Beijing-Soccer-Lovers/suggestion/"><span class="sprite spritebg spritebg_right email_icon"></span>Contact us</a>
+</div>
+</div>
+</div>';
     
-    $output .='</ul>';
-    
+    }
     
     return $output; 
 }
@@ -343,7 +419,7 @@ return $output;
  */
 function groupfront_preprocess_page(&$vars){  
    
-
+    $action = arg(2); 
 	if(arg(0)=='node' && is_numeric(arg(1)) && !isset($action) ) {
 		$node = $vars['node'];
         $curr_title = drupal_get_title();
@@ -484,9 +560,9 @@ $output .='<ul id="events-nav" class="resetList clearfix">
 
 <li class=""><a data-append="false" data-op="suggested" data-pageto="0" class="page-meetups" id="mitmTab" href="'.url('groupfront/ajax/suggestedmeetup/'.$gid).'">Suggested <span class="tabcount">1</span></a></li>
 
-<li class=""><a data-append="false" data-op="past" data-pageto="0" class="page-meetups" id="pastTab" href="http://www.meetup.com/MTG-nova/events/past/">Past</a></li>
+<li class=""><a data-append="false" data-op="past" data-pageto="0" class="page-meetups" id="pastTab" href="">Past</a></li>
 
-<li class=""><a data-append="false" data-pageto="0" data-op="calendar" class="page-meetups" href="http://www.meetup.com/MTG-nova/events/calendar/">Calendar</a></li>
+<li class=""><a data-append="false" data-pageto="0" data-op="calendar" class="page-meetups" href="">Calendar</a></li>
 </ul>';
 
 return $output;

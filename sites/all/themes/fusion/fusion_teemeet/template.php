@@ -95,13 +95,16 @@ function fusion_teemeet_menu_item($link, $has_children, $menu = '', $in_active_t
  }
 */
 
-/*
+
 function fusion_teemeet_menu_item_link($link) {
   if($link['menu_name'] == 'menu-group-page-nav'){
-    $link['link_path']= $GLOBALS['current_group']->path.'/'. $link['link_path'];
+      if (empty($link['localized_options'])) {
+            $link['localized_options'] = array();
+    }
+  return l($link['title'], $GLOBALS['current_group']->path.'/'.$link['href'], $link['localized_options']);
+
   }
 }
-*/
 
 
 /**

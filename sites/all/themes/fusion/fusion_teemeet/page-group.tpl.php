@@ -1,5 +1,5 @@
 <?php
-require 'inc/func_group.php'; 
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="<?php print $language->language; ?>" xml:lang="<?php print $language->language; ?>">
 
@@ -76,7 +76,7 @@ require 'inc/func_group.php';
               <div id="C_contextHead">
                 <div id="C_contextHeadBody">
                   <div id="C_contextTitle">
-                    <? echo output_group_sitetitle($group); ?>
+                    <h1 id="bannerGroupName"><a href="<?php echo $group->path; ?> " title="<?php echo  $group->field_site_title[0]["value"];?> "><span><?php echo $group->field_site_title[0]["value"]; ?></span> </a> </h1>
                   </div>
                 </div>
               </div>
@@ -95,7 +95,7 @@ require 'inc/func_group.php';
         <div id="main" class="main row <?php print $grid_width; ?>">
           <div id="main-inner" class="main-inner inner clearfix">
             <?php print theme('grid_row', $sidebar_first, 'sidebar-first', 'nested', $sidebar_first_width); ?>
-
+    
             <!-- main group: width = grid_width - sidebar_first_width -->
             <div id="main-group" class="main-group row nested <?php print $main_group_width; ?>">
               <div id="main-group-inner" class="main-group-inner inner">
