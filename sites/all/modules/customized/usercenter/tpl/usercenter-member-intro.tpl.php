@@ -272,12 +272,12 @@ echo '<p class="D_empty">'.isset($qa[$qid])? $qa[$qid] : t('No answer yet').'</p
 <h4><?php echo t('What @name is saying about this Meetup Group',array('@name'=>$account->name)) ?>;</h4>
  <p>
  <?php 
-    $has_comment = group_extensions_get_my_group_review($curr_group->nid, $account->uid);
+    $has_comment = group_extensions_get_my_group_review($curr_group->nid, $account->uid );
     if($has_comment){
         echo '<span class="D_empty">' . $has_comment->comment.'</span>';
     } else {    
         echo '<span class="D_empty">'. t('@name has not left a group review yet.',array('@name'=>$account->name)).'</span>';
-        echo l(t('Click here to read other members\' group reviews'),'group/'.$curr_group->nid.'/comments' );
+        echo l(t('Click here to read other members\' group reviews'),$curr_group->path.'/group/'.$curr_group->nid.'/comments' );
     }
 ?>    
  </p> 

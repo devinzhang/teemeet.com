@@ -13,12 +13,12 @@
               </div>
             </div>
             <ul class="metaBox">
-              <li class="clearfix linkable linewrappable"> <a href="http://www.meetup.com/SacSwim/members/">
+              <li class="clearfix linkable linewrappable"> <a href="<?php echo url($group->path.'/groupextension/allmembers/'.$group->nid); ?>">
                 <p><? echo $group->field_member_alias[0]['value'] ?></p>
-                会员总数 </a> </li>
-              <li class="clearfix linkable"> <a href="http://www.meetup.com/SacSwim/about/comments/?op=all">
+                <?php echo $group->og_member_count; ?> </a> </li>
+              <li class="clearfix linkable"> <a href="<?php echo url($group->path.'/group/'.$group->nid.'/comments'); ?>">
                 <p>Group reviews</p>
-                总评论数 </a> </li>
+                <?php echo $group->comment_count ?> </a> </li>
               <li class="clearfix linkable"> <a href="http://www.meetup.com/SacSwim/" class="page-meetups">
                 <p>Upcoming Meetups</p>
                 即将到来的聚会数字 </a> </li>

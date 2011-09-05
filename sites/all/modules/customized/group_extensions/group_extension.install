@@ -1,0 +1,58 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_install().
+ */
+function group_extension_install() {
+   drupal_install_schema('group_extension');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function group_extension_uninstall() {
+   drupal_uninstall_schema('group_extension');
+   
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function group_extension_schema() {
+    $schema['featuredcomments'] = array(
+        'description' => 'Stores the featured comments of a group',
+        'fields' => array(
+            'id' => array(
+               'type' => 'serial',
+               'size' => 'medium',
+               'unsigned' => TRUE,
+               'not null' => TRUE,
+               'description' => t("The serial number for a  record."),
+                ),            
+           
+            'gid' => array(
+			    'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "group nid",
+				
+			),	
+            'cid' => array(
+                'type' => 'int', 
+                'unsigned' => TRUE, 
+                'not null' => TRUE, 
+                'default' => 0,
+                'description' => "comment  cid",
+             ),
+             
+            
+		),		
+      
+     'primary key' => array('id'),
+    
+    );
+    return $schema;
+}
+

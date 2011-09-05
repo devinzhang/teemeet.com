@@ -145,7 +145,7 @@ function _frontpage_home_heartbeats($uid){
 						</li>';
                      $output .='<li class="canDo D_splain splainRegistered">
 							<a target="_blank" class="sprite_action help_icon sprite splainOver" href="">What\'s this</a>
-							
+					
 						</li>';
                     $output .= '</ul>';    
             $output .= '</div>';
