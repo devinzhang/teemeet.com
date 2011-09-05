@@ -1,0 +1,44 @@
+<?php
+
+function alipay_perm()
+{
+    
+}
+
+function alipay_menu()
+{
+    $items['admin/settings/alipay/setting'] = array
+    (
+        'title' => t('支付宝设置'),        
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('alipay_setting'),
+        'access arguments' => array('administrator'),        
+        'file' => 'alipay_setting.inc',        
+    );  
+    
+    $items['order'] = array
+    (
+        'title' => t('订单确认'),        
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('alipay_order_confirm'),
+        'access arguments' => array(),
+        'file' => 'alipay_order.inc', 
+    );
+    
+  /*$items['alipay/notify'] = array(
+    'title' => 'Order complete',
+    'page callback' => 'uc_alipay_notify',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'uc_alipay.pages.inc',
+  );
+  $items['alipay/return'] = array(
+    'title' => 'Order complete',
+    'page callback' => 'uc_alipay_return',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'uc_alipay.pages.inc',
+  );*/
+
+  return $items;
+}

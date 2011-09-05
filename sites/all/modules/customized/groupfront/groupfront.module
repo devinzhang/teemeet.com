@@ -417,7 +417,7 @@ return $output;
  * this function only used to cutomized the the group home page 
  *
  */
-function groupfront_preprocess_page(&$vars){  
+/*function groupfront_preprocess_page(&$vars){  
    
     $action = arg(2); 
 	if(arg(0)=='node' && is_numeric(arg(1)) && !isset($action) ) {
@@ -454,7 +454,7 @@ function groupfront_preprocess_page(&$vars){
                 }
         }
    }
-}
+}*/
 
 /* dispaly the creat meetup form 
 * @param, the ground audience nid
