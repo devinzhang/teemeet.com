@@ -15,9 +15,11 @@
     global $user; 
     drupal_add_css(drupal_get_path('module','group_extensions').'/css/group_extensions.css');
     $output = '';
+    $output .= '<div class="D_boxhead"><h1>'.t('All Group Reviews').'</h1></div>';
+
     $has_comment = group_extensions_get_my_group_review($gid, $user->uid); 
     
-    if(!$has_comment) {
+    if(!$has_comment && og_is_group_member($gid)) {
     $output .= drupal_get_form('group_extensions_comment_form',$gid);
     }
     $output .= _group_extensions_get_group_comments($gid);
@@ -49,13 +51,39 @@ function group_extensions_ajax_postcomment() {
 	
 }
 
+/*menu callback for set a comments as featured
+**@param $gid, the group nid
+**@param $cid, the unique comment id
+**@param, $op, $op=1 to set a featured, $op=0 remove the featured 
+** @param $ajax , bool, true for ajax return,  false for general output. 
+*/
+function group_extensions_ajax_featured_comment($gid, $cid, $op, $ajax=FALSE ) {
+    $group_node = node_load($gid); 
+    if($op) { //this is a set
+      db_query("INSERT INTO {featuredcomments} (gid, cid) VALUES (%d, %d)", $gid, $cid);
+    } else { // try to remove the featured character 
+      db_query("delete from {featuredcomments} where cid=%d", $cid);
+    }
+    drupal_goto($group_node->path.'/group/'.$gid.'/comments');
+}
+
+/* if a comment was a featured comment
+**
+**
+*/
+function group_extensions_is_featured_comment($cid) {
+    
+    return db_result(db_query('select cid from {featuredcomments} where cid=%d',$cid));    
+
+}
 
 /* Get all the group comments and dispaly them all
  *
  */
 function _group_extensions_get_group_comments($gid){
 	$output = '';
-
+    global $user; 
+    $group_node = node_load($gid); 
 	if (user_access('access comments')) {
 		// Pre-process variables.
 		$nid = $gid;
@@ -112,6 +140,17 @@ function _group_extensions_get_group_comments($gid){
             $comments .= $comment->name;
             $comments .= '<span class="nobr D_less dtreviewed"> '.$created.'</span>';
             $comments .= '</p>';
+            
+            if(og_is_group_admin($group_node)){ 
+            
+             $comments .= '<div class="vote"><ul class="D_actions">';
+                if(group_extensions_is_featured_comment($comment->cid)) {
+                $comments .= '<li class="canDo"><a href="'.url('group/'.$gid.'/comments/featuredcomment/'.$comment->cid.'/0').'" class="">'.t('Remove from featured group reviews').'</a></li>';
+                } else {
+                $comments .= '<li class="canDo"><a href="'.url('group/'.$gid.'/comments/featuredcomment/'.$comment->cid.'/1').'" class="">'.t('Set as  featured group review').'</a></li>';
+               }
+            $comments .= '</ul></div>';
+            }
             $comments .= '</div>';
 
 
@@ -173,5 +212,3 @@ function group_extensions_comment_form_submit($form, &$form_state) {
     $cid = $form_state['values']['cid'] ;
     drupal_goto($GLOBALS['current_group']->path.'/group/'.$nid.'/comments'); 
 }
-
-

@@ -44,25 +44,16 @@ function group_extensions_menu()
         'type' => MENU_CALLBACK,
         'file' => 'group.comment.inc',
 	);
-    $items['groupextension/ajax/setfeaturedcomment/%']=array(
+     $items['group/%/comments/featuredcomment/%/%']=array(
 		'title'=>t('Post Comment'),
-		'page callback'=>'group_extensions_ajax_set_featured_comment',
-		'page arguments'=>array(3),
-		'access callback'=>TRUE,
-        'type' => MENU_CALLBACK,
-        'file' => 'group.comment.inc',
-	);
-     $items['groupextension/ajax/removefeaturedcomment/$']=array(
-		'title'=>t('Post Comment'),
-		'page callback'=>'group_extensions_ajax_remove_featured_comment',
-		'page arguments'=>array(3),
+		'page callback'=>'group_extensions_ajax_featured_comment',
+		'page arguments'=>array(1,4,5),
 		'access callback'=>TRUE,
         'type' => MENU_CALLBACK,
         'file' => 'group.comment.inc',
 	);
     
-    
-    
+        
     $items['groupextension/allmembers/%']=array(
 		'title'=>t('All Members'),
 		'page callback'=>'group_extensions_all_group_members',
@@ -114,7 +105,7 @@ function group_extensions_theme() {
 
 function group_extensions_nodeapi(&$node, $op, $teaser, $page) 
 {
-    if($node->type == NODE_TYPE and $node->status != 0 and $op == 'view') 
+    if(og_is_group_type($node->type) and $node->status != 0 and $op == 'view') 
     {
         $node_timeStamp = dateToStamp($node->field_date_valuable[0][value]);
         if(time() > $node_timeStamp)
@@ -126,9 +117,11 @@ function group_extensions_nodeapi(&$node, $op, $teaser, $page)
     
     switch ($op) {
     case 'load':    
-        if($node->type == NODE_TYPE ) {
+        if(og_is_group_type($node->type) ) {
              list($txt, $subscription) = og_subscriber_count_link($node);
             $node->og_member_count = (int)$txt;
+            $node->featured_comments = group_extensions_get_featured_comment($node->nid); 
+            
         }
         
         
@@ -137,6 +130,23 @@ function group_extensions_nodeapi(&$node, $op, $teaser, $page)
     }
     
 }
+
+
+/* retrieval featured commeents
+**
+**
+*/
+function group_extensions_get_featured_comment($gid) {
+  
+    $result = db_query('SELECT cid from {featuredcomments} WHERE gid = %d order by id desc',$gid);
+    $comments = array(); 
+    while($comment = db_fetch_object($result)){
+        $sql = 'SELECT c.comment, u.uid, u.name ,u.picture FROM {comments} c INNER JOIN {users} u ON c.uid = u.uid WHERE c.cid = %d';
+        $comments[] = db_fetch_array(db_query($sql, $comment->cid));       
+    }
+    return $comments; 
+}
+
 
 /**
  * dateToStamp()

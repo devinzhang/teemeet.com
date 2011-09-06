@@ -12,20 +12,23 @@
     <div class="D_boxsection ">
       <div class="line" id="alien-group-review">
 <? 
-  $resouce = db_query('select * from {comments} where nid = %d order by timestamp desc', $group->nid);
+
   for($i = 0; $i < 2; $i++):
-    $comment = db_fetch_object($resouce);
-    $class = ($i == 0) ? 'first' : 'last';
+    $comment = array_shift($group->featured_comments);
+    if(!empty($comment)):
+        $class = ($i == 0) ? 'first' : 'last';
 ?>      
         <div class="unit size1of2">
           <div class="D_item alien-group-review-col alien-group-review-col-<? echo $class?> clearfix">
             <div class="D_image"> 
-              <a href="<? echo url('user/' . $comment->uid)?>" class="memberinfo-widget displayinlineblock" > <!--img src="http://photos1.meetupstatic.com/photos/member/c/3/8/d/thumb_10250061.jpeg" alt="" /--> </a>
+              <a href="<? echo url($gourp->path.'/member/' . $comment['uid'].'/ingroup/'.$group->nid)?>" class="memberinfo-widget displayinlineblock" > <img src="<? echo $comment['picture']; ?>" alt="" /> </a>
             </div>
-            <span class="D_quot">"</span> <? echo $comment->comment?> <a href="#" class="J_onClick blurb-more">...</a> <br>
-            -<a href="<? echo url('user/' . $comment->uid)?>" class="memberinfo-widget" ><? echo $comment->name; ?></a><!--img src="http://img1.meetupstatic.com/img/clear.gif" width="0" class="brImage" alt="" /--> </div>
+            <span class="D_quot">"</span> <? echo $comment['comment']?> <a href="#" class="J_onClick blurb-more">...</a> <br>
+            -<a href="<? echo url($gourp->path.'/member/' . $comment['uid'].'/ingroup/'.$group->nid)?>" class="memberinfo-widget" ><? echo $comment['name']; ?></a><!--img src="http://img1.meetupstatic.com/img/clear.gif" width="0" class="brImage" alt="" /--> </div>
         </div>        
-<? endfor; ?>        
+<? 
+    endif;
+  endfor; ?>        
       </div>
     </div>
     <!-- end for comment-->
