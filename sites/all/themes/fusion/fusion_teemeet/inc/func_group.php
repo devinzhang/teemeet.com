@@ -60,8 +60,8 @@ EOF;
     return $output;	
 }
 
-function output_group_sitetitle(&$node)
+function output_group_sitetitle(&$group)
 {    
-    return '<h1 id="bannerGroupName"><a href="' . $node->path . '" title="' . $node->field_site_title[0]["safe"] . '"><span>' . $node->field_site_title[0]["safe"] . '</span> </a> </h1>';
+    return '<h1 id="bannerGroupName"><a href="' . $group->path . '" title="' . $group->field_site_title[0]["safe"] . '"><span>' . $group->field_site_title[0]["safe"] . '</span> </a> </h1>';
 } 
 

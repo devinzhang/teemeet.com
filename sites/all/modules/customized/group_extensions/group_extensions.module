@@ -60,21 +60,31 @@ function group_extensions_menu()
 		'page arguments'=>array(2),
 		'access callback'=>TRUE,
         'type' => MENU_LOCAL_TASK,     
-        'file' => 'group_extension.members.inc',
+        'file' => 'group_extensions.members.inc',
 	);
     $items['groupextension/allmembers/%/all']=array(
         'title'=>t('All Members'),		
         'type' => MENU_DEFAULT_LOCAL_TASK,   
-        'file' => 'group_extension.members.inc',
+        'file' => 'group_extensions.members.inc',
 	);
-     $items['groupextension/allmembers/%/leadship']=array(
+    $items['groupextension/allmembers/%/leadship']=array(
         'title'=>t('The Leadship Team'),		 
         'page callback'=>'group_extensions_all_leadship_members',
 		'page arguments'=>array(2),
 		'access callback'=>TRUE,
         'type' => MENU_LOCAL_TASK,
-        'file' => 'group_extension.members.inc',
+        'file' => 'group_extensions.members.inc',
 	);    
+    
+    //group forums
+    $items['groupextension/%/forum']=array(
+        'title'=>t('Group Forum'),		 
+        'page callback'=>'group_extensions_forum',
+		'page arguments'=>array(1),
+		'access callback'=>TRUE,
+        'type' => MENU_LOCAL_TASK,
+        'file' => 'group_extensions.forum.inc',
+	);
     
     return $items;    
 }
@@ -89,11 +99,18 @@ function group_extensions_theme() {
   return array(
    'group_extensions_member' => array(	 // theme one member
       'arguments' => array(
-            'member'=>null, 
-            
+            'member'=>null,             
         ),
 	),
-        
+  'group_extensions_forum_board' => array(	 // theme one forum
+      'template' => 'group_extensions-forum-board',
+      'arguments' => array(
+            'group'=>null,
+            'topics'=>null,    
+        ),
+	),
+  
+  
   );
 }
 
@@ -122,6 +139,13 @@ function group_extensions_nodeapi(&$node, $op, $teaser, $page)
             $node->og_member_count = (int)$txt;
             $node->featured_comments = group_extensions_get_featured_comment($node->nid); 
             
+        }
+        if($node->type == "forum_topic"){
+            if(module_exists('statistics')) {
+                $node->view_count = statistics_get($node->nid);
+            } else {
+            $node->view_count = 0;
+            }
         }
         
         
