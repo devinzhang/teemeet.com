@@ -44,6 +44,24 @@ function group_extensions_menu()
         'type' => MENU_CALLBACK,
         'file' => 'group.comment.inc',
 	);
+    $items['groupextension/ajax/setfeaturedcomment/%']=array(
+		'title'=>t('Post Comment'),
+		'page callback'=>'group_extensions_ajax_set_featured_comment',
+		'page arguments'=>array(3),
+		'access callback'=>TRUE,
+        'type' => MENU_CALLBACK,
+        'file' => 'group.comment.inc',
+	);
+     $items['groupextension/ajax/removefeaturedcomment/$']=array(
+		'title'=>t('Post Comment'),
+		'page callback'=>'group_extensions_ajax_remove_featured_comment',
+		'page arguments'=>array(3),
+		'access callback'=>TRUE,
+        'type' => MENU_CALLBACK,
+        'file' => 'group.comment.inc',
+	);
+    
+    
     
     $items['groupextension/allmembers/%']=array(
 		'title'=>t('All Members'),

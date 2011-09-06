@@ -4,22 +4,22 @@
 /**
  * Implementation of hook_install().
  */
-function group_extension_install() {
-   drupal_install_schema('group_extension');
+function group_extensions_install() {
+   drupal_install_schema('group_extensions');
 }
 
 /**
  * Implementation of hook_uninstall().
  */
-function group_extension_uninstall() {
-   drupal_uninstall_schema('group_extension');
+function group_extensions_uninstall() {
+   drupal_uninstall_schema('group_extensions');
    
 }
 
 /**
  * Implementation of hook_schema().
  */
-function group_extension_schema() {
+function group_extensions_schema() {
     $schema['featuredcomments'] = array(
         'description' => 'Stores the featured comments of a group',
         'fields' => array(

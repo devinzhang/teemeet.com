@@ -474,6 +474,9 @@ function og_forum_nodeapi($node, $op, $teaser = NULL, $page = NULL) {
       if ($node->type == 'forum' && $og_forum_nid = db_result(db_query('SELECT nid FROM {og_term} WHERE tid = %d', $node->tid))) {
         $node->og_forum_nid = $og_forum_nid;
       }
+     if (og_is_group_type($node->type)) { 
+      $node->og_forum_tid = db_result(db_query('select tid from {og_term} where nid="%d"', $node->nid));
+      }
       break;
     case 'prepare':
       if (arg(0) == 'node' && arg(1) == 'add' && arg(2) == 'forum' && arg(3)) {
