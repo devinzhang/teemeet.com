@@ -86,6 +86,15 @@ function group_extensions_menu()
         'file' => 'group_extensions.forum.inc',
 	);
     
+     $items['groupextension/%/reply']=array(
+        'title'=>t('Post a reply'),		 
+        'page callback'=>'group_extensions_reply_post',
+		'page arguments'=>array(1),
+		'access callback'=>TRUE,
+        'type' => MENU_CALLBACK,
+        'file' => 'group_extensions.forum.inc',
+	);
+    
     return $items;    
 }
 
@@ -106,9 +115,27 @@ function group_extensions_theme() {
       'template' => 'group_extensions-forum-board',
       'arguments' => array(
             'group'=>null,
-            'topics'=>null,    
+            'topics'=>null,              
         ),
+       'path' => drupal_get_path('module','group_extensions').'/tpl',
 	),
+    
+    'forum_topic_node_form' => array(
+                    'template' => 'forum_topic-node-form',
+                    'arguments' => array (
+                            'form' => NULL,
+                    ),
+                    'path' => drupal_get_path('module','group_extensions').'/tpl',
+     ),
+     'forum_topic_show' => array(
+                    'template' => 'forum-topic-show',
+                    'arguments' => array (
+                            'group'=>NULL,
+                            'topic' => NULL,
+                    ),
+                    'path' => drupal_get_path('module','group_extensions').'/tpl',
+     ),        
+            
   
   
   );
@@ -145,15 +172,137 @@ function group_extensions_nodeapi(&$node, $op, $teaser, $page)
                 $node->view_count = statistics_get($node->nid);
             } else {
             $node->view_count = 0;
-            }
+            }           
+            
         }
         
         
     break;
-      
     }
     
 }
+
+/* impl. of hook_preprocess_page
+ * this function only used to cutomized the the group forum page here  
+ *
+ */
+function group_extensions_preprocess_page(&$vars){  
+   
+	if(arg(0)=='node' && is_numeric(arg(1)) && arg(3) =='' ) {
+		$node = $vars['node'];
+        
+        $curr_title = drupal_get_title();
+        if($node->type == 'forum_topic') {
+                $current_group = $GLOBALS['current_group'];
+              
+                $topic=array(
+                    'id'=>$node->nid, // nid or cid
+                    'ispost'=>1, 
+                    'name'=>$node->name,
+                    'uid'=>$node->uid,
+                    'picture' => $node->picture, 
+                    'grouprole' => og_is_group_admin($current_group,$node->uid) ? t('Group Organizer') : t('Group Member'),
+                    'location'=>'',
+                    'created'=>$node->created,
+                    'content'=>$node->body,
+                );
+                $vars['content'] = _group_extension_forum_topic_header($node);
+                $vars['content'] .= theme('forum_topic_show',$current_group,  $topic);
+                $vars['content'] .= group_extensions_comment_render($node, $current_group);
+                $vars['content'] .= _group_extension_forum_topic_bottom($node);
+        }
+   }
+}
+
+/** private function to show the forum topic header 
+**   this function must show with the _group_extension_forum_topic_bottom() function
+*/
+function _group_extension_forum_topic_header($node){
+    $output ='';
+    global $base_url; 
+    $icon_path = $base_url.'/'.drupal_get_path('theme','fusion_teemeet').'/images';
+    
+    $output .=' <div class="D_box">
+        <div class="D_boxbody">
+            <div class="D_boxhead">
+                <p class="crumb">
+                    <span class="nobr"><a href="'.$GLOBALS['current_group']->path.'">'.$GLOBALS['current_group']->title.'</a></span>
+                    		<span class="nobr ts">›'.$node->title.'</span>	
+                </p>
+                <h1>'.$node->title.'</h1>
+                <ul class="D_actions hasIcons">
+                    <li class="canDo">
+                        <a href="">
+                        <img class="icon png" title="" alt="" src="'.$icon_path.'/icon_closed_on.png"> <span>Close to new replies</span>
+                        </a>
+                    </li>
+
+                    <li class="canDo">
+                        <a href="">
+                        <img class="D_icon png" src="'.$icon_path.'/icon_pinned_on.png"> <span>Pin this discussion</span>
+                        </a>
+                    </li>
+
+                    <li class="canDo">
+                    <a class="orgTool sprite sprite_action page_add_icon" href="http://www.meetup.com/Beijing-Soccer-Lovers/messages/boards/view/addpost?forum=2124521">Start a new discussion</a>
+                    </li>
+
+                    <li class="canDo">
+                    <a class="sprite sprite_action monitor_add_icon" href="http://www.meetup.com/Beijing-Soccer-Lovers/messages/boards/view/addwatchprocess?forum=2124521&amp;thread=15411132&amp;WatchSelector=3">Track this discussion</a>
+                    </li>
+                    <li class="canDo">
+                    <a class="sprite sprite_action arrow_undo_icon" href="'.url($GLOBALS['current_group']->path.'/groupextension/'.$node->nid.'/reply').'">
+                    Add a reply
+                    </a>
+                    </li>
+
+                </ul>
+ 
+            </div>
+            <div class="D_boxsection isSorted">
+                <table class="D_boardThread">
+                    <tbody>';
+   return $output; 
+}
+
+function _group_extension_forum_topic_bottom($node){
+    $output ='';
+    $output .= '</tbody>
+                </table>
+            <div style="border-top: 1px solid rgb(221, 221, 221);">
+                <ul class="D_actions hasIcons">
+                    <li class="canDo">
+                    <a class="sprite sprite_action arrow_undo_icon" href="'.url($GLOBALS['current_group']->path.'/groupextension/'.$node->nid.'/reply').'">
+                    '.t('Add a reply').'
+                    </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+';
+return $output;
+}
+
+/* impl. hook_form_alter
+**
+*/
+
+function group_extensions_form_alter(&$form, &$form_state, $form_id) {
+ $current_group = $GLOBALS['current_group'];
+ 
+  if ($form_id == 'forum_topic_node_form') {
+        
+        $form['og_nodeapi']['#prefix'] = '<div style="display:none;">';
+        $form['og_nodeapi']['#suffix'] = '</div>';
+        unset($form['body_field']['format']);
+        $form['#theme']= 'forum_topic_node_form';
+        $form['#redirect'] = url($current_group->path.'/groupextension/'.$current_group->nid.'/forum/');
+   }
+}
+
 
 
 /* retrieval featured commeents
@@ -218,4 +367,84 @@ function group_extensions_get_my_group_review($gid, $uid){
 		} else {   
 			return FALSE;
 		}	
+}
+
+/* render the comments when viewing the forum topic
+**
+*/
+function group_extensions_comment_render($node, $current_group,$cid = 0) {
+  global $user;
+    
+    $output ='';
+  if (user_access('access comments')) {
+    // Pre-process variables.
+    $nid = $node->nid;
+    if (empty($nid)) {
+      $nid = 0;
+    }
+    $comments_per_page = 20;
+
+
+      // Multiple comment view
+      $query_count = 'SELECT COUNT(*) FROM {comments} c WHERE c.nid = %d';
+      $query = 'SELECT c.cid as cid, c.pid, c.nid, c.subject, c.comment, c.format, c.timestamp, c.name, c.mail, c.homepage, u.uid, u.name AS registered_name, u.signature, u.signature_format, u.picture, u.data, c.thread, c.status FROM {comments} c INNER JOIN {users} u ON c.uid = u.uid WHERE c.nid = %d';
+
+      $query_args = array($nid);
+      if (!user_access('administer comments')) {
+        $query .= ' AND c.status = %d';
+        $query_count .= ' AND c.status = %d';
+        $query_args[] = COMMENT_PUBLISHED;
+      }
+
+      if ($order == COMMENT_ORDER_NEWEST_FIRST) {
+        if ($mode == COMMENT_MODE_FLAT_COLLAPSED || $mode == COMMENT_MODE_FLAT_EXPANDED) {
+          $query .= ' ORDER BY c.cid DESC';
+        }
+        else {
+          $query .= ' ORDER BY c.thread DESC';
+        }
+      }
+      else if ($order == COMMENT_ORDER_OLDEST_FIRST) {
+        if ($mode == COMMENT_MODE_FLAT_COLLAPSED || $mode == COMMENT_MODE_FLAT_EXPANDED) {
+          $query .= ' ORDER BY c.cid';
+        }
+        else {
+          // See comment above. Analysis reveals that this doesn't cost too
+          // much. It scales much much better than having the whole comment
+          // structure.
+          $query .= ' ORDER BY SUBSTRING(c.thread, 1, (LENGTH(c.thread) - 1))';
+        }
+      }
+      $query = db_rewrite_sql($query, 'c', 'cid');
+      $query_count = db_rewrite_sql($query_count, 'c', 'cid');
+
+      // Start a form, for use with comment control.
+      $result = pager_query($query, $comments_per_page, 0, $query_count, $query_args);
+
+      $divs = 0;
+      $num_rows = FALSE;
+      $comments = '';
+     
+      while ($comment = db_fetch_object($result)) {
+        $comment = drupal_unpack($comment);
+         $topic=array(
+                    'id'=>$comment->cid, // nid or cid
+                    'ispost'=>0,
+                    'name'=>$comment->registered_name,
+                    'uid'=>$comment->uid,
+                    'picture' => $comment->picture, 
+                    'grouprole' => og_is_group_admin($current_group,$comment->uid) ? t('Group Organizer') : t('Group Member'),
+                    'location'=>'',
+                    'created'=>$comment->timestamp,
+                    'content'=>$comment->comment,
+        );
+        $output .=  theme('forum_topic_show',$current_group,  $topic);
+      }
+      
+
+      
+   
+  
+  }
+  return $output;
 }
