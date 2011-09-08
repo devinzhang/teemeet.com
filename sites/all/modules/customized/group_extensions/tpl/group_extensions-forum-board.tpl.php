@@ -165,7 +165,9 @@ Latest Reply
 
 <span class="D_nobr D_less">by:
 
-<?php echo $topic->last_comment_name; ?></span>
+<?php $name =db_result(db_query("SELECT name FROM {users} WHERE uid = %d",$topic->last_comment_uid));
+
+echo $name; ?></span>
 
 </td>
 </tr>

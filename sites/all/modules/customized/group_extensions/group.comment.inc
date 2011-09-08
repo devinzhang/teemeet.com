@@ -34,6 +34,7 @@ function group_extensions_save_comment($comment,$nid){
 	$forum_comment_fields['values']['subject'] = '';
 	$forum_comment_fields['values']['comment'] = $comment;
 	$forum_comment_fields['values']['op'] = t('Save');
+    $forum_comment_fields['values']['name'] = $user->name;
 	$forum_comment_fields['values']['nid'] = $nid;
 	comment_form_submit("comment_form", $forum_comment_fields);
 
