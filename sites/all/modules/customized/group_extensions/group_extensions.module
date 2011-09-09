@@ -168,14 +168,12 @@ function group_extensions_nodeapi(&$node, $op, $teaser, $page)
             
         }
         if($node->type == "forum_topic"){
-            if(module_exists('statistics')) {
-                $node->view_count = statistics_get($node->nid);
-            } else {
+            if(module_exists('statistics')) {            
+                 $node->view_count = db_result(db_query('SELECT totalcount FROM {node_counter} WHERE nid = %d', $node->nid));
+             } else {
             $node->view_count = 0;
             }           
-            
-        }
-        
+        }       
         
     break;
     }
@@ -206,7 +204,8 @@ function group_extensions_preprocess_page(&$vars){
                     'created'=>$node->created,
                     'content'=>$node->body,
                 );
-                $vars['content'] = _group_extension_forum_topic_header($node);
+                
+                $vars['content'] = _group_extension_forum_topic_header($node, $current_group);
                 $vars['content'] .= theme('forum_topic_show',$current_group,  $topic);
                 $vars['content'] .= group_extensions_comment_render($node, $current_group);
                 $vars['content'] .= _group_extension_forum_topic_bottom($node);
@@ -214,43 +213,84 @@ function group_extensions_preprocess_page(&$vars){
    }
 }
 
+/* create a subscrber link
+** depend on message and notify message framework
+** $op: subscribe  or unsubscribe
+*/
+function _group_extension_create_subscriber_link($node){
+    global $user; 
+    $subs = notifications_user_get_subscriptions($user->uid,'thread',$node->nid, $node, FALSE);
+    if($subs) {
+         foreach ($subs as $key => $sub){
+            if($sub->uid == $user->uid) { //user have subscribe this
+                $op = 'subscribe';
+                $lable = t('Track this discussion');
+            } else {
+                $op = 'unsubscribe';
+                $lable = t('Untrack this discussion');
+            }
+         }
+    }
+    
+    $param = array(
+                'uid' => $user->uid,
+                'confirm' => FALSE,
+                'signed' => FALSE,
+                'type' => 'thread',
+                'fields' => array('nid' => $node->nid),
+                'event_type' => 'node',
+                'destination' => TRUE,
+        );
+                
+    $link = notifications_get_link($op,$param);    
+   
+    
+    $subscribe_url= l($lable, $link['href'], $link['options']);
+    return $subscribe_url;
+}
+            
+            
 /** private function to show the forum topic header 
 **   this function must show with the _group_extension_forum_topic_bottom() function
+** @param, $node, the post node
+** @group, the current group 
 */
-function _group_extension_forum_topic_header($node){
+function _group_extension_forum_topic_header($node, $group){
     $output ='';
     global $base_url; 
-    $icon_path = $base_url.'/'.drupal_get_path('theme','fusion_teemeet').'/images';
     
+    
+    $icon_path = $base_url.'/'.drupal_get_path('theme','fusion_teemeet').'/images';
+    $is_group_admin = og_is_group_admin($group); 
     $output .=' <div class="D_box">
         <div class="D_boxbody">
             <div class="D_boxhead">
                 <p class="crumb">
                     <span class="nobr"><a href="'.$GLOBALS['current_group']->path.'">'.$GLOBALS['current_group']->title.'</a></span>
-                    		<span class="nobr ts">›'.$node->title.'</span>	
+                    		<span class="nobr ts">›'.l($node->title,$GLOBALS['current_group']->path.'/'.$node->path).'</span>	
                 </p>
                 <h1>'.$node->title.'</h1>
-                <ul class="D_actions hasIcons">
-                    <li class="canDo">
+                <ul class="D_actions hasIcons">';
+            if($is_group_admin) {
+            $output .= '<li class="canDo">
                         <a href="">
                         <img class="icon png" title="" alt="" src="'.$icon_path.'/icon_closed_on.png"> <span>Close to new replies</span>
                         </a>
                     </li>
-
-                    <li class="canDo">
+                    
+                     <li class="canDo">
                         <a href="">
                         <img class="D_icon png" src="'.$icon_path.'/icon_pinned_on.png"> <span>Pin this discussion</span>
                         </a>
-                    </li>
-
-                    <li class="canDo">
-                    <a class="orgTool sprite sprite_action page_add_icon" href="http://www.meetup.com/Beijing-Soccer-Lovers/messages/boards/view/addpost?forum=2124521">Start a new discussion</a>
-                    </li>
-
-                    <li class="canDo">
-                    <a class="sprite sprite_action monitor_add_icon" href="http://www.meetup.com/Beijing-Soccer-Lovers/messages/boards/view/addwatchprocess?forum=2124521&amp;thread=15411132&amp;WatchSelector=3">Track this discussion</a>
-                    </li>
-                    <li class="canDo">
+                    </li> ';
+            }
+            $output .= '<li class="canDo">
+                    <a class="orgTool sprite sprite_action page_add_icon" href="">Start a new discussion</a>
+                    </li>';
+         //   if(module_exists('notifications')) {
+                    $output .= '<li class="canDo">'._group_extension_create_subscriber_link($node).'</li>';
+          //      }
+                 $output .= '<li class="canDo">
                     <a class="sprite sprite_action arrow_undo_icon" href="'.url($GLOBALS['current_group']->path.'/groupextension/'.$node->nid.'/reply').'">
                     Add a reply
                     </a>

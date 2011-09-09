@@ -593,7 +593,8 @@ function comment_form_alter(&$form, $form_state, $form_id) {
 function comment_nodeapi(&$node, $op, $arg = 0) {
   switch ($op) {
     case 'load':
-      return db_fetch_array(db_query("SELECT last_comment_timestamp, last_comment_name, comment_count FROM {node_comment_statistics} WHERE nid = %d", $node->nid));
+      //return db_fetch_array(db_query("SELECT last_comment_timestamp, last_comment_name, comment_count FROM {node_comment_statistics} WHERE nid = %d", $node->nid));
+      return db_fetch_array(db_query("SELECT last_comment_timestamp, last_comment_name, last_comment_uid, comment_count FROM {node_comment_statistics} WHERE nid = %d", $node->nid));
       break;
 
     case 'prepare':
@@ -768,7 +769,7 @@ function comment_save($edit) {
 
         // Add an entry to the watchdog log.
         watchdog('content', 'Comment: added %subject.', array('%subject' => $edit['subject']), WATCHDOG_NOTICE, l(t('view'), 'node/'. $edit['nid'], array('fragment' => 'comment-'. $edit['cid'])));
-      }
+      }    echo "I am at line " . __LINE__ . " in file " . __FILE__; 
       _comment_update_node_statistics($edit['nid']);
 
       // Clear the cache so an anonymous user can see his comment being added.

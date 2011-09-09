@@ -1,5 +1,7 @@
 ; $Id: devel.info,v 1.5.2.1 2008/06/13 03:25:20 weitzman Exp $
 name = Group Extensions
+dependencies[] = tracker
+dependencies[] = statistics
 description = Function Set of Group.
 package = teemeet.com
 version = "6.x-0.1"
