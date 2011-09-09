@@ -230,6 +230,9 @@ function _group_extension_create_subscriber_link($node){
                 $lable = t('Untrack this discussion');
             }
          }
+    } else {
+          $op = 'subscribe';
+          $lable = t('Track this discussion');
     }
     
     $param = array(
