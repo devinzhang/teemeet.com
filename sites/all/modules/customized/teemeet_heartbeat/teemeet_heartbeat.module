@@ -10,28 +10,28 @@ function teemeet_heartbeat_init() {
 }
 
 function teemeet_heartbeat_token_values($type, $object = NULL) {
-  $values = array();
-  if ($type == 'user') {
-  	$values['test'] = 'test';
-  }
-  return $values;
+	print '<pre>';
+	print_r($object);
+	print '</pre>';
+	exit;
+	$values = array();
+	if ($type == 'user') {
+		$values['test'] = 'test';
+	}
+	return $values;
 }
 
 /**
  * Implementation of hook_token_list().
  */
-function teemeet_heartbeat_token_list($type='all') {
-  /*
-  print '<pre>';
-  print_r($type);
-  print '</pre>';
-  */
-  if ($type == 'user') {
-    $tokens['user']['test'] = t('test');
-	return $tokens;
-  }
-}
 
+function teemeet_heartbeat_token_list($type='all') {
+	if ($type == 'user') {
+		$tokens['user']['test'] = t('test');
+		return $tokens;
+	}
+}
+								  
 /**
  * Implementation of hook_heartbeat_register_access_types().
  */
