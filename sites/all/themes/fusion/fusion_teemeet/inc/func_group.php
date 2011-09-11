@@ -27,12 +27,12 @@ function output_group_menu($menuid = 'menu-group-page-nav')
     }
     else
     {
-    $current_group = $GLOBALS['current_group'];    
-    $sendmail_link = l(t('Email Members'),$current_group->path.'/groupextension/'.$current_group->nid.'/messages/send');
-    $manage_link = l(t('Group Settings'),$current_group->path.'/groupextension/'.$current_group->nid.'/manage');
-    $money_link = l(t('Money'),$current_group->path.'/groupextension/'.$current_group->nid.'/money');
-    $checklist_link = l(t('Organizer tips'),$current_group->path.'/groupextension/'.$current_group->nid.'/checklist');
-    
+        $current_group = $GLOBALS['current_group'];    
+        $sendmail_link = l(t('Email Members'),$current_group->path.'/groupextension/'.$current_group->nid.'/messages/send');
+        $manage_link = l(t('Group Settings'),$current_group->path.'/groupextension/'.$current_group->nid.'/manage');
+        $money_link = l(t('Money'),$current_group->path.'/groupextension/'.$current_group->nid.'/money');
+        $checklist_link = l(t('Organizer tips'),$current_group->path.'/groupextension/'.$current_group->nid.'/checklist');
+        
         $output .= <<<EOF
 <li class="hasKids groupTools rightmenu last">
 <a href="#" class="withKids">Group Tools</a>
