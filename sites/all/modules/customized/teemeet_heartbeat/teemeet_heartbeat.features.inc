@@ -19,8 +19,8 @@ function teemeet_heartbeat_heartbeat_message_info() {
   // Exported heartbeat message: custom_add_node
   $messages['custom_add_node'] = array (
     'message' => 'NEW !node_type
-  !username has added !node_title
-  !post_time !user_picture',
+    !username has added !node_title
+    !post_time !user_picture',
     'message_concat' => '',
     'message_id' => 'custom_add_node',
     'concat_args' => 
@@ -51,9 +51,9 @@ function teemeet_heartbeat_heartbeat_message_info() {
   // Exported heartbeat message: custom_add_comment
   $messages['custom_add_comment'] = array (
     'message' => 'NEW COMMENT
-  !user 
-  commented on !content
-  !time !picture',
+    !user 
+    commented on !content
+    !time !picture',
     'message_concat' => '',
     'message_id' => 'custom_add_comment',
     'concat_args' => 
@@ -141,28 +141,78 @@ function teemeet_heartbeat_heartbeat_message_info() {
     ),
   );
 
-
-  return $messages;
-}
-
-/**
- * Implementation of hook_node_info().
- */
-function teemeet_heartbeat_node_info() {
-  $items = array(
-    'group' => array(
-      'name' => t('Group'),
-      'module' => 'features',
-      'description' => '',
-      'has_title' => '1',
-      'title_label' => t('Title'),
-      'has_body' => '1',
-      'body_label' => t('Body'),
-      'min_word_count' => '0',
-      'help' => '',
+  // Exported heartbeat message: custom_add_greeting
+  $messages['custom_add_greeting'] = array (
+    'message' => '!author posted a greeting for !recipient in !group
+  !message
+  !time',
+    'message_concat' => '',
+    'message_id' => 'custom_add_greeting',
+    'concat_args' => 
+    array (
+      'type' => 'single',
+      'group_by' => 'none',
+      'group_target' => '',
+      'group_by_target' => '',
+      'group_num_max' => '',
+      'merge_separator' => '',
+      'merge_end_separator' => '',
+      'roles' => 
+      array (
+        0 => '0',
+        1 => '0',
+        2 => '0',
+        3 => '0',
+        4 => '0',
+      ),
+      'merge_separator_t' => '0',
+      'merge_end_separator_t' => '0',
+    ),
+    'description' => 'Custom: User submit a new greeting or reply a greeting',
+    'perms' => '1',
+    'custom' => 1,
+    'variables' => 
+    array (
     ),
   );
-  return $items;
+
+  // Exported heartbeat message: custom_delete_greeting
+  $messages['custom_delete_greeting'] = array (
+    'message' => '!author deleted a greeting for !recipient in !group
+  !message
+  !time',
+    'message_concat' => '',
+    'message_id' => 'custom_delete_greeting',
+    'concat_args' => 
+    array (
+      'type' => 'single',
+      'group_by' => 'none',
+      'group_target' => '',
+      'group_by_target' => '',
+      'group_num_max' => '',
+      'merge_separator' => '',
+      'merge_end_separator' => '',
+      'roles' => 
+      array (
+        0 => '0',
+        1 => '0',
+        2 => '0',
+        3 => '0',
+        4 => '0',
+      ),
+      'merge_separator_t' => '0',
+      'merge_end_separator_t' => '0',
+    ),
+    'description' => 'Custom: User delete a greeting',
+    'perms' => '1',
+    'custom' => 1,
+    'variables' => 
+    array (
+    ),
+  );
+
+
+  return $messages;
 }
 
 /**
