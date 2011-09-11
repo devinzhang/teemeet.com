@@ -13,7 +13,10 @@ define('NODE_TYPE', 'group'); //节点类型
 //_form_group_node
 function group_extensions_perm()
 {
-    return array('create group');
+    return array(
+    'create group',
+    'admin group'
+    );
 }
 
 function group_extensions_menu()
@@ -96,8 +99,66 @@ function group_extensions_menu()
         'file' => 'group_extensions.forum.inc',
 	);
     
+    /*group tools */
+    $items['groupextension/%/messages/send'] = array
+    (
+        'title' => t('Email Members'),
+        'description' => 'Send email to all members',
+        'page callback' => 'groupextension_tools_send_messages',
+        'page arguments' => array(1),       
+        'type' => MENU_CALLBACK,
+        'access callback' => 'group_extensions_is_group_admin',        
+        'access arguments' => array(1),        
+        'file' => 'group_extensions.tools.inc',
+    );
+    $items['groupextension/%/manage'] = array
+        (
+            'title' => t('Group Settings'),
+            'description' => 'Configure the group',
+            'page callback' => 'groupextension_tools_manage',
+            'page arguments' => array(1),       
+            'type' => MENU_CALLBACK,
+            'access callback' => 'group_extensions_is_group_admin',        
+            'access arguments' => array(1),        
+            'file' => 'group_extensions.tools.inc',
+        );
+    $items['groupextension/%/money'] = array
+        (
+            'title' => t('Money'),
+            'description' => 'All the money related',
+            'page callback' => 'groupextension_tools_money',
+            'page arguments' => array(1),       
+            'type' => MENU_CALLBACK,
+            'access callback' => 'group_extensions_is_group_admin',        
+            'access arguments' => array(1),        
+            'file' => 'group_extensions.tools.inc',
+        );
+    $items['groupextension/%/checklist'] = array
+        (
+            'title' => t('Money'),
+            'description' => 'Send email to all members',
+            'page callback' => 'groupextension_tools_checklist',
+            'page arguments' => array(1),       
+            'type' => MENU_CALLBACK,
+            'access callback' => 'group_extensions_is_group_admin',        
+            'access arguments' => array(1),        
+            'file' => 'group_extensions.tools.inc',
+        );
+    
+    
     return $items;    
 }
+
+
+/* if the current use is the group admin 
+*
+*/
+
+function group_extensions_is_group_admin($gid){
+$node = node_load($gid); 
+return og_is_group_admin($node); 
+}
+
 
 
 /**

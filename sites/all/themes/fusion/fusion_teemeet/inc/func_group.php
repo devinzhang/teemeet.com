@@ -21,12 +21,19 @@ function output_group_menu($menuid = 'menu-group-page-nav')
     }
     
     
-    if(0)
+    if(0 or isset($_COOKIE['menu']))
     {
         $output .= '<li class="calltoaction rightmenu giant"> <a href="http://www.meetup.com/SacSwim/join/" class="J_signupLink J_onClick omnCamp omnrg_joinus topNavJoinus">Join us!</a> </li>';
     }
     else
     {
+    $current_group = $GLOBALS['current_group'];
+    
+    $sendmail_link = l(t('Email Members'),$current_group->path.'/groupextension/'.$current_group->nid.'/messages/send');
+    $manage_link = l(t('Group Settings'),$current_group->path.'/groupextension/'.$current_group->nid.'/manage');
+    $money_link = l(t('Money'),$current_group->path.'/groupextension/'.$current_group->nid.'/money');
+    $checklist_link = l(t('Organizer tips'),$current_group->path.'/groupextension/'.$current_group->nid.'/checklist');
+    
         $output .= <<<EOF
 <li class="hasKids groupTools rightmenu last">
 <a href="#" class="withKids">Group Tools</a>
@@ -35,19 +42,19 @@ function output_group_menu($menuid = 'menu-group-page-nav')
 <a href="http://www.meetup.com/Beijing-Soccer-Lovers/events/?action=new">Schedule a Meetup</a>
 </li>
 <li class="">
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/messages/send/">Email members</a>
+$sendmail_link
 </li>
 
 <li class="" id="topNav-group-setting">
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/">Group settings</a>
+$manage_link
 </li>
 
 <li>
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/money/">Money</a>
+$money_link
 </li>
 
 <li class="last ">
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/checklist/">Organizer tips</a>
+$checklist_link
 </li>
 
 </ul>
@@ -60,8 +67,16 @@ EOF;
     return $output;	
 }
 
-function output_group_sitetitle(&$group)
+function output_group_sitetitle(&$node)
 {    
-    return '<h1 id="bannerGroupName"><a href="' . $group->path . '" title="' . $group->field_site_title[0]["safe"] . '"><span>' . $group->field_site_title[0]["safe"] . '</span> </a> </h1>';
+    return '<h1 id="bannerGroupName"><a href="' . $node->path . '" title="' . $node->field_site_title[0]["safe"] . '"><span>' . $node->field_site_title[0]["safe"] . '</span> </a> </h1>';
 } 
 
+function group_style()
+{
+    $file = file_directory_path() .'/color/' . $GLOBALS['current_group']->path . '/style.css';
+    if(file_exists($file))
+    {
+        return '<link type="text/css" rel="stylesheet" media="print" href="' . $file .'" />';
+    }
+}
