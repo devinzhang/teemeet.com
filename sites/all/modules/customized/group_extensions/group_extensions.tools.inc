@@ -120,8 +120,7 @@ function _groupextension_tools_send_message_form_submit($form, &$form_state) {
     while ($row = db_fetch_object($res)) {        
             $recipient = user_load($row->uid);
             $result = mimemail($sender, $recipient, $subject, $body, $plaintext);           
-    }
-    
+    }    
     $form_state['redirect'] = $group->path;
 }
 
