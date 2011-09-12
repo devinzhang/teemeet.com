@@ -11,7 +11,17 @@
 function og_member_profile_setting_member($gid){
     drupal_set_title(t('Your members'));
     $output = '';
-    $output .= drupal_get_form('og_member_profile_setting_member_form', $gid); 
+     $output .='<div class="D_box">
+                    <div class="D_boxbody">
+                        <div class="D_boxhead">
+                            <h1>'.t('Your members').'</h1>
+                        </div>';
+         $output .='<div class="D_boxsection ">';  
+          $output .= drupal_get_form('og_member_profile_setting_member_form', $gid); 
+         $output .='</div>';     
+    $output .='</div>';     
+   
+   
     return $output;
 }
 
