@@ -9,14 +9,16 @@ function teemeet_heartbeat_init() {
   drupal_add_css(drupal_get_path('module', 'teemeet_heartbeat') . '/teemeet_heartbeat.css');
 }
 
+/**
+ * Implementation of hook_token_values().
+ */
 function teemeet_heartbeat_token_values($type, $object = NULL) {
-	print '<pre>';
-	print_r($object);
-	print '</pre>';
-	exit;
 	$values = array();
-	if ($type == 'user') {
-		$values['test'] = 'test';
+	if ($type == 'user' && arg(1) == 'approve' && !isset($object->og_groups[arg(2)])) {
+		$gid = arg(2);
+		$user_approved = arg(3);
+	    $result = db_fetch_object(db_query("select introduction from ".MEMBER_PROFILE_TBL." where gid=%d and uid=%d",$gid,$user_approved));
+		$values['introduction-in-group'] = $result->introduction;
 	}
 	return $values;
 }
@@ -24,10 +26,9 @@ function teemeet_heartbeat_token_values($type, $object = NULL) {
 /**
  * Implementation of hook_token_list().
  */
-
 function teemeet_heartbeat_token_list($type='all') {
 	if ($type == 'user') {
-		$tokens['user']['test'] = t('test');
+		$tokens['user']['introduction-in-group'] = t('Introduction added when a user joined a group.');
 		return $tokens;
 	}
 }
@@ -105,21 +106,7 @@ function teemeet_heartbeat_greeting_delete($entry) {
  * @param $stream HeartbeatAccess as the object that holds the current stream scope
  */
 function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $stream) {
-
   foreach ($messages as $key => $message) {
-    /*
-	print "<pre>";
-	print_r($message);
-	print "</pre>";
-	print "<pre>";
-	print_r($stream);
-	print "</pre>";
-	exit;
-  */
-  /*
-  print $stream->stream->name;
-  exit;
-  */
     $timeago = '<span class="activity-time">';
     $timeago .= t('@time ago', array('@time' => format_interval(($_SERVER['REQUEST_TIME'] - $message->timestamp), 1)));
     $timeago .= '</span>';
@@ -186,6 +173,7 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
         $message->message = $message->variables['@avatar'];
         $message->message .= '<div class="teemeet-message-content clearfix">';
         $message->message .= $message->variables['@user'] . ' joined the group' . '<br/>';
+        $message->message .= $message->variables['@introduction'] . '<br/>';
         $message->message .= $timeago;
         $message->message .= '</div>';
       }
