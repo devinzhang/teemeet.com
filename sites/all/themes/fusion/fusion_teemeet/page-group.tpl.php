@@ -1,34 +1,42 @@
-<? require 'inc/func_group.php'; ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=8" />
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<meta http-equiv="Content-Language" content="en" />
-<title><? echo $title ?></title>
-<script type="text/javascript">(function(){var hash=window.location.hash.replace("#","");if(hash){var ops={calendar:"http://www.meetup.com/SacSwim/events/calendar/",drafts:"http://www.meetup.com/SacSwim/events/drafts/",making:"http://www.meetup.com/SacSwim/events/suggested/",past:"http://www.meetup.com/SacSwim/events/past/",suggested:"http://www.meetup.com/SacSwim/events/suggested/",unofficial:"http://www.meetup.com/SacSwim/events/unofficial/",upcoming:"http://www.meetup.com/SacSwim/"},loc=window.location,url=[loc.protocol,"//",loc.host,loc.pathname].join(""),target=ops[hash];if(target&&url!==target){loc.replace(target)}}})();</script>
+  <title><?php print $head_title; ?></title>
+  <?php print $head; ?>
+  <?php print $styles; ?>
+  <?php print $setting_styles; ?>
+  <!--[if IE 8]>
+  <?php print $ie8_styles; ?>
+  <![endif]-->
+  <!--[if IE 7]>
+  <?php print $ie7_styles; ?>
+  <![endif]-->
+  <!--[if lte IE 6]>
+  <?php print $ie6_styles; ?>
+  <![endif]-->
+  <?php print $local_styles; ?>
+  <?php print $scripts; ?>
+
+  <script type="text/javascript">(function(){var hash=window.location.hash.replace("#","");if(hash){var ops={calendar:"http://www.meetup.com/SacSwim/events/calendar/",drafts:"http://www.meetup.com/SacSwim/events/drafts/",making:"http://www.meetup.com/SacSwim/events/suggested/",past:"http://www.meetup.com/SacSwim/events/past/",suggested:"http://www.meetup.com/SacSwim/events/suggested/",unofficial:"http://www.meetup.com/SacSwim/events/unofficial/",upcoming:"http://www.meetup.com/SacSwim/"},loc=window.location,url=[loc.protocol,"//",loc.host,loc.pathname].join(""),target=ops[hash];if(target&&url!==target){loc.replace(target)}}})();</script>
 <script src="http://static1.meetupstatic.com/884236050070803923549903/script/Meetup/packed/Meetup.Base.jquery.js" type="text/javascript"></script>
 <script type="text/javascript">Meetup.isSecure=false;var LOG={};LOG.info=function(){return};LOG.error=function(){return};var Member={id:0,name:"",lat:"0.0",lon:"0.0",radius:"50",country:"us",zip:"",isCoord:false,isOrganizingAny:false,twitterAccount:false,status:1,isOwner:false,isCOOrg:false,groupsLink:"http://www.meetup.com/members/0/groups/",groupCount:0,isEvtOrg:false,isMember:false,memberThumb:"http://img1.meetupstatic.com/39194172310009655/img/noPhoto_50.gif",isVisitor:false,accessToken:""};var memberId=Member.id;var topicId=3361;var Chapter={id:1082327,name:"Sacramento Swimming Enthusiasts",lat:"38.57",lon:"-121.47",city:"Sacramento",state:"CA",country:"us",zip:"95816",domain:"",threshold:-1,previewUrl:"http://www.meetup.com/SacSwim/?op=preview",groupApiUrl:"http://www.meetup.com/SacSwim/api/",localTime:"August 6, 2011 20:16:11",forceUrl:false,groupUrl:"http://www.meetup.com/SacSwim/"};var chapterId=Chapter.id;Meetup.Language="en_US";if(typeof(Meetup.Copy)!="object"){Meetup.Copy={}}Meetup.Copy.CharCounter={};Meetup.Copy.dlogCloseThis="Close this";Meetup.Copy.CharCounter.upToXChars="Up to {CHAR_COUNT} characters.";Meetup.Copy.monthNames=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];Meetup.Copy.dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];if(Meetup.Data===undefined){Meetup.Data={}}Meetup.Data.secureUrl="http://www.meetup.com/";Meetup.Data.secureApiUrl="http://www.meetup.com/api/";if(typeof Meetup==="undefined"){Meetup={}}if(Meetup.Data.grouphome===undefined){Meetup.Data.grouphome={}}if(Meetup.Data.grouphome.modulePreference===undefined){Meetup.Data.grouphome.modulePreference={}}Meetup.Data.themeCSS="http://www.meetup.com/theme/1297925954/?chapterId=1082327&external=true";Meetup.Data.grouphome.baseUrl="http://www.meetup.com/SacSwim/";Meetup.Data.grouphome.layoutVersion="4";Meetup.Data.grouphome.isOrg=false;Meetup.Data.grouphome.isPrivate=false;var COOKIE_DOMAIN=".meetup.com";if(""!=""){COOKIE_DOMAIN=""}if(typeof Meetup.Styles=="undefined"){Meetup.Styles={}}Meetup.Styles.boxBackgroundColor="#E1F2E8";</script>
-<meta name="keywords" content="USA,California,Sacramento,Swimming,swimmers,group,club,event,community,meetup" />
-<meta name="description" content="Meet others in your local area interested in swimming. In the pool and out in the real world open water style. We&#039;ll work out regularly to stay fit, discuss swimming techniques, health benefits and ga" />
-<link rel="stylesheet" href="http://static2.meetupstatic.com/5784067448294103359835360/style/meetup_jquery_ui.css" type="text/css" />
-<link rel="stylesheet" href="http://static1.meetupstatic.com/0649981367410798082298064/style/meetup.css" type="text/css" />
+
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/meetup_jquery_ui.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/meetup.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/eventDetails.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/bagelbase_mar.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/new_layout.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/module.css" />
+<link type="text/css" rel="stylesheet" media="print" href="<? echo base_path() . path_to_theme() ;?>/css/print.css" />
+
+<? echo color_group_style(); ?>
 <!--[if IE 6]>
-				<link rel="stylesheet" href="http://static1.meetupstatic.com/87101548361737691066016/style/sprites_ie.css" type="text/css" />
-			<![endif]-->
-
+  <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/ie6.css" />
+<![endif]-->
 <!--[if lt IE 8]>
-		<link rel="stylesheet" href="http://static2.meetupstatic.com/74513332436582209025/style/base_ie.css" type="text/css" />
-	<![endif]-->
-
-<link rel="stylesheet" href="http://static1.meetupstatic.com/549553553979963562427959/style/bagelbase_mar.css" type="text/css" />
-<link rel="stylesheet" href="http://static2.meetupstatic.com/9659051690118168059/style/new_layout.css" type="text/css" />
-<link rel="stylesheet" href="http://static1.meetupstatic.com/8309909721544940250642/style/module.css" type="text/css" />
-<!--link rel="stylesheet" href="http://www.meetup.com/theme/1297925954/?chapterId=1082327&external=true" type="text/css" /-->
-
-
-<!-- for event --><link rel="stylesheet" href="http://static1.meetupstatic.com/93805775721321463/style/eventDetails.css" type="text/css" />
-<link rel="stylesheet" type="text/css" media="print" href="http://static2.meetupstatic.com/01979620359177082566/style/print.css" />
-<!--link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.meetup.com/SacSwim/events/rss/Sacramento+Swimming+Enthusiasts/" /-->
+  <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/ie8.css" />
+<![endif]-->
 </head>
 
 <? if(!$group): ?>
@@ -117,17 +125,28 @@
 	  </div>
     <? endif; ?>  
       <ul id="C_userLinks">
-        <li class="C_userNavItem C_userNavItem_less"><a href="http://www.meetup.com/whats_new/">What's new</a></li>
-        <li class="C_userNavItem C_userNavItem_less"> <a href="http://www.meetup.com/help/"><? echo t('help') ?></a> </li>
+        <li class="C_userNavItem C_userNavItem_less"><a href="#">What's new</a></li>
+        <li class="C_userNavItem C_userNavItem_less"> <a href="#"><? echo t('help') ?></a> </li>
         
         <? if(!$user->uid): ?>
-         <li class="C_userNavItem"><a href="https://secure.meetup.com/login/" class="J_loginLink J_onClick headerLogin">Log in</a></li>
-         <li class="C_userNavItem"><a class="omnCamp omnrg_signup J_signupLink J_onClick headerSignup" href="http://www.meetup.com/SacSwim/join/?submit=Join">Sign up</a></li>
+         <li class="C_userNavItem"><a href="<?php echo url('user/login'); ?>" class="J_loginLink J_onClick headerLogin">Log in</a></li>
+         <li class="C_userNavItem"><a class="omnCamp omnrg_signup J_signupLink J_onClick headerSignup" href="<?php echo url('user/register');?>">Sign up</a></li>
         <? else: ?>
-          <li class="C_userNavItem hasDropDown"><a href="#"><? echo t('我的小组')?></a> <div class="C_arrowTab"></div> 
-            <div id="C_groupsMenu" style="width: 310px; "> <ul class="myGroupsSection"><li><a href="" class="C_groupsMenuItem lastGroupItem">Beijing Soccer Lovers</a></li></ul></div>
+          <li class="C_userNavItem hasDropDown"><a href="<?php echo url('user/'.$user->uid.'/mygroups'); ?>"><? echo t('我的小组')?></a> <div class="C_arrowTab"></div> 
+            <div id="C_groupsMenu" style="width: 310px; "> 
+                <ul class="myGroupsSection">
+                    
+                <?php
+                    
+                    foreach($user->og_groups as $nid=>$group) {
+                    echo '<li>'.l($group['title'],drupal_get_path_alias('node/'.$nid),array('attributes'=>array('class'=>'C_groupsMenuItem '))).'</li>';
+                 }                
+                ?>
+                               
+                </ul>
+            </div>
           </li>
-          <li class="C_userNavItem"><a href="http://www.meetup.com/account/">Account</a></li>
+          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>">Account</a></li>
           <li class="C_userNavItem"><a href="<? echo url('logout') ?>"><? echo t('登出') ?></a></li>
         <? endif; ?>
       </ul>

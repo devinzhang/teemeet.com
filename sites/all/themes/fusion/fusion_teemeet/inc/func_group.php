@@ -70,12 +70,3 @@ function output_group_sitetitle(&$node)
 {    
     return '<h1 id="bannerGroupName"><a href="' . $node->path . '" title="' . $node->field_site_title[0]["safe"] . '"><span>' . $node->field_site_title[0]["safe"] . '</span> </a> </h1>';
 } 
-
-function group_style()
-{
-    $file = file_directory_path() .'/color/' . $GLOBALS['current_group']->path . '/style.css';
-    if(file_exists($file))
-    {
-        return '<link type="text/css" rel="stylesheet" media="print" href="' . $file .'" />';
-    }
-}
