@@ -134,10 +134,8 @@
         <? else: ?>
           <li class="C_userNavItem hasDropDown"><a href="<?php echo url('user/'.$user->uid.'/mygroups'); ?>"><? echo t('我的小组')?></a> <div class="C_arrowTab"></div> 
             <div id="C_groupsMenu" style="width: 310px; "> 
-                <ul class="myGroupsSection">
-                    
-                <?php
-                    
+                <ul class="myGroupsSection">                    
+                <?php                    
                     foreach($user->og_groups as $nid=>$group) {
                     echo '<li>'.l($group['title'],drupal_get_path_alias('node/'.$nid),array('attributes'=>array('class'=>'C_groupsMenuItem '))).'</li>';
                  }                

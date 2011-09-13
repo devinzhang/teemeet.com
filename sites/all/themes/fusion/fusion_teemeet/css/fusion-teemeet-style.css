@@ -903,6 +903,9 @@ display: inline;
     padding: 0;
     
 }
+#site-name-wrapper{
+display:none;
+}
 
 #block-frontpage-0 {
 float:left; 
