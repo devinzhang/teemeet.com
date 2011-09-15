@@ -306,7 +306,11 @@ function usercenter_block($op = 'list', $delta = 0, $edit = array()){
             
             $blocks[2]['info']=t('Profile Header in a group');
 			$blocks[2]['cache']=BLOCK_NO_CACHE;
+            
+            $blocks[3]['info']=t('Sponsor Business Summary');
+			$blocks[3]['cache']=BLOCK_NO_CACHE;
 
+            
             
 	
 			return $blocks;
@@ -326,6 +330,11 @@ function usercenter_block($op = 'list', $delta = 0, $edit = array()){
                 case 2:
 					$block['subject']=t('Profile Header in a group');
 					$block['content']= usercenter_profile_header_ingroup();
+
+					break;				
+                case 3:
+					$block['subject']=t('Sponsor Business Summary');
+					$block['content']= usercenter_sponsor_business_summary();
 
 					break;				
 
@@ -442,10 +451,49 @@ function usercenter_profile_header_ingroup(){
             $output .= '</ul>';
             
     $output .= '</div>';
-   
+ //   $output .= '</div>';
+    
     return $output; 
 }
 
+function usercenter_sponsor_business_summary(){
+    $output = '';
+    global $user; 
+    $my_sponsor = node_load(array('uid'=>$user->uid, 'type'=>'sponsor'));
+    
+    if($my_sponsor){
+        $output .= '<div id="D_memberHomeHeader" class="D_box clearfix">';
+		 $output .= '<dl class="sponsorLetterhead clearfix vcard" id="sponsorInfo">';
+
+            $output .= '<dt class="fn org url"></dt><h2>'.$my_sponsor->title.'</h2>';
+                $output .= '<dd class="startDate">Sponsor since '.format_date($my_sponsor->created,'custom','Y-m-d').'</dd>';
+                $output .= '<dt class="name">devin</dt>';
+                $output .= '<dd class="adr">';
+                $output .= '<span class="street-address">'.$my_sponsor->field_sponsor_address[0]['street'].'</span>';
+                $output .= '<span class="locality">'.$my_sponsor->field_sponsor_address[0]['city'].'</span>,';
+                $output .= '<abbr title="Maryland" class="region">'.$my_sponsor->field_sponsor_address[0]['province'].'</abbr>,';
+                $output .= '<span class="country-name">'.$my_sponsor->field_sponsor_address[0]['country'].'</span>';
+                $output .= '</dd>';
+                $output .= '</dl>';
+                $output .= '<div id="letterheadMeta">';
+			$output .= '<h2 class="lightHeading">';
+			$output .= 'Sponsoring <strong id="count_members">0</strong> members in <strong id="count_activeGroups">0</strong> Meetup Groups';
+			$output .= '</h2>';
+			$output .= '<a href="'.url('node/'.$my_sponsor->nid).'" id="visitSponsorHome" class="clearfix">
+				<img alt="Home" class="D_icon" src="http://img2.meetupstatic.com/8689168192329930562/img/house.gif"> 
+				<span>View your Sponsor page</span>
+				<em></em>
+			</a>
+
+			<ul class="D_actions" id="editSponsorAccount">
+				<li class="canDo"> <a class="sprite sprite_action pencil_icon" href="'.url('node/'.$my_sponsor->nid.'/edit').'">'.t('Edit Your Info').'</a> </li>
+			</ul>
+		</div>
+	</div>';
+    }
+    
+    return $output; 
+}
 
 /*
 * http://drupal.org/node/269913
