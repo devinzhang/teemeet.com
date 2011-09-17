@@ -299,3 +299,103 @@ function usercenter_sponsor_create_form_submit($form, &$form_state) {
     
     }
 }
+
+/* menu callback */
+function usercenter_sponsor_find_group(){
+    $output = '';
+    
+    $query = 'select nid from {node} where type="'.GROUP_NODE_TYPE.'" and status=1 order by created DESC';
+    $query_count = 'SELECT COUNT(*) from {node} where type="'.GROUP_NODE_TYPE.'" and status=1 ';
+    $groups_per_page = 10;
+    
+    $output .='<div id="groupListContainer" class="D_groupList_large">';
+    $output .='<ul class="D_summaryList">';
+     $result = pager_query($query, $groups_per_page, 0, $query_count);
+     $i = 1; 
+     while ($gid = db_fetch_object($result)) {
+        $group = node_load($gid->nid);
+        $output .= '<li class="D_group J_groupHover position_'.$i.' first">';
+        $output .= _usercenter_output_group_teaser($group);
+        $output .= '</li>';
+        
+        $i ++;
+     }
+     $output .='</ul>';
+    $output .='</div>';
+    return $output; 
+}
+
+function _usercenter_output_group_teaser($group){
+    $output = '';
+   
+    $group_path = url($group->path); 
+    $group_member = $group->og_member_count;
+    $group_title = $group->field_site_title[0]['value']; 
+    $ask_sponsor = l(t('Sponsor this group'), 'sponsor/sponsorgroup/'.$group->nid);
+    $output.= <<<EOF
+    <div style="font-size: 0.9em;" class="D_image">
+		<a class="omnCamp omngj_sj6b" href="http://www.midatlantichiking.com/">
+							<img data-src="http://photos3.meetupstatic.com/photos/event/7/6/8/f/global_22170351.jpeg" src="http://photos3.meetupstatic.com/photos/event/7/6/8/f/global_22170351.jpeg" alt="" style="display: block;">
+        </a>
+		<div style="margin-top: 0.5em;" class="D_distance">
+            <strong>14 miles away</strong> <span class="D_nobr">in Washington, DC</span>
+        </div>		
+		<div style="margin-top: 0.5em;" class="D_members">
+		<strong>$group_member</strong>
+            mebers in this group			
+		</div>
+	</div>
+    <div class="D_info">
+        <div style="width: auto; margin-right: 18.4em;" class="D_name J_help">
+			<a class="omnCamp omngj_sj6b" href=" $group_path"> $group_title</a>
+		</div>
+        <div style="width: 22em;" class="D_secondary">
+        $ask_sponsor
+        </div>
+        <div style="margin-right: 23em;" class="D_primary">
+            <div class="D_description J_help">
+                description
+            </div>
+        </div>
+        
+        
+    </div>
+EOF;
+    return $output; 
+}
+/*menu callback
+**
+*/
+function usercenter_sponsor_ask_sponsor_the_group($gid){
+    $output ='';
+    $output .= drupal_get_form('usercenter_sponsor_ask_sponsor_group_form', $gid);
+    return $output;
+}
+
+function usercenter_sponsor_ask_sponsor_group_form($form_state, $gid){
+    $form['morewords'] = array(
+      '#type' => 'textarea', 
+      '#title' => t(''), 
+      '#default_value' =>'',      
+      '#required' => FALSE,
+      
+  );
+  
+    $form['gid'] = array(
+      '#type' => 'hidden', 
+      '#value' => $gid,
+  );
+  
+  
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit'),
+    '#submit' => array('usercenter_sponsor_ask_sponsor_group_form_submit'),
+    '#weight' => 15,
+);
+return $form; 
+}
+
+function usercenter_sponsor_ask_sponsor_group_form_submit($form, &$form_state) {
+    drupal_goto('sponsor/findgroup');
+}

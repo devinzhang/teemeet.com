@@ -6,8 +6,14 @@ core = 6.x
 engine = phptemplate
 
 stylesheets[all][] = css/fusion-teemeet-style.css
-stylesheets[all][] = css/jquery_dialog.css
-stylesheets[all][] = css/ui.dialog.css
+stylesheets[all][] = css/meetup_jquery_ui.css
+stylesheets[all][] = css/meetup.css
+stylesheets[all][] = css/eventDetails.css
+stylesheets[all][] = css/bagelbase_mar.css
+stylesheets[all][] = css/new_layout.css
+stylesheets[all][] = css/module.css
+stylesheets[print][] = css/print.css
+stylesheets[print][] = css/search.css
 
 regions[sidebar_first] = sidebar first
 regions[sidebar_last] = sidebar last

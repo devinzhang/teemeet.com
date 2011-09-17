@@ -1,0 +1,22 @@
+#C_page { background: url(images/body.png) repeat-x;}
+body {background: #edf5fa;}
+body.humble #C_contextHead { background: none; border:none;}
+
+
+a:link, a:visited {
+  color: #027AC6;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0062A0;
+  text-decoration: underline;
+}
+
+a:active, a.active {
+  color: #5895be;
+}
+
+.navTop {border:none !important; background:none;}
+
+.C_contextNav li.select a, .C_contextNav li:hover a, .C_contextNav li a:hover, .C_contextNav li.ie6over a {background: #000 !important;}

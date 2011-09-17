@@ -1,0 +1,1008 @@
+.switchingMessage {
+	display:none;
+	height:350px;
+	line-height:1.45;
+}
+.switchingMessage {
+	display:none;
+	height:350px;
+	line-height:1.45;
+}
+.switchingMessage img {
+	float:right;
+	margin-left:.6em;
+}
+div.urf div.label {
+	float:none;
+}
+div.urf div.input {
+	width:85%;
+}
+div.urf div.input input[type="text"],div.urf div.input input[type="password"] {
+	width:85%;
+}
+div.sponsorSlot table,div.sponsorSlot tbody,div.sponsorSlot tr,div.sponsorSlot td {
+	padding:0;
+	margin:0;
+	vertical-align:top;
+}
+div.sponsorSlot table {
+	width:100%;
+}
+div.sponsorSlot td.sponsorImage {
+	width:120px;
+}
+div.sponsorSlot td.sponsorText {
+	padding-left:10px;
+}
+div.sponsorSlot td.noText {
+	vertical-align:middle;
+}
+div.M_photoSoloGallery {
+	position:relative;
+}
+div.M_photoSoloGallery div.mainPhoto {
+	width:100%;
+	padding:0;
+	margin:0;
+	overflow:hidden;
+	position:relative;
+}
+div.M_photoSoloGallery div.mainPhoto.event {
+	height:360px;
+}
+div.M_photoSoloGallery div.mainPhoto.global {
+	height:180px;
+}
+div.M_photoSoloGallery div.buffer {
+	position:absolute;
+	background-color:transparent;
+	background-position:center center;
+	background-repeat:no-repeat;
+	background-attachment:scroll;
+}
+div.M_photoSoloGallery div.mainPhoto.event div.buffer {
+	width:100%;
+	height:360px;
+}
+div.M_photoSoloGallery div.mainPhoto.event div.buffer a {
+	display:block;
+	border:0;
+	width:100%;
+	height:100%;
+	background-color:transparent;
+	text-decoration:none;
+}
+div.M_photoSoloGallery div.mainPhoto.event div.buffer a:hover {
+	text-decoration:none;
+}
+div.M_photoSoloGallery div.mainPhoto.global div.buffer {
+	width:100%;
+	height:180px;
+}
+div.M_photoSoloGallery div.mainPhoto div.buffer.fadeout {
+	z-index:1;
+}
+div.M_photoSoloGallery div.mainPhoto div.buffer.fadein {
+	z-index:2;
+}
+div.M_photoSoloGallery div.navNext,div.M_photoSoloGallery div.navPrev {
+	display:none;
+	position:absolute;
+	background-color:transparent;
+	background-attachment:scroll;
+	background-repeat:no-repeat;
+	width:24px;
+	height:48px;
+	cursor:pointer;
+	z-index:10;
+	top:156px;
+}
+div.M_photoSoloGallery div.navPrev {
+	left:0;
+	background-image:url(http://img1.meetupstatic.com/img/8441501567676534439/module/photo/big_pager_left.png);
+}
+div.M_photoSoloGallery div.navNext {
+	right:0;
+	background-image:url(http://img1.meetupstatic.com/img/635593553503354961/module/photo/big_pager_right.png);
+}
+body.hasJS div.M_photoSoloGallery div.navNext,body.hasJS div.M_photoSoloGallery div.navPrev {
+	display:block;
+}
+body.hasJS div.M_photoSoloGallery div.buffer a {
+	display:block;
+	text-align:center;
+}
+div.M_photoSoloGallery div.meta div.uploader {
+	text-align:center;
+}
+div.M_photoSoloGallery div.meta ul.counts {
+	text-align:center;
+	margin:0;
+	padding:0;
+	display:block;
+}
+div.M_photoSoloGallery div.meta ul.counts li {
+	display:inline;
+	list-style-position:inside;
+	list-style:none;
+	padding-left:16px;
+	background-attachment:scroll;
+	background-repeat:no-repeat;
+	margin-right:1em;
+}
+div.M_photoSoloGallery div.meta ul.counts>li {
+	display:-moz-inline-box;
+	display:inline-block;
+}
+div.M_photoSoloGallery div.meta ul.counts li.comments {
+	background-position:0 3px;
+	background-image:url(http://img1.meetupstatic.com/img/1088268337491907197/module/photo/tmp_commet_icon.png);
+}
+div.M_photoSoloGallery div.meta ul.counts li.tags {
+	background-position:0 3px;
+	background-image:url(http://img1.meetupstatic.com/img/0674024392656936621947/module/photo/tmp_tag_icon.png);
+}
+div.members_stage .D_boxsection {
+	padding:0;
+}
+div.M_membersStage {
+	position:relative;
+	padding:2em 0 1.42em 0;
+}
+div.M_membersStage div.J_membersStageSpinner {
+	display:none;
+	text-align:center;
+}
+body.hasJS div.J_membersStageSpinner {
+	display:block;
+}
+body.hasJS div.M_membersStage div.forNonJS {
+	display:none;
+}
+div.M_membersStage div.row {
+	width:100%;
+	height:90px;
+	position:relative;
+}
+div.M_membersStage div.row div.picture {
+	position:absolute;
+	height:80px;
+	width:80px;
+	background-color:transparent;
+	background-position:center center;
+	background-attachment:scroll;
+	background-repeat:no-repeat;
+	top:0;
+	left:0;
+}
+div.M_membersStage div.row div.picture a.block {
+	display:block;
+	width:80px;
+	height:80px;
+	font-size:0;
+	line-height:0;
+}
+div.M_membersStage div.row div.text {
+	margin-left:90px;
+	height:80px;
+	overflow:hidden;
+}
+div.M_membersStage div.row div.text div.nominal {
+	font-size:85%;
+	line-height:1;
+}
+div.M_membersStage div.row div.text div.nominal a {
+	font-weight:bold;
+}
+div.M_membersStage div.row div.text div.nominal span.name {
+	font-size:11px;
+}
+div.M_membersStage div.row div.text div.nominal span.title {
+	font-size:11px;
+	font-style:italic;
+}
+div.M_membersStage div.row div.text div.saying {
+	margin-top:.5em;
+	font-size:11px;
+	line-height:1.3;
+}
+div.M_membersStage div.view {
+	position:relative;
+	overflow:hidden;
+}
+div.M_membersStage div.chunk {
+	position:absolute;
+	width:100%;
+}
+.M_membersStage .J_membersStageArrowUp,.M_membersStage .J_membersStageArrowDown {
+	position:absolute;
+	z-index:999;
+	visibility:hidden;
+}
+.M_membersStage .J_membersStageArrowUp {
+	top:0;
+}
+.M_membersStage .J_membersStageArrowDown {
+	bottom:0;
+}
+.M_membersStage .D_vertArrowTop,.M_membersStage .D_vertArrowBottom {
+	color:#000;
+}
+div.module_manager div.D_box {
+	color:#272727!important;
+}
+div.module_manager a {
+	color:#2175B1!important;
+}
+div.module_manager .D_radio a {
+	color:#555!important;
+}
+div.module_manager .D_radio a.selected {
+	color:#111!important;
+}
+div.module_manager .manage_buttons {
+	float:right;
+}
+div.module_manager div.D_boxbody {
+	background:#eee;
+}
+div.module_manager div.D_boxsection {
+	overflow:hidden;
+	padding-bottom:0;
+}
+div.module_manager div.D_boxhead h2 {
+	color:#444!important;
+}
+div.module_manager div.D_boxsection div.introduction {
+	float:left;
+	width:54%;
+}
+div.module_manager div.D_boxsection ul.rightAligned {
+	text-align:right;
+	margin-top:0;
+	vertical-align:top;
+	padding-bottom:5px;
+}
+div.module_manager div.D_boxsection li {
+	line-height:24px;
+}
+div.module_manager div.D_boxsection li img {
+	padding:0;
+	margin:0;
+	border:none;
+	margin-top:-2px;
+}
+div.expandingArea {
+	display:none;
+}
+div.expandingArea div.collapse {
+	text-align:center;
+	font-size:93%;
+	line-height:16px;
+	margin-top:1em;
+	padding-bottom:.8em;
+}
+div.expandingArea div.collapse img {
+	cursor:pointer;
+}
+br.clear {
+	font-size:0;
+	line-height:0;
+	clear:both;
+}
+div.expandingArea div.moduleSelector {
+	width:31%;
+	float:left;
+	margin-top:.8em;
+	margin-right:1.2em;
+	padding:0;
+	overflow:hidden;
+	cursor:default;
+	position:relative;
+}
+div.expandingArea span.inlineBlock,div.expandingArea span.inlineBlockMeasure {
+	display:-moz-inline-box;
+	display:inline-block;
+	zoom:1;
+	vertical-align:middle;
+}
+div.expandingArea span.hidden {
+	visibility:hidden;
+}
+div.expandingArea div.moduleSelector div.niftyborderTop,div.expandingArea div.moduleSelector div.niftyborderBottom {
+	height:3px;
+	font-size:0;
+	line-height:0;
+	width:100%;
+}
+div.expandingArea div.moduleSelector div.niftyborderTop div.left,div.expandingArea div.moduleSelector div.niftyborderTop div.right,div.expandingArea div.moduleSelector div.niftyborderTop div.center,div.expandingArea div.moduleSelector div.niftyborderBottom div.left,div.expandingArea div.moduleSelector div.niftyborderBottom div.right,div.expandingArea div.moduleSelector div.niftyborderBottom div.center {
+	height:3px;
+	background-attachment:scroll;
+}
+div.expandingArea div.moduleSelector div.niftyborderTop div.left,div.expandingArea div.moduleSelector div.niftyborderTop div.right,div.expandingArea div.moduleSelector div.niftyborderBottom div.left,div.expandingArea div.moduleSelector div.niftyborderBottom div.right {
+	width:auto!important;
+	background-repeat:no-repeat;
+}
+div.expandingArea div.moduleSelector div.niftyborderTop div.center,div.expandingArea div.moduleSelector div.niftyborderBottom div.center {
+	width:100%;
+}
+div.expandingArea div.moduleSelector div.niftyborderTop div.left {
+	background-position:left top;
+	background-image:url(http://img1.meetupstatic.com/img/255734121481068664952/module/manager/modbox_top_left.gif);
+	padding-left:3px;
+}
+div.expandingArea div.moduleSelector div.niftyborderTop div.right {
+	background-position:right top;
+	background-image:url(http://img1.meetupstatic.com/img/86337843198321509196948/module/manager/modbox_top_right.gif);
+	padding-right:3px;
+}
+div.expandingArea div.moduleSelector div.niftyborderTop div.center {
+	background-position:right top;
+	background-repeat:repeat-x;
+	background-image:url(http://img1.meetupstatic.com/img/6019767987978839564899/module/manager/modbox_top_pat.gif);
+}
+div.expandingArea div.moduleSelector div.niftyborderBottom div.left {
+	background-position:left top;
+	background-image:url(http://img1.meetupstatic.com/img/538587992563229515/module/manager/modbox_bottom_left.gif);
+	padding-left:3px;
+}
+div.expandingArea div.moduleSelector div.niftyborderBottom div.right {
+	background-position:right top;
+	background-image:url(http://img1.meetupstatic.com/img/348904927312162789/module/manager/modbox_bottom_right.gif);
+	padding-right:3px;
+}
+div.expandingArea div.moduleSelector div.niftyborderBottom div.center {
+	background-position:right top;
+	background-repeat:repeat-x;
+	background-image:url(http://img1.meetupstatic.com/img/65090913739996659/module/manager/modbox_bottom_pat.gif);
+}
+div.expandingArea div.moduleSelector div.niftyborderBody {
+	border-right:1px solid #777;
+	border-left:1px solid #777;
+	background-color:#FFF;
+	height:auto!important;
+}
+div.expandingArea div.moduleSelector div.niftyborderBody div.blockHeader {
+	background-color:#DDD;
+	border-bottom:1px solid #777;
+	zoom:1;
+}
+div.expandingArea div.moduleSelector div.niftyborderBody div.blockHeader,div.expandingArea div.moduleSelector div.blockHeader span.inlineBlockMeasure {
+	height:2.5em;
+}
+div.expandingArea div.moduleSelector div.niftyborderBody div.blockHeader em.checked {
+	padding:0 5px 0 0;
+	font-size:10px;
+	line-height:8px;
+	background-color:transparent;
+	background-position:0 0;
+	background-repeat:no-repeat;
+	background-attachment:scroll;
+	background-image:url(http://img1.meetupstatic.com/img/856119531732591943/module/manager/check.gif);
+}
+div.expandingArea div.moduleSelector div.blockHeader span.inlineBlock {
+	margin-top:-1px;
+	font-weight:bold;
+	font-size:85%;
+	line-height:1;
+	width:65%;
+}
+div.expandingArea div.moduleSelector div.blockHeader div.rightAligned {
+	position:absolute;
+	width:auto;
+	height:2em;
+	right:5px;
+	top:9px;
+	margin:0;
+	padding:0;
+}
+div.expandingArea div.moduleSelector div.niftyborderBody div.blockBody {
+	background-color:#FFF;
+	font-size:93%;
+	line-height:1.3;
+	padding-right:.5em;
+	padding-top:.3em;
+	padding-bottom:.3em;
+	height:80px;
+}
+div.expandingArea div.moduleSelector div.niftyborderBody div.blockBody img {
+	float:left;
+	padding:0 1em 0 .3em;
+}
+div.expandingArea div.moduleSelector div.niftyborderBody div.blockBody span.showme {
+	color:#2175B1;
+	font-weight:bold;
+	text-decoration:underline;
+	line-height:16px;
+	cursor:pointer;
+}
+div.expandingArea div.moduleSelector div.overlay,div.expandingArea div.moduleSelector div.dimmer {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	display:none;
+}
+div.expandingArea div.moduleSelector div.dimmer {
+	background-color:#FFF;
+}
+div.expandingArea div.moduleSelector div.successMessage {
+	text-align:center;
+}
+div.expandingArea div.moduleSelector div.spinner img {
+	position:absolute;
+	z-index:3;
+	left:50%;
+	top:2em;
+	margin-left:-8px;
+	margin-top:-8px;
+}
+div.expandingArea div.moduleSelector div.successMessage span {
+	display:-moz-inline-box;
+	display:inline-block;
+	zoom:1;
+	vertical-align:middle;
+}
+div.expandingArea div.moduleSelector div.successMessage span.measure {
+	height:100%;
+}
+div.expandingArea div.moduleSelector div.successMessage span.message {
+	width:90%;
+	font-weight:bold;
+	color:#6EA835;
+}
+div.expandingArea div.feedback {
+	text-align:center;
+	font-size:108%;
+	margin-top:.5em;
+}
+div.footerAction {
+	text-align:center;
+}
+div.footerAction a.cancel {
+	line-height:2em;
+}
+div.modulePreferencePanel dl {
+	margin-top:1em;
+}
+div.modulePreferencePanel dt {
+	width:29%;
+	text-align:right;
+	float:left;
+	clear:both;
+	font-weight:bold;
+	line-height:1;
+}
+div.modulePreferencePanel dd {
+	margin-left:30%;
+	text-align:left;
+	margin-bottom:1.4em;
+	padding:1px;
+}
+div.modulePreferencePanel dd p.errorMessage {
+	line-height:1;
+	margin:0;
+	font-style:italic;
+	font-weight:bold;
+}
+div.modulePreferencePanel dd.list ul.representation {
+	list-style:none;
+	margin-left:0;
+	padding-left:0;
+}
+div.modulePreferencePanel dd.list ul.representation li {
+	list-style-position:outside;
+	margin-left:0;
+	padding-left:0;
+}
+div.modulePreferencePanel dd input {
+	margin-left:0;
+}
+div.modulePreferencePanel dd input[type=text] {
+	width:75%;
+}
+div.modulePreferencePanel div.footElement img.spinner {
+	margin-bottom:-0.4em;
+	display:none;
+}
+div.moduleRemoveConfirm div.D_boxsection {
+	border-top:none;
+}
+div.moduleRemoveConfirm div.D_boxsection p.message {
+	font-size:116%;
+}
+div.modulePreferencePanel dl.allCheckboxes dt {
+	float:right;
+	clear:both;
+	width:90%;
+	height:16px;
+	line-height:16px;
+	padding:0;
+	margin:0 0 .5em 0;
+	text-align:left;
+}
+div.modulePreferencePanel dl.allCheckboxes dd {
+	float:left;
+	width:8%;
+	height:16px;
+	line-height:16px;
+	padding:0;
+	margin:0 0 .5em 0;
+	text-align:center;
+}
+div.modulePreferencePanel dl.allCheckboxes dd.clear {
+	float:none;
+	clear:both;
+	width:100%;
+	height:1px;
+	margin:0;
+	padding:0;
+	font-size:0;
+	line-height:0;
+}
+ul.cog-menu {
+	z-index:100;
+}
+ul.cog-menu a {
+	height:14px;
+	line-height:16px;
+	padding-left:20px;
+	width:auto;
+}
+div.modulePreferencePanel dt.__allSelect__ {
+	font-weight:normal;
+	margin-bottom:1em!important;
+	border-bottom:1px solid #999;
+}
+ul.cog-menu a.edit {
+	background-image:url(http://img1.meetupstatic.com/img/071804321819153062/thirdparty/fff/silk/plugin_edit.png);
+}
+ul.cog-menu a.remove {
+	background-image:url(http://img1.meetupstatic.com/img/5012717414000712615/thirdparty/fff/silk/delete.png);
+}
+div.chapter_feed .D_tearSheet {
+	width:50px;
+	display:block;
+}
+div.chapter_feed .D_tearSheet span.date {
+	padding:2px;
+	margin:0;
+	width:auto;
+}
+div.chapter_feed .D_tearSheet span.date span.month {
+	padding:0 0 1px 0;
+}
+div.chapter_feed .D_tearSheet span.date span.day {
+	padding:2px;
+}
+body.hasJS div.X_video div.D_boxsection {
+	padding-left:0;
+	padding-right:0;
+	position:relative;
+}
+div.X_video object,div.X_video embed {
+	position:relative;
+	z-index:1;
+}
+body.hasJS div.X_video .forNonJS {
+	display:none;
+}
+div.X_video .noVideoYet {
+	display:none;
+	padding-right:.4em;
+	padding-left:.4em;
+}
+div.X_video .D_boxsection {
+	min-height:240px;
+}
+.X_crossover_group_info .organizer {
+	width:100%;
+	overflow:hidden;
+	border-bottom:1px dotted #ccc;
+	margin-bottom:.5em;
+	padding-bottom:.5em;
+	padding:0 0 .5em;
+}
+.X_crossover_group_info .calltoaction {
+	overflow:visible;
+}
+.X_crossover_group_info .calltoaction form {
+	display:block;
+	margin:0;
+	padding:0;
+}
+.X_crossover_group_info .calltoaction .D_boxbody {
+	margin-bottom:.24em;
+}
+.X_crossover_group_info .D_badges {
+	float:right;
+	font-size:.6em;
+}
+.groupDues h4 {
+	font-weight:bold;
+	margin:0 0 .25em 0;
+}
+.groupDues .groupDuesInner {
+	font-size:.93em;
+}
+.groupDues .actionblock {
+	float:right;
+	width:9.5em;
+	margin-top:-0.75em;
+}
+.groupDues .ownerActionblock {
+	width:20em;
+}
+.groupDues .ownerActionblock .D_actions {
+	text-align:right;
+}
+.groupDues .actionblock .submitWrap {
+	text-align:right;
+}
+.groupDues .actionblock .canDo {
+	padding-right:0!important;
+	white-space:normal;
+}
+.groupDues .payblocks .payblock {
+	margin-right:5em;
+	font-size:.93em;
+	float:left;
+	max-width:33%;
+}
+.groupDues .payblock .payblockInner {
+	border-left:1px dotted #ccc;
+	padding-left:1em;
+	margin-left:1em;
+}
+.groupDues .first .payblockInner {
+	border-left:0;
+	padding-left:0;
+	margin-left:0;
+}
+a.D_smallButton {
+	margin:0 3px;
+	padding:2px 4px;
+	font-size:9px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#666;
+	border:1px solid!important;
+	border-top-color:#FFF;
+	border-right-color:#424242;
+	border-bottom-color:#424242;
+	border-left-color:#FFF;
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	background-color:#CCC;
+	background-image:url(http://img1.meetupstatic.com/img/7183126925177050557115/module/manager/toolbar_button_bg.png);
+	background-position:center center;
+	background-repeat:repeat-x;
+	background-attachment:scroll;
+}
+a.D_smallButton:link,a.D_smallButton:visited {
+	text-decoration:none!important;
+	color:#333!important;
+}
+a.D_smallButton:active {
+	border-top-color:#424242;
+	border-right-color:#FFF;
+	border-bottom-color:#FFF;
+	border-left-color:#424242;
+	background-image:url(http://img1.meetupstatic.com/img/0163686500880755772/module/manager/toolbar_button_bg-on.png);
+}
+.D_radio {
+	display:inline;
+	display:inline-block;
+	border:1px solid #666;
+	border-right:0;
+}
+.D_radio a {
+	display:inline;
+	display:inline-block;
+	border-right:1px solid #666;
+	background-color:#ccc;
+	background-position:0 0;
+	background-repeat:repeat-x;
+	background-attachment:scroll;
+	background-image:url(http://img1.meetupstatic.com/img/7183126925177050557115/module/manager/toolbar_button_bg.png);
+	font-size:.9em;
+	padding:.35em .65em;
+	color:#333!important;
+}
+.D_radio a.selected {
+	font-weight:bold;
+	color:#000!important;
+	background-image:url(http://img1.meetupstatic.com/img/0163686500880755772/module/manager/toolbar_button_bg-on.png);
+	cursor:default!important;
+}
+.D_radio a.disabled {
+	cursor:default!important;
+}
+body.hasJS div.X_video div.D_boxsection {
+	padding-left:0;
+	padding-right:0;
+	position:relative;
+}
+div.X_video object,div.X_video embed {
+	position:relative;
+	z-index:1;
+}
+body.hasJS div.X_video .forNonJS {
+	display:none;
+}
+div.X_video .noVideoYet {
+	display:none;
+	padding-right:.4em;
+	padding-left:.4em;
+}
+.D_vertArrowBlock {
+	text-align:center;
+	width:100%;
+	background-color:transparent;
+	height:1.34em;
+}
+.D_vertArrowTop,.D_vertArrowBottom {
+	font-size:1em;
+	margin:0;
+	padding:.17em .58em .17em 1.58em;
+	color:#000;
+	background-color:#CCC;
+	background-position:.42em center;
+	background-repeat:no-repeat;
+	cursor:pointer;
+	font-weight:bold;
+	line-height:1.34em;
+	text-decoration:none;
+}
+.D_vertArrowTop:hover,.D_vertArrowBottom:hover {
+	text-decoration:none;
+}
+.D_vertArrowTop {
+	top:0;
+	background-image:url(http://img1.meetupstatic.com/img/41457635875872797646/module/common/pager_top_b.png);
+	-moz-border-radius:0 0 5px 5px;
+	-webkit-border-top-right-radius:0;
+	-webkit-border-top-left-radius:0;
+	-webkit-border-bottom-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+	border-radius:0 0 5px 5px;
+}
+.D_vertArrowBottom {
+	bottom:0;
+	background-image:url(http://img1.meetupstatic.com/img/548085563392830713971/module/common/pager_bot_b.png);
+	-moz-border-radius:5px 5px 0 0;
+	-webkit-border-top-right-radius:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-bottom-right-radius:0;
+	-webkit-border-bottom-left-radius:0;
+	border-radius:5px 5px 0 0;
+}
+.D_vertArrowTop:hover,.D_vertArrowBottom:hover {
+	opacity:.7;
+	filter:alpha(opacity=70);
+}
+.D_groupStats_new dl.stats dt {
+	border-top-width:0!important;
+	border-top-style:none!important;
+}
+.group-info {
+	overflow:hidden;
+	width:100%;
+}
+.group-photo {
+	float:right;
+	margin:0 10px 10px;
+	text-align:center;
+	width:180px;
+}
+.group-photo li {
+	padding:0!important;
+}
+.D_groupStats_new .meetup-topic {
+	line-height:1.6em;
+}
+#groupFee li.last {
+	float:none;
+	clear:both;
+	font-size:0;
+	line-height:0;
+	visibility:hidden;
+	zoom:1;
+}
+.interactive_events .D_boxsection {
+	padding:0;
+}
+.interactive_events .nomeetup .D_boxsection {
+	padding:.8em .4em;
+}
+.M_interactiveEvents {
+	width:100%;
+}
+body.hasJS .M_interactiveEvents .forNonJS {
+	display:none;
+}
+.M_interactiveEvents .forJS {
+	display:none;
+}
+.M_interactiveEvents h4 {
+	border-bottom:1px solid #ccc;
+	margin:0 0 .4em 0;
+	padding-left:.4em;
+}
+br.clear {
+	clear:both;
+	font-size:1px;
+	line-height:1px;
+}
+.M_interactiveEvents {
+	position:relative;
+}
+.M_interactiveEvents .viewport {
+	position:relative;
+	width:100%;
+	height:27em;
+	overflow:hidden;
+	display:none;
+}
+body.hasJS .M_interactiveEvents .viewport {
+	display:block;
+}
+.M_interactiveEvents .viewport .J_movable {
+	position:absolute;
+	width:100%;
+}
+.M_interactiveEvents .viewport .J_IEventsSpinner {
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top:-10px;
+	margin-left:-10px;
+	width:20px;
+	height:20px;
+}
+.M_interactiveEvents .J_IEventsArrowUp,.M_interactiveEvents .J_IEventsArrowDown {
+	position:absolute;
+	width:100%;
+	height:22px;
+	overflow:visible;
+}
+.M_interactiveEvents .J_IEventsArrowUp .D_vertArrowBlock,.M_interactiveEvents .J_IEventsArrowDown .D_vertArrowBlock {
+	position:absolute;
+	z-index:2;
+}
+.M_interactiveEvents .J_IEventsArrowUp,.M_interactiveEvents .J_IEventsArrowUp .D_vertArrowBlock {
+	top:0;
+}
+.M_interactiveEvents .J_IEventsArrowDown,.M_interactiveEvents .J_IEventsArrowDown .D_vertArrowBlock {
+	bottom:0;
+}
+.M_interactiveEvents .D_vertArrowTop,.M_interactiveEvents .D_vertArrowBottom {
+	color:#000;
+}
+.M_interactiveEvents .bgs {
+	position:absolute;
+	width:100%;
+	height:24px;
+	z-index:1;
+	left:0;
+	top:0;
+}
+.M_interactiveEvents .bg {
+	height:2px;
+	background-color:#FFF;
+	font-size:0;
+	line-height:0;
+}
+.M_interactiveEvents .pad {
+	height:14px;
+}
+.M_interactiveEvents .bgs .opa80 {
+	opacity:.8;
+	filter:alpha(opacity=80);
+}
+.M_interactiveEvents .bgs .opa60 {
+	opacity:.6;
+	filter:alpha(opacity=60);
+}
+.M_interactiveEvents .bgs .opa40 {
+	opacity:.4;
+	filter:alpha(opacity=40);
+}
+.M_interactiveEvents .bgs .opa20 {
+	opacity:.2;
+	filter:alpha(opacity=20);
+}
+.M_interactiveEvents .rowEachEvent {
+	position:relative;
+	margin-bottom:1em;
+}
+.M_interactiveEvents .nextMeetup {
+	background-color:#EDF5FE;
+	padding:.42em 0;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	overflow:hidden;
+	width:100%;
+}
+.M_interactiveEvents .J_movable h5 {
+	text-align:center;
+	font-size:1.2em;
+}
+.M_interactiveEvents .J_movable h5.stopTop {
+	margin-top:0;
+}
+.M_interactiveEvents .J_movable h5.stopBot {
+	margin-bottom:0;
+	padding:.8em 0;
+	background-color:#CCC;
+	line-height:1;
+}
+.M_interactiveEvents .J_movable h5.noTopMargin {
+	margin-top:0;
+}
+.M_interactiveEvents div.colIconic {
+	width:4.7em;
+	float:left;
+	padding-left:.4em;
+}
+.D_tearSheet_mid {
+	width:55px;
+}
+.D_tearSheet_mid .date .month {
+	font-size:1em;
+	line-height:1;
+}
+.D_tearSheet_mid .date .day {
+	font-size:2em!important;
+	line-height:1;
+}
+.D_tearSheet_mid .daytime .dow,.D_tearSheet_mid .daytime .time {
+	display:block;
+}
+.D_tearSheet_mid .daytime .time {
+	font-size:.77em;
+}
+.M_interactiveEvents div.colButton {
+	float:right;
+	width:5.5em;
+	text-align:left;
+}
+div.colButton .D_submitContainer {
+	margin-top:0;
+}
+div.colButton .D_submit {
+	font-size:.85em;
+}
+.M_interactiveEvents div.colContent {
+	margin-left:5.75em;
+	margin-right:6em;
+}
+.M_interactiveEvents .pastMeetup div.D_body,.M_interactiveEvents .upcomingMeetup div.D_body {
+	font-size:.93em;
+}
+.colContent div.D_title,.colContent div.date {
+	font-weight:bold;
+}
+.colContent .D_submitContainer {
+	float:right;
+}
+.colContent .D_description {
+	line-height:1.2;
+}
+.colContent ul.D_actions {
+	margin:0;
+}
+.colContent .D_attendeeCount {
+	font-weight:bold;
+	line-height:1.2;
+	padding-top:3px;
+}
+.colContent .D_attendeeCount .D_less {
+	font-weight:normal;
+	font-size:1em;
+}

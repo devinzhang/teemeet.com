@@ -203,6 +203,7 @@ function _groupextension_tools_manage_output(){
     $output='';
     $current_group = $GLOBALS['current_group'];
     $member_link = l(t('Your Memebers'),$current_group->path.'/grouptool/'.$current_group->nid.'/manage/settings/members');
+    $theme_link = url($current_group->path.'/admin/build/themes/settings/fusion_teemeet');
     $output.= <<<EOF
    <h3>General info</h3>
 <div class="D_boxcols divby3">
@@ -279,7 +280,7 @@ function _groupextension_tools_manage_output(){
 		
 				<ul class="D_list">
 					<li class="D_category">
-					<div class="D_name"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/appearance/">Appearance</a></div>
+					<div class="D_name"><a href="$theme_link">Appearance</a></div>
 						<ul class="D_bullet">
 							<li>Personalize your group's colors and fonts</li>
 							<li>Select from pre-made themes</li>

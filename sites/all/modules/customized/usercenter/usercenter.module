@@ -9,8 +9,8 @@
  *  4) user registered related function for example, soponsor regisered, 
 */
 
-define("usercenter_TABLE", "homepage");
 
+define('GROUP_NODE_TYPE', 'group'); //节点类型
 
 function usercenter() {
     return array(
@@ -147,6 +147,23 @@ function usercenter_menu() {
         'file' => 'usercenter.sponsorships.inc',
     );
     
+    $items['sponsor/findgroup'] = array(
+    	'title' => t('Find a group to sponsor'),
+        'page callback' => 'usercenter_sponsor_find_group',
+        'page arguments' => null,                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'usercenter.sponsorships.inc',
+    );
+    
+    $items['sponsor/sponsorgroup/%'] = array(
+    	'title' => t('Ask to sponsor this group'),
+        'page callback' => 'usercenter_sponsor_ask_sponsor_the_group',
+        'page arguments' => array(2),                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'usercenter.sponsorships.inc',
+    );
     
     
   return $items;
