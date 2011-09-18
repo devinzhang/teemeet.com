@@ -31,17 +31,17 @@ function sponsor_schema() {
                'description' => t("The serial number for a  record."),
                 ),
             
-            'uid' => array(
+            'nid' => array(
                 'type' => 'int', 
                 'unsigned' => TRUE, 
                 'not null' => TRUE, 
                 'default' => 0,
-                'description' => t(" the sponsor uid"),
+                'description' => t(" the sponsor node nid"),
             ),
             
             'message' => array(
-            'type' => 'text', 
-            'not null' => TRUE
+                'type' => 'text', 
+                'not null' => TRUE
             ),
                 
 			
@@ -72,7 +72,7 @@ function sponsor_schema() {
 		),		
 
       'indexes' => array(
-        'uid' => array('uid'),      
+        'nid' => array('nid'),      
         'gid' => array('gid'),
        ),
      'primary key' => array('sid'),

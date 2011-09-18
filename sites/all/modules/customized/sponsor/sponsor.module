@@ -8,6 +8,13 @@
 
 
 define('GROUP_NODE_TYPE', 'group'); //节点类型
+define('SPONSORSHIPS_TABLE', 'sponsorships'); //节点类型
+
+define('SPONSORSHIPS_STATUS_EXPIRE', 0); //节点类型
+define('SPONSORSHIPS_STATUS_OK', 1); //节点类型
+define('SPONSORSHIPS_STATUS_PENDDING', 2); //节点类型
+
+
 
 function sponsor_perm() {
     return array(
@@ -117,6 +124,15 @@ function sponsor_user($op, &$edit, &$account, $category = NULL) {
            
 		break;
         
+        case 'load' :
+           if(in_array('sponsor', array_values($account->roles))) {
+            $account->sponsorgroups = sponsor_get_sponsored_groups($account->uid);
+           }
+           
+		break;
+        
+        
+        
 		case 'login':
                 $_REQUEST['destination'] = 'home';
 			break;
@@ -200,6 +216,34 @@ function sponsor_business_summary(){
 
 /*helper function ,called by other functions */
 
+/* Get a user sponsored group list
+** @param $uid, the sponsor user uid
+**
+*/
+function sponsor_get_sponsored_groups($uid){
+    $sponsor_node_nid = db_result(db_query('select nid from {node} where uid=%d and type="sponsor"', $uid));
+    $result = db_query('select gid, status from '.SPONSORSHIPS_TABLE.' where nid=%d', $sponsor_node_nid);
+    $groups = array(); 
+    while($sponsorship = db_fetch_array($result)) {
+        $groups[$sponsorship['status']][$sponsorship['gid']] = $sponsorship->gid;
+    }
+    
+    return $groups;
+}
+
+/* to get a groups sponsor list
+**
+**
+*/
+function sponsor_get_group_sponsors($gid){
+    $result = db_query('select * from '.SPONSORSHIPS_TABLE.' where gid=%d', $gid);
+    $sponsor_list = array(); 
+    while($sponsor = db_fetch_array($result)) {
+        $sponsor_list[$sponsor['nid']] = $sponsor;
+    }
+    
+    return $sponsor_list;
+}
 /* create a new user programmaticlly
 ** @param , $values,an input array, keyed by mail, password
 */

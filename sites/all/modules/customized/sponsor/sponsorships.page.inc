@@ -149,9 +149,19 @@ function sponsor_nodeapi(&$node, $op, $teaser, $page)
                     user_save($user, array('roles' => $myuserroles)); 
                 }
             break;
-        
+            
         } 
-    }    
+    }
+        
+    if(og_is_group_type($node->type)) {
+        switch( $op ) {
+            case 'load':
+            $sponsor_list = sponsor_get_group_sponsors($node->nid);
+            $node->sponsors = $sponsor_list;            
+            break;
+       }
+    }
+            
 }
 
 
@@ -314,6 +324,7 @@ function sponsor_find_group(){
      $i = 1; 
      while ($gid = db_fetch_object($result)) {
         $group = node_load($gid->nid);
+        
         $output .= '<li class="D_group J_groupHover position_'.$i.' first">';
         $output .= _sponsor_output_group_teaser($group);
         $output .= '</li>';
@@ -331,6 +342,10 @@ function _sponsor_output_group_teaser($group){
     $group_path = url($group->path); 
     $group_member = $group->og_member_count;
     $group_title = $group->field_site_title[0]['value']; 
+    global $user; 
+    print_r($user); 
+  //  if(in_array($group->nid, array_values($user->sponsorgroups)))
+    
     $ask_sponsor = l(t('Sponsor this group'), 'sponsor/sponsorgroup/'.$group->nid);
     $output.= <<<EOF
     <div style="font-size: 0.9em;" class="D_image">
@@ -375,17 +390,18 @@ function sponsor_ask_sponsor_the_group($gid){
 function sponsor_ask_sponsor_group_form($form_state, $gid){
     $form['morewords'] = array(
       '#type' => 'textarea', 
-      '#title' => t(''), 
+      '#title' => t('What do you want to speak to the group orgnazor?'), 
       '#default_value' =>'',      
       '#required' => FALSE,
       
   );
   
-    $form['gid'] = array(
+  $form['gid'] = array(
       '#type' => 'hidden', 
       '#value' => $gid,
   );
   
+ 
   
   $form['submit'] = array(
     '#type' => 'submit',
@@ -397,5 +413,13 @@ return $form;
 }
 
 function sponsor_ask_sponsor_group_form_submit($form, &$form_state) {
+    global $user; 
+    $gid = $form_state['values']['gid'];
+    $message = $form_state['values']['morewords'];
+    $sponsor_node_nid = db_result(db_query('select nid from {node} where uid=%d and type="sponsor"', $user->uid));
+    $now = time(); 
+	db_query("INSERT INTO {".SPONSORSHIPS_TABLE."} (nid, message,  gid, status, created)
+	 VALUES(%d, '%s', %d, %d, %d)", $sponsor_node_nid , $message, $gid,  SPONSORSHIPS_STATUS_PENDDING,  $now);    
+    drupal_set_message(t('Your message have been sent to the group organizor.'));
     drupal_goto('sponsor/findgroup');
 }
