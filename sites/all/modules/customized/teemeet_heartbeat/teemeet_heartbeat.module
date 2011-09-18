@@ -178,6 +178,19 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
         $message->message .= '</div>';
       }
     }
+
+    if ($message->message_id == 'custom_reply_rsvp') {
+      if ($stream->stream->name == 'ogheartbeat') {
+        $message->message = '<div class="teemeet-message-type">';
+        $message->message .= 'new rsvp';
+        $message->message .= '</div>';
+        $message->message .= '<div class="teemeet-message-content">';
+        $message->message .= $message->variables['@avator'];
+        $message->message .= $message->variables['@user']. ' RSVPed '. $message->variables['@result']. ' for '. $message->variables['@title']. '<br/>';
+        $message->message .= $timeago;
+        $message->message .= '</div>';
+      }
+    }
   }
 
 }
