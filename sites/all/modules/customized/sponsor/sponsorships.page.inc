@@ -5,28 +5,28 @@
 * we will load the sponsor create form.
 */
 
-function usercenter_sponsorships_page(){
+function sponsor_sponsorships_page(){
     $output = '';
-    drupal_add_css(drupal_get_path('module','usercenter').'/css/sponsorship.css');
+    drupal_add_css(drupal_get_path('module','sponsor').'/css/sponsorship.css');
     
     global $user; 
     
     drupal_set_title(t('Sponsor local Meetup Groups'));
     $promote_sponsors = array();
     $my_sponsor = node_load(array('uid'=>$user->uid, 'type'=>'sponsor'));
-    $output .= theme('usercenter_sponsorship_landing', $promote_sponsors, $my_sponsor);
+    $output .= theme('sponsor_sponsorship_landing', $promote_sponsors, $my_sponsor);
     
     
     return $output; 
 }
 
 /*menu call back */
-function usercenter_create_sponsor(){
+function sponsor_create_sponsor(){
     drupal_set_title(t('Offer a Meetup Perk'));
-    drupal_add_css(drupal_get_path('module','usercenter').'/css/sponsorship.css');
+    drupal_add_css(drupal_get_path('module','sponsor').'/css/sponsorship.css');
     global $user; 
     $output = '';
-    $output .= _usercenter_output_step_indicator(1);
+    $output .= _sponsor_output_step_indicator(1);
     
     $output .= '<div class="D_form " style="">';
         if(!$user->uid){
@@ -54,7 +54,7 @@ function usercenter_create_sponsor(){
 
 /* here we hook the _form_alter to add new fields */
 
-function usercenter_form_alter(&$form, $form_state, $form_id)
+function sponsor_form_alter(&$form, $form_state, $form_id)
 {   
     
     if($form_id == 'sponsor_node_form') {
@@ -95,7 +95,7 @@ function usercenter_form_alter(&$form, $form_state, $form_id)
  **  change the node author before save to the db
  **
  */
-function usercenter_nodeapi(&$node, $op, $teaser, $page) 
+function sponsor_nodeapi(&$node, $op, $teaser, $page) 
 {
     if($node->type == 'sponsor') {
         switch( $op ) {
@@ -159,7 +159,7 @@ function usercenter_nodeapi(&$node, $op, $teaser, $page)
 **
 **
 */
-function usercenter_create_perk(){
+function sponsor_create_perk(){
     drupal_set_title(t('Offer a Meetup Perk'));
     drupal_add_css(drupal_get_path('module','usercenter').'/css/sponsorship.css');
     global $user; 
@@ -182,7 +182,7 @@ function usercenter_create_perk(){
     return $output;
 }
 
-function _usercenter_output_step_indicator($step) {
+function _sponsor_output_step_indicator($step) {
     $output = '';
     $output .= '<ul id="perks-breadcrumb">'; // output the step
     $step_class = array('','','','');
@@ -301,7 +301,7 @@ function usercenter_sponsor_create_form_submit($form, &$form_state) {
 }
 
 /* menu callback */
-function usercenter_sponsor_find_group(){
+function sponsor_find_group(){
     $output = '';
     
     $query = 'select nid from {node} where type="'.GROUP_NODE_TYPE.'" and status=1 order by created DESC';
@@ -315,7 +315,7 @@ function usercenter_sponsor_find_group(){
      while ($gid = db_fetch_object($result)) {
         $group = node_load($gid->nid);
         $output .= '<li class="D_group J_groupHover position_'.$i.' first">';
-        $output .= _usercenter_output_group_teaser($group);
+        $output .= _sponsor_output_group_teaser($group);
         $output .= '</li>';
         
         $i ++;
@@ -325,7 +325,7 @@ function usercenter_sponsor_find_group(){
     return $output; 
 }
 
-function _usercenter_output_group_teaser($group){
+function _sponsor_output_group_teaser($group){
     $output = '';
    
     $group_path = url($group->path); 
@@ -366,13 +366,13 @@ EOF;
 /*menu callback
 **
 */
-function usercenter_sponsor_ask_sponsor_the_group($gid){
+function sponsor_ask_sponsor_the_group($gid){
     $output ='';
-    $output .= drupal_get_form('usercenter_sponsor_ask_sponsor_group_form', $gid);
+    $output .= drupal_get_form('sponsor_ask_sponsor_group_form', $gid);
     return $output;
 }
 
-function usercenter_sponsor_ask_sponsor_group_form($form_state, $gid){
+function sponsor_ask_sponsor_group_form($form_state, $gid){
     $form['morewords'] = array(
       '#type' => 'textarea', 
       '#title' => t(''), 
@@ -390,12 +390,12 @@ function usercenter_sponsor_ask_sponsor_group_form($form_state, $gid){
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Submit'),
-    '#submit' => array('usercenter_sponsor_ask_sponsor_group_form_submit'),
+    '#submit' => array('sponsor_ask_sponsor_group_form_submit'),
     '#weight' => 15,
 );
 return $form; 
 }
 
-function usercenter_sponsor_ask_sponsor_group_form_submit($form, &$form_state) {
+function sponsor_ask_sponsor_group_form_submit($form, &$form_state) {
     drupal_goto('sponsor/findgroup');
 }

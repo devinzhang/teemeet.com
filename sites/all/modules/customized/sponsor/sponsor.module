@@ -1,0 +1,258 @@
+<?php
+
+
+/*  This module define the base of each user type profile, it include the following use cases.
+ *  
+ *  1) user registered related function for example, soponsor regisered, 
+*/
+
+
+define('GROUP_NODE_TYPE', 'group'); //节点类型
+
+function sponsor_perm() {
+    return array(
+        'admin sponsor',
+        'create sponsor');
+}
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function sponsor_menu() {
+  $items = array();
+   $items['sponsorships'] = array(
+    	'title' => t('Sponsor local Meetup Groups'),
+        'page callback' => 'sponsor_sponsorships_page',
+        'page arguments' => null,   
+        'type' => MENU_LOCAL_TASK,        
+        'access callback' =>true,
+        
+        'file' => 'sponsorships.page.inc',
+        'weight' => -13,
+    ); 
+    
+    
+    //create a sponsor
+    $items['sponsor/create'] = array(
+    	'title' => t('Create Sponsor'),
+        'page callback' => 'sponsor_create_sponsor',
+        'page arguments' => null,                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'sponsorships.page.inc',
+    );
+    
+    $items['perk/create'] = array(
+    	'title' => t('Create Perk'),
+        'page callback' => 'sponsor_create_perk',
+        'page arguments' => null,                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'sponsorships.page.inc',
+    );
+    
+    $items['sponsor/findgroup'] = array(
+    	'title' => t('Find a group to sponsor'),
+        'page callback' => 'sponsor_find_group',
+        'page arguments' => null,                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'sponsorships.page.inc',
+    );
+    
+    $items['sponsor/sponsorgroup/%'] = array(
+    	'title' => t('Ask to sponsor this group'),
+        'page callback' => 'sponsor_ask_sponsor_the_group',
+        'page arguments' => array(2),                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'sponsorships.page.inc',
+    );
+    
+    
+  return $items;
+}
+
+
+function sponsor_is_login($uid){
+    return $uid; 
+}
+
+/**
+ * Implementation of hook_theme().
+ *
+ *
+ */
+function sponsor_theme() {
+  return array(
+  
+    
+    'sponsor_sponsorship_landing' => array(
+	  'template' => 'sponsor-sponsorship-landing',
+      'arguments' => array(
+            'promoted-sponsors'=>null,
+            'sponsor'=>null,
+        ),
+	),
+    
+    
+   
+ 
+    
+  );
+}
+
+
+/**
+ * Implementation of hook_user().
+ */
+function sponsor_user($op, &$edit, &$account, $category = NULL) {
+	switch($op) {
+		case 'register':
+		
+			break;
+
+        case 'view' :
+           
+		break;
+        
+		case 'login':
+                $_REQUEST['destination'] = 'home';
+			break;
+		}
+}
+
+
+/* hook_block
+ *
+ */
+ 
+
+function sponsor_block($op = 'list', $delta = 0, $edit = array()){
+	switch($op){
+		case 'list':			
+			
+            
+            $blocks[0]['info']=t('Sponsor Business Summary');
+			$blocks[0]['cache']=BLOCK_NO_CACHE;
+
+            
+            
+	
+			return $blocks;
+		case 'view':
+			switch($delta){
+				
+                case 0:
+					$block['subject']=t('Sponsor Business Summary');
+					$block['content']= sponsor_business_summary();
+
+					break;				
+
+                    
+			}
+			return $block;
+	}
+}
+
+
+function sponsor_business_summary(){
+    $output = '';
+    global $user; 
+    $my_sponsor = node_load(array('uid'=>$user->uid, 'type'=>'sponsor'));
+    
+    if($my_sponsor){
+        $output .= '<div id="D_memberHomeHeader" class="D_box clearfix">';
+		 $output .= '<dl class="sponsorLetterhead clearfix vcard" id="sponsorInfo">';
+
+            $output .= '<dt class="fn org url"></dt><h2>'.$my_sponsor->title.'</h2>';
+                $output .= '<dd class="startDate">Sponsor since '.format_date($my_sponsor->created,'custom','Y-m-d').'</dd>';
+                $output .= '<dt class="name">devin</dt>';
+                $output .= '<dd class="adr">';
+                $output .= '<span class="street-address">'.$my_sponsor->field_sponsor_address[0]['street'].'</span>';
+                $output .= '<span class="locality">'.$my_sponsor->field_sponsor_address[0]['city'].'</span>,';
+                $output .= '<abbr title="Maryland" class="region">'.$my_sponsor->field_sponsor_address[0]['province'].'</abbr>,';
+                $output .= '<span class="country-name">'.$my_sponsor->field_sponsor_address[0]['country'].'</span>';
+                $output .= '</dd>';
+                $output .= '</dl>';
+                $output .= '<div id="letterheadMeta">';
+			$output .= '<h2 class="lightHeading">';
+			$output .= 'Sponsoring <strong id="count_members">0</strong> members in <strong id="count_activeGroups">0</strong> Meetup Groups';
+			$output .= '</h2>';
+			$output .= '<a href="'.url('node/'.$my_sponsor->nid).'" id="visitSponsorHome" class="clearfix">
+				<img alt="Home" class="D_icon" src="http://img2.meetupstatic.com/8689168192329930562/img/house.gif"> 
+				<span>View your Sponsor page</span>
+				<em></em>
+			</a>
+
+			<ul class="D_actions" id="editSponsorAccount">
+				<li class="canDo"> <a class="sprite sprite_action pencil_icon" href="'.url('node/'.$my_sponsor->nid.'/edit').'">'.t('Edit Your Info').'</a> </li>
+			</ul>
+		</div>
+	</div>';
+    }
+    
+    return $output; 
+}
+
+
+
+/*helper function ,called by other functions */
+
+/* create a new user programmaticlly
+** @param , $values,an input array, keyed by mail, password
+*/
+function sponsor_create_user($values, $roles) {
+    $name = $values['name'];
+   $pass = $values['pass'];
+   $email = $values['mail'];
+   $newUser = array(
+  		'name' =>$name,
+  		'pass' => $pass, // note: do not md5 the password
+  		'mail' => $email,
+  		'roles' => $roles,
+  		'status' => 1,
+   		
+  	);
+	$user=user_save(null, $newUser);
+
+	if(!$user){ //if user save fail
+	$ret = 'fail';
+	$uid = 0;	
+	}
+	else{
+	$uid = $user->uid;
+	$ret = t('uid=').$user->uid;	
+	}
+
+  $return=array(
+  'name' => $name,
+  'email' => $email,
+  'pass' => $pass,
+  'result' => $ret,
+  'uid' => $uid,
+
+  );
+
+  return $return;
+}
+
+
+/* create a new sponsor node programmaticlly
+*/
+
+function sponsor_create_sponosr_node($values){
+  $edit = array();
+  $edit['type'] = 'sponsor';
+  $edit['uid'] = $values['uid'];// user who would be called the  creator of the node
+  $edit['name'] = $name;
+  $edit['promote'] = 0;
+  $edit['format'] = FILTER_FORMAT_DEFAULT;
+  $edit['status'] = 1;
+  $edit['title'] = t('Confidential Signature: ').$name;
+
+  node_validate($edit);
+  $node = node_submit($edit);
+  node_save($node);
+}
