@@ -77,6 +77,25 @@ function sponsor_menu() {
         'file' => 'sponsorships.page.inc',
     );
     
+    $items['sponsor/approvesponsor/%'] = array(
+    	'title' => t('Approve to sponsor this group'),
+        'page callback' => 'sponsor_approve_sponsor_the_group',
+        'page arguments' => array(2),                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'sponsorships.page.inc',
+    );
+    
+    $items['sponsor/removesponsor/%'] = array(
+    	'title' => t('Remove the sponsorship of this group'),
+        'page callback' => 'sponsor_remove_sponsor_the_group',
+        'page arguments' => array(2),                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'sponsorships.page.inc',
+    );
+    
+    
     
   return $items;
 }
@@ -134,9 +153,52 @@ function sponsor_user($op, &$edit, &$account, $category = NULL) {
         
         
 		case 'login':
+               
                 $_REQUEST['destination'] = 'home';
+                foreach($account->og_groups as $gid=>$group){
+                    $pendding_request = sponsor_check_sponsorship_pendding_request($gid);
+                        if($pendding_request != false && !empty($sponsor_request) ) {
+                           foreach($pendding_request as $key=> $sponsor){
+                            
+                           }
+                           
+                    }
+               }
 			break;
 		}
+}
+
+
+ /* impl , hook_nodeapi 
+ **  After the user create a sponsor node,  if the user is anomyous , then create a new user firstly, then 
+ **  change the node author before save to the db
+ **
+ */
+function sponsor_nodeapi(&$node, $op, $teaser, $page) {
+    global $user; 
+    if(og_is_group_type($node->type)) {
+        switch( $op ) {
+            case 'load':
+            $sponsor_list = sponsor_get_group_sponsors($node->nid);
+            $node->sponsors = $sponsor_list;            
+            break;
+            case 'view':
+            $sponsor_request = sponsor_check_sponsorship_pendding_request($node->nid); 
+            if($sponsor_request != false && !empty($sponsor_request)){
+                 foreach($sponsor_request as $sid => $sponsor){
+                    $usr = user_load($sponsor['uid']); 
+                    $sponsor_link = l($usr->name, 'node/'.$sponsor['nid'] );
+                    $group_link = l($node->title, $node->path); 
+                    $destination = drupal_get_destination();
+                    $agree_link = l( t('Approve'),'sponsor/approvesponsor/'.$sid,array('query'=> $destination));
+                    drupal_set_message( $sponsor_link. t('want to sponosr your group').$group_link.'  '.$agree_link); 
+                 }
+            }
+            
+            break; 
+       }
+    }
+            
 }
 
 
@@ -214,7 +276,26 @@ function sponsor_business_summary(){
 
 
 
-/*helper function ,called by other functions */
+/*helper function ,called by other functions
+**@param $gid, the group nid
+**@return , if there is a pendding quest, return the pendding array, otherwise, false;  
+*/
+
+function sponsor_check_sponsorship_pendding_request($gid){
+    $result = db_query('select sid, uid, nid, status from {'.SPONSORSHIPS_TABLE.'} where status =%d and gid=%d',SPONSORSHIPS_STATUS_PENDDING, $gid);
+    $pendding_request = array();
+    $has_result = false; 
+    while($item = db_fetch_object($result)){
+        $pendding_request[$item->sid] = array('uid'=>$item->uid, 'nid' => $item->nid);
+        $has_result = true; 
+    }
+    if($has_result) {
+    return $pendding_request;
+    } else {
+    return false;
+    }
+    
+}
 
 /* Get a user sponsored group list
 ** @param $uid, the sponsor user uid

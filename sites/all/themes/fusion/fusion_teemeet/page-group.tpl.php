@@ -18,10 +18,7 @@
   <?php print $local_styles; ?>
   <?php print $scripts; ?>
 
-  <script type="text/javascript">(function(){var hash=window.location.hash.replace("#","");if(hash){var ops={calendar:"http://www.meetup.com/SacSwim/events/calendar/",drafts:"http://www.meetup.com/SacSwim/events/drafts/",making:"http://www.meetup.com/SacSwim/events/suggested/",past:"http://www.meetup.com/SacSwim/events/past/",suggested:"http://www.meetup.com/SacSwim/events/suggested/",unofficial:"http://www.meetup.com/SacSwim/events/unofficial/",upcoming:"http://www.meetup.com/SacSwim/"},loc=window.location,url=[loc.protocol,"//",loc.host,loc.pathname].join(""),target=ops[hash];if(target&&url!==target){loc.replace(target)}}})();</script>
-<script src="http://static1.meetupstatic.com/884236050070803923549903/script/Meetup/packed/Meetup.Base.jquery.js" type="text/javascript"></script>
-<script type="text/javascript">Meetup.isSecure=false;var LOG={};LOG.info=function(){return};LOG.error=function(){return};var Member={id:0,name:"",lat:"0.0",lon:"0.0",radius:"50",country:"us",zip:"",isCoord:false,isOrganizingAny:false,twitterAccount:false,status:1,isOwner:false,isCOOrg:false,groupsLink:"http://www.meetup.com/members/0/groups/",groupCount:0,isEvtOrg:false,isMember:false,memberThumb:"http://img1.meetupstatic.com/39194172310009655/img/noPhoto_50.gif",isVisitor:false,accessToken:""};var memberId=Member.id;var topicId=3361;var Chapter={id:1082327,name:"Sacramento Swimming Enthusiasts",lat:"38.57",lon:"-121.47",city:"Sacramento",state:"CA",country:"us",zip:"95816",domain:"",threshold:-1,previewUrl:"http://www.meetup.com/SacSwim/?op=preview",groupApiUrl:"http://www.meetup.com/SacSwim/api/",localTime:"August 6, 2011 20:16:11",forceUrl:false,groupUrl:"http://www.meetup.com/SacSwim/"};var chapterId=Chapter.id;Meetup.Language="en_US";if(typeof(Meetup.Copy)!="object"){Meetup.Copy={}}Meetup.Copy.CharCounter={};Meetup.Copy.dlogCloseThis="Close this";Meetup.Copy.CharCounter.upToXChars="Up to {CHAR_COUNT} characters.";Meetup.Copy.monthNames=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];Meetup.Copy.dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];if(Meetup.Data===undefined){Meetup.Data={}}Meetup.Data.secureUrl="http://www.meetup.com/";Meetup.Data.secureApiUrl="http://www.meetup.com/api/";if(typeof Meetup==="undefined"){Meetup={}}if(Meetup.Data.grouphome===undefined){Meetup.Data.grouphome={}}if(Meetup.Data.grouphome.modulePreference===undefined){Meetup.Data.grouphome.modulePreference={}}Meetup.Data.themeCSS="http://www.meetup.com/theme/1297925954/?chapterId=1082327&external=true";Meetup.Data.grouphome.baseUrl="http://www.meetup.com/SacSwim/";Meetup.Data.grouphome.layoutVersion="4";Meetup.Data.grouphome.isOrg=false;Meetup.Data.grouphome.isPrivate=false;var COOKIE_DOMAIN=".meetup.com";if(""!=""){COOKIE_DOMAIN=""}if(typeof Meetup.Styles=="undefined"){Meetup.Styles={}}Meetup.Styles.boxBackgroundColor="#E1F2E8";</script>
-
+ 
 <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/meetup_jquery_ui.css" />
 <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/meetup.css" />
 <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/eventDetails.css" />
@@ -30,7 +27,7 @@
 <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/module.css" />
 <link type="text/css" rel="stylesheet" media="print" href="<? echo base_path() . path_to_theme() ;?>/css/print.css" />
 
-<? echo color_group_style(); ?>
+
 <!--[if IE 6]>
   <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/ie6.css" />
 <![endif]-->
@@ -54,7 +51,8 @@
 <div id="C_page">
 
 
-<? if($group): ?>
+<? if($group and !strstr(request_uri(),'admin/build/themes/settings')): ?>
+<? echo color_group_style(); ?>
   <div id="C_contextHead">
     <div id="C_contextHeadBody">
       <div id="C_contextTitle">
@@ -70,13 +68,16 @@
   <div id="C_pageBody">
     <div id="C_context">
       <div id="C_document" class=""> 
-        <script type="text/javascript">//var name = 'trax_ghrollout#1082327';var val  = 'uuid=2e521390-64e6-465f-82bc-9ed07d29fdb7&v=new&p=ghome&s=0&_=87f1c9';var exp  = new Date(); exp.setSeconds( exp.getSeconds() + 14400 );var dom  = document.domain.indexOf('.meetup.com') > -1 ? '.meetup.com' : document.domain;document.cookie = name + '=' + val + ';expires=' + exp.toGMTString() + '; path=/; domain=' + dom;var cookie = getCookie(name);var d = doAjax( '/api/', {method: 'storeStart',arg_uuid: (cookie) ? parseQueryString(cookie)['uuid'] : '',arg_process: 'ghrollout',arg_session: '1082327',arg_page: 'ghome',arg_score: '0',arg_variant: 'new',arg_memberId: '0',arg_chapterId: '1082327'});</script>
         
         <? echo $preface_bottom; ?>
         <?php if ($show_messages && $messages): print $messages; endif; ?>
         <? 
-        
-            if(arg(0) == 'node' and $node->type == 'group')
+            if(strstr(request_uri(),'admin/build/themes/settings'))
+            {
+                include 'inc/create-group.tpl.php';
+            }        
+            
+            elseif(arg(0) == 'node' and $node->type == 'group')
             {
                 include 'inc/center-content.tpl.php';    
             }             
@@ -100,7 +101,7 @@
 
       </div>
       
-      <? if($group): ?>
+      <? if($group and !strstr(request_uri(),'admin/build/themes/settings/fusion_teemeet')): ?>
       <div id="C_nav" >
         <? echo $sidebar_first; ?>
         <? include 'inc/left-sidebar.tpl.php'; ?>

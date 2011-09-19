@@ -29,7 +29,16 @@ function sponsor_schema() {
                'unsigned' => TRUE,
                'not null' => TRUE,
                'description' => t("The serial number for a  record."),
-                ),
+            ),
+            
+            'uid' => array(
+                'type' => 'int', 
+                'unsigned' => TRUE, 
+                'not null' => TRUE, 
+                'default' => 0,
+                'description' => t(" the sponsor user uid"),
+            ),
+            
             
             'nid' => array(
                 'type' => 'int', 
@@ -53,6 +62,14 @@ function sponsor_schema() {
                 'description' => "group nid",
 				
 			),	
+            'approver' => array(
+                'type' => 'int', 
+                'unsigned' => TRUE, 
+                'not null' => TRUE, 
+                'default' => 0,
+                'description' => t(" the person approve this sponsorship, usually is group admin"),
+            ),
+            
             'status' => array(
                 'type' => 'int', 
                 'unsigned' => TRUE, 

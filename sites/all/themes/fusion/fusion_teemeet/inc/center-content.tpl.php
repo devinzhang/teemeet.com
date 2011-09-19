@@ -12,7 +12,7 @@
     <div class="D_boxsection ">
       <div class="line" id="alien-group-review">
 <? 
-
+  
   for($i = 0; $i < 2; $i++):
     $comment = array_shift($group->featured_comments);
     if(!empty($comment)):
@@ -21,10 +21,10 @@
         <div class="unit size1of2">
           <div class="D_item alien-group-review-col alien-group-review-col-<? echo $class?> clearfix">
             <div class="D_image"> 
-              <a href="<? echo url($gourp->path.'/member/' . $comment['uid'].'/ingroup/'.$group->nid)?>" class="memberinfo-widget displayinlineblock" > <img src="<? echo $comment['picture']; ?>" alt="" /> </a>
+              <a href="<? echo url('user/' . $comment['uid'])?>" class="memberinfo-widget displayinlineblock" > <img src="<? echo $comment['picture']; ?>" alt="" /> </a>
             </div>
             <span class="D_quot">"</span> <? echo $comment['comment']?> <a href="#" class="J_onClick blurb-more">...</a> <br>
-            -<a href="<? echo url($gourp->path.'/member/' . $comment['uid'].'/ingroup/'.$group->nid)?>" class="memberinfo-widget" ><? echo $comment['name']; ?></a><!--img src="http://img1.meetupstatic.com/img/clear.gif" width="0" class="brImage" alt="" /--> </div>
+            -<a href="<? echo url('user/' . $comment['uid'])?>" class="memberinfo-widget" ><? echo $comment['name']; ?></a><!--img src="http://img1.meetupstatic.com/img/clear.gif" width="0" class="brImage" alt="" /--> </div>
         </div>        
 <? 
     endif;

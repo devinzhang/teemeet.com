@@ -90,80 +90,6 @@ function sponsor_form_alter(&$form, $form_state, $form_id)
  
  }
 
- /* impl , hook_nodeapi 
- **  After the user create a sponsor node,  if the user is anomyous , then create a new user firstly, then 
- **  change the node author before save to the db
- **
- */
-function sponsor_nodeapi(&$node, $op, $teaser, $page) 
-{
-    if($node->type == 'sponsor') {
-        switch( $op ) {
-            case 'presave':
-            
-                if($node->uid <1) {
-                    
-                    // 检查用户名是否存在，若存在，则选择一个新的用户名。
-                    $new_name = $node->user_name;
-                    $i = 1;
-                    while ($uid = db_result(db_query("SELECT uid FROM {users} WHERE name = '%s'", $new_name))) {
-                        $new_name = $node->user_name.'_'.$i;
-                        ++$i;
-                    }
-
-            
-                    $newUser = array(
-                        'name' => $new_name,
-                        'pass' => $node->user_pass, // note: do not md5 the password
-                        'mail' => $node->user_mail,
-                    
-                        'status' => 1,   		
-                        );
-                        
-                    $user=user_save(null, $newUser);
-                    if($user->uid > 0){
-                    $node->uid = $user->uid; 
-                    $node->name = $new_name;
-                    } else {
-                    exit;
-                    }
-                }
-            break;
-    
-            case 'validate':
-             //   if($node->uid <1) {                    
-             //      drupal_set_message($node->user_mail . $node->user_name. $node->user_pass . 'data');         
-             //   }    
-            break;
-            
-            case 'insert':
-                    if($node->uid > 0) { //if the user have already been a member, then just need to add the 'sponsor' role and create a new node for her/him
-                    $user= user_load($uid);
-                    $myuserroles = $user->roles; 
-                    $roles = user_roles(TRUE);
-                    foreach ($roles as $rid => $name){
-                            if($name =='sponsor'){
-                            $myuserroles[$rid] = $name; 
-                    }
-                    }
-                    user_save($user, array('roles' => $myuserroles)); 
-                }
-            break;
-            
-        } 
-    }
-        
-    if(og_is_group_type($node->type)) {
-        switch( $op ) {
-            case 'load':
-            $sponsor_list = sponsor_get_group_sponsors($node->nid);
-            $node->sponsors = $sponsor_list;            
-            break;
-       }
-    }
-            
-}
-
 
 /*menu callback to creat a perk 
 **
@@ -343,10 +269,27 @@ function _sponsor_output_group_teaser($group){
     $group_member = $group->og_member_count;
     $group_title = $group->field_site_title[0]['value']; 
     global $user; 
-    print_r($user); 
+  //  print_r($user); 
   //  if(in_array($group->nid, array_values($user->sponsorgroups)))
+    $status = db_result(db_query('select status from {'.SPONSORSHIPS_TABLE.'} where uid=%d and gid=%d', $user->uid, $group->nid));
+    if(!$status) { //if there is no sponsorships record, then mean didn't sponsor group
+        $ask_sponsor = l(t('Sponsor this group'), 'sponsor/sponsorgroup/'.$group->nid);
+    } else {
+        switch($status){
+            case SPONSORSHIPS_STATUS_EXPIRE :
+             $ask_sponsor = l(t('You once Sponsored this group, re-sponsor again'), 'sponsor/sponsorgroup/'.$group->nid);
+            break;
+            case SPONSORSHIPS_STATUS_OK :
+             $ask_sponsor = '<span>'.t('You have sponsored this group').'</span>';
+            break;
+            case SPONSORSHIPS_STATUS_PENDDING :
+                $ask_sponsor = '<span>'.t('Your sponsor request is in progress').'</span>';
+            break;
     
-    $ask_sponsor = l(t('Sponsor this group'), 'sponsor/sponsorgroup/'.$group->nid);
+        }
+    }
+    
+    
     $output.= <<<EOF
     <div style="font-size: 0.9em;" class="D_image">
 		<a class="omnCamp omngj_sj6b" href="http://www.midatlantichiking.com/">
@@ -418,8 +361,28 @@ function sponsor_ask_sponsor_group_form_submit($form, &$form_state) {
     $message = $form_state['values']['morewords'];
     $sponsor_node_nid = db_result(db_query('select nid from {node} where uid=%d and type="sponsor"', $user->uid));
     $now = time(); 
-	db_query("INSERT INTO {".SPONSORSHIPS_TABLE."} (nid, message,  gid, status, created)
-	 VALUES(%d, '%s', %d, %d, %d)", $sponsor_node_nid , $message, $gid,  SPONSORSHIPS_STATUS_PENDDING,  $now);    
+	db_query("INSERT INTO {".SPONSORSHIPS_TABLE."} (uid, nid, message, gid, approver, status, created)
+	 VALUES(%d, %d, '%s', %d, %d, %d, %d)", $user->uid, $sponsor_node_nid , $message, $gid, 0, SPONSORSHIPS_STATUS_PENDDING,  $now);    
     drupal_set_message(t('Your message have been sent to the group organizor.'));
     drupal_goto('sponsor/findgroup');
+}
+
+/*menu callback
+** @param, $sid, the sponsorship id
+**
+*/
+function sponsor_approve_sponsor_the_group($sid){
+    global $user; 
+    db_query('update {'.SPONSORSHIPS_TABLE.'} set status=%d , approver=%d where sid=%d', SPONSORSHIPS_STATUS_OK, $user->uid, $sid);
+    $dest = $_GET['destination'];
+    $item = db_fetch_array(db_query('select * from {'.SPONSORSHIPS_TABLE.'} where sid=%d', $sid));
+    drupal_goto($dest);
+    
+}
+
+function sponsor_remove_sponsor_the_group($sid){
+    
+    db_query('delete from {'.SPONSORSHIPS_TABLE.'}  where sid=%d',  $sid);
+    
+    
 }
