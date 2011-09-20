@@ -369,13 +369,36 @@ function sponsor_ask_sponsor_group_form_submit($form, &$form_state) {
 
 /*menu callback
 ** @param, $sid, the sponsorship id
-**
+** [field_sponsor_list] => Array
+        (
+            [0] => Array
+                (
+                    [nid] => 166
+                    [safe] => Array
+                        (
+                            [nid] => 166
+                            [title] => devin business technologies
+                            [status] => 1
+                        )
+
+                )
+
+        )
 */
 function sponsor_approve_sponsor_the_group($sid){
     global $user; 
     db_query('update {'.SPONSORSHIPS_TABLE.'} set status=%d , approver=%d where sid=%d', SPONSORSHIPS_STATUS_OK, $user->uid, $sid);
     $dest = $_GET['destination'];
     $item = db_fetch_array(db_query('select * from {'.SPONSORSHIPS_TABLE.'} where sid=%d', $sid));
+	$sponsor_node = node_load($item['nid']);
+	$node = node_load($item['gid'] );
+	$size = sizeof($node->field_sponsor_list);
+	
+    $node->field_sponsor_list[$size] = array('nid'=>$item['nid'],'safe'=>array('nid'=>$item['nid'], 'title'=>$sponsor_node->title,'status'=>$sponsor_node->status ));
+   
+    node_save($node);
+   
+    
     drupal_goto($dest);
     
 }

@@ -183,6 +183,7 @@ function sponsor_nodeapi(&$node, $op, $teaser, $page) {
             $node->sponsors = $sponsor_list;            
             break;
             case 'view':
+			
             $sponsor_request = sponsor_check_sponsorship_pendding_request($node->nid); 
             if($sponsor_request != false && !empty($sponsor_request)){
                  foreach($sponsor_request as $sid => $sponsor){
@@ -198,6 +199,17 @@ function sponsor_nodeapi(&$node, $op, $teaser, $page) {
             break; 
        }
     }
+	
+	 if($node->type == 'sponsor') {
+        switch( $op ) {
+            case 'load':
+            $sponsor_list = sponsor_get_sponsored_groups($node->uid);
+            $node->sponsorships = $sponsor_list;            
+            break;
+
+       }
+    }
+	
             
 }
 
@@ -302,11 +314,12 @@ function sponsor_check_sponsorship_pendding_request($gid){
 **
 */
 function sponsor_get_sponsored_groups($uid){
-    $sponsor_node_nid = db_result(db_query('select nid from {node} where uid=%d and type="sponsor"', $uid));
-    $result = db_query('select gid, status from '.SPONSORSHIPS_TABLE.' where nid=%d', $sponsor_node_nid);
+   
+    $result = db_query('select sid, gid, status from '.SPONSORSHIPS_TABLE.' where uid=%d', $uid);
     $groups = array(); 
     while($sponsorship = db_fetch_array($result)) {
-        $groups[$sponsorship['status']][$sponsorship['gid']] = $sponsorship->gid;
+		$group = node_load($sponsorship['gid']); 
+        $groups[$sponsorship['status']][$sponsorship['gid']] = array('sid'=>$sponsorship['sid'], 'path'=>$group->path, 'title'=>$group->title);
     }
     
     return $groups;
