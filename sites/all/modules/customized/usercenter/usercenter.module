@@ -491,10 +491,11 @@ function usercenter_account($uid){
 */
 function usercenter_mygroups() {
     global $user; 
+	
     $mygroups = $user->og_groups;
     drupal_set_title($user->name);
     $output = '';
-    $output .='<div style="width: 310px;" id="C_groupsMenu">';
+    $output .='<div style="width: 310px;" id="groupsMenu">';
     $output .='<ul class="myGroupsSection">';
     if(!empty($mygroups)){ 
         foreach($mygroups as $nid => $group){

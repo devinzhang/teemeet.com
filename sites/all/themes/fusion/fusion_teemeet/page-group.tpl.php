@@ -51,7 +51,7 @@
 <div id="C_page">
 
 
-<? if($group and !strstr(request_uri(),'admin/build/themes/settings')): ?>
+<? if($group and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
 <? echo color_group_style(); ?>
   <div id="C_contextHead">
     <div id="C_contextHeadBody">
@@ -72,12 +72,12 @@
         <? echo $preface_bottom; ?>
         <?php if ($show_messages && $messages): print $messages; endif; ?>
         <? 
-            if(strstr(request_uri(),'admin/build/themes/settings'))
+            if(strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet'))
             {
                 include 'inc/create-group.tpl.php';
             }        
             
-            elseif(arg(0) == 'node' and $node->type == 'group')
+            elseif(arg(0) == 'node' and $node->type == 'group' and arg(2) != 'edit')
             {
                 include 'inc/center-content.tpl.php';    
             }             
@@ -101,7 +101,7 @@
 
       </div>
       
-      <? if($group and !strstr(request_uri(),'admin/build/themes/settings/fusion_teemeet')): ?>
+      <? if($group and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
       <div id="C_nav" >
         <? echo $sidebar_first; ?>
         <? include 'inc/left-sidebar.tpl.php'; ?>

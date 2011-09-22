@@ -391,13 +391,16 @@ function sponsor_approve_sponsor_the_group($sid){
     $dest = $_GET['destination'];
     $item = db_fetch_array(db_query('select * from {'.SPONSORSHIPS_TABLE.'} where sid=%d', $sid));
 	$sponsor_node = node_load($item['nid']);
-	$node = node_load($item['gid'] );
-	$size = sizeof($node->field_sponsor_list);
+	$existing_group_node = node_load($item['gid'] );
 	
-    $node->field_sponsor_list[$size] = array('nid'=>$item['nid'],'safe'=>array('nid'=>$item['nid'], 'title'=>$sponsor_node->title,'status'=>$sponsor_node->status ));
-   
-    node_save($node);
-   
+	
+    $existing_group_node->field_sponsor_list[]['nid'] =$item['nid'];
+    
+    $existing_group_node = node_submit($existing_group_node);
+	content_presave($existing_group_node);
+	node_save($existing_group_node);
+	content_insert($existing_group_node);
+
     
     drupal_goto($dest);
     

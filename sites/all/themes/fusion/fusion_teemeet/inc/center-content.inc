@@ -102,19 +102,4 @@
         <li><a href="http://www.meetup.com/SacSwim/members/11898674/" class="thumb30" title="Elijah Li"> <img alt="Elijah Li" data-src="http://photos4.meetupstatic.com/photos/member/5/0/9/8/thumb_9440632.jpeg" src="http://photos4.meetupstatic.com/photos/member/5/0/9/8/thumb_9440632.jpeg" style="display: inline; "> </a></li>
         <li><a href="http://www.meetup.com/SacSwim/members/14426205/" class="thumb30" title="Bruce Carso"> <img alt="Bruce Carso" data-src="http://photos3.meetupstatic.com/photos/member/4/7/b/6/thumb_12498358.jpeg" src="http://photos3.meetupstatic.com/photos/member/4/7/b/6/thumb_12498358.jpeg" style="display: inline; "> </a></li>
         <li><a href="http://www.meetup.com/SacSwim/members/9166538/" class="thumb30" title="Lora PITTMAN"> <img alt="Lora PITTMAN" data-src="http://photos2.meetupstatic.com/photos/member/1/c/b/8/thumb_10207352.jpeg" src="http://photos2.meetupstatic.com/photos/member/1/c/b/8/thumb_10207352.jpeg" style="display: inline; "> </a></li>
-        <li><a href="http://www.meetup.com/SacSwim/members/12134294/" class="thumb30" title="Tom"> <img alt="Tom" data-src="http://photos2.meetupstatic.com/photos/member/5/c/6/3/thumb_9743651.jpeg" src="http://photos2.meetupstatic.com/photos/member/5/c/6/3/thumb_9743651.jpeg" style="display: inline; "> </a></li>
-        <li><a href="http://www.meetup.com/SacSwim/members/11107221/" class="thumb30" title="helen"> <img alt="helen" data-src="http://photos3.meetupstatic.com/photos/member/b/e/0/7/thumb_12348647.jpeg" src="http://photos3.meetupstatic.com/photos/member/b/e/0/7/thumb_12348647.jpeg" style="display: inline; "> </a></li>
-      </ul>
-      <p class="event-rating"> They
-        
-        rated it <img class="D_icon" src="http://img2.meetupstatic.com/03784007994490629714917/img/star_500.png" alt="5.00" title="1 rating for an average of 5.00 out of 5"> <span class="displaynone rating"><span class="average">5.00</span><span class="count">1</span></span> <span class="D_ratingsText D_empty" title="1 rating for an average of 5.00 out of 5"> (1 ratings) </span> and
-        
-        
-        uploaded <a href="http://www.meetup.com/SacSwim/photos/2709911/">3 photos</a> </p>
-      <div class="event-desc"> BBQ after this swim, first thursday of each month !! Fun swim
-        and fun foods ! This will be a good swim for those getting ready
-        for triathlons and Open Water Swims, also... <a href="http://www.meetup.com/SacSwim/events/22126171/" style="text-transform:uppercase;font-size:9px">Learn more</a> </div>
-    </li>
-  </ul>
-  <a href="http://www.meetup.com/SacSwim/events/past/?page=0" style="text-transform:uppercase;" id="seePastMeetups" class="page-meetups D_roundedButton" data-pageto="0" data-op="past" data-displayold="0">See all past Meetups</a>
-</div>
+        <li><a href="http://www.meetup.com/SacSwim/members/12134294/" class="thumb30" title="Tom"> <img alt="Tom" data-src="http://photos2.meetupstatic.com/photos/member/5/c/6/3/thumb_9743651.jpeg" src="http://photos2.meetupstatic.com/photos/member/
