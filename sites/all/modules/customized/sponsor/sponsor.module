@@ -315,14 +315,21 @@ function sponsor_check_sponsorship_pendding_request($gid){
 */
 function sponsor_get_sponsored_group_summary($uid){
 	$groups = sponsor_get_sponsored_groups($uid);
-	
-	$group_number = sizeof($groups[1]);
+	$group_number = 0;
 	$group_member_number = 0;
-	foreach($groups[1] as $gid =>$group){
-		$group_node = node_load($gid);
-		$group_member_number += $group_node->og_member_count;
-	
-	}
+		
+	if(!empty($groups)) {
+		$group_number = sizeof($groups[1]);
+		$group_member_number = 0;
+		if(!empty($groups[1])) {
+			foreach($groups[1] as $gid =>$group){
+				$group_node = node_load($gid);
+				$group_member_number += $group_node->og_member_count;
+			
+			}
+		}
+		
+	} 
 	
 	return array('group_counter'=> $group_number, 'member_counter'=> $group_member_number);
 	
