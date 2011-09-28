@@ -123,39 +123,39 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
 
     if ($message->message_id == 'custom_add_node') {
       if ($stream->stream->name == 'ogheartbeat') {
-      $message->message = '<div class="teemeet-message-type">';
-      $message->message .= 'new ' . $message->variables['@node_type'];
-      $message->message .= '</div>';
-      $message->message .= '<div class="teemeet-message-content">';
-      $message->message .= $message->variables['@user_picture'];
-      $message->message .= $message->variables['@username'] . ' has added ' . $message->variables['@node_title'] . '<br/>';
-      $message->message .= $timeago;
-      $message->message .= '</div>';
+		  $message->message = '<div class="teemeet-message-type">';
+		  $message->message .= 'new ' . $message->variables['@node_type'];
+		  $message->message .= '</div>';
+		  $message->message .= '<div class="teemeet-message-content">';
+		  $message->message .= $message->variables['@user_picture'];
+		  $message->message .= $message->variables['@username'] . ' has added ' . $message->variables['@node_title'] . '<br/>';
+		  $message->message .= $timeago;
+		  $message->message .= '</div>';
       } else {
-      $message->message = $message->variables['@user_picture'];
-      $message->message .= '<div class="teemeet-message-content">';
-      $message->message .= $message->variables['@username'] . ' has added ' . $message->variables['@node_title'] . '<br/>';
-      $message->message .= $timeago;
-      $message->message .= '</div>';
+		  $message->message = $message->variables['@user_picture'];
+		  $message->message .= '<div class="teemeet-message-content">';
+		  $message->message .= $message->variables['@username'] . ' has added ' . $message->variables['@node_title'] . '<br/>';
+		  $message->message .= $timeago;
+		  $message->message .= '</div>';
       }
     }
 
     if ($message->message_id == 'custom_add_comment') {
       if ($stream->stream->name == 'ogheartbeat') {
-      $message->message = '<div class="teemeet-message-type">';
-      $message->message .= 'new comment';
-      $message->message .= '</div>';
-      $message->message .= '<div class="teemeet-message-content">';
-      $message->message .= $message->variables['@picture'];
-      $message->message .= $message->variables['@user'] . ' commented on ' . $message->variables['@content'] . '<br/>';
-      $message->message .= $timeago;
-      $message->message .= '</div>';
+		  $message->message = '<div class="teemeet-message-type">';
+		  $message->message .= 'new comment';
+		  $message->message .= '</div>';
+		  $message->message .= '<div class="teemeet-message-content">';
+		  $message->message .= $message->variables['@picture'];
+		  $message->message .= $message->variables['@user'] . ' commented on ' . $message->variables['@content'] . '<br/>';
+		  $message->message .= $timeago;
+		  $message->message .= '</div>';
       } else {
-      $message->message = $message->variables['@picture'];
-      $message->message .= '<div class="teemeet-message-content">';
-      $message->message .= $message->variables['@user'] . ' commented on ' . $message->variables['@content'] . '<br/>';
-      $message->message .= $timeago;
-      $message->message .= '</div>';
+		  $message->message = $message->variables['@picture'];
+		  $message->message .= '<div class="teemeet-message-content">';
+		  $message->message .= $message->variables['@user'] . ' commented on ' . $message->variables['@content'] . '<br/>';
+		  $message->message .= $timeago;
+		  $message->message .= '</div>';
       }
     }
 
