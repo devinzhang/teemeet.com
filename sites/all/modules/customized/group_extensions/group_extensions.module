@@ -144,6 +144,17 @@ function group_extensions_menu()
             'access arguments' => array(1),        
             'file' => 'group_extensions.tools.inc',
         );
+    $items['groupextension/%/dues'] = array
+        (
+            'title' => t('Dues'),
+            'description' => 'Membership Dues',
+            'page callback' => 'groupextension_tools_dues',
+            'page arguments' => array(1),       
+            'type' => MENU_CALLBACK,
+            'access callback' => 'group_extensions_is_group_admin',        
+            'access arguments' => array(1),        
+            'file' => 'group_extensions.tools.inc',
+        );
     return $items;    
 }
 
@@ -529,4 +540,544 @@ function group_extensions_comment_render($node, $current_group,$cid = 0) {
   
   }
   return $output;
+}
+
+
+/**
+ * Event Payment Form
+ * @return $form
+ * @author nemo
+ */
+function event_payment_form() { 
+	$gid = arg(3);
+	$gids = group_extensions_get_nid_by_group($gid);
+	$options = array();
+	foreach ($gids as $_gid) {
+		$group = node_load($_gid);
+		$options[$_gid] = $group->title . ' -- ' . date('d/m/Y', $group->changed);
+	}	
+	
+	$form = array();
+	
+	$group_alias = drupal_get_path_alias('node/' . $gid);
+	//$form['#action'] = url($group_alias . '/groupextension/' . $gid . '/money');
+	
+	$form['form-prefix'] = array(    
+    	'#value' => '<div class="D_form">', 
+	);	
+	
+	$form['form_title'] = array(
+		'#prefix' => '<h2>',
+		'#value' => t('Event Payment'),
+		'#suffix' => '</h2>',
+	);
+	
+	$form['event'] = array(
+		'#type' => 'select',
+		'#title' => t('Event'),
+		'#options' =>$options,
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+
+	);
+	
+	$form['member'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Member'),
+		'#autocomplete_path' => 'user/autocomplete',
+		'#size' => '30',
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['date'] = array(
+		'#type' => 'date',
+		'#title' =>t('Date'),
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+	);
+	
+	$form['quantity'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Quantity'),
+		'#size' => '15',
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+		'#element_validate' => array('quantity_validate'),
+		'#required' => TRUE,
+    );
+	
+	$form['total'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Total Amount'),
+		'#size' => '15',
+		'#field_prefix' => '￥',
+		'#default_value' => '0.00',
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+		'#required' => TRUE,
+		'#element_validate' => array('total_validate'),
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Record Event Payment'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement">',
+		'#suffix' => '</div>',
+	);
+	
+	$form['form-suffix'] = array(    
+    	'#value' => '</div>', 
+	);
+	
+	$form['gid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $gid, 
+    );
+	
+	$form['type'] = array(
+		'#type' => 'hidden', 
+		'#value' => 'event_payment', 
+    );
+	
+	$form['#validate'][] = 'group_extensions_payment_form_validate';
+	
+	$form['#submit'][] = 'group_extensions_payment_form_submit';
+	
+	return $form;
+}
+
+/**
+ * hook_colorbox_form_access
+ * @author nemo
+ */
+function group_extensions_colorbox_form_access($form_id){
+	$forms = array('event_payment_form', 'sponsor_payment_form', 'other_payment_form', 'expense_form', 'dues_form');
+	
+	if (in_array($form_id, $forms)) {
+		return TRUE;
+	}
+}
+
+/**
+ * get nid which belongs to a specific group
+ * @param  $gid Inter
+ * @return $nids Array
+ * @author nemo
+ */
+
+function group_extensions_get_nid_by_group($gid) {
+	$sql = 'SELECT node.nid AS nid FROM {node} node ' .
+			'INNER JOIN {og_ancestry} og_ancestry ON node.nid = og_ancestry.nid ' .
+			'WHERE og_ancestry.group_nid = %d';
+	
+	$results = db_query($sql, $gid);
+	
+	$nids = array();
+	while ($nid = db_fetch_object($results)) {
+		$nids[] = $nid->nid;
+	}
+	
+	return $nids;
+}
+/**
+ * @author nemo
+ */
+function quantity_validate($element, &$form_state) {
+	$form_state['values']['quantity'] = (int)$element['#value'];
+   if ($form_state['values']['quantity'] <= 0) {
+     form_error($element, t('Quantity field is illegal.'));
+   }
+}
+
+/**
+ * @author nemo
+ */
+function total_validate($element, &$form_state) {
+	$form_state['values']['total'] = (int)$element['#value'];
+   if ($form_state['values']['total'] <= 0) {
+     form_error($element, t('Total Amount field is illegal.'));
+   }
+}
+
+/**
+ * @author nemo
+ */
+function group_extensions_payment_form_validate($form, &$form_state) {
+	$gid = $form_state['values']['gid'];
+	if($errors = form_get_errors()){
+		$group_alias = drupal_get_path_alias('node/' . $gid);
+		drupal_goto($group_alias . '/groupextension/' . $gid . '/money');
+	}	
+}
+
+/**
+ * @author nemo
+ */
+function group_extensions_payment_form_submit($form, &$form_state) {
+	$gid = $form_state['values']['gid'];
+	$values = $form_state['values'];
+	$date = mktime(0, 0, 0, $values['date']['month'], $values['date']['day'], $values['date']['year']);
+	$type = $form_state['values']['type'];
+	
+	db_query("insert into {og_transaction} (tid, gid, type, amount, date) 
+				VALUES (null, %d, '%s', '%s', %d)", 
+				$values['gid'], $type, $values['total'], $date);
+	drupal_set_message(t('Transaction is recorded successfully'));
+	$group_alias = drupal_get_path_alias('node/' . $gid);
+	drupal_goto($group_alias . '/groupextension/' . $gid . '/money');
+}
+
+/**
+ * Get transaction which belongs to a specific group
+ * @param  $gid Inter
+ * @return $transactions Array
+ * @author nemo
+ */
+
+function group_extensions_get_transactions_by_group($gid) {
+	$sql = 'SELECT * FROM {og_transaction} ot ' .
+			'WHERE ot.gid = %d';
+	
+	$results = db_query($sql, $gid);
+	
+	$transactions = array();
+	while ($t = db_fetch_array($results)) {
+		$transactions[] = $t;
+	}
+	
+	return $transactions;
+}
+
+
+/**
+ * Sponsor Payment Form
+ * @return $form
+ * @author nemo
+ */
+function sponsor_payment_form() { 
+	$gid = arg(3);
+	
+	$form['form-prefix'] = array(    
+    	'#value' => '<div class="D_form">', 
+	);	
+	
+	$form['form_title'] = array(
+		'#prefix' => '<h2>',
+		'#value' => t('Sponsor Payment'),
+		'#suffix' => '</h2>',
+	);
+	
+	$form['sponsor'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Sponsor'),
+		'#size' => '60',
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['date'] = array(
+		'#type' => 'date',
+		'#title' =>t('Date'),
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+	);
+	
+	$form['total'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Total Amount'),
+		'#size' => '15',
+		'#field_prefix' => '￥',
+		'#default_value' => '0.00',
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+		'#required' => TRUE,
+		'#element_validate' => array('total_validate'),
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Record Sponsor Payment'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement">',
+		'#suffix' => '</div>',
+	);
+	
+	$form['form-suffix'] = array(    
+    	'#value' => '</div>', 
+	);
+	
+	$form['gid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $gid, 
+    );
+	
+	$form['type'] = array(
+		'#type' => 'hidden', 
+		'#value' => 'sponsor_payment', 
+    );
+	
+	$form['#validate'][] = 'group_extensions_payment_form_validate';
+		
+	$form['#submit'][] = 'group_extensions_payment_form_submit';
+	
+	return $form;
+}
+
+/**
+ * Other Payment Form
+ * @return $form
+ * @author nemo
+ */
+function other_payment_form() { 
+	$gid = arg(3);
+	
+	$form['form-prefix'] = array(    
+    	'#value' => '<div class="D_form">', 
+	);	
+	
+	$form['form_title'] = array(
+		'#prefix' => '<h2>',
+		'#value' => t('Other Income'),
+		'#suffix' => '</h2>',
+	);
+	
+	$form['other'] = array(
+		'#type' => 'textfield',
+		'#title' => t('other'),
+		'#size' => '60',
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['date'] = array(
+		'#type' => 'date',
+		'#title' =>t('Date'),
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+	);
+	
+	$form['total'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Total Amount'),
+		'#size' => '15',
+		'#field_prefix' => '￥',
+		'#default_value' => '0.00',
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+		'#required' => TRUE,
+		'#element_validate' => array('total_validate'),
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Record Other Income'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement">',
+		'#suffix' => '</div>',
+	);
+	
+	$form['form-suffix'] = array(    
+    	'#value' => '</div>', 
+	);
+	
+	$form['gid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $gid, 
+    );
+	
+	$form['type'] = array(
+		'#type' => 'hidden', 
+		'#value' => 'other_payment', 
+    );
+	
+	$form['#validate'][] = 'group_extensions_payment_form_validate';
+		
+	$form['#submit'][] = 'group_extensions_payment_form_submit';
+	
+	return $form;
+}
+
+/**
+ * Espense Form
+ * @return $form
+ * @author nemo
+ */
+function expense_form() { 
+	$gid = arg(3);
+	
+	$form['form-prefix'] = array(    
+    	'#value' => '<div class="D_form">', 
+	);	
+	
+	$form['form_title'] = array(
+		'#prefix' => '<h2>',
+		'#value' => t('Expense'),
+		'#suffix' => '</h2>',
+	);
+	
+	$form['expense'] = array(
+		'#type' => 'textfield',
+		'#title' => t('other'),
+		'#size' => '60',
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['date'] = array(
+		'#type' => 'date',
+		'#title' =>t('Date'),
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+	);
+	
+	$form['total'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Total Amount'),
+		'#size' => '15',
+		'#field_prefix' => '￥',
+		'#default_value' => '0.00',
+		'#prefix' => '<div class="element">',
+		'#suffix' => '</div>',
+		'#required' => TRUE,
+		'#element_validate' => array('total_validate'),
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Record Expense'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement">',
+		'#suffix' => '</div>',
+	);
+	
+	$form['form-suffix'] = array(    
+    	'#value' => '</div>', 
+	);
+	
+	$form['gid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $gid, 
+    );
+	
+	$form['type'] = array(
+		'#type' => 'hidden', 
+		'#value' => 'expense', 
+    );
+	
+	$form['#validate'][] = 'group_extensions_payment_form_validate';
+		
+	$form['#submit'][] = 'group_extensions_payment_form_submit';
+	
+	return $form;
+}
+
+/**
+ * Other Payment Form
+ * @return $form
+ * @author nemo
+ */
+function dues_form() { 
+	$gid = arg(3);
+	$group_alias = drupal_get_path_alias('node/' . $gid);
+	
+	$form['form-prefix'] = array(    
+    	'#value' => '<div class="D_form">', 
+	);	
+	
+	$dues = db_result(db_query('select dues from {og_dues} where gid = %d', $gid)) ;
+	if (!$dues) {
+		$form['form_title'] = array(
+			'#prefix' => '<h2>',
+			'#value' => t('Set up Membership dues'),
+			'#suffix' => '</h2><br/>',
+		);
+		
+		$form['form_footer'] = array(
+			'#value' => t('Set up Membership dues') . '<br/><br/>' . l('To add a transaction you must set up Membership dues.', $group_alias . '/groupextension/' . $gid . '/dues'),
+			'#prefix' => '<div class="footElement">',
+			'#suffix' => '</div>',
+		);
+	}else{
+		$form['form_title'] = array(
+			'#prefix' => '<h2>',
+			'#value' => t('Membership dues'),
+			'#suffix' => '</h2>',
+		);
+		
+		$form['member'] = array(
+			'#type' => 'textfield',
+			'#title' => t('Member'),
+			'#autocomplete_path' => 'user/autocomplete',
+			'#size' => '30',
+			'#prefix' => '<div class="element">',
+			'#suffix' => '</div>',
+		);
+		
+		$form['total'] = array(
+			'#type' => 'textfield', 
+			'#value' => $dues, 
+			'#attributes' => array('disabled' => TRUE),
+			'#prefix' => '<div class="element">',
+			'#suffix' => '</div>',
+			'#size' => '15',
+			'#field_prefix' => '￥',
+			'#field_suffix' => l('Change the membership dues', $group_alias . '/groupextension/' . $gid . '/dues'),
+		);
+		
+		$form['submit'] = array(
+			'#type' => 'submit', 
+			'#value' => t('Record Membership dues'),
+			'#attributes' => array('class' => 'D_submit'),
+			'#prefix' => '<div class="footElement">',
+			'#suffix' => '</div>',
+		);
+		
+		$form['gid'] = array(
+			'#type' => 'hidden', 
+			'#value' => $gid, 
+		);
+		
+		$form['type'] = array(
+			'#type' => 'hidden', 
+			'#value' => 'dues', 
+		);
+
+		$form['#validate'][] = 'group_extensions_payment_form_validate';
+
+		$form['#submit'][] = 'group_extensions_payment_form_submit';
+	}
+
+	$form['form-suffix'] = array(    
+		'#value' => '</div>', 
+	);
+	
+	return $form;
+}
+
+/**
+ * Get group money
+ * @param  $gid Inter
+  * @param $type String(dues, event_payment, sponsor_payment, other_payment, expense)
+ * @return  Float
+ * @author nemo
+ */
+
+function group_extensions_get_money_by_group($gid, $type = 'dues') {
+	$sql = "SELECT SUM(amount) FROM {og_transaction} WHERE gid = %d AND type = '%s' ";
+	
+	return  db_result(db_query($sql, $gid, $type));	
+}
+
+/**
+ * Get group dues
+ * @param  $gid Inter
+ * @return  Float
+ * @author nemo
+ */
+function group_extensions_get_dues_by_group($gid) {
+	$sql = "SELECT dues FROM {og_dues} WHERE gid = %d";
+	
+	return  db_result(db_query($sql, $gid));	
 }
