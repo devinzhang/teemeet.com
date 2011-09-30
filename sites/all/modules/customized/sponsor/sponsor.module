@@ -77,6 +77,15 @@ function sponsor_menu() {
         'file' => 'sponsorships.page.inc',
     );
     
+	$items['sponsor/%/list'] = array(
+    	'title' => t('Sponsor'),
+        'page callback' => 'sponsor_sponsorship_list',
+        'page arguments' => array(1),                
+        'access callback' =>true,
+        'type' => MENU_CALLBACK, 
+        'file' => 'sponsorships.page.inc',
+    );
+	
     $items['sponsor/approvesponsor/%'] = array(
     	'title' => t('Approve to sponsor this group'),
         'page callback' => 'sponsor_approve_sponsor_the_group',
@@ -113,7 +122,6 @@ function sponsor_is_login($uid){
 function sponsor_theme() {
   return array(
   
-    
     'sponsor_sponsorship_landing' => array(
 	  'template' => 'sponsor-sponsorship-landing',
       'arguments' => array(
@@ -122,9 +130,12 @@ function sponsor_theme() {
         ),
 	),
     
-    
-   
- 
+	'sponsor_sponsorship_list' => array(
+	  'template' => 'sponsor-sponsorship-list',
+      'arguments' => array(            
+            'sponsors'=>null,
+        ),
+	),
     
   );
 }

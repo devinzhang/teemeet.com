@@ -385,6 +385,26 @@ function sponsor_ask_sponsor_group_form_submit($form, &$form_state) {
 
         )
 */
+
+/*menu callback
+**
+*/
+function sponsor_sponsorship_list($gid){
+	$output = '';
+	$sponsor_list = sponsor_get_group_sponsors($gid);
+	$sponsors = array();
+	foreach($sponsor_list as $sponsor){
+		$sponsor_node = node_load($sponsor['nid']); 
+		$sponsors[] = array(
+			'sid'=>$sponsor['sid'],
+			'name'=>$sponsor_node->title,
+			'nid'=>$sponsor['nid'],
+			);
+	}
+	$output .= theme('sponsor_sponsorship_list',$sponsors);
+	return  $output;
+
+}
 function sponsor_approve_sponsor_the_group($sid){
     global $user; 
     db_query('update {'.SPONSORSHIPS_TABLE.'} set status=%d , approver=%d where sid=%d', SPONSORSHIPS_STATUS_OK, $user->uid, $sid);

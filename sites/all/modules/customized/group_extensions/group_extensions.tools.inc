@@ -441,7 +441,9 @@ function _groupextension_tools_manage_output(){
     $member_link = l(t('Your Memebers'),$current_group->path.'/grouptool/'.$current_group->nid.'/manage/settings/members');
     $theme_link = url($current_group->path.'/admin/build/themes/settings/fusion_teemeet');
 	$tags_link = l(t('Topics'), $current_group->path.'/groupextension/'.$current_group->nid.'/tags');
-    $output.= <<<EOF
+    $group_due_link = l('Membership Dues',$current_group->path.'/groupextension/'.$current_group->nid.'/dues');
+	$sponsors_list_link = l('Sponsors and Perks',$current_group->path.'/sponsor/'.$current_group->nid.'/list');
+	$output.= <<<EOF
    <h3>General info</h3>
 <div class="D_boxcols divby3">
 <div class="D_col first">
@@ -596,7 +598,39 @@ function _groupextension_tools_manage_output(){
 
 		
 </div>
-
+<div class="D_boxsection ">	
+<h3>Money</h3>
+<div class="D_boxcols divby3">
+<div class="D_col first">
+	<div class="D_colbody">
+<ul class="D_list">
+<li class="D_category">
+<div class="D_name">$group_due_link</div>
+<ul class="D_bullet">
+<li>Manage how you collect dues</li>
+<li>Set your refund policy</li>
+</ul>
+</li>
+</ul>
+	</div>
+</div>
+<div class="D_col last">
+	<div class="D_colbody">
+		
+<ul class="D_list">
+<li class="D_category">
+<div class="D_name">$sponsors_list_link</div>
+<ul class="D_bullet">
+<li>Manage who can send you Sponsor offers</li>
+<li>Manage Perks, Sponsors and Offers</li>
+<li>Add your own Sponsor</li>
+</ul>
+</li>
+</ul>
+	</div>
+</div>
+</div>
+</div>
  
 EOF;
 
