@@ -155,6 +155,41 @@ function group_extensions_menu()
             'access arguments' => array(1),        
             'file' => 'group_extensions.tools.inc',
         );
+	
+	// poll
+	$items['groupextension/%/poll'] = array
+        (
+            'title' => t('Polls'),
+            'description' => '',
+            'page callback' => 'groupextension_tools_poll',
+            'page arguments' => array(1),       
+            'type' => MENU_CALLBACK,
+            'access callback' => TRUE,        
+            'access arguments' => array(1),        
+            'file' => 'group_extensions.tools.inc',
+        );
+	$items['groupextension/%/poll/open'] = array
+        (
+            'title' => t('Open polls'),
+            'description' => '',
+            'page callback' => 'groupextension_tools_poll',
+            'page arguments' => array(1),       
+            'type' => MENU_DEFAULT_LOCAL_TASK,
+            'access callback' => TRUE,        
+            'access arguments' => array(1),        
+            'file' => 'group_extensions.tools.inc',
+        );
+	$items['groupextension/%/poll/closed'] = array
+        (
+            'title' => t('Closed polls'),
+            'description' => '',
+            'page callback' => 'groupextension_tools_poll',
+            'page arguments' => array(1),       
+            'type' => MENU_LOCAL_TASK,
+            'access callback' => TRUE,        
+            'access arguments' => array(1),        
+            'file' => 'group_extensions.tools.inc',
+        );
     return $items;    
 }
 
@@ -663,16 +698,17 @@ function group_extensions_colorbox_form_access($form_id){
 /**
  * get nid which belongs to a specific group
  * @param  $gid Inter
+ * @param  $type String : node type
  * @return $nids Array
  * @author nemo
  */
 
-function group_extensions_get_nid_by_group($gid) {
+function group_extensions_get_nid_by_group($gid, $type = 'event') {
 	$sql = 'SELECT node.nid AS nid FROM {node} node ' .
 			'INNER JOIN {og_ancestry} og_ancestry ON node.nid = og_ancestry.nid ' .
-			'WHERE og_ancestry.group_nid = %d';
+			"WHERE og_ancestry.group_nid = %d AND node.type = '%s'";
 	
-	$results = db_query($sql, $gid);
+	$results = db_query($sql, $gid, $type);
 	
 	$nids = array();
 	while ($nid = db_fetch_object($results)) {
@@ -1080,4 +1116,29 @@ function group_extensions_get_dues_by_group($gid) {
 	$sql = "SELECT dues FROM {og_dues} WHERE gid = %d";
 	
 	return  db_result(db_query($sql, $gid));	
+}
+
+/**
+ * Get group polls
+ * @param  $gid Inter
+ * @return $polls Array
+ * @author nemo
+ */
+function group_extensions_get_poll_by_group($gid, $active = 1) {
+	$sql = db_rewrite_sql("SELECT n.nid, n.title, p.active, n.created, SUM(c.chvotes) AS votes FROM {node} n 
+						INNER JOIN {poll} p ON n.nid = p.nid 
+						INNER JOIN {poll_choices} c ON n.nid = c.nid 
+						INNER JOIN {og_ancestry} og_ancestry ON n.nid = og_ancestry.nid
+						WHERE n.status = 1 AND og_ancestry.group_nid = %d AND p.active = %d 
+						GROUP BY n.nid 
+						ORDER BY n.created DESC");
+
+	$results = db_query($sql, $gid, $active);
+	
+	$polls = array();
+	while ($poll = db_fetch_array($results)) {
+		$polls[] = $poll;
+	}
+	
+	return $polls;
 }

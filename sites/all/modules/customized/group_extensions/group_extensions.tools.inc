@@ -766,7 +766,7 @@ function groupextension_tools_money($gid){
 			</tr>
 		</thead>
 		<tbody id="ledger_body">';
-	if(empty($output)) {
+	if(empty($transactions)) {
 	$output .=	'<tr id="emptytrans">
 				<td style="margin-top: 1em; text-align: center;" colspan="4">
 				<p>There are no transactions. <br><br>Click "<a style="font-weight:bold;" onclick="" href="javascript:void(0);">Record a transaction</a>" above to keep track of all the money coming in and out of your Meetup Group.</p>
@@ -819,3 +819,68 @@ function groupextension_tools_checklist($gid){
 return $output;
 }
 
+function groupextension_tools_poll($gid){
+	$group = node_load($gid);
+	$group_alias = drupal_get_path_alias('node/' . $gid);
+	
+	$group_polls_open = group_extensions_get_poll_by_group($gid);
+	$group_polls_closed = group_extensions_get_poll_by_group($gid, 0);
+	
+	
+	// .D_box
+	$output .= '<div class="D_box"><div class="D_boxbody">';	
+	
+	
+	if (in_array('closed', arg())) {
+		$open_class = '';
+		$closed_class = 'active';
+		$group_polls = $group_polls_closed;
+		$poll_status = 'closed';
+	} else {
+		$open_class = 'active';
+		$closed_class = '';
+		$group_polls = $group_polls_open;
+		$poll_status = 'open';
+	}
+   
+	$output .= '<div class="D_boxhead">
+					<h1>' . t('Polls') . '</h1>
+					<span>' . l('Suggest a poll' , '') . '</span>
+					<ul class="tabs primary">
+						<li class="' . $open_class . '">' . l('Open polls', $group_alias . '/groupextension/' . $gid . '/poll') . '</li>
+						<li class="' . $closed_class . '">' . l('Closed polls', $group_alias . '/groupextension/' . $gid . '/poll/closed') . '</li>
+					</ul></div>';
+	
+	// poll table
+	$output .= '<table class="D_ledger" width="600">
+		<thead>
+			<tr>
+				<th class="" width="50%">' . t('Title') . '</th>
+				<th class="" width="25%">' . t('Vote') . '</th>
+				<th class="" width="25%">' . t('Create') . '</th>
+			</tr>
+		</thead>
+		<tbody id="ledger_body">';
+	if(empty($group_polls)) {
+	$output .=	'<tr id="emptytrans">
+				<td style="margin-top: 1em; text-align: center;" colspan="4">
+				' . t('There aren\'t any @poll_status polls', array('@poll_status' => $poll_status)) . '
+				</td>
+			</tr>';
+	}else{
+		foreach($group_polls as $gp) {	
+			$output .= '<tr>
+					<td>' . l($gp['title'], 'node/' . $gp['nid']) . '</td>
+					<td>' . $gp['votes'] . '</td>
+					<td>' . date('d/m/Y', $gp['created']) . '</td>
+				</tr>';
+		}
+	}
+	// poll table end
+	$output .=	'</tbody></table>';
+	
+	// .D_box end
+	$output .='</div></div>';
+	
+	return $output;
+}
