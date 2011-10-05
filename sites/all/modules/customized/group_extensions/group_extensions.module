@@ -190,6 +190,18 @@ function group_extensions_menu()
             'access arguments' => array(1),        
             'file' => 'group_extensions.tools.inc',
         );
+	
+	$items['groupextension/%/suggest'] = array
+        (
+            'title' => t('Suggest a poll'),
+            'description' => '',
+            'page callback' => 'groupextension_tools_suggest',
+            'page arguments' => array(1),       
+            'type' => MENU_CALLBACK,
+            'access callback' => TRUE,        
+            'access arguments' => array(1),        
+            'file' => 'group_extensions.tools.inc',
+        );
     return $items;    
 }
 

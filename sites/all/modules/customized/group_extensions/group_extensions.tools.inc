@@ -826,11 +826,6 @@ function groupextension_tools_poll($gid){
 	$group_polls_open = group_extensions_get_poll_by_group($gid);
 	$group_polls_closed = group_extensions_get_poll_by_group($gid, 0);
 	
-	
-	// .D_box
-	$output .= '<div class="D_box"><div class="D_boxbody">';	
-	
-	
 	if (in_array('closed', arg())) {
 		$open_class = '';
 		$closed_class = 'active';
@@ -842,10 +837,12 @@ function groupextension_tools_poll($gid){
 		$group_polls = $group_polls_open;
 		$poll_status = 'open';
 	}
+	// .D_box
+	$output .= '<div class="D_box"><div class="D_boxbody">';	
    
 	$output .= '<div class="D_boxhead">
 					<h1>' . t('Polls') . '</h1>
-					<span>' . l('Suggest a poll' , '') . '</span>
+					<span>' . l('Suggest a poll' , $group_alias . '/groupextension/' . $gid . '/suggest') . '</span>
 					<ul class="tabs primary">
 						<li class="' . $open_class . '">' . l('Open polls', $group_alias . '/groupextension/' . $gid . '/poll') . '</li>
 						<li class="' . $closed_class . '">' . l('Closed polls', $group_alias . '/groupextension/' . $gid . '/poll/closed') . '</li>
@@ -883,4 +880,141 @@ function groupextension_tools_poll($gid){
 	$output .='</div></div>';
 	
 	return $output;
+}
+
+function groupextension_tools_suggest($gid){
+	$group = node_load($gid);
+	$group_alias = drupal_get_path_alias('node/' . $gid);
+	
+	// .D_box
+	$output .= '<div class="D_box"><div class="D_boxbody">';	
+   
+	$output .= '<div class="D_boxhead"><h1>' . t('Contact Organizer') . '</h1></div>';
+	
+	// D_boxsection
+	$output .= '<div class="D_boxsection "><div class="D_form">';
+	
+	$output .= drupal_get_form('groupextension_tools_contact_form');
+	
+	// D_boxsection end
+	$output .= '</div></div>';
+	
+	// .D_box end
+	$output .='</div></div>';
+	
+	return $output;
+}
+
+/**
+ * The contact form.
+ * @author nemo
+ */
+function groupextension_tools_contact_form() {
+  $gid = arg(1);
+  
+  $form['intro'] = array(
+    '#value' => t('Have an idea for meetup!'),
+  );
+  $form['subject'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Subject'),
+    '#required' => TRUE,
+	'#prefix' => '<div class="element">',
+	'#suffix' => '</div>',
+  );
+  $form['message'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Message'),
+    '#required' => TRUE,
+	'#prefix' => '<div class="element">',
+	'#suffix' => '</div>',
+  );
+  $form['gid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $gid, 
+    );
+  $form['submit'] = array(
+	'#type' => 'submit', 
+	'#value' => t('Send'),
+	'#attributes' => array('class' => 'D_submit'),
+	'#prefix' => '<div class="footElement">',
+	'#suffix' => '</div>',
+);
+ 
+  return $form;
+}
+
+/**
+ * Form submission logic for the contact form.
+ * @author nemo
+ */
+function groupextension_tools_contact_form_submit($form, &$form_state) {
+	groupextension_tools_contact_mail_send($form_state['values']);
+}
+
+/**
+ * Send an e-mail.
+ *
+ * @param $form_values
+ * @author nemo
+ */
+function groupextension_tools_contact_mail_send($form_values) {
+  global $user;
+  
+  // All system mails need to specify the module and template key (mirrored from
+  // hook_mail()) that the message they want to send comes from.
+  $module = 'group_extensions';
+  $key = 'contact_message';
+
+  // Specify 'to' and 'from' addresses.
+  $group_node = node_load($form_values['gid']);
+  $group_owner = user_load(array('uid' => $group_node->uid));
+  
+  $to = $group_owner->mail;
+  $from = $user->mail;
+
+  // "params" loads in additional context for email content completion in
+  // hook_mail(). 
+  $params = $form_values;
+
+  // The language of the e-mail.
+  $language = language_default();
+
+  // Whether or not to automatically send the mail when drupal_mail() is
+  // called. This defaults to TRUE, and is normally what you want unless you
+  // need to do additional processing before drupal_mail_send() is called.
+  $send = TRUE;
+  
+  // Send the mail, and check for success. Note that this does not guarantee
+  // message delivery; only that there were no PHP-related issues encountered
+  // while sending.
+  $result = drupal_mail($module, $key, $to, $language, $params, $from, $send);
+  if ($result['result'] == TRUE) {
+    drupal_set_message(t('Your message has been sent.'));
+  }
+  else {
+    drupal_set_message(t('There was a problem sending your message and it was not sent.'), 'error');
+  }
+
+}
+
+/**
+ * Implementation of hook_mail().
+ * @author nemo
+ */
+function group_extensions_mail($key, &$message, $params) {
+  global $user;
+
+  $language = $message['language'];
+
+  switch ($key) {
+    // Send a simple message from the contact form.
+    case 'contact_message':
+      $message['subject'] = $params['subject'];
+      // Note that the message body is an array, not a string.
+      $message['body'][] = t('@name sent you the following message:', array('@name' => $user->name), $language->language);
+      // Because this is just user-entered text, we do not need to translate it.
+      $message['body'][] = $params['message'];
+      break;
+  }
 }
