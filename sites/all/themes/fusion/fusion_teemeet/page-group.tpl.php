@@ -52,7 +52,7 @@
 
 
 <? if($group and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
-<? echo color_group_style(); ?>
+<? echo color_mine_style(); ?>
   <div id="C_contextHead">
     <div id="C_contextHeadBody">
       <div id="C_contextTitle">
