@@ -53,7 +53,7 @@
     <div id="C_userNav">
     <? if($user->uid): ?>
       <div id="C_welcome">
-        <a href="<? echo url('<front>')?>"><img src="http://img2.meetupstatic.com/8689168192329930562/img/house.gif" class="D_icon" alt="Home" /></a> <a href="<? echo url('<front>')?>"><? echo $user->name ?></a>
+        <a href="<? echo url('<front>')?>"><img src="http://img2.meetupstatic.com/8689168192329930562/img/house.gif" class="D_icon" alt="Home" /></a> <a href="<? echo url('myhome/'.$user->uid)?>"><? echo $user->name ?></a>
 	  </div>
     <? endif; ?>  
       <ul id="C_userLinks">

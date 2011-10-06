@@ -18,6 +18,22 @@
   <![endif]-->
   <?php print $local_styles; ?>
   <?php print $scripts; ?>
+    
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/meetup_jquery_ui.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/meetup.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/eventDetails.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/bagelbase_mar.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/new_layout.css" />
+<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/module.css" />
+<link type="text/css" rel="stylesheet" media="print" href="<? echo base_path() . path_to_theme() ;?>/css/print.css" />
+
+<!--[if IE 6]>
+  <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/ie6.css" />
+<![endif]-->
+<!--[if lt IE 8]>
+  <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/ie8.css" />
+<![endif]-->
+
 </head>
 
 <body id="<?php print $body_id; ?>" class="<?php print $body_classes; ?>">
@@ -31,41 +47,62 @@
       <?php print theme('grid_row', $header_top, 'header-top', 'full-width', $grid_width); ?>
 
       <!-- header-group row: width = grid_width -->
-      <div id="header-group-wrapper" class="header-group-wrapper full-width">
-        <div id="header-group" class="header-group row <?php print $grid_width; ?>">
-          <div id="header-group-inner" class="header-group-inner inner clearfix">
-            <?php print theme('grid_block', theme('links', $secondary_links), 'secondary-menu'); ?>
-            <?php print theme('grid_block', $search_box, 'search-box'); ?>
-
-            <?php if ($logo || $site_name || $site_slogan): ?>
-            <div id="header-site-info" class="header-site-info block">
-              <div id="header-site-info-inner" class="header-site-info-inner inner">
-                <?php if ($logo): ?>
-                <div id="logo">
-                  <a href="<?php print check_url($front_page); ?>" title="<?php print t('Home'); ?>"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" /></a>
-                </div>
-                <?php endif; ?>
-                <?php if ($site_name || $site_slogan): ?>
-                <div id="site-name-wrapper" class="clearfix">
-                  <?php if ($site_name): ?>
-                  <span id="site-name"><a href="<?php print check_url($front_page); ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a></span>
-                  <?php endif; ?>
-                  <?php if ($site_slogan): ?>
-                  <span id="slogan"><?php print $site_slogan; ?></span>
-                  <?php endif; ?>
-                </div><!-- /site-name-wrapper -->
-                <?php endif; ?>                
-              </div><!-- /header-site-info-inner -->
-              <?php print $header; ?>
-            </div><!-- /header-site-info -->
-            <?php endif; ?>
-
-            
-           
-          </div><!-- /header-group-inner -->
-        </div><!-- /header-group -->
-      </div><!-- /header-group-wrapper -->
-          <? if($group): ?>             
+    <div id="C_header">
+  <div id="C_headerBody">
+    <div id="C_logo"> <a href="<? echo url('<front>')?>"> <img src="<? echo $logo ?>" alt="<? echo $title ?>" /> </a> </div>
+    <div id="C_userNav">
+    <? if($user->uid): ?>
+      <div id="C_welcome">
+        <a href="<? echo url('<front>')?>"><img src="http://img2.meetupstatic.com/8689168192329930562/img/house.gif" class="D_icon" alt="Home" /></a> <a href="<? echo url('myhome/'.$user->uid)?>"><? echo $user->name ?></a>
+	  </div>
+    <? endif; ?>  
+      <ul id="C_userLinks">
+        <li class="C_userNavItem C_userNavItem_less"><a href="#">What's new</a></li>
+        <li class="C_userNavItem C_userNavItem_less"> <a href="#"><? echo t('help') ?></a> </li>
+        
+        <? if(!$user->uid): ?>
+         <li class="C_userNavItem"><a href="<?php echo url('user/login'); ?>" class="J_loginLink J_onClick headerLogin">Log in</a></li>
+         <li class="C_userNavItem"><a class="omnCamp omnrg_signup J_signupLink J_onClick headerSignup" href="<?php echo url('user/register');?>">Sign up</a></li>
+        <? else: ?>
+          <li class="C_userNavItem hasDropDown"><a href="<?php echo url('user/'.$user->uid.'/mygroups'); ?>"><? echo t('我的小组')?></a> <div class="C_arrowTab"></div> 
+            <div id="C_groupsMenu" style="width: 310px; "> 
+                <ul class="myGroupsSection">                    
+                <?php                    
+                    foreach($user->og_groups as $nid=>$group) {
+                    echo '<li>'.l($group['title'],drupal_get_path_alias('node/'.$nid),array('attributes'=>array('class'=>'C_groupsMenuItem '))).'</li>';
+                 }                
+                ?>
+                               
+                </ul>
+            </div>
+          </li>
+          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>">Account</a></li>
+          <li class="C_userNavItem"><a href="<? echo url('logout') ?>"><? echo t('登出') ?></a></li>
+        <? endif; ?>
+      </ul>
+    </div>
+    <!-- end C_userNav -->
+    
+    <div id="C_globalNav">
+      <div id="C_tabs"> 
+        <a href="<? echo url('search'); ?>"> <span class="C_tabContent"> <span class="C_topBig"> <? echo t('发现')?> </span> <span class="C_topSm"> <? echo t('一个聚会')?> </span> </span> </a>
+        <a id="tabs_start" class="omnCamp omnic_sn3 hasAd" href="<? echo url('group/create') ?>"> <span class="C_startContainer C_tabContent"> <span class="C_topBig"> <? echo t('创建') ?></span> <span class="C_topSm"> <? echo t('一个小组')?> </span> </span> </a>
+        <a id="tabs_sponsor" class="omnCamp omnrg_perksheader last" href="#"> <span class="C_startContainer C_tabContent"> <span class="C_topBig"> <? echo t('赞助') ?></span> <span class="C_topSm"> <? echo t('一个小组') ?> </span> </span> </a> </div>
+    </div>
+    <!-- end C_globalNav -->
+    
+    <form id="C_globalSearch" method="get" action="/find/">
+      <input type="text" name="keywords" autocomplete="off" id="C_globalSearchInput" class="D_topicSearch" maxlength="100" />
+      <div class="D_submitInline">
+        <input type="image" src="http://img2.meetupstatic.com/0460894421244282745036/img/header/search_20.png" id="C_globalSearchBtn" />
+      </div>
+      <input type="submit" style="display:none" />
+    </form>
+  </div>
+</div>
+<!-- end C_header -->
+	  <!-- end of hearder -->
+      <? if($group): ?>             
                 <?php print theme('grid_block', $primary_links_tree, 'primary-menu'); ?>      
             <? endif; ?> 
       <!-- preface-top row: width = grid_width -->
