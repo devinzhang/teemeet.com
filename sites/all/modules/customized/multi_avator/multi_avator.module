@@ -113,7 +113,9 @@ function multi_avator_user($op, &$edit, &$account, $category = NULL) {
                
         break;
         case 'load':
-           $account->picture='afda';    
+            $sql = "select f.filepath from {files} as f inner join {multi_avator} as ma on f.fid=ma.image_id where ma.pirmary=1 and ma.uid=%d";
+            $ret = db_result(db_query($sql, $account->uid));
+           $account->picture= $ret;    
         break;
 		}
 }
@@ -132,17 +134,17 @@ function multi_avator_member_photos() {
                     href="?width=600&height=350&inline=true#add-profile-avator">
                         Add profile photo
                     </a>
-                </li>
+                </li>';
 
-                <li class="canDo">
+  /*  $output .= ' <li class="canDo">
                 <a class="sprite sprite_action delete_icon" href="">Don\'t show main photo</a>
                 </li>
 
                 <li title="&quot;Hidden&quot; means only your main profile photo and tagged photos will be visible" class="canDo">
                 <a class="D_signal D_signal_appear_to_confirmHideProfilePhotos sprite sprite_action monitor_icon" id="photosHideSubmit">Hide profile photos </a>
-                </li>
-
-            </ul>'; 
+                </li>';
+	*/
+    $output .= '</ul>'; 
 
     global $user;
     

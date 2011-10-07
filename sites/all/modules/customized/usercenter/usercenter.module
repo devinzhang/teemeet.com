@@ -494,18 +494,66 @@ function usercenter_mygroups() {
 	
     $mygroups = $user->og_groups;
     drupal_set_title($user->name);
+	 
     $output = '';
-    $output .='<div style="width: 310px;" id="groupsMenu">';
-    $output .='<ul class="myGroupsSection">';
+    $output .='<table class="D_tabular">
+				<thead>
+					<tr>
+					<th class="D_graphic_compact"></th>';
+	$output .='	<th>'.t('Name').'</th>';
+	$output .='	<th class="D_narrow">'.t('Members').'</th>
+					</tr>			
+				</thead>
+				<tbody>';
+    
+	
+	
     if(!empty($mygroups)){ 
+		$i = 0; 
+		
         foreach($mygroups as $nid => $group){
-            $output .= '<li>'.l($group['title'],'node/'.$nid).'</li>';
-        }
+			$group_node = node_load($nid);
+			$first_class = ($i==0)? 'first':'';	
+			$odd_even_class = ($i%2)?'tOdd':'tEven';
+            $output .= '
+<tr class="'.$odd_even_class.'">
+<td class="D_graphic '.$first_class.'">
+<a class="omnCamp " href="'.url($group_node->path).'">
+
+<img alt="" src="'.$group_node->field_logo[0]['filepath'].'">
+
+</a>
+</td>
+<td class="D_subject">
+<div class="D_title">
+<a class="omnCamp " href="'.url($group_node->path).'">'.$group_node->title.'</a>
+</div>
+<div class="D_badges">
+
+</div>
+
+<ul style="margin-top: 0.15em;" class="D_actions">
+<li class="canDo"><a class="omnCamp " href="'.url($group_node->path.'/member/'.$user->uid.'/ingroup/'.$nid).'">View profile</a></li>
+</ul>
+
+</td>
+
+<td class="D_narrow">
+<strong>'.$group_node->og_member_count.'</strong>
+<br>
+
+'.$group_node->field_member_alias[0]['value'].'
+
+</td>
+
+</tr>';
+        $i ++; 
+		}
     } else {
           $output .= t('You didn\'t join any groups');
     }
     
-    $output .= '</ul></div>';
+    $output .= '</tbody></table>';
     
     return $output;
 }
