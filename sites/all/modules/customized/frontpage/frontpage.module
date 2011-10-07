@@ -107,6 +107,7 @@ function frontpage_featured_groups(){
 
 function _output_group_teaser($node) {
     $output = '';
+	
     $output .= '<div style="background: url(&quot;http://photos4.meetupstatic.com/photos/event/5/c/5/9/event_40043641.jpeg&quot;) no-repeat scroll center center rgb(102, 102, 102);" class="D_photoGroup">';
     $output .= '<a class="D_photoGroup_link" href="'.$node->path.'">';
     $output .= '<span class="D_photoGroup_bkg"></span>
@@ -116,7 +117,7 @@ function _output_group_teaser($node) {
 
 '</span>
 <span class="D_photoGroup_location">
-'.$node->field_location[0]['country_name'].' • '.$node->field_location[0]['province_name'].' • '.$node->field_location[0]['lid'].'
+'.$node->location['country_name'].' • '.$node->location['province_name'].' • '.$node->location['city'].'
 </span>
 
 <span class="D_photoGroup_lastMeetup">Latest Meetup: Jul 14, 2011</span>

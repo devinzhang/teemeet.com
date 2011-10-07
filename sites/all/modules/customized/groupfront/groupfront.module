@@ -56,7 +56,7 @@ function groupfront_init()
     print_r($_GET['q']);
     print_r($GLOBALS['current_group']);die;
 }*/ 
-    drupal_add_css(drupal_get_path('module', 'groupfront').'/css/groupfront.css');
+   // drupal_add_css(drupal_get_path('module', 'groupfront').'/css/groupfront.css');
 }
 
 function groupfront_url($path)

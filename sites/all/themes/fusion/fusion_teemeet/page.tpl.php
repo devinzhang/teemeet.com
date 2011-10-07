@@ -57,7 +57,7 @@
       <!-- header-group row: width = grid_width -->
       <div id="C_header">
   <div id="C_headerBody">
-    <div id="C_logo"> <a href="<? echo url('<front>')?>"> <img src="<? echo $logo ?>" alt="<? echo $title ?>" /> </a> </div>
+    <div id="C_logo"> <a href="<? echo url('<front>')?>"> <img src="<? echo $logo ?>" alt="<? echo $site_name ?>" /> </a> </div>
     <div id="C_userNav">
     <? if($user->uid): ?>
       <div id="C_welcome">
