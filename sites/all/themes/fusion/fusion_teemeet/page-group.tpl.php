@@ -43,8 +43,8 @@
 <? endif; ?>
 
 
+<body id="<?php print $body_id; ?>" class="humble <?php print $body_classes; ?>">
 
-<body id="meetupBody" class=" humble">
 <div class="interstitialblock" id="interstitialblock"><!--[if lte IE 6.5]><iframe src="javascript:false;"></iframe><![endif]--></div>
 <script type="text/javascript">document.body.className += (!document.body.className) ? 'hasJS' : ' hasJS';</script>
 
@@ -381,6 +381,6 @@ $(function(){Meetup.GroupHome.init()});$(function(){$("#module_10538121").feedpo
 Meetup.Facebook.isIE8 = true;
 </script>
 <![endif]-->
-
+  <?php print $closure; ?>
 </body>
 </html>
