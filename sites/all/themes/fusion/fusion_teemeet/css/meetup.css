@@ -167,7 +167,7 @@ body.hasAnnouncement #C_globalNav {
 }
 #C_header {
 	position:absolute;
-	z-index:4000;
+	
 	top:0;
 	left:0;
 	width:100%;
@@ -14982,176 +14982,68 @@ div.D_addSponsor.D_form .footElement {
 	text-transform:capitalize;
 }
 
-/* ---------------------------------------------------------------- 
- *  add by nemo
- * ---------------------------------------------------------------- 
- */
- 
-/* group dues */
-.D_form_dues input {
-	margin-top: 5px;
+/* search box */
+#findMeetup .block-title {
+  width:370px;
+  padding-top:20px;
+  padding-bottom:15px;
+
+  font-size:2em;
 }
-.D_form_dues .sub_element{
-    margin-left: 20px;
+#findMeetup .element{
+	display:block;
+	margin:10px 0;
 }
 
-/* group money */
-#rollup {
-    border-left: 1px solid #CCCCCC;
-    padding-left: 0.5em;
-}
-#rollup ul {
-    background-color: #FFFFFF;
-    color: #000000;
-    list-style-type: none;
-    margin: 0;
-    padding: 0.5em;
-}
-#rollup ul li {
-    overflow: hidden;
-    width: 100%;
-}
-#rollup ul li p.label {
-    float: left;
-    font-size: 1.1em;
-    font-weight: bold;
-    margin: 0.3em 0.5em;
-}
-#rollup ul li p.total {
-    float: right;
-    font-size: 1.1em;
-    font-weight: bold;
-    margin: 0.3em 0 0.3em 0.5em;
-    text-align: right;
-}
-#netLabel, #netTotal {
-    font-size: 1.3em !important;
-}
-#rollup ul li.borderBottom {
-    border-bottom: 1px dotted #000000;
-}
-#rollup ul li.borderTop {
-    border-top: 1px solid #000000;
-}
-#rollup ul li.borderTopDouble {
-    border-top: 2px solid #000000;
-}
-#rollup .allcash {
-    list-style-type: none;
-    margin: 0 0 0 2em;
-    padding: 0;
-}
-#rollup .allcash li {
-    border-bottom: 1px dotted #000000;
-    overflow: hidden;
-    width: 100%;
-}
-#rollup .allcash li p.label {
-    float: left;
-    font-size: 0.85em;
-    font-weight: normal;
-    margin: 0.3em 0.5em;
-}
-#rollup .allcash li p.total {
-    float: right;
-    font-size: 0.85em;
-    font-weight: normal;
-    margin: 0.3em 0 0.3em 0.5em;
-    text-align: right;
+/* search page */
+ul.D_summaryList:after, ul.D_summaryList li:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
 }
 
-.moneyIn {
-    color: #00AB42;
-}
-.moneyOut {
-    color: #AD0014;
-}
-
-#addMenu, #exportMenu {
+.D_groupList_large ul.D_summaryList li.D_group {
+    border-color: #BBBBBB;
     border-style: solid;
-    border-width: 1px;
-    display: none;
-    left: 35px;
-    position: absolute;
-    top: 65px;
-    z-index: 300;
-}
-#addMenu ul, #exportMenu ul {
-    display: block;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-#addMenu ul li, #exportMenu ul li {
-    border-bottom: 1px solid #CCCCCC;
-    display: block;
-    margin: 0.5em 0.75em;
-}
-#addMenu ul li a, #exportMenu ul li a {
-    display: block;
-    margin: 0.25em 0.75em;
+    padding-bottom: 1.25em;
+    padding-top: 0.5em;
 }
 
-#addMenu {
-	background-color: #DDDDDD !important;
+.D_groupList_large ul.D_summaryList .D_image {
+    width: 180px;
+}
+.D_groupList_large ul.D_summaryList .D_image img {
+    max-height: 140px;
 }
 
-table.D_ledger, .D_ledger thead, .D_ledger tbody, .D_ledger th, .D_ledger tr, .D_ledger td {
-    border: 0 none;
-    font-family: inherit;
-    font-size: 100%;
-    font-style: inherit;
-    font-weight: inherit;
-    line-height: 1;
-    margin: 0;
-    padding: 0;
-    text-align: left;
-    vertical-align: top;
+.D_groupList_large ul.D_summaryList .D_info .D_primary {
+    border-right: 1px dotted #DDDDDD;
+    margin-right: 19em;
+    padding-right: 1em;
 }
-table.D_ledger {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
+.D_groupList_large ul.D_summaryList .D_info .D_secondary {
+    float: right;
+    padding-left: 1em;
+    width: 18em;
 }
-table.D_ledger thead th, table.D_ledger tbody td {
-    border-bottom: 1px solid #E7E7E7;
-    font-size: 0.9em;
-    padding: 0.65em 0.25em;
+
+#search-form label{
+	display:block;
 }
-table.D_ledger thead th {
-    border-top: 2px solid #E7E7E7;
-    color: #999999;
-    font-weight: bold;
-    vertical-align: bottom;
+
+#search-form .element{
+	display:block;
+	margin:10px 0;
+	float:left;
 }
-table.D_ledger .center {
-    text-align: center;
+
+#search-form .footElement{
+	display:block;
+	margin:25px 0 0 0;
+	float:left;
 }
-table.D_ledger .right {
-    text-align: right;
-}
-table.D_ledger tbody td.ledgerActions {
-    width: 45px;
-}
-table.D_ledger tbody td.ledgerActions a {
-    margin: 0;
-    padding: 0;
-}
-table.D_ledger tbody tr td.ledgerActions div {
-    height: 16px;
-}
-table.D_ledger tbody tr:hover td.ledgerActions div {
-    display: inline;
-}
-table.D_ledger tbody td.ledgerActions li {
-    padding: 0 !important;
-}
-table.D_ledger thead th.ledgerDate, table.D_ledger thead th.ledgerAmount {
-    width: 85px;
-}
-table.D_ledger tbody td p.payFrom {
-    margin: 0.3em 0 0;
-}
-.transBox .D_boxsection {
-	width:99%
+#C_document .box{
+	clear:both;
 }

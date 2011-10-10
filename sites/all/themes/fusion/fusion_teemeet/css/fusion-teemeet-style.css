@@ -324,13 +324,16 @@ border-left: 1px solid #DDDDDD;
 }
 
 .footer-wrapper {
+line-height: 100%;
+height: auto;
+ background: none repeat scroll 0 0 #666666;
 }
 
 .footer {
- background: none repeat scroll 0 0 #666666;
-    color: #E7E7E7;
-    padding: 1.75em 0 10em;
+
+    color: #E7E7E7;  
     width: 100%;
+	line-height: 100%;
 }
 
 .footer-inner {
@@ -1295,13 +1298,21 @@ ul {
 .navTop ul.C_contextNav {
     list-style-type: none;
 }
-#C_page ul.C_contextNav a:link, #C_page ul.C_contextNav a:hover, #C_page ul.C_contextNav a:visited, #C_page ul.C_contextNav a, .navTop, .C_contextNav li a, .navTop ul.C_contextNav li span {
+#C_page ul.C_contextNav a:link,
+#C_page ul.C_contextNav a:visited, 
+#C_page ul.C_contextNav a, .navTop, 
+.C_contextNav li a, 
+.navTop ul.C_contextNav li span {
     background-color: #4F3C2A;
     color: #FFFFFF;
 }
 .navTop ul.C_contextNav li.first a {
     border-left: 1px solid #DDDDDD;
 }
+.navTop ul.C_contextNav li a :hover{
+color:  #4F3C2A;
+}
+
 .menu ul li a, .menu ul li.first a, .menu ul li.hasKids a:hover, .menu ul li.ie6over li a, .menu ul li:hover li a, .menu ul li span {
     border-color: #647F4C !important;
 }
@@ -1320,4 +1331,68 @@ ul {
     margin-right: 0px;
 }
 
+#block-views-past_event-block_1,
+#block-views-coming_event-block_1{
+	width: 544px;
+}
     
+#block-block-4{
+margin-bottom: 0px; 
+}	
+/* theme fancy login box */
+#fancy_login_form_contents  {
+width: 310px;
+}
+#fancy_login_form_contents  .form-item input.form-text{
+  width: 310px;
+}
+#fancy_login_form_contents #edit-submit-2{
+background: -moz-linear-gradient(center top , #F10044, #AD0000) repeat scroll 0 0 #AD0000;
+    border: 2px solid #AD0000;
+    border-radius: 4px 4px 4px 4px;
+    color: #FFFFFF !important;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial,sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0.35em 1em;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 0 3px #3E0012;
+}
+
+#fancy_login_form_contents .D_boxhead{
+  margin: 0.65em;
+    padding: 0.65em 0.35em 0;
+	 border-bottom: 1px solid #CCCCCC;
+
+}
+
+#fancy_login_form_contents h2{
+	color: #E51937;
+    font-size: 2.5em;
+    line-height: 1.1em;
+    margin: 0;
+    padding: 0;
+}
+
+#fancy_login_close_button{
+    
+    top: 30px;
+	   background: none repeat scroll 0 0 #EEEEEE;
+	border-color: #CCCCCC #AAAAAA #AAAAAA #CCCCCC;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    color: #333333;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.25em;
+    position: absolute;
+    right: 2em;
+    text-align: center;
+    top: 0.5em;
+    width: 1em;
+   
+}

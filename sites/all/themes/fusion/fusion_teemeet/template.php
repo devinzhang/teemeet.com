@@ -15,7 +15,7 @@ function fusion_teemeet_preprocess_maintenance_page(&$vars) {
  * Page preprocessing
  */
 function fusion_teemeet_preprocess_page(&$vars) {
- 
+  require 'inc/func_group.php'; 
   /*if(strstr(request_uri(), 'mytestgroup'))
   {
     $vars['template_files'][] = 'page-group-mytestgroup';
@@ -105,6 +105,25 @@ function fusion_teemeet_menu_item_link($link) {
 
   }
 }*/
+
+/*
+//http://hellodrupal.info/node/79
+function fusion_teemeet_theme(){
+  return array(
+    'user_login' => array(
+      'template' => 'user-login',
+      'arguments' => array('form' => NULL),
+    ), 
+  );
+}
+
+function fusion_teemeet_preprocess_user_login(&$variables) {
+//去掉两个衔接。
+$variables['form']['name']['#title']='';
+$variables['form']['pass']['#title']='';
+$variables['form']['links']['#value']='';
+}
+*/
 
 
 /**

@@ -52,7 +52,7 @@
 
 
 <? if($group and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
-<? echo color_mine_style(); ?>
+<? echo color_group_style(); ?>
   <div id="C_contextHead">
     <div id="C_contextHeadBody">
       <div id="C_contextTitle">
@@ -70,7 +70,7 @@
       <div id="C_document" class=""> 
         
         <? echo $preface_bottom; ?>
-        <?php if ($show_messages && $messages): print $messages; endif; ?>
+        <?php if ($show_messages && $messages && arg(0) != 'search'): print $messages; endif; ?>
         <? 
             if(strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet'))
             {
@@ -82,10 +82,10 @@
                 include 'inc/center-content.tpl.php';    
             }             
             
-            elseif(strstr(request_uri(), 'search'))
+            /*elseif(strstr(request_uri(), 'search'))
             {
                 include 'inc/search.tpl.php';
-            }
+            }*/
             
             elseif(request_uri() == '/group/create')
             {
@@ -118,11 +118,11 @@
 
 <div id="C_header">
   <div id="C_headerBody">
-    <div id="C_logo"> <a href="<? echo url('<front>')?>"> <img src="<? echo $logo ?>" alt="<? echo $site_name ?>" /> </a> </div>
+    <div id="C_logo"> <a href="<? echo url('<front>')?>"> <img src="<? echo $logo ?>" alt="<? echo $title ?>" /> </a> </div>
     <div id="C_userNav">
     <? if($user->uid): ?>
       <div id="C_welcome">
-        <a href="<? echo url('<front>')?>"><img src="http://img2.meetupstatic.com/8689168192329930562/img/house.gif" class="D_icon" alt="Home" /></a> <a href="<? echo url('myhome/'.$user->uid)?>"><? echo $user->name ?></a>
+        <a href="<? echo url('<front>')?>"><img src="http://img2.meetupstatic.com/8689168192329930562/img/house.gif" class="D_icon" alt="Home" /></a> <a href="<? echo url('<front>')?>"><? echo $user->name ?></a>
 	  </div>
     <? endif; ?>  
       <ul id="C_userLinks">
@@ -175,39 +175,28 @@
   <div id="C_footerBody">
     <div class="C_footerRow">
       <ul class="utility C_footerSection">
-        <li><a href="http://www.meetup.com/about/">About Meetup</a></li>
-        <li><a href="http://www.meetup.com/jobs/"><span style="color:#FFFF99;">We're hiring!</span></a></li>
-        <li> <a href="http://www.meetup.com/boards/">Discuss Meetup</a> </li>
-        <li><a href="http://meetupblog.meetup.com/">Meetup HQ Blog</a></li>
-        <li><a href="http://www.meetup.com/meetup_api/">Meetup API</a></li>
+        <li><a href="">关于Teemeet</a></li>
+        <li><a href=""><span style="color:#FFFF99;">招贤纳才</span></a></li>
+        
+      <!--  <li><a href="">Meetup HQ Blog</a></li>
+        <li><a href="">Meetup API</a></li> -->
       </ul>
       <ul class="utility C_footerSection">
-        <li><a href="http://www.meetup.com/everywhere/">Meetup Everywhere</a></li>
-        <li><a href="http://www.meetup.com/sponsorships/" class="omnCamp omnrg_perksfooter">Sponsor Meetup Groups</a></li>
-        <li><a href="http://www.meetup.com/help/">Help</a></li>
-        <li><a href="http://www.meetup.com/privacy/"><span style="color:#FFFF99;">Privacy</span></a> <span class="D_less">Updated 5/23/2010</span></li>
-        <li><a href="http://www.meetup.com/terms/"><span style="color:#FFFF99;">Terms of service</span></a> <span class="D_less">Updated 5/23/2010</span></li>
+      <!--  <li><a href="http://www.meetup.com/everywhere/">Meetup Everywhere</a></li> -->
+        <li><a href="<?php print url('sponsorships'); ?>" class="omnCamp omnrg_perksfooter">赞助Teemeet小组</a></li>
+        <li><a href="">快速帮助</a></li>
+        <li><a href="<?php print url('privacy');?>"><span style="color:#FFFF99;">隐私说明</span></a> <span class="D_less">最后更新 10/15/2011</span></li>
+        <li><a href="<?php print url('terms'); ?>"><span style="color:#FFFF99;">使用须知</span></a> <span class="D_less">最后更新 10/15/2011</span></li>
       </ul>
       <ul class="meta C_footerSection">
-        <li>&copy; 2011 Meetup <br />
-          <a href="http://www.meetup.com/terms/#tm">Trademarks</a> belong to their respective owners.</li>
-        <li>Meetup is proudly <a href="http://nytm.org/made" target="_blank">Made in NYC</a>!</li>
+        <li>&copy; 2011 Teemeet <br />
+        <!--  <a href="http://www.meetup.com/terms/#tm">Trademarks</a> 
+		  belong to their respective owners.
+		  -->
+		 </li>
+        <!-- <li>Teemeet is proudly <a href="" target="_blank">Made in China</a>!</li> -->
         <br />
-        <li id="C_langChange"> Change language:
-          <form id="C_langForm" action="http://www.meetup.com/account/language/" method="post">
-            <select id="C_langs" name="lang">
-              <option class="en_US" value="en_US">English</option>
-              <option class="de" value="de">Deutsch</option>
-              <option class="es" value="es">Espa&ntilde;ol</option>
-              <option class="fr" value="fr">Fran&ccedil;ais</option>
-              <option class="it" value="it">Italiano</option>
-              <option class="pt" value="pt">Portugu&ecirc;s</option>
-            </select>
-            <noscript>
-            <input type="submit" name="submitButton" value="Set language" class="D_submit"  />
-            </noscript>
-          </form>
-        </li>
+        
       </ul>
     </div>
   </div>
@@ -342,10 +331,8 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"> 
-Meetup.Copy.characterLeft="1 character left";Meetup.Copy.charactersLeft="{NUM_CHARS} characters left";Meetup.Copy.noCharactersLeft="No more characters left.";Meetup.Copy.characterOver="(1 character over)";Meetup.Copy.charactersOver="({NUM_CHARS} characters over)";Meetup.Copy.removeRSVP="Can't go";Meetup.Copy.updateRSVP="Update";Meetup.Data.googleMapKey="ABQIAAAAsy0hHdLv8lt7dUhh_8Q2nhT9dWrIyy2PXg-qM7aW-4MZzb3j6xQO9Ylaxb0g9dvE--f66B7pFHaapg";Meetup.Data.LayoutVersion=4;Meetup.Data.ghIconColor="bk";Meetup.Data.memberLang="en";Meetup.Data.isUpcoming=true;Meetup.Data.page=null;Meetup.Data.isSuggestionOpen=false;Meetup.Data.calendarRoot="http://www.meetup.com/SacSwim/events/";Meetup.Data.venueRoot="http://www.meetup.com/SacSwim/venue/";Meetup.Data.chapterWho="swimmers";Meetup.Data.chapterUrlname="SacSwim";Meetup.Copy.seeResult="Your post will appear on __PT__ in a moment.";Meetup.Copy.errorSharing="Sorry, there was a problem posting your message. Please try again later.";Meetup.Copy.notYou="Change";Meetup.Copy.numGoing='<span class="rsvp-count-number">__COUNT__</span> swimmers going';Meetup.Copy.zeroGoing="Be the first to say you're going";Meetup.Copy.numWaiting='<span class="rsvp-count-number">__RSVP_COUNT__</span> going &middot <span class="rsvp-count-number">__WAIT_COUNT__</span> waiting';Meetup.Copy.numSpots="__COUNT__ spots available";Meetup.Copy.oneSpot="1 spot available";Meetup.Copy.noSpotsWL="No spots left";Meetup.Copy.noSpots="No spots left";Meetup.Data.path_twitter_tie="http://www.meetup.com/twitter_connect/";Meetup.Data.path_img_facebook="http://img1.meetupstatic.com/192008639833446537662/img/externalservice/socialmediaicons/facebook-16x16.png";Meetup.Data.path_img_facebook_g="http://img1.meetupstatic.com/61619264790717889890851/img/externalservice/socialmediaicons/facebook-16x16g.png";Meetup.Data.path_img_twitter="http://img1.meetupstatic.com/13191465716213475/img/externalservice/socialmediaicons/twitter-16x16.png";Meetup.Data.path_img_twitter_g="http://img2.meetupstatic.com/696188756139167243428083971/img/externalservice/socialmediaicons/twitter-16x16g.png";Meetup.Data.fbname="";Meetup.Data.noPhoto="http://img1.meetupstatic.com/39194172310009655/img/noPhoto_50.gif";Meetup.Copy.cancel="cancel";Meetup.Copy.titlePrompt="Title:";Meetup.Copy.descriptionPrompt="Description:";Meetup.Copy.timePrompt="Time:";Meetup.Copy.allDay="All day";Meetup.Copy.startsAtPrompt="Starts at:";Meetup.Copy.submit="Submit";Meetup.Copy.addToCalendarPrompt="Add to Calendar:";Meetup.Copy.errorGeneric="Sorry, there was a problem saving your data.  Please try again in a minute.";Meetup.Copy.errorTitleMissing="You must enter a title.";Meetup.Copy.oneMoreRsvp="1 more RSVP until&hellip;";Meetup.Copy.xMoreRsvps="__COUNT__ more RSVPs until&hellip;";Meetup.Copy.errFull="Sorry, this Meetup is full!";Meetup.Copy.errInvalidGuest="Please enter a valid number of guests.";Meetup.Copy.errTooManyGuests="You can't bring that many guests.";Meetup.Copy.errPast="This Meetup already happened!";Meetup.Copy.errGeneric="An error occurred.";Meetup.Data.calScript="http://static2.meetupstatic.com/375309602028658/script/jquery/Meetup/CalendarQuickAdd.js";Meetup.Copy.memberLike="Members who like this";Meetup.Copy.memberWant="Members who want this";Meetup.Copy.justNow="just now";Meetup.Copy.suggestAMeetup="Suggest a new Meetup";Meetup.Copy.cancelLMA="No thanks";Meetup.Copy.postDeleted="The post has been deleted";Meetup.Copy.undo="undo";Meetup.Copy.emailSent="Email Sent";Meetup.Copy.sendingEmail="Sending Email";if(!mc){var mc=Meetup.Copy}mc.noThanks="No thanks.";mc.login="Log in";mc.signUpToday="Sign up today!";mc.or="or";mc.toReceiveTopicUpdates="To receive updates about {TOPIC_NAME} Meetups in your area.";mc.imInterestedInThis="Notify me!";mc.wellEmailYou="We'll email when groups start nearby.";mc.meetupGroupsWorldwide="Meetup Groups worldwide";mc.meetupGroupsNearYou="Meetup Groups near you";mc.alreadyInterested="You're already interested in this!";if(typeof(Meetup)=="undefined"){Meetup={}}Meetup.pageName="GROUP: home";
-</script> 
-<script src="http://static1.meetupstatic.com/209101726573579077045/script/Meetup/packed/grouphome.js" type="text/javascript"></script> 
+
+
 <script type="text/javascript"> 
  
 Meetup.DOMReady.ready(function() {
@@ -388,90 +375,7 @@ $(function(){Meetup.GroupHome.init()});$(function(){$("#module_10538121").feedpo
 </script> 
 <script type="text/javascript" src="http://static2.meetupstatic.com/654226392224242/script/Meetup/Facebook2.js"></script>
 <div id="fb-root"></div>
-<script type="text/javascript"> 
- 
-if (Meetup.Data === undefined) {
-Meetup.Data = {};
-}
- 
-Meetup.Data.path_api = "http://www.meetup.com/api/";
-Meetup.Data.path_fb_tie = "http://www.meetup.com/facebook_account_tie/";
- 
-Meetup.Data.path_xdpath = "http://www.meetup.com/fbconnect/xd.html";
- 
- 
-Meetup.Facebook.afterAuthUri = "http://www.meetup.com/fb/?country=us&zip=95816&rg=ghurf";
-Meetup.Facebook.returnUri = "http://www.meetup.com/SacSwim/join/";
-/*
-Meetup.Facebook.onButtonLogin = function () {
-if (Meetup.Facebook.isJoining) {
-var oper = (Meetup.Facebook.returnUri.indexOf("?") > -1) ? "&" : "?";
-Meetup.Facebook.returnUri = Meetup.Facebook.returnUri + oper + "returnUri=" + Meetup.Facebook.returnUriSecondary;
-}
-//else {
-// Meetup.Facebook.returnUri
-//}
-Meetup.Facebook.extendedPerms(Meetup.Facebook.extendedPermissionList, Meetup.Facebook.returnUri);
-};
-*/
-//var fbd = Meetup.Dispatcher.init("meetupBody")
-//fbd.registerFunc("doFB", Meetup.Facebook.onButtonLogin);
- 
- 
-Meetup.Facebook.template = 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-{
-	'name': "Sacramento Swimming Enthusiasts",
-	'href': "http:\/\/www.meetup.com\/SacSwim\/i3\/socialmedia"
- 
-	,'caption': "288 swimmers in Sacramento, CA"
- 
- 
- 
-	,'media': [{
-	'type': 'image',
-	'src': "http:\/\/photos2.meetupstatic.com\/photos\/event\/e\/3\/2\/d\/thumb_21538157.jpeg"
- 
-	,'href': "http:\/\/www.meetup.com\/SacSwim\/i3\/socialmedia"
- 
-}]
- 
-}
-;
-Meetup.Facebook.fbSrcCode = "fb_ghm";
-Meetup.Twitter.srcCode = "ghme";
- 
-Meetup.Twitter.template =  
- 
-{
-	'name': "Sacramento Swimming Enthusiasts",
-	'href': "http:\/\/www.meetup.com\/SacSwim\/i3\/socialmedia"
- 
-	,'caption': "Check out Sacramento Swimming Enthusiasts on Meetup"
- 
- 
- 
-}
-;
- 
-(function() {
-var e = document.createElement('script');
-e.async = true;
-e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js#appId=308de2e49a5be660d94a6dc5d68f6dab&xbfml=1';
-document.getElementById('fb-root').appendChild(e);
-}());
-window.fbAsyncInit = function () {
-Meetup.Facebook.init("308de2e49a5be660d94a6dc5d68f6dab", null  );
-}
-</script> 
+
 <!--[if gte IE 8]>
 <script type="text/javascript">
 Meetup.Facebook.isIE8 = true;

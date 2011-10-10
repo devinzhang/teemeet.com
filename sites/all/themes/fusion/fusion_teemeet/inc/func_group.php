@@ -32,13 +32,15 @@ function output_group_menu($menuid = 'menu-group-page-nav')
         $manage_link = l(t('Group Settings'),$current_group->path.'/groupextension/'.$current_group->nid.'/manage');
         $money_link = l(t('Money'),$current_group->path.'/groupextension/'.$current_group->nid.'/money');
         $checklist_link = l(t('Organizer tips'),$current_group->path.'/groupextension/'.$current_group->nid.'/checklist');
-        
+        $schedule_meetup_link = l('Schedule a Meetup','');
+		if(og_is_group_admin($current_group)) { 
+		
         $output .= <<<EOF
 <li class="hasKids groupTools rightmenu last">
 <a href="#" class="withKids">Group Tools</a>
 <ul>
 <li class="">
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/events/?action=new">Schedule a Meetup</a>
+$schedule_meetup_link
 </li>
 <li class="">
 $sendmail_link
@@ -59,7 +61,7 @@ $checklist_link
 </ul>
 </li>
 EOF;
-
+}
     }
     
     $output .= '</ul>';
@@ -67,6 +69,6 @@ EOF;
 }
 
 function output_group_sitetitle(&$node)
-{    
-    return '<h1 id="bannerGroupName"><a href="' . $node->path . '" title="' . $node->field_site_title[0]["safe"] . '"><span>' . $node->field_site_title[0]["safe"] . '</span> </a> </h1>';
+{    $current_group = $GLOBALS['current_group'];
+    return '<h1 id="bannerGroupName"><a href="' . $current_group->path . '" title="' . $current_group->field_site_title[0]["value"] . '"><span>' . $current_group->field_site_title[0]["value"] . '</span> </a> </h1>';
 } 

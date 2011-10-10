@@ -57,12 +57,12 @@
 	  </div>
     <? endif; ?>  
       <ul id="C_userLinks">
-        <li class="C_userNavItem C_userNavItem_less"><a href="#">What's new</a></li>
+        <li class="C_userNavItem C_userNavItem_less"><a href="#">新鲜事</a></li>
         <li class="C_userNavItem C_userNavItem_less"> <a href="#"><? echo t('help') ?></a> </li>
         
         <? if(!$user->uid): ?>
-         <li class="C_userNavItem"><a href="<?php echo url('user/login'); ?>" class="J_loginLink J_onClick headerLogin">Log in</a></li>
-         <li class="C_userNavItem"><a class="omnCamp omnrg_signup J_signupLink J_onClick headerSignup" href="<?php echo url('user/register');?>">Sign up</a></li>
+         <li class="C_userNavItem"><a href="<?php echo url('user/login'); ?>" class="J_loginLink J_onClick headerLogin">登录</a></li>
+         <li class="C_userNavItem"><a class="omnCamp omnrg_signup J_signupLink J_onClick headerSignup" href="<?php echo url('user/register');?>">注册</a></li>
         <? else: ?>
           <li class="C_userNavItem hasDropDown"><a href="<?php echo url('user/'.$user->uid.'/mygroups'); ?>"><? echo t('我的小组')?></a> <div class="C_arrowTab"></div> 
             <div id="C_groupsMenu" style="width: 310px; "> 

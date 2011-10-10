@@ -334,7 +334,8 @@ function frontpage_top_right_menu(){
     $output .= '<li class="leaf ">'.l(t('Account'),'').'</li>';
     $output .= '<li class="leaf last">'.l(t('Log out'),'logout').'</li>';
     } else {
-    $output .= '<li class="leaf ">'.l(t('Log in'),'user/login').'</li>';
+   // $output .= '<li class="leaf ">'.l(t('Log in'),'user/login').'</li>';
+   $output .='<a class="colorbox-load" href="/colorbox/form/user_login_block?destination=user&width=500&height=250">user/login</a>';
     $output .= '<li class="leaf ">'.l(t('Sign up'),'user/register').'</li>';
     }
     $output .= '</ul>';

@@ -9,6 +9,7 @@ define('CREAT_GROUP_STEPS', 5); //表单步骤总数
 
 function group_create(&$form_state)
 {     
+	global $user;
     if(!isset($form_state['storage']['step']))
     {
         $form_state['storage']['step'] = 1;
@@ -20,7 +21,7 @@ function group_create(&$form_state)
         case 1 :      
             $form['#id'] = 'create';      
             
-            addresses_user_form_user_profile_form_alter($form, $form_state, TRUE);            
+          //  addresses_user_form_user_profile_form_alter($form, $form_state, TRUE);            
             
             $form['title'] = array
             (
@@ -51,7 +52,10 @@ function group_create(&$form_state)
                 '#title' => t('组员称呼'),
                 '#size' => 64,                
             );
-            
+			
+            $settings = variable_get('location_settings_user', array());
+            $form['locations'] = location_form($settings, $user->locations);
+			
             $form['path'] = array
             (
                 '#field_prefix' => $_SERVER['HTTP_HOST'] . '/',                
@@ -255,15 +259,17 @@ function group_create_submit($form, &$form_state)
             $node->theme = $form_state['storage']['theme'];  
             $node->taxonomy['tags'][1] = $form_state['storage']['taxonomy'];   
             
-            $node->field_location[0] = $form_state['storage']['addresses']; 
+            $node->field_location = $form_state['storage']['locations']; 
             $node->field_site_title[0]['value'] = $form_state['storage']['field_site_title'];
             $node->field_member_alias[0]['value'] = $form_state['storage']['field_member_alias'];
             $node->status = 0;           
             
-            module_load_include('inc', 'addresses', '/countries/'. $node->field_location[0]['country']);
+            /*module_load_include('inc', 'addresses', '/countries/'. $node->field_location[0]['country']);
             eval("\$province = addresses_province_list_{$node->field_location[0]['country']}();");
-            $node->field_location[0]['province_name'] = $province[$node->field_location[0]['province']];
-            
+            $node->field_location[0]['province_name'] = $province[$node->field_location[0]['province']];*/
+           // print '<pre>';
+			//print_r($node);exit;
+			//print '</pre>';
             node_save($node);
             $form_state['storage']['nid'] = $node->nid;
             //$form_state['storage']['path'] = $form_state['storage']['path'];
