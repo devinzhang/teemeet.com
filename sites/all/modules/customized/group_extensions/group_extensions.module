@@ -263,14 +263,21 @@ function group_extensions_theme() {
 
 function group_extensions_nodeapi(&$node, $op, $teaser, $page) 
 {
-    if(og_is_group_type($node->type) and $node->status != 0 and $op == 'view') 
+    if(og_is_group_type($node->type) and $op == 'view') 
     {
-        $node_timeStamp = dateToStamp($node->field_date_valuable[0][value]);
-        if(time() > $node_timeStamp)
-        {
-            $node->status = 0;
-            node_save($node);
-        }
+	   if($node->status) {
+			$node_timeStamp = dateToStamp($node->field_date_valuable[0][value]);
+			if(time() > $node_timeStamp)
+			{
+				$node->status = 0;
+				node_save($node);
+			}
+		} else {
+			$node->content['noaccess'] = array(
+					'#value' => 'guoqi', 
+					'#weight' => 1,
+  );
+		}
     }    
     
     switch ($op) {
