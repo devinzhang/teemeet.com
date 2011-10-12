@@ -1,0 +1,7 @@
+; $Id$ Author Spirit8.com
+name = Color Mine
+description = Let color module get more power!
+core = 6.x
+version = "6.x-0.1.1"
+package = "teemeet.com"
+dependency = color

@@ -1,3 +1,4 @@
+<? if($group->status ): ?>
 <div id="moduleBoxParent" class="D_box newBox X_alien_group_info">
   <div>
     <div class="D_boxsection isNotDivided ">
@@ -62,3 +63,23 @@
   </div>
 </div>
 <div style="clear:both; font-size:0;line-height:0;">&nbsp;</div>
+<? else : ?>
+<div id="moduleBoxParent" class="D_box newBox X_alien_group_info">
+	<div class="D_box calltoaction variant_fbonly">
+      <div class="D_boxbody">
+        <div class="D_boxhead">
+          <h2>当前小组处于关闭状态</h2>
+          <p style="font-size: 10px;"></p>
+        </div>
+        <div class="D_boxsection isFacebook">
+         
+        </div>
+        <div class="D_boxsection tos"> 如果您是小组的组织者，请付费开通小组</div>
+      </div>
+    </div>
+</div>
+
+<? endif; ?>  <!--  if one group didn't published -->
+
+
+  

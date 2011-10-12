@@ -438,8 +438,9 @@ function _groupextension_tools_group_dues_form_submit($form, &$form_state) {
 function _groupextension_tools_manage_output(){
     $output='';
     $current_group = $GLOBALS['current_group'];
+	$basic_link = l('Basics',$current_group->path.'/node/'.$current_group->nid.'/edit');
     $member_link = l(t('Your Memebers'),$current_group->path.'/grouptool/'.$current_group->nid.'/manage/settings/members');
-    $theme_link = url($current_group->path.'/admin/build/themes/settings/fusion_teemeet');
+    $theme_link = url($current_group->path.'/theme/color_mine',array('query'=>array('styleid'=>$current_group->path)));
 	$tags_link = l(t('Topics'), $current_group->path.'/groupextension/'.$current_group->nid.'/tags');
     $group_due_link = l('Membership Dues',$current_group->path.'/groupextension/'.$current_group->nid.'/dues');
 	$sponsors_list_link = l('Sponsors and Perks',$current_group->path.'/sponsor/'.$current_group->nid.'/list');
@@ -451,7 +452,7 @@ function _groupextension_tools_manage_output(){
 		
 				<ul class="D_list">
 					<li class="D_category">
-						<div class="D_name"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/settings/basic/">Basics</a></div>
+						<div class="D_name">$basic_link</div>
 						<ul class="D_bullet">
 							<li>Meetup Group name</li>
 							<li>Meetup Group headline</li>

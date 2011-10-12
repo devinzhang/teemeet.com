@@ -51,7 +51,7 @@
 <div id="C_page">
 
 
-<? if($group and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
+<? if($group  and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet') ): ?>
 <? echo color_group_style(); ?>
   <div id="C_contextHead">
     <div id="C_contextHeadBody">
@@ -60,17 +60,22 @@
       </div>
     </div>
   </div>
+  <? if($group->status ): ?>
+  
   <div class="navTop menu" id="C_navTop">
   <? echo output_group_menu(); ?>
   </div>
+  <? endif; ?> 
 <? endif; ?> 
   
   <div id="C_pageBody">
     <div id="C_context">
       <div id="C_document" class=""> 
-        
+         <? if($group and $group->status and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
         <? echo $preface_bottom; ?>
         <?php if ($show_messages && $messages && arg(0) != 'search'): print $messages; endif; ?>
+		<? endif; ?> 
+		
         <? 
             if(strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet'))
             {
@@ -101,7 +106,7 @@
 
       </div>
       
-      <? if($group and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
+      <? if($group and $group->status and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
       <div id="C_nav" >
         <? echo $sidebar_first; ?>
         <? include 'inc/left-sidebar.tpl.php'; ?>

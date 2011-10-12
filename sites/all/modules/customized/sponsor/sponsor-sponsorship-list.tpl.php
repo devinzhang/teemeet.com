@@ -2,13 +2,13 @@
 	<div class="D_boxbody">
 <div class="D_boxhead">
 	
-<h1 id="ourSponsorsHead">Our Sponsors and Membership Perks</h1>
+<h1 id="ourSponsorsHead"><?php print t('Our Sponsors and Membership Perks'); ?></h1>
 
 <div id="sponsorshipSettings">
 
-<span>You're accepting offers for <strong>Financial support and benefits</strong> and <strong>Discounts and Perks for members</strong></span>
+<span><?php print t('You\'re accepting offers for'); ?> <strong><?php print t('Financial support and benefits'); ?></strong> <?php print t('and'); ?> <strong><?php print t('Discounts and Perks for members'); ?></strong></span>
 
-<a href="" class="sprite sprite_action pencil_icon edit" id="settingsFormLink">Change</a>
+<!-- <a href="" class="sprite sprite_action pencil_icon edit" id="settingsFormLink">Change</a> -->
 </div>
 </div>
 <div class="D_boxsection isNotDivided ">
@@ -21,37 +21,42 @@
 
 <h2 class="list-heading">
 
-<strong><?php print count($sponsors); ?></strong> Group Sponsors
+<strong><?php print count($sponsors); ?></strong> <?php print t('Group Sponsors'); ?>
 
 <span class="add-sponsor-perk">
-<a href="">
+<!--<a href="sponsor/findgroup">
 <span class="sprite sprite_pixel add_icon addSponsor-sprite">
-Add a Sponsor
+Find a Sponsor
 </span>
 </a>
+-->
 </span>
 
 </h2>
 
 <?php if(count($sponsors)== 0) : ?>
 <p class="empty-group-note">
-Your group does not have any Sponsors. We'll let you know when your group is
-eligible for one. Or, click "Add a Sponsor" to add your own.
+<?php print t('Your group does not have any Sponsors. We\'ll let you know when your group is
+eligible for one. Or, click "Add a Sponsor" to add your own.'); ?>
+
 </p>
 <?php endif; ?>
 <ul class="sponsorList" id="sponsors-list">
 	<?php foreach($sponsors as $sponsor):?>
-	<li><span><?php print l($sponsor['name'],'node/'.$sponsor['nid']); ?></span>----------------------------<span><?php print l('Remove','sponsor/removesponsor/'.$sponsor['sid']); ?></span></li>
+	<li><span><?php print l($sponsor['name'],'node/'.$sponsor['nid']); ?></span><span><?php print l('Remove','sponsor/removesponsor/'.$sponsor['sid']); ?></span></li>
 	<?php endforeach;?>
 </ul>
 
 <div class="sponsorless">
 
-<p class="lightHeading sponsorName">This group is looking for discounts and Perks</p>
-
+<p class="lightHeading sponsorName"><?php print t('This group is looking for discounts and Perks'); ?></p>
+<?php global $user;
+if(in_array('sponsor',$user->roles)): 
+?>
 <p>
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/settings/sponsors/add/?addPerk=1" class="bold">Add one yourself</a>, or see these <a target="_blank" href="http://meetupblog.meetup.com/2010/03/from-the-vaults-how-to-obtain-a-sponsor-for-your-meetup-group.html" class="bold">great tips</a> on finding a sponsor.
+<a href="<?php print url($GLOBALS['current_group']->path.'/sponsor/sponsorgroup/'.$GLOBALS['current_group']->nid) ?>" class="bold"><?php print t('Sponsor this group'); ?></a>
 </p>
+<?php endif; ?>
 
 </div>
 
