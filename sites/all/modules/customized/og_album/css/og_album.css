@@ -46,22 +46,11 @@ ul.D_summaryList {
 }
 
 
-.D_groupList_shopping ul.D_summaryList .D_image {
-    height: 130px;
-    border-bottom: 1px dotted #E2E2E2;
-    border-left: 1px solid #EEEEEE;
-    float: none;
-    height: 150px;
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border-color: #B8BFB4;
+ul.D_summaryList  li{
+    float:left;
 }
-.D_groupList_shopping ul.D_summaryList .D_image  img{
-width:100%;
-height: 100px;
-margin: 5px 5px 5px 5px;
-}
+
+
 
 .D_groupList_shopping ul.D_summaryList .D_info {
     border-left: 1px solid #EEEEEE;

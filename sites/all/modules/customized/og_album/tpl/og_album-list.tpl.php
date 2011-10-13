@@ -5,7 +5,7 @@
             <?php if($is_group_admin): ?>
             <ul class="D_actions">
             <?php 
-            echo '<li>'.l('Upload Photos','album/ingroup/'.$current_group->nid.'/upload').'</li>';
+            echo '<li>'.l('Upload Photos',$current_group->path.'/album/ingroup/'.$current_group->nid.'/upload').'</li>';
             ?>
             </ul>
             <?php endif; ?>
@@ -24,7 +24,7 @@
             <div id="groupListContainer" class="D_groupList_shopping">
                 <ul class="D_summaryList">
                 <?php foreach($albums as $aid => $album): ?>      
-                        <?php //print_r($current_group); ?>
+                        <?php// print_r($album); ?>
                     <li class="D_group J_groupHover position_1 first">
                         <div class="D_image">
                              <a href="<?php echo url( $current_group->path.'/node/'.$album->nid); ?>">

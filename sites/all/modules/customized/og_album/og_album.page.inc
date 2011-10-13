@@ -128,7 +128,8 @@ function og_album_photo_upload_form_submit($form, &$form_state) {
        }
     }
   
-  drupal_goto('album/ingroup/'.$value['gid']);
+  
+  drupal_goto($GLOBALS['current_group']->path.'/album/ingroup/'.$value['gid']);
     
 }
 

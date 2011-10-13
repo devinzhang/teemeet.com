@@ -68,19 +68,21 @@
 </li>
 
 <li><a class="D_signal D_signal_appear_to_D_photoGallery_confirmDeletePhotoDialog" href="">删除</a></li>
-
+<!--
 <li class="D_dropdown" id="D_photoGallery_movePhoto">
-<span><a class="J_onClick D_dropdownToggler D_dropdownParent" id="D_photoGallery_movePhotoToggler" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/2900971/#">
+<span><a class="J_onClick D_dropdownToggler D_dropdownParent" id="D_photoGallery_movePhotoToggler" href="">
 Move
 </a></span>
 <div class="jsStartHidden D_dropdownContent" id="D_photoGallery_movePhotoControl">
 <p class="header">Choose album</p>
-<p class="pager"><a onclick="return false;" class="jsStartHidden" id="D_photoGallery_movePhotoPrev" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/2900971/#">Previous</a></p>
+<p class="pager"><a onclick="return false;" class="jsStartHidden" id="D_photoGallery_movePhotoPrev" href="">Previous</a></p>
 <p class="spinner" style="text-align: center;"><img ;="" src="./Photos - Beijing Soccer Lovers (Beijing) - Meetup_files/spinner_ffffff.gif"></p>
 <ul id="D_photoGallery_movePhotoThumbList"></ul>
 <p class="pager"><a onclick="return false;" class="jsStartHidden" id="D_photoGallery_movePhotoNext" href="http://www.meetup.com/Beijing-Soccer-Lovers/photos/2900971/#">Next</a></p>
 </div>
 </li>
+
+-->
 </ul>
 
 <div class="D_photoShare">
