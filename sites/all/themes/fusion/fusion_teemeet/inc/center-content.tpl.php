@@ -9,7 +9,7 @@
       </div>
     </div>
     <!-- end for about -->
-    <script type="text/javascript">var name = 'trax_reviewjoin';var val  = 'uuid=8a1ad8d3-9578-4286-a0b3-8cad1df32ef2&v=reviews&p=grouphome&s=0&_=b46874';var exp  = new Date(); exp.setSeconds( exp.getSeconds() + 14400 );var dom  = document.domain.indexOf('.meetup.com') > -1 ? '.meetup.com' : document.domain;document.cookie = name + '=' + val + ';expires=' + exp.toGMTString() + '; path=/; domain=' + dom;var cookie = getCookie(name);var d = doAjax( '/api/', {method: 'storeStart',arg_uuid: (cookie) ? parseQueryString(cookie)['uuid'] : '',arg_process: 'reviewjoin',arg_session: '',arg_page: 'grouphome',arg_score: '0',arg_variant: 'reviews',arg_memberId: '0',arg_chapterId: '1667458'});</script>
+    
     <div class="D_boxsection ">
       <div class="line" id="alien-group-review">
 <? 
@@ -36,15 +36,15 @@
     <div class="D_box calltoaction variant_fbonly">
       <div class="D_boxbody">
         <div class="D_boxhead">
-          <h2>Join this Meetup Group</h2>
-          <p style="font-size: 10px;">You can join groups on Meetup using your Facebook account.</p>
+          <h2><? echo t('加入这个小组'); ?></h2>
+          <!--p style="font-size: 10px;">You can join groups on Meetup using your Facebook account.</p-->
         </div>
         <div class="D_boxsection isFacebook">
           <div class="isFacebook_button">
-            <p>Not on Facebook? <strong><a class="showJoin J_signupLink J_onClick inAlienNudgeSignup omnCamp omnrg_ghurf" href="http://www.meetup.com/malibuhorsesinc/join/">Join Meetup here</a>.</strong></p>
+            <p><strong><a class="showJoin J_signupLink J_onClick inAlienNudgeSignup omnCamp omnrg_ghurf" href="og/subscribe/<? echo $group->nid ?>">Join Meetup here</a>.</strong></p>
           </div>
         </div>
-        <div class="D_boxsection tos"> By clicking the "Sign up using Facebook" button above, you agree to Meetup's <a href="http://www.meetup.com/terms/" target="_blank">Terms of Service</a> </div>
+        <!--div class="D_boxsection tos"> By clicking the "Sign up using Facebook" button above, you agree to Meetup's <a href="http://www.meetup.com/terms/" target="_blank">Terms of Service</a> </div-->
       </div>
     </div>
   </div>
@@ -74,12 +74,21 @@
         <div class="D_boxsection isFacebook">
          
         </div>
-        <div class="D_boxsection tos"> 如果您是小组的组织者，请付费开通小组</div>
+		<?php 
+			global $user;
+			if($user->uid == $group->uid):
+		?>
+		   
+	   <div class="D_boxsection tos"> 如果您是小组的组织者，请付费开通小组</div>
+	   <?php else: ?>
+	   <div class="D_boxsection tos"> 小组已经关闭，您可以选择继续留在这个小组一遍以后小组回复<br>
+	   或者，您可以选择<?php print l('退出这个小组','og/unsubscribe/'.$group->nid.'/'.$usr->uid);?>
+	   </div>
+	   <? endif; ?>
+	   
       </div>
     </div>
 </div>
 
+
 <? endif; ?>  <!--  if one group didn't published -->
-
-
-  

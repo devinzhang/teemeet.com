@@ -51,8 +51,8 @@
 <div id="C_page">
 
 
-<? if($group  and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet') ): ?>
-<? echo color_group_style(); ?>
+<? if($group and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
+<? echo color_mine_style(); ?>
   <div id="C_contextHead">
     <div id="C_contextHeadBody">
       <div id="C_contextTitle">
@@ -60,8 +60,7 @@
       </div>
     </div>
   </div>
-  <? if($group->status ): ?>
-  
+<? if($group->status ): ?>
   <div class="navTop menu" id="C_navTop">
   <? echo output_group_menu(); ?>
   </div>
@@ -70,12 +69,10 @@
   
   <div id="C_pageBody">
     <div id="C_context">
-      <div id="C_document" class=""> 
-         <? if($group and $group->status and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
-        <? echo $preface_bottom; ?>
-        <?php if ($show_messages && $messages && arg(0) != 'search'): print $messages; endif; ?>
-		<? endif; ?> 
-		
+      <div id="C_document" > 
+          <? if($group and $group->status and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
+        <? echo $preface_bottom; ?>        
+<? endif; ?> 
         <? 
             if(strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet'))
             {
@@ -102,7 +99,9 @@
                 echo $content;
             }
         ?>
-        
+		<? if($group and $group->status and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
+        <?php if ($show_messages && $messages && arg(0) != 'search'): print $messages; endif; ?>
+		<? endif; ?>
 
       </div>
       
@@ -268,6 +267,7 @@
             </div>
           </div>
         </div>
+        
         <div id="paneSignup">
           <div  class="D_boxhead">
             <h1>Sign up</h1>
@@ -319,73 +319,18 @@
               </div>
             </form>
           </div>
-          <div class="D_boxsection isFacebook">
-            <div class="orbox">
-              <div class="orword"> or </div>
-            </div>
-            <div class="isFacebook_button">
-              <p class="explain">Join this Meetup Group even quicker with your Facebook account.</p>
-              <fb:login-button v="2" perms="email" size="" onlogin="Meetup.Facebook.onLoginButtonClick();">
-                <fb:intl>Sign up using Facebook</fb:intl>
-              </fb:login-button>
-            </div>
-          </div>
-          <div class="D_boxsection tos"> By clicking the "Sign up using Facebook" or "Sign up" buttons above, you agree to Meetup's <a href="http://www.meetup.com/terms/" target="_blank">Terms of Service</a> </div>
         </div>
+        
+        
       </div>
     </div>
   </div>
 </div>
 
 
-<script type="text/javascript"> 
- 
-Meetup.DOMReady.ready(function() {
-Meetup.Script.include([ "http://static1.meetupstatic.com/082899144013760729961/script/Meetup/packed/Modules.jquery.js", "http://static1.meetupstatic.com/246471989912363528614/script/jquery/plug-in/actionDropdown.js"]
- 
-,function() {
- 
-$('#C_page').actionDropdown();
- 
-FeedPager.init( $( "#grouphome_feed_10538121" ), "http://www.meetup.com/SacSwim/module/render/?moduleId=10538121&m_nochrome=true" );
-}
- 
-);
-});
- 
-connect(window, "onload",function() {
-Meetup.Script.include([ "http://static1.meetupstatic.com/41330693538953738449500/script/jquery/Meetup/TopicInfo.js", "http://static1.meetupstatic.com/25848261219440578973/script/jquery/Meetup/Validator.js"]
- 
-,function() {
- 
-$("form.J_signupForm").each(function(){
-var MUVR = Meetup.UI.ValidatorRules;
-var signupVal = new Meetup.UI.Validator(this);
-var id = this.id;
-signupVal.addRule(MUVR.notEmpty, $get(id+"_realname"));
-signupVal.addRule(MUVR.notEmpty, $get(id+"_email"));
-signupVal.addRule(MUVR.isEmail, $get(id+"_email"));
-signupVal.addRule(MUVR.notEmpty, $get(id+"_password"));
-signupVal.addRule(MUVR.isMinLength, $get(id+"_password"), 6);
-});
-//Meetup.DomDeco.applyByTagAndClass('input', 'horizUrfInput', Meetup.DomDeco.TextInputTip);
- 
- 
-}
- 
-);
-});
- 
-$(function(){Meetup.GroupHome.init()});$(function(){$("#module_10538121").feedpopup()});$(function(){if($("#duesSignal")){$("#chapterDuesDialog").Dialog()}if($("#refundSignal")){$("#refundBox").Dialog()}});$(function(){$(".D_splain").Splain()});$(function(){Meetup.GA.load("member","","","","")});
-</script> 
-<script type="text/javascript" src="http://static2.meetupstatic.com/654226392224242/script/Meetup/Facebook2.js"></script>
-<div id="fb-root"></div>
 
-<!--[if gte IE 8]>
-<script type="text/javascript">
-Meetup.Facebook.isIE8 = true;
-</script>
-<![endif]-->
-  <?php print $closure; ?>
+
+<div id="fb-root"></div>
+ <?php print $closure; ?>
 </body>
 </html>

@@ -38,6 +38,46 @@ function usercenter_menu() {
         'access callback' => 'usercenter_is_login',
         'access arguments' => array(1),   
     );  
+  
+  $items['account/%/name'] = array(
+    	'title' => t('Change Your Name'),
+        'page callback' => 'usercenter_account_name',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+  
+    $items['account/%/email'] = array(
+    	'title' => t('Change Your Email Address'),
+        'page callback' => 'usercenter_account_email',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+	
+	$items['account/%/pass'] = array(
+    	'title' => t('Change Your Password'),
+        'page callback' => 'usercenter_account_pass',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+	
+	$items['account/%/location'] = array(
+    	'title' => t('Change Your Location'),
+        'page callback' => 'usercenter_account_location',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+	
+	$items['account/%/language'] = array(
+    	'title' => t('Change Your Language'),
+        'page callback' => 'usercenter_account_language',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
     
     $items['user/%user/mygroups'] = array(
     	'title' => t('My Groups'),
@@ -459,7 +499,7 @@ function usercenter_main() {
 
 /* menu callback*/
 function usercenter_account($uid){
-    $user = user_load($uid); 
+    $user = user_load(array('uid' => $uid)); 
     drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
     drupal_set_title('');
     $output = '';
@@ -470,8 +510,222 @@ function usercenter_account($uid){
     return  $output;
 }
 
+/* menu callback*/
+function usercenter_account_name($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_name_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
 
+/* menu callback*/
+function usercenter_account_email($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_email_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
 
+/* menu callback*/
+function usercenter_account_pass($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_pass_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_location($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_location_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_language($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_language_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+function usercenter_account_name_form(&$form_state, $user) {
+	$form['name'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Change Your Name'),
+		'#required' => TRUE,
+		'#size' => 30,
+		'#prefix' => '<div class="element" style="float:left">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_language_form(&$form_state, $user) {
+	
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_email_form(&$form_state, $user) {
+	$form['email'] = array(
+		'#type' => 'textfield',
+		'#title' => t('New email'),
+		'#required' => TRUE,
+		'#size' => 30,
+		'#prefix' => '<div class="element" style="float:left">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_pass_form(&$form_state, $user) {
+	$form['pass'] = array(
+		'#type' => 'password_confirm',
+		//'#title' => t('Your new password'),
+		'#required' => TRUE,
+		'#size' => 30,
+		'#prefix' => '<div class="element" style="float:left">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_location_form(&$form_state, $user) {
+	
+	$settings = variable_get('location_settings_user', array());
+    $form['locations'] = location_form($settings, $user->locations);
+	//print '<pre>';
+	//print_r($form['locations']);exit;
+	//print '</pre>';
+	$form['locations'][0]['#collapsed'] = 0;
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_name_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+    user_save(user_load(array('uid' => $values['uid'])), array(
+		'name' => $values['name'],	
+	));
+	drupal_goto('account/' . $values['uid'] );
+}
+
+function usercenter_account_email_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+    user_save(user_load(array('uid' => $values['uid'])), array(
+		'mail' => $values['email'],	
+	));
+	drupal_goto('account/' . $values['uid'] );
+}
+
+function usercenter_account_pass_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+
+    user_save(user_load(array('uid' => $values['uid'])), array(
+		'pass' => $values['pass'],	
+	));
+	drupal_goto('account/' . $values['uid'] );
+}
+
+function usercenter_account_location_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+    location_save_locations($values['locations'], array('uid' => $values['uid']));
+	drupal_goto('account/' . $values['uid'] );
+}
 /* menu callback */
 /*
 [1] => Array

@@ -123,10 +123,12 @@ function og_member_profile_setting_member_form(&$form_state, $gid) {
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
     );
+  
+    $email_body = db_result(db_query("select message from {og_member_profile_email} where gid=%d", $gid));
     $form['member_email']['email_body'] = array(
       '#type' => 'textarea', 
       '#title' => t('Welcome message to new members'), 
-      '#default_value' =>'', 
+      '#default_value' =>$email_body, 
       '#required' => false,
        '#description' => t('New members receive an automatic email confirmation when they join this Meetup. You can add your own message to introduce yourself and encourage new members to RSVP for your next Meetup or fill out their profile.'),
     );
@@ -168,7 +170,17 @@ function og_member_profile_setting_member_form_submit($form, &$form_state) {
     variable_set('group_'.$gid.'_profile_requrement_introduction',$value['profile_requirement']['introduction']);
     variable_set('group_'.$gid.'_profile_requrement_photo',$value['profile_requirement']['photo']);
     variable_set('group_'.$gid.'_profile_requrement_question',$value['profile_requirement']['question']);
-
+	
+	// 邮件
+	$exist = db_result(db_query("select gid from {og_member_profile_email} where gid=%d", $gid));
+	if($exist) {//update
+		db_query("update {og_member_profile_email} set message ='%s' where gid = %d", $value['email_body'] , $gid);
+	} else {
+		db_query("INSERT INTO {og_member_profile_email} (gid, message) VALUES (%d, '%s')", $gid ,$value['email_body']);
+	}   
+	
+	$group_alias = drupal_get_path_alias('node/' . $gid);
+	drupal_goto($group_alias . '/grouptool/' . $gid . '/manage/settings/members');
 }
 
 

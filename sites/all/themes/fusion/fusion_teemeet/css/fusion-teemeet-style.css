@@ -1396,3 +1396,8 @@ background: -moz-linear-gradient(center top , #F10044, #AD0000) repeat scroll 0 
     width: 1em;
    
 }
+
+#block-sponsor-0 .inner{
+ margin-left:0;
+ margin-right: 0;
+}

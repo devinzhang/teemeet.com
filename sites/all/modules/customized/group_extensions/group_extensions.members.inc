@@ -91,18 +91,24 @@ function group_extensions_all_leadship_members($gid){
     $arg = 0;
      if(isset($GLOBALS['current_group'])){
         $current_group = $GLOBALS['current_group'];
+		
         $arg = $current_group->nid;         
      }
      $output .= '<ul class="D_actions hasIcons">
                 <li class="canDo">
                     <a class="sprite sprite_action user_green_icon" href="'.url($current_group->path.'/member/'.$user->uid.'/ingroup/'.$current_group->nid).'">View your profile</a>
                 </li>
-                <li class="canDo">
-                <a class="sprite sprite_action email_edit_icon" href="">Edit communication settings</a>
-                </li>
+              
                 </ul>';
       $output.=_group_extensions_members_tabmenu($arg);
-    $output .='Under construction';
+	  $output .= '<ul id="list_of_members" class="memlist dues">';    
+     
+   
+        $uid =  $current_group->uid;
+        $output .= '<li id="member_'.$user->uid.'">'.theme('group_extensions_member',$user ).'</li>';  
+   
+     $output .= '</ul>';
+	 
     return $output; 
 }
 
@@ -133,9 +139,9 @@ function theme_group_extensions_member($member){
      $output .= '<a href="'.url( $current_group->path.'/member/'.$member->uid.'/ingroup/'.$current_group->nid).'"><img width="80px" height= "80" class="memPhoto" alt="" src="'.$base_url.'/'.$user->picture.'"></a>';
      $output .= '</div>';
      $output .= '<div class="memberItem clearfix">
-        <div class="memberActions canOnlyEmail D_dropdown">
-        <a title="Send an Email" class="cog emailcog" href="http://www.meetup.com/Beijing-Soccer-Lovers/message/?recipientId=20252341"><span></span></a>
-        </div>
+        <div class="memberActions canOnlyEmail D_dropdown">';
+   //  $output .= '   <a title="Send an Email" class="cog emailcog" href="http://www.meetup.com/Beijing-Soccer-Lovers/message/?recipientId=20252341"><span></span></a>';
+     $output .= '   </div>
 <div class="memberInfo hasOnlyEmail">
 <div id="memberInfo_20252341" class="D_title">';
 $output .= '<a class="memName" href="'.url( $current_group->path.'/member/'.$member->uid.'/ingroup/'.$current_group->nid).'">'.$user->name.'</a>';

@@ -141,13 +141,14 @@ function _frontpage_home_heartbeats($uid){
 					 $output .= '<h2>'.t('What\'s happening?').'</h2>';
 					 $output .= '<ul class="D_actions">';
                      $output .='<li id="D_feedRefreshBtn" class="canDo"><a style="background: url(&quot;http://img1.meetupstatic.com/img/thirdparty/fff/silk/arrow_refresh.png&quot;) no-repeat scroll left top transparent;" class="sprite_action" href="">Refresh</a></li>';
-                     $output .= '<li class="canDo">
+                 /*    $output .= '<li class="canDo">
 							<a class="sprite sprite_action page_edit_icon" id="D_unhideBtn" href="javascript:void(0);">Manage feed</a>
 						</li>';
                      $output .='<li class="canDo D_splain splainRegistered">
 							<a target="_blank" class="sprite_action help_icon sprite splainOver" href="">What\'s this</a>
 					
 						</li>';
+				*/		
                     $output .= '</ul>';    
             $output .= '</div>';
             

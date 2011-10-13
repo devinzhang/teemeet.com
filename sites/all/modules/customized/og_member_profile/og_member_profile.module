@@ -207,6 +207,7 @@ function og_member_profile_og($op, $gid, $uid, $args) {
     case 'user insert':
       $account = user_load(array('uid' => $uid));
     //  og_notifications_user_autosubscribe($account, $gid);
+		og_member_profile_welcome_email_send($gid, $account);
       break;
     case 'user delete':
       $account = user_load(array('uid' => $uid));
@@ -351,4 +352,66 @@ function og_member_profile_create_profile_node($account, $group){
   node_validate($edit);
   $node = node_submit($edit);
   node_save($node);
+}
+
+/**
+ * Send an e-mail.
+ *
+ * @param $form_values
+ * @author nemo
+ */
+function og_member_profile_welcome_email_send($gid, $account) {
+ 
+  // All system mails need to specify the module and template key (mirrored from
+  // hook_mail()) that the message they want to send comes from.
+  $module = 'og_member_profile';
+  $key = 'og_member_profile_welcome_email';
+
+  // Specify 'to' and 'from' addresses.
+  $group_node = node_load($gid);
+  $group_owner = user_load(array('uid' => $group_node->uid));
+  
+  $to = $account->mail;
+  $from = $group_owner->mail;
+
+  // "params" loads in additional context for email content completion in
+  // hook_mail(). 
+  $email_body = db_result(db_query("select message from {og_member_profile_email} where gid=%d", $gid));
+  $params = array('message' =>$email_body);
+
+  // The language of the e-mail.
+  $language = language_default();
+
+  // Whether or not to automatically send the mail when drupal_mail() is
+  // called. This defaults to TRUE, and is normally what you want unless you
+  // need to do additional processing before drupal_mail_send() is called.
+  $send = TRUE;
+  
+  // Send the mail, and check for success. Note that this does not guarantee
+  // message delivery; only that there were no PHP-related issues encountered
+  // while sending.
+  $result = drupal_mail($module, $key, $to, $language, $params, $from, $send);
+  if ($result['result'] == TRUE) {
+    drupal_set_message(t('A welcome email has been sent to you.'));
+  }
+  else {
+    drupal_set_message(t('There was a problem with a welcome email and it was not sent.'), 'error');
+  }
+
+}
+
+/**
+ * Implementation of hook_mail().
+ * @author nemo
+ */
+function og_member_profile_mail($key, &$message, $params) {
+//print_r($params);exit;
+  switch ($key) {
+    // Send a simple message from the contact form.
+    case 'og_member_profile_welcome_email':
+      $message['subject'] = t('Welcome to our group');
+      // Because this is just user-entered text, we do not need to translate it.
+      $message['body'][] = $params['message'];
+      break;
+  }
 }

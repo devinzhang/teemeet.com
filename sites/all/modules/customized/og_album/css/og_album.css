@@ -45,15 +45,6 @@ ul.D_summaryList {
     padding: 0 0.5em;
 }
 
-.D_groupList_shopping ul.D_summaryList li {
-    border-bottom: 0 none;
-    border-top: 1px solid #CCCCCC;
-    float: left;
-    margin-bottom: 0.25em;
-    overflow: hidden;
-    width: 25%;
-   text-align: center; 
-}
 
 .D_groupList_shopping ul.D_summaryList .D_image {
     height: 130px;

@@ -12,13 +12,14 @@
         </div>
         <div class="D_boxsection isNotDivided ">
             <div class="D_listControls">
-                <div class="D_listControl">
+               <!-- <div class="D_listControl">
                     <label>Sort by:</label>
                         <span class="D_radio">
                             <a href="" class="selected">Activity</a>
                             <a href="">Created</a>
                         </span>
                 </div>
+			   -->	
             </div>
             <div id="groupListContainer" class="D_groupList_shopping">
                 <ul class="D_summaryList">
