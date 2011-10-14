@@ -478,12 +478,27 @@ function og_album_ahah_set_group_photo() {
   $is_group_photo = isset($form['#parameters'][1]['post']['group_cover']) ? 1 : 0 ;  
   $is_album_thumbnail = isset($form['#parameters'][1]['post']['album_thumbnail']) ? 1 : 0 ;  
    
+   
   //first need to clear all the exist group photo in all the albums of this group
   $gid = db_result(db_query("select gid from ".OG_ALBUM_TABLE." where aid=%d", $aid));
+     //update the field_logo cck field
+  $group_node = node_load($gid);
+   
+  $attributes = db_fetch_array(db_query("select * from ".OG_ALBUM_PHOTOS_TABLE." where pid=%d", $pid));
+  
+  
+   if($attributes['fid']) {
+   $file =db_fetch_object(db_query("select * from {files} as f where f.fid=%d ", $attributes['fid']));
+  
+  
+  $group_node->field_logo[0]['fid'] = $attributes['fid']; 
+  $group_node = node_submit($group_node);
+  node_save($group_node);
+  }
   $aids = db_fetch_array(db_query('select aid from '.OG_ALBUM_TABLE.' where gid=%d',$gid));
    
-    db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where aid in ( ".implode( ',' ,  $aids ).")", 0 ); 
-    db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where pid=%d", $is_group_photo, $pid ); 
+   db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where aid in ( ".implode( ',' ,  $aids ).")", 0 ); 
+   db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where pid=%d", $is_group_photo, $pid ); 
    
    
  drupal_json(array('status' => TRUE, 'data' => 'g-p='.$is_group_photo.'pid'.$pid.'aiid'.$aid.'al_th'.$is_album_thumbnail));   
