@@ -62,7 +62,7 @@
 
 <!--<li><a class="D_signal D_signal_appear_to_D_photoGallery_allSizesDialog" id="D_photoGallery_allSizes" href="">All sizes</a></li> -->
 
-<li class="D_dropdown" id="D_photoGallery_orgControlsWrapper"><span><a class="colorbox-inline J_onClick D_dropdownToggler D_dropdownParent" href="?width=300&height=100&inline=true#photo_controls">'.<?php print t('Use photo as');?>.'</a></span>
+<li class="D_dropdown" id="D_photoGallery_orgControlsWrapper"><span><a class="colorbox-inline J_onClick D_dropdownToggler D_dropdownParent" href="?width=300&height=100&inline=true#photo_controls"><?php print t('Use photo as');?></a></span>
 <?php print $set_photo_form; ?>
 
 </li>

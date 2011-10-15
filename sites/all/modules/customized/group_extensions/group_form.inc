@@ -177,11 +177,14 @@ EOF
         break;
         
         case 3:
-          
+			$from['group_tag_select'] = array(
+				'#value' => '<h3>'.t('What\'s topic for this group?').'</h3>',
+				
+			);
           for($i=1; $i<= GROUP_TAGS_MAX_TOPICS; $i++) {
 				$form['group_tag_'.$i] = array(
 				'#type' => 'textfield',
-				'#title' => '',
+				'#title' => t(''),
 				'#default_value' => '',
 				'#size' => 50,
 				'#maxlength' => 128,
@@ -252,6 +255,7 @@ function group_create_submit($form, &$form_state)
             $node->uid = $user->uid;
             $node->name = $user->name;
             $node->type = NODE_TYPE;
+			$node->comment =2;
             $node->title = $form_state['storage']['title'];   
             $node->og_description = $form_state['storage']['og_description']; 
             $node->pathauto_perform_alias = 0;
@@ -271,6 +275,9 @@ function group_create_submit($form, &$form_state)
 			//print_r($node);exit;
 			//print '</pre>';
             node_save($node);
+			 
+          path_set_alias('node/' . $node->nid, $form_state['storage']['path'], NULL, $language);
+        
             $form_state['storage']['nid'] = $node->nid;
             //$form_state['storage']['path'] = $form_state['storage']['path'];
             drupal_set_message('小组创建成功，请设置模板');        

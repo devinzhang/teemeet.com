@@ -17,13 +17,14 @@
 <?php //in the product site, need to use this code instead the below <img part
 //$img_path = $account->picture;
 //echo theme('imagecache','avator_100x100', $img_path,'','', array('class'=>'D_memberProfilePhoto'));
+//print_r($account);
 ?>
 
 <img width="100px" src="<?php global $base_url; echo $base_url.'/'.$account->picture; ?>" alt="" class=""></a>
 
 </div>
 
-<span class="D_inlineAction D_firstInlineAction"><a href="<?php echo url('user/'.$account->uid.'/photos'); ?>">Manage photos</a></span>
+<span class="D_inlineAction D_firstInlineAction"><a href="<?php echo url('user/'.$account->uid.'/photos'); ?>"><?php print t('Manage photos'); ?></a></span>
 
 </div>
 
@@ -50,7 +51,7 @@ if(isset($group_member_profile->membertitle)){
 </p>
 
 <div class="D_memberProfileContentChunk">
-<h4>Follow me on:</h4>
+<!--<h4>Follow me on:</h4>
 
 <div style="padding-top: 0.25em; padding-bottom: 0.25em;">
 <img title="" alt="" src="<?php global $base_url ; echo $base_url.'/'.drupal_get_path('module','usercenter').'/images/qq.jpeg'; ?>?">
@@ -62,16 +63,16 @@ if(isset($group_member_profile->membertitle)){
 <a href="http://www.meetup.com/Beijing-Soccer-Lovers/profile/#webLinks">Add/edit links</a>
 
 </p>
-
+-->
 </div>
 
 <div class="D_memberProfileContentChunk">
-<h4>My activity</h4>
+<h4><?php print t('My activity'); ?></h4>
 <ul class="D_memberActivityList" id="D_memberProfileActivityList">
 <li class="D_memberActivityListMeetups">
 
 
-<a href="http://www.meetup.com/Beijing-Soccer-Lovers/members/20252341/rsvps/">RSVPs (2)</a>
+<a href="">RSVPs (2)</a>
 
 
 </li>
@@ -81,8 +82,8 @@ if(isset($group_member_profile->membertitle)){
 
 </li>
 
-<li class="D_memberActivityListPhotos"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/members/20252341/photos/">Photos (2)</a></li>
-<li class="D_memberActivityListGreetings"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/members/20252341/shouts/">Greetings (0)</a></li>
+<li class="D_memberActivityListPhotos"><a href="">Photos (2)</a></li>
+<li class="D_memberActivityListGreetings"><a href="">Greetings (0)</a></li>
 
 
 </ul>
@@ -205,12 +206,12 @@ echo $group['member_profile']->membertitle;
 	<div class="D_colbody">
 		
 <div class="D_memberProfileContentItem">
-<h4>Location</h4>
+<h4><?php print t('Location'); ?></h4>
 <p>
 
-<a href="http://www.meetup.com/cities/us/20854/"><span class="locality">Potomac</span>, <span class="region">MD</span></a><span class="displaynone country-name">USA</span>
+<a href=""><span class="locality"><?php print $account->locations[0]['city']; ?></span>, <span class="region"><?php print $account->locations[0]['province_name']; ?></span></a><span class="displaynone country-name"><?php print $account->locations[0]['country_name']; ?></span>
 
-<a class="D_inlineAction D_firstInlineAction" href="http://www.meetup.com/account/city/?returnUri=http%3A%2F%2Fwww.meetup.com%2FBeijing-Soccer-Lovers%2Fmembers%2F20252341%2F">Edit location</a>
+<a class="D_inlineAction D_firstInlineAction" href=""><?php print t('Edit location');?></a>
 
 </p>
 </div>

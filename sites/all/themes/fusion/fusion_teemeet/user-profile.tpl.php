@@ -43,7 +43,7 @@
 ?>
 <div class="profile">
     <div class="D_col spans2 first">
-        <div class="D_colbody">		
+        <div class="DD_colbody">		
             <div id="D_memberProfileAside">
                 <div id="image_<?php print $user->uid; ?>">
                     <?php print $profile['user_picture']; ?>
@@ -66,7 +66,7 @@
        
 </div>
 
-<div class="D_docsection divby5">
+<div class="DD_docsection divby5">
     <div class="D_col D_docCol spans3 first">
         <div class="D_colbody">
             <?php print $profile['summary']; ?>

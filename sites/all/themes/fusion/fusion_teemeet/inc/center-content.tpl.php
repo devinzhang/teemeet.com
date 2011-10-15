@@ -79,9 +79,9 @@
 			if($user->uid == $group->uid):
 		?>
 		   
-	   <div class="D_boxsection tos"> 如果您是小组的组织者，请付费开通小组</div>
+	   <div class="D_boxsection tos"> 小组的关闭或许是因为您还未付费开通,<br>或许，是因为小组费用到期<br>如果您是小组的组织者，请<?php print l('付费开通小组', 'order'); ?></div>
 	   <?php else: ?>
-	   <div class="D_boxsection tos"> 小组已经关闭，您可以选择继续留在这个小组一遍以后小组回复<br>
+	   <div class="D_boxsection tos"> 小组已经关闭，您可以选择继续留在这个小组以便以后小组回复<br>
 	   或者，您可以选择<?php print l('退出这个小组','og/unsubscribe/'.$group->nid.'/'.$usr->uid);?>
 	   </div>
 	   <? endif; ?>

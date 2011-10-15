@@ -745,15 +745,18 @@ function usercenter_account_location_form_submit($form, &$form_state) {
 */
 function usercenter_mygroups() {
     global $user; 
-	
+	drupal_add_css(drupal_get_path('module','usercenter').'/css/group_list.css');
     $mygroups = $user->og_groups;
     drupal_set_title($user->name);
     $output = '';
+	$output .='<h2>'.t('Member of @counter Teemeet groups', array('@counter'=>count($mygroups))).'</h2>';
     $output .='<div style="width: 310px;" id="groupsMenu">';
     $output .='<ul class="myGroupsSection">';
     if(!empty($mygroups)){ 
-        foreach($mygroups as $nid => $group){
-            $output .= '<li>'.l($group['title'],'node/'.$nid).'</li>';
+        foreach($mygroups as $nid => $grp){
+			$group = node_load($nid);
+			
+            $output .= '<li>'._output_group_list_teaser($group).'</li>';
         }
     } else {
           $output .= t('You didn\'t join any groups');
@@ -762,6 +765,27 @@ function usercenter_mygroups() {
     $output .= '</ul></div>';
     
     return $output;
+}
+
+/* intenal function to output a group teaser 
+**
+*/
+function _output_group_list_teaser($group){
+	$output = '';
+	global $base_url;
+	$output .= '<div data-chapterid="'.$group->nid.'" class="D_group clearfix  first groupinfo-widget">';
+	$output .= '<div class="D_image">';
+		$output .= '<a href="'.url($group->path).'" title="'.$group->field_site_title[0]['value'].'"><img src="'.$base_url.'/'.$group->field_logo[0]['filepath'].'"></a>';
+    $output .= '</div>';
+	$output .= '<div class="D_info">';
+		$output .= '<div class="D_name"><a href="'.url($group->path).'" class="omnCamp omngj_sj3">'.$group->field_site_title[0]['value'].'</a></div>';
+			$output .= '<div class="member-role">';
+				$output .= '<a class="omnCamp omngj_sj3" href="'.url($group->path.'/groupextension/allmembers/'.$group->nid).'">'.t('Members').'</a>';
+			$output .= '</div>';
+		$output .= '</div>';
+	$output .= '</div>';
+
+	return $output; 
 }
 
 /* menu callback */

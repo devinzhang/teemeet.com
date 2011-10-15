@@ -1,0 +1,90 @@
+<?php
+
+
+/**
+ * Implementation of hook_form_alter().
+ * @author nemo
+ */
+function teemeet_search_form_alter(&$form, &$form_state, $form_id) {
+	//print $form_id;
+	switch ($form_id) {
+
+		case 'search_form':
+			$form['basic']['inline']['address']= array(
+				'#type' => 'textfield',
+				'#title' => t('ZIP/postal code or City '),
+				'#size' => 50,
+				'#maxlength' => 255,
+				'#weight' => 1,
+				'#default_value' => $_SESSION['search_address'],
+				'#prefix' => '<div class="element">',
+				'#suffix' => '</div>',
+			  );
+			
+			 $form['basic']['inline']['submit']['#weight'] = 2;
+			 $form['basic']['inline']['submit']['#prefix'] = '<div class="footElement">';
+			 $form['basic']['inline']['submit']['#suffix'] = '</div>';
+			 $form['basic']['inline']['submit']['#attributes'] = array('class' => 'D_submit');
+			 
+			 array_unshift($form['#submit'], 'teemeet_search_search_submit');
+			//print '<pre>';
+			//print_r($form);
+			//print '</pre>';
+			$form['basic']['inline']['keys']['#title'] =  t('Topic or interest');
+			$form['basic']['#title'] =  '';
+			$form['basic']['inline']['keys']['#prefix'] = '<div class="element">';
+			$form['basic']['inline']['keys']['#suffix'] = '</div>';
+			$form['basic']['inline']['keys']['#size'] = 50;
+			
+			$form['advanced']['#access'] = FALSE;
+			
+			break;
+		
+		case 'search_block_form':
+			
+			$form['search_block_form']['#title'] =  t('Topic or interest');
+			$form['search_block_form']['#size'] =  50;
+			$form['search_block_form']['#prefix'] = '<div class="element">';
+			$form['search_block_form']['#suffix'] = '</div>';
+			
+			$form['address']= array(
+				'#type' => 'textfield',
+				'#title' => t('City or ZIP/postal code'),
+				'#size' => 35,
+				'#maxlength' => 255,
+				'#weight' => 1,
+				'#default_value' => $_SESSION['search_address'],
+				'#prefix' => '<div class="element">',
+				'#suffix' => '</div>',
+			  );	
+			
+			$form['submit']['#weight'] = 2;
+			$form['submit']['#prefix'] = '<div class="footElement">';
+			$form['submit']['#suffix'] = '</div>';
+			$form['submit']	['#attributes'] = array('class' => 'D_submit');
+
+			break;
+	}
+}
+
+/*
+ * Rewrite the sql query to exclude content types
+ */
+function teemeet_search_db_rewrite_sql($query, $primary_table, $primary_field, $args) {
+  if ($query == '' && $primary_table == 'n' && $primary_field = 'nid' && empty($args)) {
+
+	  $join = "LEFT JOIN {location_instance} location_instance ON $primary_table.vid = location_instance.vid 
+						LEFT JOIN {location} location ON location_instance.lid = location.lid";
+	  
+      $where = " n.type = 'group' AND location.city LIKE '%" . $_SESSION['search_address'] . "%' OR location.postal_code LIKE '%" . $_SESSION['search_address'] . "%'";
+	  
+      return array('where' => $where, 'join' => $join);
+  }
+}
+
+/**
+ * Process a search form submission.
+ */
+function teemeet_search_search_submit($form, &$form_state) {
+   $_SESSION['search_address'] = $form_state['values']['address'];  
+}

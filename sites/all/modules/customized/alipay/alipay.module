@@ -21,7 +21,7 @@ function alipay_menu()
         'title' => t('订单确认'),        
         'page callback' => 'drupal_get_form',
         'page arguments' => array('alipay_order_confirm'),
-        'access arguments' => array(),
+        'access arguments' => array('access content'),
         'file' => 'alipay_order.inc', 
     );
     

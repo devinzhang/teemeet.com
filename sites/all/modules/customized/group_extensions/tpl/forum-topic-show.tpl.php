@@ -16,9 +16,15 @@
                                             </a>
                                             </li>
                                             -->
-                                            <li><a href="http://www.meetup.com/Beijing-Soccer-Lovers/messages/boards/view/editpost?post=53200342&amp;offset=0" class="orgTool">Edit</a></li>
-                                            <li><a href="http://www.meetup.com/Beijing-Soccer-Lovers/messages/boards/view/deletethread?thread=15411132" class="orgTool"><?php echo $topic['ispost']? t('Delete thread') : t('Delete thread'); ?></a></li>
-                                            <li><a href="">Quote in reply</a></li>
+											<?php global $user; if($topic['uid'] == $user->uid):?>											
+                                            <li><a href="<?php print url($group->path.'/node/'.$topic['id'].'/edit'); ?>" class="orgTool"><?php print t('Edit'); ?></a></li>
+		
+											<?php endif; ?>
+											
+                                            <?php if($topic['ispost']):?>
+											<li><a href="" class="orgTool"><?php echo $topic['ispost']? t('Delete thread') : t('Delete thread'); ?></a></li>
+											<?php endif; ?>
+                                           <!-- <li><a href="">引用</a></li> -->
                                          </ul>
 
                                     </div>

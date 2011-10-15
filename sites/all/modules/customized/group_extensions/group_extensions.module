@@ -273,9 +273,14 @@ function group_extensions_nodeapi(&$node, $op, $teaser, $page)
 				$node->status = 0;
 				node_save($node);
 			}
-		} else { //if this node was not published
-			
-			
+		} else {
+		if ($user->uid == $node ->uid) {
+		
+			$node->content['noaccess'] = array(
+					'#value' => 'guoqi afja jasfdaj dajfaslkajdfa', 
+					'#weight' => 1,
+			);
+			}
 		}
     }    
     
@@ -390,13 +395,13 @@ function _group_extension_forum_topic_header($node, $group){
         <div class="D_boxbody">
             <div class="D_boxhead">
                 <p class="crumb">
-                    <span class="nobr"><a href="'.$GLOBALS['current_group']->path.'">'.$GLOBALS['current_group']->title.'</a></span>
+                    <span class="nobr"><a href="'.url($GLOBALS['current_group']->path).'">'.$GLOBALS['current_group']->title.'</a></span>
                     		<span class="nobr ts">›'.l($node->title,$GLOBALS['current_group']->path.'/'.$node->path).'</span>	
                 </p>
                 <h1>'.$node->title.'</h1>
                 <ul class="D_actions hasIcons">';
             if($is_group_admin) {
-            $output .= '<li class="canDo">
+           /* $output .= '<li class="canDo">
                         <a href="">
                         <img class="icon png" title="" alt="" src="'.$icon_path.'/icon_closed_on.png"> <span>Close to new replies</span>
                         </a>
@@ -407,9 +412,11 @@ function _group_extension_forum_topic_header($node, $group){
                         <img class="D_icon png" src="'.$icon_path.'/icon_pinned_on.png"> <span>Pin this discussion</span>
                         </a>
                     </li> ';
-            }
+            */
+			}
+			
             $output .= '<li class="canDo">
-                    <a class="orgTool sprite sprite_action page_add_icon" href="">Start a new discussion</a>
+                    <a class="orgTool sprite sprite_action page_add_icon" href="'.url($GLOBALS['current_group']->path.'/node/add/forum-topic', array('query'=>array('gids[]'=>$group->nid))).'">'.t('Start a new discussion').'</a>
                     </li>';
          //   if(module_exists('notifications')) {
                     $output .= '<li class="canDo">'._group_extension_create_subscriber_link($node).'</li>';

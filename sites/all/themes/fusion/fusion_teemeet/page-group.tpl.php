@@ -18,16 +18,6 @@
   <?php print $local_styles; ?>
   <?php print $scripts; ?>
 
- 
-<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/meetup_jquery_ui.css" />
-<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/meetup.css" />
-<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/eventDetails.css" />
-<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/bagelbase_mar.css" />
-<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/new_layout.css" />
-<link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/module.css" />
-<link type="text/css" rel="stylesheet" media="print" href="<? echo base_path() . path_to_theme() ;?>/css/print.css" />
-
-
 <!--[if IE 6]>
   <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/ie6.css" />
 <![endif]-->
@@ -35,6 +25,59 @@
   <link type="text/css" rel="stylesheet" media="all" href="<? echo base_path() . path_to_theme() ;?>/css/ie8.css" />
 <![endif]-->
 </head>
+<!--[if IE]>
+<script>
+$(document).ready(function(){
+    var fnMergeStyleSheet = function(){
+    if(!document.styleSheets){
+        return;
+    }
+    var aSheet = document.styleSheets,
+        aStyle = document.getElementsByTagName('style'),
+        aLink  = document.getElementsByTagName('link');
+        if(aStyle.length + aLink.length < 32 || !aSheet[0].cssText){
+            return;
+        }
+        
+        var aCssText = [],aCloneLink = [];
+        alert(aSheet[0].cssText);
+        for(var i=aStyle.length-1;i>-1;--i){
+            var o = aStyle[i];
+                aCssText.push(o.innerHTML);
+                if(i>0){
+                    o.parentNode.removeChild(o);
+                }
+        }
+        
+        for(var i=aLink.length-1;i>-1;--i){
+            
+            var o = aLink[i];
+                if(o.getAttribute && o.getAttribute('rel')==='stylesheet'){
+                    if(o.styleSheet){
+                        aCssText.push(o.styleSheet.cssText);
+                    }else{
+                       aCloneLink.push(o.cloneNode(true)); 
+                    }
+                    if(i>0){
+                        o.parentNode.removeChild(o);
+                    }
+                }
+        }
+        /*alert(aSheet[0].cssText);
+        var oHead = document.getElementsByTagName('head')[0];
+        for(var i = aCloneLink.length-1;i>-1;--i){
+            var o = aCloneLink[i];
+            oHead.appendChild(o);
+            aCssText.push(o.styleSheet.cssText);
+            oHead.removeChild(o);
+        }
+        
+        aSheet[0].cssText += aCssText.join('');*/
+    }
+    fnMergeStyleSheet();    
+})
+</script>
+<![endif]-->
 
 <? if(!$group): ?>
 <style type="text/css">
@@ -60,19 +103,16 @@
       </div>
     </div>
   </div>
-<? if($group->status ): ?>
   <div class="navTop menu" id="C_navTop">
   <? echo output_group_menu(); ?>
   </div>
-  <? endif; ?> 
 <? endif; ?> 
   
   <div id="C_pageBody">
     <div id="C_context">
       <div id="C_document" > 
-          <? if($group and $group->status and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
+        
         <? echo $preface_bottom; ?>        
-<? endif; ?> 
         <? 
             if(strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet'))
             {
@@ -99,13 +139,11 @@
                 echo $content;
             }
         ?>
-		<? if($group and $group->status and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
         <?php if ($show_messages && $messages && arg(0) != 'search'): print $messages; endif; ?>
-		<? endif; ?>
 
       </div>
       
-      <? if($group and $group->status and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
+      <? if($group and !strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet')): ?>
       <div id="C_nav" >
         <? echo $sidebar_first; ?>
         <? include 'inc/left-sidebar.tpl.php'; ?>

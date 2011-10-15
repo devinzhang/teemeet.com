@@ -1,0 +1,30 @@
+.line:after, .lastUnit:after {
+    clear: both;
+    content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";
+    display: block;
+    font-size: xx-large;
+    height: 0 !important;
+    line-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+.resetList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.gutter-right {
+    margin-right: 12px;
+}
+.size1of7 {
+    width: 14.2857%;
+}
+.unit {
+    float: left;
+}
+.size4of7 {
+    width: 57.1428%;
+}
+.help_new {
+	color: red;
+}

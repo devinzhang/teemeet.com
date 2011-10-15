@@ -769,7 +769,7 @@ function comment_save($edit) {
 
         // Add an entry to the watchdog log.
         watchdog('content', 'Comment: added %subject.', array('%subject' => $edit['subject']), WATCHDOG_NOTICE, l(t('view'), 'node/'. $edit['nid'], array('fragment' => 'comment-'. $edit['cid'])));
-      }    echo "I am at line " . __LINE__ . " in file " . __FILE__; 
+      }   
       _comment_update_node_statistics($edit['nid']);
 
       // Clear the cache so an anonymous user can see his comment being added.
