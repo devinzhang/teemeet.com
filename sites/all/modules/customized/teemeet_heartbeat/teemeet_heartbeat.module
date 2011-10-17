@@ -165,12 +165,12 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
 		
       if ($stream->stream->name == 'ogheartbeat') {
 		  $message->message = '<div class="teemeet-message-type">';
-		  $message->message .= 'new ' . $message->variables['@node_type'];
+		  $message->message .= t('new ') . $message->variables['@node_type'];
 		  $message->message .= '</div>';
 		  $message->message .= '<div class="teemeet-message-content">';
 		  $message->message .= $message->variables['@user_picture'];
 	   //   $message->message .= $message->variables['@username'] . ' has added ' . $message->variables['@node_title'] . '<br/>';
-		 $message->message .= $group_user_name . ' has added ' . $group_node_title . '<br/>';
+		 $message->message .= $group_user_name . t(' has added ') . $group_node_title . '<br/>';
 		 
 		  $message->message .= $timeago;
 		  $message->message .= '</div>';
@@ -178,7 +178,7 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
 		  $message->message = $message->variables['@user_picture'];
 		  $message->message .= '<div class="teemeet-message-content">';
 		 // $message->message .= $message->variables['@username'] . ' has added ' . $message->variables['@node_title'] . '<br/>';
-		  $message->message .= $group_user_name . ' has added ' . $group_node_title . '<br/>';
+		  $message->message .= $group_user_name . t(' has added ') . $group_node_title . '<br/>';
 		  $message->message .= $timeago;
 		  $message->message .= '</div>';
       }
@@ -212,7 +212,7 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
 		
       if ($stream->stream->name == 'ogheartbeat') {
       $message->message = '<div class="teemeet-message-type">';
-      $message->message .= 'new comment';
+      $message->message .= t('new comment');
       $message->message .= '</div>';
       $message->message .= '<div class="teemeet-message-content">';
       $message->message .= $message->variables['@picture'];
@@ -255,12 +255,12 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
 			
       if ($stream->stream->name == 'ogheartbeat') {
         $message->message = '<div class="teemeet-message-type">';
-        $message->message .= 'new member';
+        $message->message .= t('new member');
         $message->message .= '</div>';
         $message->message .= '<div class="teemeet-message-content">';
         $message->message .= $message->variables['@avatar'];
        // $message->message .= $message->variables['@user'] . ' joined' . '<br/>';
-        $message->message .= $group_user_name . ' joined' . '<br/>';
+        $message->message .= $group_user_name . t(' joined') . '<br/>';
 		$message->message .= $timeago;
         $message->message .= '</div>';
       } else {
@@ -279,11 +279,11 @@ function teemeet_heartbeat_heartbeat_theme_alter(&$messages, HeartbeatAccess $st
     if ($message->message_id == 'custom_reply_rsvp') {
       if ($stream->stream->name == 'ogheartbeat') {
         $message->message = '<div class="teemeet-message-type">';
-        $message->message .= 'new rsvp';
+        $message->message .= t('new rsvp');
         $message->message .= '</div>';
         $message->message .= '<div class="teemeet-message-content">';
         $message->message .= $message->variables['@avator'];
-        $message->message .= $message->variables['@user']. ' RSVPed '. $message->variables['@result']. ' for '. $message->variables['@title']. '<br/>';
+        $message->message .= $message->variables['@user']. t(' RSVPed '). $message->variables['@result']. t(' for '). $message->variables['@title']. '<br/>';
         $message->message .= $timeago;
         $message->message .= '</div>';
       }
