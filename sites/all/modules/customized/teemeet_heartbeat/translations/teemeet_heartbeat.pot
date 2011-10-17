@@ -1,0 +1,58 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  teemeet_heartbeat.context.inc: n/a
+#  teemeet_heartbeat.module: n/a
+#  teemeet_heartbeat.info: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2011-10-17 13:13+0800\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: teemeet_heartbeat.context.inc:69
+msgid "Activity shown on home page."
+msgstr "显示在主页上的动态。"
+
+#: teemeet_heartbeat.module:31
+msgid "Introduction added when a user joined a group."
+msgstr "用户加入小组时的介绍。"
+
+#: teemeet_heartbeat.module:116
+msgid "@time ago"
+msgstr "@time 之前"
+
+#: teemeet_heartbeat.module:136
+msgid "is going to a meetup with "
+msgstr "将要参加一个聚会"
+
+#: teemeet_heartbeat.module:220;237
+msgid " commented on "
+msgstr "评论了"
+
+#: teemeet_heartbeat.module:271
+msgid " joined the group "
+msgstr "加入了小组"
+
+#: teemeet_heartbeat.info:0
+msgid "Teemeet Heartbeat"
+msgstr "Teemeet动态"
+
+#: teemeet_heartbeat.info:0
+msgid "Heatbeat of teemeet.com"
+msgstr "teemeet.com的动态"
+
+#: teemeet_heartbeat.info:0
+msgid "teemeet.com"
+msgstr "teemeet.com"
+
