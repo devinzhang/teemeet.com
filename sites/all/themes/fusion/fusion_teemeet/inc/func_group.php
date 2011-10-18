@@ -2,9 +2,10 @@
 function output_group_menu($menuid = 'menu-group-page-nav')
 {	
 	$output = '<ul class="C_contextNav clearfix" id="C_navTopBody">';
-    //$output .= '<li class="first select"> <a href="http://www.meetup.com/SacSwim/">Home</a> </li>';
+    $output .= '<li class="first select"> <a href="/' . $GLOBALS['current_group']->path  . '">' . t('Home') . '</a> </li>';
     $tree = menu_tree_all_data($menuid);
-	$current_group = $GLOBALS['current_group'];  
+	$current_group = $GLOBALS['current_group']; 
+	global $user; 
     foreach($tree as $item)
     {
         $hasKids  = !empty($item['below']) ? 'class="hasKids"'  : '';
@@ -23,12 +24,17 @@ function output_group_menu($menuid = 'menu-group-page-nav')
     
     
     if(!og_is_group_member($current_group->nid) or isset($_COOKIE['menu']))
-    {
-        $output .= '<li class="calltoaction rightmenu giant"> <a href="http://www.meetup.com/SacSwim/join/" class="J_signupLink J_onClick omnCamp omnrg_joinus topNavJoinus">Join us!</a> </li>';
+    {	if($user->uid){
+			$join_link = url('og/subscriber/'.$current_group->nid);
+		}else{
+			$join_link = url('user/register');
+		}
+        $output .= '<li class="calltoaction rightmenu giant"> <a href="'.$join_link.'" class="J_signupLink J_onClick omnCamp omnrg_joinus topNavJoinus">加入我们!</a> </li>';
     }
-    else
-    {	
-		
+    else if($user->uid == $current_group->uid)
+
+    {
+        $grouptool = t('Group Tools');
 		$schedule_meetup_link = l('发起活动',$current_group->path.'/node/add/event', array('query'=>array('gids[]'=>$current_group->nid)));
         $sendmail_link = l(t('Email Members'),$current_group->path.'/groupextension/'.$current_group->nid.'/messages/send');
         $manage_link = l(t('Group Settings'),$current_group->path.'/groupextension/'.$current_group->nid.'/manage');
@@ -37,7 +43,7 @@ function output_group_menu($menuid = 'menu-group-page-nav')
         
         $output .= <<<EOF
 <li class="hasKids groupTools rightmenu last">
-<a href="#" class="withKids">Group Tools</a>
+<a href="#" class="withKids">$grouptool</a>
 <ul>
 <li class="">
 $schedule_meetup_link
@@ -54,10 +60,6 @@ $manage_link
 $money_link
 </li>
 
-<li class="last ">
-$checklist_link
-</li>
-
 </ul>
 </li>
 EOF;
@@ -70,5 +72,5 @@ EOF;
 
 function output_group_sitetitle(&$node)
 {    
-    return '<h1 id="bannerGroupName"><a href="' . $node->path . '" title="' . $node->field_site_title[0]["safe"] . '"><span>' . $node->field_site_title[0]["safe"] . '</span> </a> </h1>';
+    return '<h1 id="bannerGroupName"><a href="' . $node->path . '" title="' . $node->field_site_title[0]["value"] . '"><span>' . $node->field_site_title[0]["value"] . '</span> </a> </h1>';
 } 

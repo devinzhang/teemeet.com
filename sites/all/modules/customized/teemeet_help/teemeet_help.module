@@ -37,7 +37,7 @@ function teemeet_help_latest()
 					</h2>
 					<p>' . $help->teaser . ' </p>
 
-						<p class="readMore">' . l('Read more', 'node/' . $help->nid) . '</p>
+						<p class="readMore">' . l('更多', 'node/' . $help->nid) . '</p>
 
 			</div>
 

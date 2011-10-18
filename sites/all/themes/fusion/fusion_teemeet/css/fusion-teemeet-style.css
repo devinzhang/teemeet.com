@@ -568,6 +568,14 @@ ul.pager a:focus {
 form input.form-submit {
   margin: 2px;
   padding: 3px 5px;
+  background: -moz-linear-gradient(center top , #6E1B29, #3B0F17) repeat scroll 0 0 transparent;
+  border-color: #3B0F17;
+  color: #FFFFFF !important;
+  text-shadow: 1px 1px 0 #6E1B29;
+  border: 2px solid #AD0000;
+  border-radius: 4px 4px 4px 4px;
+  text-align: center;
+    text-decoration: none;
 }
 
 /* Hover style for form buttons */
@@ -1401,3 +1409,41 @@ background: -moz-linear-gradient(center top , #F10044, #AD0000) repeat scroll 0 
  margin-left:0;
  margin-right: 0;
 }
+
+/*rsvp form*/
+#rsvp-box-action{
+ height: 50px;
+}
+
+#rsvp-box-action .form-radios  label{
+width: 85px;
+padding-left:3px;
+background-image: none;
+}
+
+#rsvp-box-action .form-radios  .form-item{
+width:85px;
+float:left;
+}
+
+.rsvp-box-block  #edit-guest-wrapper{
+margin-top: 0;
+margin-bottom: 0;
+width:40px;
+}
+.rsvp-box-block  #edit-guest-wrapper input{
+background-color: #FFFFFF;
+    border: 1px solid #848484;
+    border-radius: 2px 2px 2px 2px;
+    box-shadow: 1px 1px 1px 0 rgba(127, 127, 127, 0.2) inset;
+    display: inline-block;
+    font-size: 11px;
+    height: 22px;
+    line-height: 22px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+
+

@@ -57,12 +57,12 @@
 	  </div>
     <? endif; ?>  
       <ul id="C_userLinks">
-        <li class="C_userNavItem C_userNavItem_less"><a href="#">What's new</a></li>
+        <li class="C_userNavItem C_userNavItem_less"><a href="<?php print url('whats_new')?>">新鲜事</a></li>
         <li class="C_userNavItem C_userNavItem_less"> <a href="#"><? echo t('help') ?></a> </li>
         
         <? if(!$user->uid): ?>
-         <li class="C_userNavItem"><a href="<?php echo url('user/login'); ?>" class="J_loginLink J_onClick headerLogin">Log in</a></li>
-         <li class="C_userNavItem"><a class="omnCamp omnrg_signup J_signupLink J_onClick headerSignup" href="<?php echo url('user/register');?>">Sign up</a></li>
+         <li class="C_userNavItem"><a href="<?php echo url('user/login'); ?>" class="J_loginLink J_onClick headerLogin">登入</a></li>
+         <li class="C_userNavItem"><a class="omnCamp omnrg_signup J_signupLink J_onClick headerSignup" href="<?php echo url('user/register');?>">注册</a></li>
         <? else: ?>
           <li class="C_userNavItem hasDropDown"><a href="<?php echo url('user/'.$user->uid.'/mygroups'); ?>"><? echo t('我的小组')?></a> <div class="C_arrowTab"></div> 
             <div id="C_groupsMenu" style="width: 310px; "> 
@@ -85,9 +85,9 @@
     
     <div id="C_globalNav">
       <div id="C_tabs"> 
-        <a href="<? echo url('search'); ?>"> <span class="C_tabContent"> <span class="C_topBig"> <? echo t('发现')?> </span> <span class="C_topSm"> <? echo t('一个聚会')?> </span> </span> </a>
+        <a href="<? echo url('search/node/'); ?>"> <span class="C_tabContent"> <span class="C_topBig"> <? echo t('发现')?> </span> <span class="C_topSm"> <? echo t('一个聚会')?> </span> </span> </a>
         <a id="tabs_start" class="omnCamp omnic_sn3 hasAd" href="<? echo url('group/create') ?>"> <span class="C_startContainer C_tabContent"> <span class="C_topBig"> <? echo t('创建') ?></span> <span class="C_topSm"> <? echo t('一个小组')?> </span> </span> </a>
-        <a id="tabs_sponsor" class="omnCamp omnrg_perksheader last" href="#"> <span class="C_startContainer C_tabContent"> <span class="C_topBig"> <? echo t('赞助') ?></span> <span class="C_topSm"> <? echo t('一个小组') ?> </span> </span> </a> </div>
+        <a id="tabs_sponsor" class="omnCamp omnrg_perksheader last" href="<?php print url('sponsorships'); ?>"> <span class="C_startContainer C_tabContent"> <span class="C_topBig"> <? echo t('赞助') ?></span> <span class="C_topSm"> <? echo t('一个小组') ?> </span> </span> </a> </div>
     </div>
     <!-- end C_globalNav -->
     

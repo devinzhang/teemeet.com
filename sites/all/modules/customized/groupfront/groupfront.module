@@ -80,10 +80,10 @@ function groupfront_views($field)
  */
 function groupfront_menu() {
   $items = array();  
-  $items['about'] = array(
+  $items['about/%'] = array(
     'title' => t('Welcome to Home'),
     'page callback' => 'groupfront_page',
-    'page arguments' => array('about'),
+    'page arguments' => array(1),
     //'file' => 'groupfront_page.inc',
 	'access arguments'=>array('access content'),
   );
@@ -787,19 +787,58 @@ function groupfront_send_to_memebers(){
     return $output; 
 }
 
-function groupfront_page($page)
+function groupfront_page($gid)
 {
-    if($node = $GLOBALS['current_group'])
-    {           
-        require dirname(__FILE__) . '/group-page/' . $page . '.tpl.php';
-        return $string;
-        //ob_end_flush();
-        //echo ob_get_flush();die;
-        //$output = ob_get_flush();
-        //return $output;
-        //return file_get_contents( dirname(__FILE__) . '/group-page/' . $page . '.tpl.php');
-    }
-    //return ;
+	$group = node_load($gid);
+	$group_alias = drupal_get_path_alias('node/' . $gid);
+	
+	$sql = db_rewrite_sql("SELECT n.nid, n.title, n.uid, n.changed FROM {node} n 
+						INNER JOIN {og_ancestry} og_ancestry ON n.nid = og_ancestry.nid
+						WHERE n.status = 1 AND n.type = 'group_page' AND og_ancestry.group_nid = %d 
+						ORDER BY n.created DESC");
+
+	$results = db_query($sql, $gid);
+	$pages = array();
+	while ($page = db_fetch_object($results)) {
+		$author = user_load($page->uid);
+		$page->author = $author->name;
+		$pages[] = $page;
+	}
+	
+	$output = '<div class="D_box chapterPage"><div class="D_boxbody">';
+	$output .= '<div class="D_boxhead"><h1>' . $group->title . ' ' . t('pages') . '</h1>';
+	$output .= '<ul class="D_actions hasIcons">';
+	$output .= '<li class="canDo"><a class="sprite sprite_action page_add_icon" href="' . url($group_alias .'/node/add/group-page') . '?destination='. $group_alias . '/about/' . $gid . '">Add a page</a></li>';
+	$output .= '</ul>';
+	$output .= '</div>';
+	$output .= '</div></div>';
+	
+	$output .= '<div class="D_box"><div class="D_boxbody">';
+	$output .= '<div class="D_boxhead"><h2>' . t('Table of Contents') . '</h2></div>';
+	$output .= '<div class="D_boxsection " style="width:700px;"><table class="D_tabular" >';
+	$output .= '<thead><tr>
+				<th class="main">Page title</th>
+				<th class="date last">Most recent update</th>
+				<th class="main sender">Last edited by</th>
+				<th class="main sender">action</th>
+				</tr></thead>';
+	$output .= '<tbody>';
+	foreach ($pages as $p) {
+		$output .= '<tr>
+						<td class="main">' . l($p->title, $group_alias .'/node/'.$p->nid) . '</td>
+						<td class="last"> ' . date('F d,Y h:i A',$p->changed) . ' </td>
+						<td class="main"><a href="'. url('user/'.$p->uid) .'">'. $p->author .'</a></td>
+						<td class="main">
+							<a href="'. url($group_alias .'/node/'.$p->nid.'/edit',array('query' => 'destination='. $group_alias . '/about/' . $gid)) .'">'. t('Edit') .'</a> | 
+							<a href="'. url($group_alias .'/node/'.$p->nid.'/delete',array('query' => 'destination='. $group_alias . '/about/' . $gid)) .'">'. t('Delete') .'</a>
+						</td>
+					</tr>';
+	}
+	$output .= '<tbody>';
+	$output .= '</table></div>';
+	$output .= '</div></div>';
+	
+   return $output;
 }
 
 function groupfront_form__alter()

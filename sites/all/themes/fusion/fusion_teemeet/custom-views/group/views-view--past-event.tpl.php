@@ -3,5 +3,5 @@
     <ul class="resetList event-list clearfix">
   <? echo $rows?>    
     </ul>
-    <a href="#" style="text-transform:uppercase;" id="seePastMeetups" class="page-meetups D_roundedButton" >See all past Meetups</a>
+    
   </div>

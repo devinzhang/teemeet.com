@@ -40,7 +40,7 @@ $(document).ready(function(){
         }
         
         var aCssText = [],aCloneLink = [];
-        alert(aSheet[0].cssText);
+        
         for(var i=aStyle.length-1;i>-1;--i){
             var o = aStyle[i];
                 aCssText.push(o.innerHTML);
@@ -63,7 +63,6 @@ $(document).ready(function(){
                     }
                 }
         }
-        /*alert(aSheet[0].cssText);
         var oHead = document.getElementsByTagName('head')[0];
         for(var i = aCloneLink.length-1;i>-1;--i){
             var o = aCloneLink[i];
@@ -72,7 +71,7 @@ $(document).ready(function(){
             oHead.removeChild(o);
         }
         
-        aSheet[0].cssText += aCssText.join('');*/
+        aSheet[0].cssText += aCssText.join('');
     }
     fnMergeStyleSheet();    
 })
@@ -168,12 +167,12 @@ $(document).ready(function(){
 	  </div>
     <? endif; ?>  
       <ul id="C_userLinks">
-        <li class="C_userNavItem C_userNavItem_less"><a href="#">What's new</a></li>
-        <li class="C_userNavItem C_userNavItem_less"> <a href="#"><? echo t('help') ?></a> </li>
+        <li class="C_userNavItem C_userNavItem_less"><a href="#">新鲜事</a></li>
+        <li class="C_userNavItem C_userNavItem_less"> <a href="#"><? echo t('帮助') ?></a> </li>
         
         <? if(!$user->uid): ?>
-         <li class="C_userNavItem"><a href="<?php echo url('user/login'); ?>" class="J_loginLink J_onClick headerLogin">Log in</a></li>
-         <li class="C_userNavItem"><a class="omnCamp omnrg_signup J_signupLink J_onClick headerSignup" href="<?php echo url('user/register');?>">Sign up</a></li>
+         <li class="C_userNavItem"><a href="<?php echo url('user/login'); ?>" class="J_loginLink J_onClick headerLogin">登入</a></li>
+         <li class="C_userNavItem"><a class="omnCamp omnrg_signup J_signupLink J_onClick headerSignup" href="<?php echo url('user/register');?>">注册</a></li>
         <? else: ?>
           <li class="C_userNavItem hasDropDown"><a href="<?php echo url('user/'.$user->uid.'/mygroups'); ?>"><? echo t('我的小组')?></a> <div class="C_arrowTab"></div> 
             <div id="C_groupsMenu" style="width: 310px; "> 
@@ -187,7 +186,7 @@ $(document).ready(function(){
                 </ul>
             </div>
           </li>
-          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>">Account</a></li>
+          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>">帐户</a></li>
           <li class="C_userNavItem"><a href="<? echo url('logout') ?>"><? echo t('登出') ?></a></li>
         <? endif; ?>
       </ul>
@@ -196,9 +195,9 @@ $(document).ready(function(){
     
     <div id="C_globalNav">
       <div id="C_tabs"> 
-        <a href="<? echo url('search'); ?>"> <span class="C_tabContent"> <span class="C_topBig"> <? echo t('发现')?> </span> <span class="C_topSm"> <? echo t('一个聚会')?> </span> </span> </a>
+        <a href="<? echo url('search/node/'); ?>"> <span class="C_tabContent"> <span class="C_topBig"> <? echo t('发现')?> </span> <span class="C_topSm"> <? echo t('一个聚会')?> </span> </span> </a>
         <a id="tabs_start" class="omnCamp omnic_sn3 hasAd" href="<? echo url('group/create') ?>"> <span class="C_startContainer C_tabContent"> <span class="C_topBig"> <? echo t('创建') ?></span> <span class="C_topSm"> <? echo t('一个小组')?> </span> </span> </a>
-        <a id="tabs_sponsor" class="omnCamp omnrg_perksheader last" href="#"> <span class="C_startContainer C_tabContent"> <span class="C_topBig"> <? echo t('赞助') ?></span> <span class="C_topSm"> <? echo t('一个小组') ?> </span> </span> </a> </div>
+        <a id="tabs_sponsor" class="omnCamp omnrg_perksheader last" href="<?php print url('sponsorships'); ?>"> <span class="C_startContainer C_tabContent"> <span class="C_topBig"> <? echo t('赞助') ?></span> <span class="C_topSm"> <? echo t('一个小组') ?> </span> </span> </a> </div>
     </div>
     <!-- end C_globalNav -->
     
@@ -217,9 +216,9 @@ $(document).ready(function(){
   <div id="C_footerBody">
     <div class="C_footerRow">
       <ul class="utility C_footerSection">
-        <li><a href="">关于Teemeet</a></li>
+    <!--    <li><a href="">关于Teemeet</a></li>
         <li><a href=""><span style="color:#FFFF99;">招贤纳才</span></a></li>
-        
+      -->  
       <!--  <li><a href="">Meetup HQ Blog</a></li>
         <li><a href="">Meetup API</a></li> -->
       </ul>
@@ -244,128 +243,6 @@ $(document).ready(function(){
   </div>
 </div>
 <!-- end C_footer -->
-
-<div id="dialogHello">
-  <div class="D_box calltoaction">
-    <div class="D_boxbody">
-      <div id="helloPanes">
-        <div id="paneLogin">
-          <div  class="D_boxhead">
-            <h1>Log in</h1>
-            <ul class="D_actions">
-              <li class="canDo"> Not registered with us yet? <a href="https://secure.meetup.com/register/" class="J_signupLink J_onClick inHelloSignup omnCamp omnrg_login">Sign up</a> </li>
-            </ul>
-          </div>
-          <div class="D_boxsection isMeetup">
-            <form action="https://secure.meetup.com/login/" method="post" id="loginForm" class="loginForm">
-              <div class="D_form embiggen">
-                <div class="element">
-                  <div class="label">
-                    <label>Email address:</label>
-                  </div>
-                  <div class="input">
-                    <input type="text" id="email" name="email" value="" tabindex="101" class="text" />
-                  </div>
-                </div>
-                <div class="element">
-                  <div class="label">
-                    <label> Password: </label>
-                    <p class="explain"> <a href="http://www.meetup.com/account/forgot/"> Forgot your password? </a> </p>
-                  </div>
-                  <div class="input">
-                    <input type="password" id="password" name="password" tabindex="102" class="text" />
-                  </div>
-                  <div class="input">
-                    <table summary="" class="inputs">
-                      <tr class="last">
-                        <td><input type="checkbox" id="rememberme" name="rememberme" tabindex="103" /></td>
-                        <td><label for="rememberme"> Remember me on this computer </label></td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-                <div class="footElement" style="text-align: left;">
-                  <input type="submit" name="submitButton" value="Log in" class="D_submit" tabindex="104"  />
-                  <input type="hidden" name="returnUri" value="" />
-                  <input type="hidden" name="op" value="login"/>
-                  <input type="hidden" name="apiAppName" value="" />
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="D_boxsection isFacebook">
-            <div class="orbox">
-              <div class="orword"> or </div>
-            </div>
-            <p class="explain">Log in to Meetup with your Facebook account.</p>
-            <div class="fbButton">
-              <fb:login-button v="2" perms="email" size="" onlogin="Meetup.Facebook.onLoginButtonClick();">
-                <fb:intl>Log in using Facebook</fb:intl>
-              </fb:login-button>
-            </div>
-          </div>
-        </div>
-        
-        <div id="paneSignup">
-          <div  class="D_boxhead">
-            <h1>Sign up</h1>
-            <ul class="D_actions">
-              <li class="canDo">Meetup members, <a href="https://secure.meetup.com/login/?returnUri=http%3A%2F%2Fwww.meetup.com%2FSacSwim%2Fjoin%2F" class="J_loginLink J_onClick inHelloLogin">Log in</a></li>
-            </ul>
-          </div>
-          <div class="D_boxsection isMeetup">
-            <form action="https://secure.meetup.com/register/" class="signUp J_signupForm" method="post" id="baseSignUp">
-              <div class="D_form embiggen">
-                <div class="element">
-                  <div class="label">
-                    <label>Your real name</label>
-                  </div>
-                  <div class="input">
-                    <input type="text" name="realname" id="baseSignUp_realname" value="" size="" maxlength="" class="text" title="Your real name" />
-                  </div>
-                </div>
-                <div class="element">
-                  <div class="label">
-                    <label>Your email</label>
-                  </div>
-                  <div class="input">
-                    <input type="text" name="email" id="baseSignUp_email" value="" class="text " title="Your email" />
-                    <p class="explain hideOnValidating">We hate spam too. We won't share your address!</p>
-                  </div>
-                </div>
-                <div class="element">
-                  <div class="label">
-                    <label>Pick a password</label>
-                  </div>
-                  <div class="input">
-                    <input type="password" class="text " name="password" id="baseSignUp_password" value="" title="Pick a password" />
-                  </div>
-                </div>
-                <input type="hidden" name="country" value="us" />
-                <input type="hidden" name="zip" value="95816" />
-                <div class="footElement" style="text-align: left;">
-                  <input type="submit" name="submitButton" value="Sign up" class="D_submit"  />
-                  <input type="hidden" id="htmlEmail" name="emailPrefs" value="1" />
-                  <input type="hidden" name="submit" value="Submit" />
-                  <input type="hidden" name="number" value="28" />
-                  <input type="hidden" name="c" value="1082327" />
-                  <input type="hidden" name="fromWaitingList" value="" />
-                  <input type="hidden" name="urlkey" value="swimming" />
-                  <input type="hidden" name="inv_code" value="" />
-                  <input type="hidden" name="returnUri" value="http://www.meetup.com/SacSwim/join/" />
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-
 
 
 <div id="fb-root"></div>

@@ -6,10 +6,18 @@
 }*/
 define('NODE_TYPE', 'group'); //节点类型
 
-/*function group_extensions_form_alter(&$form, $form_state, $form_id)
+function group_extensions_form_alter(&$form, $form_state, $form_id)
 {
-    if($_GET['q'] == 'node/add/group') print_r($form_id);
-}*/
+    if ($form_id == 'forum_topic_node_form') {
+		  $gid = $_GET['gids'][0];
+		  if($gid) {
+		  $group = node_load($gid);
+		  $form['#redirect'] = $group->path.'/groupextension/223/forum';
+		}
+	}
+}
+
+
 //_form_group_node
 function group_extensions_perm()
 {
@@ -301,6 +309,18 @@ function group_extensions_nodeapi(&$node, $op, $teaser, $page)
         }       
         
     break;
+	case 'insert':
+	break;
+	case 'view':
+	if($node->type == "forum_topic"){
+		$belonged_gid = array_shift($node->og_groups);
+	/*	if($belonged_gid){
+			
+		}
+		*/
+	}
+	
+	break;
     }
     
 }

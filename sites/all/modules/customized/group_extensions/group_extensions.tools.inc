@@ -996,7 +996,7 @@ function groupextension_tools_contact_mail_send($form_values) {
   else {
     drupal_set_message(t('There was a problem sending your message and it was not sent.'), 'error');
   }
-
+  drupal_goto($group_node->path);
 }
 
 /**

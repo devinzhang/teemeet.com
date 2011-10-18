@@ -27,7 +27,7 @@ function group_extensions_all_group_members($nid) {
                 </ul>';
       $output.=_group_extensions_members_tabmenu($arg);
      $output .= group_extensions_all_show_members($arg); 
-    return $output; 
+    return '<div class="D_box">' . $output . '</div>'; 
 }
 
 /* output the tabed menu

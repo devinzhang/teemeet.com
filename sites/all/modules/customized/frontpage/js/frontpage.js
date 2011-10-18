@@ -1,7 +1,7 @@
 
 $(document).ready(function() {
    
-    $('#frontpage-top-right-menu').superfish({
+      $('#frontpage-top-right-menu').superfish({
       // Apply a generic hover class.
       hoverClass: 'over',
       delay:       1000,                            // one second delay on mouseout 

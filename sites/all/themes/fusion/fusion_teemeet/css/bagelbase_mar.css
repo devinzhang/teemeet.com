@@ -251,7 +251,7 @@ p.event-rating .D_icon {
 	border-right:1px dotted #e6e6e6;
 	margin-bottom:14px;
 	float:left;
-	width:362px;
+	/*width:362px;*/
 	padding-bottom:12px;
 }
 .event-meta {
@@ -2605,3 +2605,6 @@ a.no-underline-link:hover {
 #toggle-option-box .throbber {
 	display:none;
 }
+
+.block .inner { margin:0;}
+.block ul, .block ol {margin:0;}

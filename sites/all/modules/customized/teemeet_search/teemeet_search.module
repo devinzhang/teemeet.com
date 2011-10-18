@@ -88,3 +88,82 @@ function teemeet_search_db_rewrite_sql($query, $primary_table, $primary_field, $
 function teemeet_search_search_submit($form, &$form_state) {
    $_SESSION['search_address'] = $form_state['values']['address'];  
 }
+
+function teemeet_search_menu_alter(&$items) {
+  $items['search/node/%menu_tail']['page callback'] = 'teemeet_search_view';
+}
+
+/**
+ * Menu callback; presents the search form and/or search results.
+ */
+function  teemeet_search_view($type = 'node') {
+  // Search form submits with POST but redirects to GET. This way we can keep
+  // the search query URL clean as a whistle:
+  // search/type/keyword+keyword
+  if (!isset($_POST['form_id'])) {
+    if ($type == '') {
+      // Note: search/node can not be a default tab because it would take on the
+      // path of its parent (search). It would prevent remembering keywords when
+      // switching tabs. This is why we drupal_goto to it from the parent instead.
+      drupal_goto('search/node');
+    }
+
+    $keys = search_get_keys();
+    // Only perform search if there is non-whitespace search term:
+    $results = '';
+    if (trim($keys)) {
+      // Log the search keys:
+      watchdog('search', '%keys (@type).', array('%keys' => $keys, '@type' => module_invoke($type, 'search', 'name')), WATCHDOG_NOTICE, l(t('results'), 'search/'. $type .'/'. $keys));
+
+      // Collect the search results:
+      $results = search_data($keys, $type);
+
+      if ($results) {
+        $results = theme('box', t('Search results'), $results);
+      }
+      else {
+        $results = theme('box', t('Your search yielded no results'), search_help('search#noresults', drupal_help_arg()));
+      }
+    }
+
+    // Construct the search form.
+    $output = drupal_get_form('search_form', NULL, $keys, $type);
+	
+    if ($results) {
+		$output .= $results;
+	}else{
+		 $sql = "SELECT node.nid AS nid FROM {node} node 
+				WHERE node.type = 'group' AND node.status <> 0  
+				ORDER BY node.created LIMIT 5";
+		$default_query = db_query($sql);
+;
+		$default_array = array();
+		while ($d = db_fetch_array($default_query)) {
+			$node = node_load($d['nid']);
+
+			$default_array[] = array(
+			  'link' => url('node/'. $node->nid, array('absolute' => TRUE)),
+			  'type' => check_plain(node_get_types('name', $node)),
+			  'title' => $node->title,
+			  'user' => theme('username', $node),
+			  'date' => $node->changed,
+			  'node' => $node,
+			  'extra' => '',
+			  'score' => '',
+			  'snippet' => $node->og_description
+			);
+		}
+		
+		/*$default_results = '';
+		foreach ($default_array as $result) {
+			$default_results .= theme('search_result', $result, 'node');
+		 }	*/
+		
+		$output .= theme('box', t('Search results'), theme('search_results', $default_array, 'node'));
+	}
+
+    return $output;
+  }
+
+  return drupal_get_form('search_form', NULL, empty($keys) ? '' : $keys, $type);
+}

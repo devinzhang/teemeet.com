@@ -266,8 +266,8 @@ function usercenter_user($op, &$edit, &$account, $category = NULL) {
 			break;
 
         case 'view' :
-            global $user; 
-            if($user->uid != $account->uid) {
+           global $user; 
+            if(($user->uid != $account->uid)) {
                 if(empty($account->og_groups)) {
                     drupal_goto('user/'.$account->uid); 
                 }else{
@@ -275,7 +275,8 @@ function usercenter_user($op, &$edit, &$account, $category = NULL) {
                 
                 drupal_goto('member/'.$account->uid.'/ingroup/'.$first_group['nid']); 
                 }
-            }
+            } 
+			
 		break;
         
 		case 'login':
@@ -367,19 +368,20 @@ function usercenter_profile_header(){
     $output = '';
     drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
     global $user; 
+	$usr = user_load(arg(2));
     global $base_url;
     $output .= '<div class="D_boxhead">';
 	$output .= '<span id="member_'.$user->uid.'" class="member-header">';
 
     $output .= '<div class="D_memberProfileHdrThumbnail">';
-    $output .= '<a href="user/'.$user->uid.'"><img width="85" height="85" alt="'.$user->name.'" src="'.$base_url.'/'.$user->picture.'"></a>';
+    $output .= '<a href="user/'.$usr->uid.'"><img width="85" height="85" alt="'.$usr->name.'" src="'.$base_url.'/'.$usr->picture.'"></a>';
     $output .= '</span>';
 
     $output .= '<h1 class="fn">';
-    $output .= l($user->name, 'user/'.$user->uid);
+    $output .= l($usr->name, 'user/'.$usr->uid);
 
     $output .= '</h1>';
-    $output .= '<div id="memberInfo_'.$user->uid.'"></div>';
+    $output .= '<div id="memberInfo_'.$usr->uid.'"></div>';
     $output .= '</div>';
     $output .= '</div>';
     
