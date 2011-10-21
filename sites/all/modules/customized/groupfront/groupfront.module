@@ -808,7 +808,9 @@ function groupfront_page($gid)
 	$output = '<div class="D_box chapterPage"><div class="D_boxbody">';
 	$output .= '<div class="D_boxhead"><h1>' . $group->title . ' ' . t('pages') . '</h1>';
 	$output .= '<ul class="D_actions hasIcons">';
-	$output .= '<li class="canDo"><a class="sprite sprite_action page_add_icon" href="' . url($group_alias .'/node/add/group-page') . '?destination='. $group_alias . '/about/' . $gid . '">Add a page</a></li>';
+	if (og_is_group_member($gid)) {
+		$output .= '<li class="canDo"><a class="sprite sprite_action page_add_icon" href="' . url($group_alias .'/node/add/group-page') . '?destination='. $group_alias . '/about/' . $gid . '">' . t('Add a page') . '</a></li>';
+	}
 	$output .= '</ul>';
 	$output .= '</div>';
 	$output .= '</div></div>';
