@@ -31,7 +31,7 @@ function sponsor_create_sponsor(){
     $output .= '<div class="D_form " style="">';
         if(!$user->uid){
         $output .= t('<p style="padding: 8px 12px; font-size: 12px; margin-bottom: 0pt; background: none repeat scroll 0% 0% rgb(237, 245, 254);">
-            '.t('Already have an account?').'<a class="J_loginLink J_onClick" href="'.url('user/login').'/">Login</a>
+            '.t('Already have an account?').'<a class="J_loginLink J_onClick" href="'.url('user/login').'/">' . t('Login') . '</a>
             </p>');
         }
     
@@ -123,10 +123,10 @@ function _sponsor_output_step_indicator($step) {
     $output .= '<ul id="perks-breadcrumb">'; // output the step
     $step_class = array('','','','');
     $step_class[$step-1] = 'D_selectedStep';
-    $output .= '<li class="D_step '.$step_class[0].'"><span class="step-num">1</span> Register</li>';
-    $output .= '<li class="D_step '.$step_class[1].'"><span class="step-num">2</span> Create your Perk</li>';
-    $output .= '<li class="D_step '.$step_class[2].'"><span class="step-num">3</span> Add payment info</li>';
-    $output .= '<li class="D_step '.$step_class[3].'"><span class="step-num">4</span> Manage your Perk</li>';
+    $output .= '<li class="D_step '.$step_class[0].'"><span class="step-num">1</span> ' . t('Register') . '</li>';
+    $output .= '<li class="D_step '.$step_class[1].'"><span class="step-num">2</span> ' . t('Create your Perk') . '</li>';
+    $output .= '<li class="D_step '.$step_class[2].'"><span class="step-num">3</span> ' . t('Add payment info') . '</li>';
+    $output .= '<li class="D_step '.$step_class[3].'"><span class="step-num">4</span> ' . t('Manage your Perk') . '</li>';
     $output .= '</ul>';
     
     return $output; 
@@ -157,12 +157,12 @@ function usercenter_sponsor_create_form(&$form_state, $uid) {
         );
     }
    
-    $form['business'] = array('#type' => 'textfield',
+	$form['business'] = array('#type' => 'textfield',
             '#title' => t('Your business or organization'),
             '#default_value' =>'',
             '#maxlength' => EMAIL_MAX_LENGTH,   
             '#required' => TRUE,
-  );    
+			);    
   
   $form['street'] = array('#type' => 'textfield',
             '#title' => t('Street'),
