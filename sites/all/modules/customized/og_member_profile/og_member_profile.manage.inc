@@ -192,7 +192,7 @@ function og_member_profile_setting_member_form_submit($form, &$form_state) {
 function og_member_profile_edit($uid, $gid){
     $output = '';
     $output .= drupal_get_form('og_member_profile_edit_form',$uid, $gid); 
-    return $output; 
+     return '<div class="D_box">' . $output . '</div>';
 }
 
 function og_member_profile_edit_form(&$form_state, $uid, $gid) {
@@ -213,7 +213,7 @@ function og_member_profile_edit_form(&$form_state, $uid, $gid) {
             '#default_value' => $profile->introduction,
             '#required' => false,           
   ); 
-  $form['introduce']['image'] = array(
+ /* $form['introduce']['image'] = array(
             '#type' => 'image_upload_element',
             '#title' => t('Add profile photo'),
             '#description' => _profile_form_explanation($field),
@@ -223,6 +223,7 @@ function og_member_profile_edit_form(&$form_state, $uid, $gid) {
                   'file_validate_extensions' => array('txt gif jpg jpeg'),
                 ),
   );
+  */
   /* questions */
    $request_questons = variable_get('group_'.$gid.'_profile_requrement_question',0);
      if($request_questons){       
@@ -337,7 +338,7 @@ function og_member_profile_edit_form_submit($form, &$form_state) {
     }
     
    drupal_set_message(t("Your profile has been updated"));
-
+   drupal_goto($GLOBALS['current_group']->path.'/member/'.$uid.'/ingroup/'.$gid);
 }
 
 /*menu call back to update the user group title

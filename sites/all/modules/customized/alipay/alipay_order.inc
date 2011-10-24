@@ -2,22 +2,35 @@
 
 function alipay_order_confirm() 
 {
+    $form['confirm'] = array
+    (
+        '#value' => 
+        "<div>
+        <p>$_GET[subject]</p>
+        <p>$_GET[total_fee]</p>
+        <p>$_GET[alibody]</p>
+        </div>"
+    );
+    
     $form['subject'] = array
     (
-        '#type' => 'textfield',
-        '#title' => t('商品/服务名称')
+        '#type' => 'hidden',
+        '#title' => t('商品/服务名称'),
+        '#default_value' => $_GET['subject'] 
     );
     
     $form['total_fee'] = array
     (
-        '#type' => 'textfield',
-        '#title' => t('总金额')
+        '#type' => 'hidden',
+        '#title' => t('总金额'),
+        '#default_value' => $_GET['total_fee'] 
     );
     
     $form['alibody'] = array
     (
-        '#type' => 'textfield',
+        '#type' => 'hidden',
         '#title' => t('备注'),
+        '#default_value' => $_GET['alibody'] 
     );
     
     $form['submit'] = array

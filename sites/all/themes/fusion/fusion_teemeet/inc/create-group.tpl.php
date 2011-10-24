@@ -31,7 +31,7 @@ padding-bottom: 1em;
 		请先在这里注册帐号，然后再创建小组
 		<ul>
 			<li><a href="<?php print url('user/register'); ?>">加入Teemeet</a></li>
-			<li><a href="<?php print url('search'); ?>">随便浏览，查看其他小组</a></li>
+			<li><a href="<?php print url('search/node/'); ?>">随便浏览，查看其他小组</a></li>
 		</ul>
 		
 	</div>

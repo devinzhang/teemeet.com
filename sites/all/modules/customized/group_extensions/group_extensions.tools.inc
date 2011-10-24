@@ -30,11 +30,11 @@ function _groupextension_tools_send_message_form(&$form_state, $gid) {
  $form=array();  
  $select_options = array(
     t('All members of this Meetup Group'), 
-    t('A custom list'),
-    t('Members active within the last'),
-    t('Members inactive for'),
-    t('The Leadership Team'),
-    t('Related to a specific Meetup event')
+ //   t('A custom list'),
+ //   t('Members active within the last'),
+ //   t('Members inactive for'),
+ //   t('The Leadership Team'),
+//    t('Related to a specific Meetup event')
     
 ); 
 global $user; 
@@ -442,10 +442,10 @@ function _groupextension_tools_manage_output(){
     $member_link = l(t('Your Memebers'),$current_group->path.'/grouptool/'.$current_group->nid.'/manage/settings/members');
     $theme_link = url($current_group->path.'/theme/color_mine',array('query'=>array('styleid'=>$current_group->path)));
 	$tags_link = l(t('Topics'), $current_group->path.'/groupextension/'.$current_group->nid.'/tags');
-    $group_due_link = l('Membership Dues',$current_group->path.'/groupextension/'.$current_group->nid.'/dues');
-	$sponsors_list_link = l('Sponsors and Perks',$current_group->path.'/sponsor/'.$current_group->nid.'/list');
+    $group_due_link = l(t('Membership Dues'),$current_group->path.'/groupextension/'.$current_group->nid.'/dues');
+	$sponsors_list_link = l(t('Sponsors and Perks'),$current_group->path.'/sponsor/'.$current_group->nid.'/list');
 	$output.= <<<EOF
-   <h3>General info</h3>
+   <h3>基本信息</h3>
 <div class="D_boxcols divby3">
 <div class="D_col first">
 	<div class="D_colbody">
@@ -454,14 +454,13 @@ function _groupextension_tools_manage_output(){
 					<li class="D_category">
 						<div class="D_name">$basic_link</div>
 						<ul class="D_bullet">
-							<li>Meetup Group name</li>
-							<li>Meetup Group headline</li>
-							<li>Meetup Group description</li>
-							<li>What are members called?</li>
-							<li>Location</li>
-							<li>Web address</li>
-							<li>Adding Meetups <span class="D_new">New!</span></li>
-							<li>Meetup Group photo</li>
+							<li>小组名字</li>
+							<li>小组标题</li>
+							<li>小组描述</li>
+							<li>小组成员的叫什么？</li>
+							<li>所在地</li>
+							<li>网络地址</li>							
+							<li>小组的LOGO</li>
 						</ul>
 					</li>
 				</ul>
@@ -475,10 +474,10 @@ function _groupextension_tools_manage_output(){
 					<li class="D_category">
                     <div class="D_name">$member_link</div>
 						<ul class="D_bullet">
-							<li>Profile questions</li>
-							<li>Membership to the group</li>
-							<li>New Member Profile Requirements</li>
-							<li>Welcome message to new members</li>
+							<li>档案问题</li>
+							<li>会员信息</li>
+							<li>入会准则</li>
+							<li>新会员欢迎信息</li>
 						</ul>
 					</li>
 				</ul>
@@ -491,7 +490,7 @@ function _groupextension_tools_manage_output(){
 				<ul class="D_list">
 					<li class="D_category">
 						<div class="D_name">$tags_link</div>
-						<p>Choose the right topics so the right people can find your Meetup Group.</p>
+						<p>选择合适的主题以便其他人能够方便找到小组.</p>
 					</li>
 				</ul>
 			
@@ -504,12 +503,7 @@ function _groupextension_tools_manage_output(){
 		
 				<ul class="D_list">
 					<li class="D_category">
-                    <div class="D_name"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/settings/privacy/">Privacy</a></div>
-						<ul class="D_bullet">
-							<li>Make Meetup Group pages private</li>
-							
-							<li>Who can create new Pages?</li>
-						</ul>
+                   
 					</li>
 				</ul>
 			
@@ -522,9 +516,9 @@ function _groupextension_tools_manage_output(){
 					<li class="D_category">
 					<div class="D_name"><a href="$theme_link">Appearance</a></div>
 						<ul class="D_bullet">
-							<li>Personalize your group's colors and fonts</li>
-							<li>Select from pre-made themes</li>
-							<li>Make your own theme</li>
+							<li>设置小组主页的色调和字体</li>
+							<li>选择预设的小组外观</li>
+							<li>创建自己的小组外观</li>
 						</ul>
 					</li>
 				</ul>
@@ -535,14 +529,7 @@ function _groupextension_tools_manage_output(){
 	<div class="D_colbody">
 		
 				<ul class="D_list">
-					<li class="D_category">
-                    <div class="D_name"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/settings/venues/">Your Venues</a></div>
-						<ul class="D_bullet">
-							<li>Edit and manage your Venues</li>
-							<li>Share your Venues</li>
-							<li>Add a Venue</li>
-						</ul>
-					</li>
+					
 				</ul>
 			
 	</div>
@@ -554,8 +541,7 @@ function _groupextension_tools_manage_output(){
 		
 				<ul class="D_list">
 					<li class="D_category">
-						<div class="D_name"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/settings/domain/">Manage Custom Domains</a></div>
-						<p>Link your group to a domain you own</p>
+						
 					</li>
 				</ul>
 			
@@ -566,19 +552,7 @@ function _groupextension_tools_manage_output(){
 		
 					<ul class="D_list">
 					<li class="D_category">
-						<div class="D_name"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/settings/optional/">Optional features</a></div>
-						<ul class="D_bullet">
-							<li>Meetup Venues</li>
-							<li>Mailing lists and message boards</li>
-							
-							<li>Set your default currency</li>
-							
-							<li>Track web stats using Google Analytics</li>
-							
-							
-							<li>Follow us on</li>
-
-						</ul>
+						
 					</li>
 				</ul>
 			
@@ -588,10 +562,7 @@ function _groupextension_tools_manage_output(){
 	<div class="D_colbody">
 		
 				<ul class="D_list">
-				<li class="D_category">
-					<div class="D_name"><a href="http://www.meetup.com/Beijing-Soccer-Lovers/manage/roles/">Member roles</a></div>
-					<p>Manage roles and customize which members can help run the Meetup Group</p>
-				</li>
+				
 				</ul>
 			
 	</div>
@@ -600,7 +571,7 @@ function _groupextension_tools_manage_output(){
 		
 </div>
 <div class="D_boxsection ">	
-<h3>Money</h3>
+<h3>财务</h3>
 <div class="D_boxcols divby3">
 <div class="D_col first">
 	<div class="D_colbody">
@@ -608,8 +579,8 @@ function _groupextension_tools_manage_output(){
 <li class="D_category">
 <div class="D_name">$group_due_link</div>
 <ul class="D_bullet">
-<li>Manage how you collect dues</li>
-<li>Set your refund policy</li>
+<li>管理如何收费</li>
+<li>设置返还机制</li>
 </ul>
 </li>
 </ul>
@@ -622,9 +593,8 @@ function _groupextension_tools_manage_output(){
 <li class="D_category">
 <div class="D_name">$sponsors_list_link</div>
 <ul class="D_bullet">
-<li>Manage who can send you Sponsor offers</li>
-<li>Manage Perks, Sponsors and Offers</li>
-<li>Add your own Sponsor</li>
+
+<li>添加自己的赞助商</li>
 </ul>
 </li>
 </ul>
@@ -996,7 +966,7 @@ function groupextension_tools_contact_mail_send($form_values) {
   else {
     drupal_set_message(t('There was a problem sending your message and it was not sent.'), 'error');
   }
-
+  drupal_goto($group_node->path);
 }
 
 /**

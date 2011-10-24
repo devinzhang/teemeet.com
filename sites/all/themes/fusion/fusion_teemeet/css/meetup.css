@@ -15047,3 +15047,17 @@ ul.D_summaryList:after, ul.D_summaryList li:after {
 #C_document .box{
 	clear:both;
 }
+
+/* group nearby */
+.D_dateLabel {
+    background-color: #EEEEEE;
+    border-bottom: 1px solid #CCCCCC;
+    color: #000000;
+    font-weight: bold;
+    line-height: 1.25em;
+    overflow: hidden;
+    padding: 0.5em;
+}
+.help_new {
+	color: red;
+}

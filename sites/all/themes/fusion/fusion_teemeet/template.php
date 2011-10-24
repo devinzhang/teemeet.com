@@ -69,7 +69,12 @@ function fusion_teemeet_preprocess_page(&$vars) {
     {
         print_r($vars['template_files']);
     }
-   
+	
+	//新鲜事
+	if ($vars['user']->uid){
+		$sql = "SELECT COUNT(DISTINCT(nid)) FROM {node} node WHERE node.type = 'help' AND node.status = 1 AND node.created > " . $vars['user']->login;
+		$vars['whats_new_count'] = db_result(db_query($sql));
+	}
 }
 /* hook_menu_item 
 *
@@ -106,25 +111,16 @@ function fusion_teemeet_menu_item_link($link) {
   }
 }*/
 
-/*
+
 //http://hellodrupal.info/node/79
 function fusion_teemeet_theme(){
   return array(
-    'user_login' => array(
-      'template' => 'user-login',
+    'event_node_form' => array(
+      'template' => 'node-event-edit',
       'arguments' => array('form' => NULL),
     ), 
   );
 }
-
-function fusion_teemeet_preprocess_user_login(&$variables) {
-//去掉两个衔接。
-$variables['form']['name']['#title']='';
-$variables['form']['pass']['#title']='';
-$variables['form']['links']['#value']='';
-}
-*/
-
 
 /**
  * Node preprocessing

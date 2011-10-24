@@ -273,7 +273,7 @@ function color_mine_style()
             $style .= "  
             <style type='text/css'>
             #C_pageBody{              
-                background-image: url($settings[background_path]);
+                background-image: url(/$settings[background_path]);
                 background-repeat: $settings[background_repeat];
                 background-position: $settings[background_position];
                 background-attachment: $settings[background_attachment];

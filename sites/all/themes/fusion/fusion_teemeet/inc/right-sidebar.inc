@@ -1,5 +1,0 @@
-      <li class="v4-feed-item v4-feed-item-first v4-photo-block"> <a href="http://www.meetup.com/SacSwim/photos/2537181/42840621/" class="v4-photo-block-anc"> <img src="http://photos1.meetupstatic.com/photos/event/2/6/d/global_42840621.jpeg" width="172"> </a> </li>
-      <li class="v4-feed-item v4-photo-block"> <a href="http://www.meetup.com/SacSwim/photos/2537181/42628011/" class="v4-photo-block-anc"> <img src="http://photos3.meetupstatic.com/photos/event/6/d/6/b/global_42628011.jpeg" width="172"> </a> </li>
-      <li class="v4-feed-item v4-photo-block v4-photo-block-last"> <a href="http://www.meetup.com/SacSwim/photos/2697081/45533681/" class="v4-photo-block-anc"> <img src="http://photos4.meetupstatic.com/photos/event/d/1/b/1/global_45533681.jpeg" width="172"> </a>
-        <div class="v4-photo-block-more"><a href="http://www.meetup.com/SacSwim/photos/">See all photos</a></div>
-      </li>

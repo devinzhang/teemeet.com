@@ -1,4 +1,3 @@
-<? if($group->status ): ?>
 <div id="moduleBoxParent" class="D_box newBox X_alien_group_info">
   <div>
     <div class="D_boxsection isNotDivided ">
@@ -41,8 +40,12 @@
         </div>
         <div class="D_boxsection isFacebook">
           <div class="isFacebook_button">
-            <p><strong><a class="showJoin J_signupLink J_onClick inAlienNudgeSignup omnCamp omnrg_ghurf" href="og/subscribe/<? echo $group->nid ?>">Join Meetup here</a>.</strong></p>
-          </div>
+		  <?php global $user; if($user->uid <1):?>
+            <p><strong><a class="showJoin J_signupLink J_onClick inAlienNudgeSignup omnCamp omnrg_ghurf" href="<? echo url('user/register'); ?>"><?php print t('Join Teemeet here'); ?></a>.</strong></p>
+          <?php else:?>
+		   <p><strong><a class="showJoin J_signupLink J_onClick inAlienNudgeSignup omnCamp omnrg_ghurf" href="og/subscribe/<? echo $group->nid ?>"><?php print t('Join Teemeet here'); ?></a>.</strong></p>
+		  <?php endif; ?>
+		  </div>
         </div>
         <!--div class="D_boxsection tos"> By clicking the "Sign up using Facebook" button above, you agree to Meetup's <a href="http://www.meetup.com/terms/" target="_blank">Terms of Service</a> </div-->
       </div>
@@ -51,7 +54,32 @@
 </div>
 
 <div class="v4-gh-main-column">
-  
+  <div class="D_box" id="events-list-module">
+      <h1 id="welcome-message" class="">  <? echo t('Welcome, ').$GLOBALS['current_group']->field_member_alias[0]['value'] ?>! </h1>
+      <?php if(og_is_group_member($GLOBALS['current_group']->nid)): ?>
+	  <a href="#lma" id="lma-suggest" class="ghsprite plus_bk for-non-member showJoin J_signupLink J_onClick"><?php print t('Join and suggest a new Meetup'); ?></a>
+      <script>
+      $(document).ready(function(){
+          $('#lma-suggest').click(function(){
+              $.get("/ajax?func=scheduleMeetup&gid=<? echo $group->nid?>", function(data){
+                  $('#lma').html(data);
+              });         
+          });
+            
+      })
+      </script>
+      </script>
+      <div id="lma" class="closed">
+    
+      </div>
+      <!-- end lma -->
+	  <?php endif; ?>
+      <ul id="ajax-container" class="resetList event-list clearfix">
+        <? echo $content_group; ?>
+        <!--li class="event-list-more" id="centerColMeetupListRearguard"> <a href="http://www.meetup.com/SacSwim/?page=1" class="page-meetups D_roundedButton caps" >More Meetups <span class="feed-pager-link"></span></a> </li-->
+      </ul>
+      <!-- end ajax-container -->
+  </div>
   <? echo $content_bottom; ?>
 
 </div>
@@ -63,32 +91,3 @@
   </div>
 </div>
 <div style="clear:both; font-size:0;line-height:0;">&nbsp;</div>
-<? else : ?>
-<div id="moduleBoxParent" class="D_box newBox X_alien_group_info">
-	<div class="D_box calltoaction variant_fbonly">
-      <div class="D_boxbody">
-        <div class="D_boxhead">
-          <h2>当前小组处于关闭状态</h2>
-          <p style="font-size: 10px;"></p>
-        </div>
-        <div class="D_boxsection isFacebook">
-         
-        </div>
-		<?php 
-			global $user;
-			if($user->uid == $group->uid):
-		?>
-		   
-	   <div class="D_boxsection tos"> 小组的关闭或许是因为您还未付费开通,<br>或许，是因为小组费用到期<br>如果您是小组的组织者，请<?php print l('付费开通小组', 'order'); ?></div>
-	   <?php else: ?>
-	   <div class="D_boxsection tos"> 小组已经关闭，您可以选择继续留在这个小组以便以后小组回复<br>
-	   或者，您可以选择<?php print l('退出这个小组','og/unsubscribe/'.$group->nid.'/'.$usr->uid);?>
-	   </div>
-	   <? endif; ?>
-	   
-      </div>
-    </div>
-</div>
-
-
-<? endif; ?>  <!--  if one group didn't published -->

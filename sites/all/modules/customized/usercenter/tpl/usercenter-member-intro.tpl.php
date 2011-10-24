@@ -13,14 +13,22 @@
 <div id="image_20252341">
 <div>
 
-<a href="">
+<a href="<?php print url($curr_group->path.'/member/'.$account->uid.'/ingroup/'.$curr_group->nid);?>">
 <?php //in the product site, need to use this code instead the below <img part
-//$img_path = $account->picture;
+global $base_url;
+if($account->picture != ''){
+$img_path = $account->picture;
 //echo theme('imagecache','avator_100x100', $img_path,'','', array('class'=>'D_memberProfilePhoto'));
-//print_r($account);
-?>
+echo '<img width="100px" src="'.$base_url.'/'.$img_path.'">';
 
-<img width="100px" src="<?php global $base_url; echo $base_url.'/'.$account->picture; ?>" alt="" class=""></a>
+}else{
+$default_path = 'http://test.2.362202.com/sites/all/modules/customized/usercenter/images/default_avator.png';
+echo '<img width="100px" src="'.$default_path.'">';
+}
+
+
+?>
+</a>
 
 </div>
 
@@ -92,20 +100,14 @@ if(isset($group_member_profile->membertitle)){
 <div class="D_memberProfileContentChunk" id="D_memberProfileInteract">
 <ul>
 <li class="canDo contactMember">
-
-
-
-
-
-
-
-<a title="Send an Email" class="" href="http://www.meetup.com/Beijing-Soccer-Lovers/message/?recipientId=20252341"><img height="16" width="15" class="D_icon mailTip" alt="Send an Email" src="<?php global $base_url ; echo $base_url.'/'.drupal_get_path('module','usercenter').'/images/icon_envelope.gif'; ?>"></a> <a class="" href="http://www.meetup.com/Beijing-Soccer-Lovers/message/?recipientId=20252341"> Send email</a>
-
+<!--
+<a title="Send an Email" class="" href=""><img height="16" width="15" class="D_icon mailTip" alt="Send an Email" src="<?php global $base_url ; echo $base_url.'/'.drupal_get_path('module','usercenter').'/images/icon_envelope.gif'; ?>"></a> <a class="" href="http://www.meetup.com/Beijing-Soccer-Lovers/message/?recipientId=20252341"> Send email</a>
+-->
 </li>
 
 </ul>
 </div>
-
+<!--
 <div class="D_memberProfileContentChunk">
 <h4>Interested in new groups about</h4>
 
@@ -133,22 +135,20 @@ if(isset($group_member_profile->membertitle)){
 </ul>
 
 </div>
-
+-->
 <div class="D_memberProfileContentChunk">
-<h4>My Meetup Groups</h4>
+<h4><?php print t('我加入的小组'); ?></h4>
 
-<form method="post" action="http://www.meetup.com/account/">
+
 <ul style="margin-top: 0.5em ! important;" class="D_actions">
 <li title="&quot;Hidden&quot; means that only you will be able to view this information." class="canDo">
 
-<a class="parentSubmit sprite_action sprite monitor_icon" id="chapterHideSubmit">Hide my Meetup Groups</a>
-<noscript>&amp;lt;input type="submit" id="chapterHideSubmit" name="submit" value="Hide my Meetup Groups" /&amp;gt;</noscript>
 
-<input type="hidden" value="group_privacy" name="op">
-<input type="hidden" value="http://www.meetup.com/Beijing-Soccer-Lovers/members/20252341/groups/" name="returnUri">
+
+
 </li>
 </ul>
-</form>
+
 
 <ul class="D_summaryList  D_narrow">
 <?php  foreach($account->og_groups as $gid=>$group): ?>
@@ -181,7 +181,7 @@ echo $group['member_profile']->membertitle;
 </div>
 
 <ul class="D_actions">
-<li><a class="omnCamp omngj_sj3" href="">View profile</a></li>
+<li><a class="omnCamp omngj_sj3" href="">查看详细</a></li>
 </ul>
 </div>
 </li>
@@ -209,9 +209,7 @@ echo $group['member_profile']->membertitle;
 <h4><?php print t('Location'); ?></h4>
 <p>
 
-<a href=""><span class="locality"><?php print $account->locations[0]['city']; ?></span>, <span class="region"><?php print $account->locations[0]['province_name']; ?></span></a><span class="displaynone country-name"><?php print $account->locations[0]['country_name']; ?></span>
-
-<a class="D_inlineAction D_firstInlineAction" href=""><?php print t('Edit location');?></a>
+<span class="locality"><?php print $account->locations[0]['city']; ?></span>, <span class="region"><?php print $account->locations[0]['province_name']; ?></span> <span class="displaynone country-name"><?php print $account->locations[0]['country_name']; ?></span>
 
 </p>
 </div>
@@ -223,7 +221,7 @@ echo $group['member_profile']->membertitle;
 		
 
 <div class="D_memberProfileContentItem">
-<h4>Member of this Meetup Group since</h4>
+<h4>加入这个小组时间</h4>
 <p><?php echo format_date($account->og_groups[$curr_group->nid]['created'],'custom','M d, Y'); ?></p>
 </div>
 
@@ -246,7 +244,7 @@ echo $group['member_profile']->membertitle;
 
 
 <div class="D_memberProfileContentItem">
-<h4>Introduction</h4>
+<h4>自我介绍</h4>
 <p><?php
 $group_member_profile = $account->og_groups[$curr_group->nid]['member_profile'];
 echo $group_member_profile->introduction;

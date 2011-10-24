@@ -5,7 +5,7 @@
  * @copyright 2011
  */
  
-define('CREAT_GROUP_STEPS', 5); //表单步骤总数
+define('CREAT_GROUP_STEPS', 4); //表单步骤总数
 
 function group_create(&$form_state)
 {     
@@ -208,12 +208,25 @@ EOF
         break;
         
         case 4:
-        //payment
-		$form['Next'] = array
+            $q = db_query("SELECT node.nid AS nid, node_data_field_price.field_price_value AS node_data_field_price_field_price_value, node.language AS node_language, node.type AS node_type, node.vid AS node_vid, node_data_field_price.field_period_valuable_value AS node_data_field_price_field_period_valuable_value, node.title AS node_title, node_revisions.body AS node_revisions_body, node_revisions.format AS node_revisions_format FROM node node  LEFT JOIN content_type_service node_data_field_price ON node.vid = node_data_field_price.vid LEFT JOIN node_revisions node_revisions ON node.vid = node_revisions.vid WHERE node.type in ('service')");
+
+            $form['service-order'] = array
+            (
+                '#type' => 'radios', 
+                '#title' => t('Please Select a Service.'), 
+                '#required' => true,
+            );
+            while($r = db_fetch_object($q))
+            {    
+                //print_r($r);
+                $form['service-order']['#options'][$r->nid] = $r->node_revisions_body;                
+            }
+            
+    		$form['Pay'] = array
             (
                 '#weight' => 1000,
                 '#type' => 'submit',
-                '#value' => 'Next'
+                '#value' => t('Pay')
                 
             );
          
@@ -328,9 +341,12 @@ function group_create_submit($form, &$form_state)
 			
         }
 		elseif($form_state['storage']['step'] == 4)
-		 {
-		  
-		  }
+		{
+            $node = node_load($form_state['values']['service-order']);
+            $subject = $node->title . '-' . $node->nid . '-' . $form_state['storage']['nid'];
+            drupal_goto('order', 'subject=' . $subject . '&total_fee=' . $node->field_price[0]['value'] . '&alibody=' . $node->body);
+            //$form['service-order']['#options']
+		}
     }
 
     

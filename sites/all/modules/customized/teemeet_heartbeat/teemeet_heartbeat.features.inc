@@ -18,8 +18,8 @@ function teemeet_heartbeat_heartbeat_message_info() {
 
   // Exported heartbeat message: custom_add_node
   $messages['custom_add_node'] = array (
-    'message' => 'NEW !node_type
-    !username has added !node_title
+    'message' => 'NEW !node_type
+    !username has added !node_title
     !post_time !user_picture',
     'message_concat' => '',
     'message_id' => 'custom_add_node',
@@ -50,9 +50,9 @@ function teemeet_heartbeat_heartbeat_message_info() {
 
   // Exported heartbeat message: custom_add_comment
   $messages['custom_add_comment'] = array (
-    'message' => 'NEW COMMENT
-    !user 
-    commented on !content
+    'message' => 'NEW COMMENT
+    !user 
+    commented on !content
     !time !picture',
     'message_concat' => '',
     'message_id' => 'custom_add_comment',
@@ -143,8 +143,8 @@ function teemeet_heartbeat_heartbeat_message_info() {
 
   // Exported heartbeat message: custom_add_greeting
   $messages['custom_add_greeting'] = array (
-    'message' => '!author posted a greeting for !recipient in !group
-  !message
+    'message' => '!author posted a greeting for !recipient in !group
+  !message
   !time',
     'message_concat' => '',
     'message_id' => 'custom_add_greeting',
@@ -178,8 +178,8 @@ function teemeet_heartbeat_heartbeat_message_info() {
 
   // Exported heartbeat message: custom_delete_greeting
   $messages['custom_delete_greeting'] = array (
-    'message' => '!author deleted a greeting for !recipient in !group
-  !message
+    'message' => '!author deleted a greeting for !recipient in !group
+  !message
   !time',
     'message_concat' => '',
     'message_id' => 'custom_delete_greeting',

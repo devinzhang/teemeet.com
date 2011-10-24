@@ -22,7 +22,7 @@ function usercenter_group_member_intro($uid, $gid){
 
         $output .= '</div>';
     $output .= '</div>';
-    return $output;
+    return '<div class="D_box">' . $output . '</div>';
 
 }
 

@@ -52,7 +52,7 @@
                                 <?php echo $album->album['photo_size'].t(" photos"); ?>
                                 </p>
                                 <p class="D_less">
-                                    Activity on Aug 16, 2011
+                                    
                                 </p>
                             </div>
                             <div class="D_primary">

@@ -15,6 +15,7 @@
 </li>
 
 <?php if($is_album_admin): ?>
+<!--
 <li class="canDo">
 <a class="sprite sprite_action pencil_icon" title="Rename album" href="">Rename album</a>
 </li>
@@ -24,7 +25,7 @@
 <li class="canDo">
 <a class="sprite sprite_action photos_icon" title="Reorder album" href="">Reorder album</a>
 </li>
-
+-->
 <?php endif; ?>
 
 </ul>
@@ -66,9 +67,9 @@
 <?php print $set_photo_form; ?>
 
 </li>
-
-<li><a class="D_signal D_signal_appear_to_D_photoGallery_confirmDeletePhotoDialog" href="">删除</a></li>
 <!--
+<li><a class="D_signal D_signal_appear_to_D_photoGallery_confirmDeletePhotoDialog" href="">删除</a></li>
+
 <li class="D_dropdown" id="D_photoGallery_movePhoto">
 <span><a class="J_onClick D_dropdownToggler D_dropdownParent" id="D_photoGallery_movePhotoToggler" href="">
 Move

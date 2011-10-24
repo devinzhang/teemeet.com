@@ -19,15 +19,13 @@ function group_extensions_all_group_members($nid) {
      }
      $output .= '<ul class="D_actions hasIcons">
                 <li class="canDo">
-                    <a class="sprite sprite_action user_green_icon" href="'.url($current_group->path.'/member/'.$user->uid.'/ingroup/'.$current_group->nid).'">View your profile</a>
-                </li>
-                <li class="canDo">
-                <a class="sprite sprite_action email_edit_icon" href="">Edit communication settings</a>
-                </li>
-                </ul>';
+                    <a class="sprite sprite_action user_green_icon" href="'.url($current_group->path.'/member/'.$user->uid.'/ingroup/'.$current_group->nid).'">'.t('View your profile').'</a>
+                </li>';
+  //   $output .= '<li class="canDo"><a class="sprite sprite_action email_edit_icon" href="">Edit communication settings</a></li>';
+      $output .= '</ul>';
       $output.=_group_extensions_members_tabmenu($arg);
      $output .= group_extensions_all_show_members($arg); 
-    return $output; 
+    return '<div class="D_box">' . $output . '</div>'; 
 }
 
 /* output the tabed menu
@@ -96,7 +94,7 @@ function group_extensions_all_leadship_members($gid){
      }
      $output .= '<ul class="D_actions hasIcons">
                 <li class="canDo">
-                    <a class="sprite sprite_action user_green_icon" href="'.url($current_group->path.'/member/'.$user->uid.'/ingroup/'.$current_group->nid).'">View your profile</a>
+                    <a class="sprite sprite_action user_green_icon" href="'.url($current_group->path.'/member/'.$user->uid.'/ingroup/'.$current_group->nid).'">'.t('View your profile').'</a>
                 </li>
               
                 </ul>';
@@ -109,7 +107,7 @@ function group_extensions_all_leadship_members($gid){
    
      $output .= '</ul>';
 	 
-    return $output; 
+   return '<div class="D_box">' . $output . '</div>'; 
 }
 
 
@@ -150,9 +148,9 @@ $output .= '<span id="role_20252341" class="memRole">
 </span>
 
 <ul class="D_less memStats">';
-$output .= '<li><span class="bold">Joined</span>: '.format_date($user->created).'</li>';
+$output .= '<li><span class="bold">'.t('Joined').'</span>: '.format_date($user->created).'</li>';
 
-$output .= '<li><span class="bold">Last visited</span>:'.format_date($user->login,'small').'</li>';
+$output .= '<li><span class="bold">'.t('Last visited').'</span>:'.format_date($user->login,'small').'</li>';
 $output .= '</ul><p class="D_less">"'.$member_profile->introduction.'"</p></div></div></div>';     
      return $output; 
 }
