@@ -1,0 +1,252 @@
+<?php
+
+// group tags module complete the tag a group function 
+
+define("GROUP_TAGS_VOCABULARY_VID", 3);
+define("GROUP_TAGS_MAX_TOPICS", 15);
+
+
+function group_tags_menu()
+{
+    /*group tools */
+   
+    $items['groupextension/%/tags'] = array
+        (
+            'title' => t('Money'),
+            'description' => 'All the money related',
+            'page callback' => 'group_tags_tools_manage_tag',
+            'page arguments' => array(1),       
+            'type' => MENU_CALLBACK,
+            'access callback' => 'group_tags_is_group_admin',        
+            'access arguments' => array(1),        
+          //  'file' => 'group_extensions.tools.inc',
+        );
+   
+    return $items;    
+}
+
+
+/* if the current use is the group admin 
+*
+*/
+
+function group_tags_is_group_admin($gid){
+$node = node_load($gid); 
+return og_is_group_admin($node); 
+}
+
+
+/* hook_theme
+**
+*/
+
+function group_tags_theme() {
+    return array(		
+		   			
+			'group_tags_edit_form' => array(
+                    'template' => 'group-tags-form',
+                    'arguments' => array (
+                            'form' => NULL,
+                    ),                   
+            ), 
+			'group_tag_exist_field' => array(
+				'arguments' => array('element'),
+				'file' => 'group_tag_exist_field_elements.inc',
+			),
+    );
+}
+
+/*hook_elements 
+** add a new tag element, which include three values, - tag name, tag tid, and tag node counter
+*/
+
+function group_tags_elements() {
+  // This interest_field element keeps its values as the three part, 
+  // brand, quesiton and wishilist.
+  $types['group_tag_exist_field'] = array(
+    '#input' => TRUE,
+
+    // #process is an array of callback functions executed when this element is
+    // processed. Here it provides the child form elements which define
+    // areacode, prefix, and extension.
+    '#process' => array('group_tag_exist_field_process'),
+
+    // validation handlers for this element
+    '#element_validate' => array('group_tag_exist_field_validate'),
+    '#autocomplete_path' => FALSE,
+  );
+	return $types;
+}
+
+
+
+/*menu callback
+**
+*/
+function group_tags_tools_manage_tag($gid) {
+	$output = '';
+	$current_group = $GLOBALS['current_group'];
+	$output .='<div class="D_box"><div class="D_boxbody">';
+		$output .= '<div class="D_boxhead">';
+			$output .= '<div class="D_backTo">';
+				$output .= l(t('Back to group settings'), $current_group->path.'/groupextension/'.$current_group->nid.'/manage');
+			$output .= '</div>';		
+			$output .= '<h1>'.t('What\'s your Meetup Group about?').'</h1>';
+			$output .='<div class="D_splain splainRegistered">';
+			$output .='<p>Topics <strong>categorize</strong> and <strong>describe</strong> what your Meetup Group is about in a word or two.  Pick up to <strong>15 topics</strong> for your Meetup Group.</p>';
+			$output .='</div>';
+		$output .= '</div>';
+		$group_title = $current_group->field_site_title[0]['value'];
+	
+		$output .= '<div class="D_boxsection ">';
+			$output .= drupal_get_form('group_tags_tools_edit_form', $current_group->nid);
+			
+		$output .= '</div>';
+		
+	$output .= '</div></div>';
+	
+	return $output ; 
+}
+
+
+/* define a form to allow the user input the comment
+ ** @param $gid, the group node nid
+ **
+ */
+function  group_tags_tools_edit_form(&$form_state,$gid) {
+	$group_node = node_load($gid);
+	drupal_add_js(drupal_get_path('module','group_tags').'/js/group_tags.js');
+	$i = 1; 	
+	$j = 0; 
+	foreach($group_node->taxonomy as $key=>$value){
+		$j ++;
+		$nodes_taxonomy[] =  $key;		
+		//$counter = db_result(db_query('select count(*) from {term_node} where tid=%d', $key));
+		$counter = taxonomy_term_count_nodes($key);
+		$form['group_exist_tag_'.$j] = array(
+			'#type' => 'group_tag_exist_field',
+			'#title' => '',
+			'#value' => array('tag_name'=>$value->name, 'tag_tid'=>$key, 'tag_node_counter'=>$counter),			
+		);	
+	}	
+	
+	for($i=$j; $i<= GROUP_TAGS_MAX_TOPICS; $i++) {
+	$form['group_tag_'.$i] = array(
+		'#type' => 'textfield',
+		'#title' => '',
+		'#default_value' => '',
+		'#size' => 50,
+		'#maxlength' => 128,
+		'#autocomplete_path' => 'taxonomy/autocomplete/'. GROUP_TAGS_VOCABULARY_VID,
+		'#required' => false,
+		
+	);
+	}
+
+	$form['gid'] = array(
+	'#type' => 'hidden',
+	'#value' => $gid,
+	);
+
+	$form['grouptag_submit'] = array(
+	'#type' => 'submit',
+	'#value' => t('Submit'),
+	'#weight' => 4,
+	);
+	$form['#theme'] = 'group_tags_edit_form';
+	
+	return $form;
+}
+
+
+function group_tags_tools_edit_form_submit($form, &$form_state) {
+    $values = $form_state['values'];
+    $gid = $form_state['values']['gid']; 
+	$group_node = node_load($gid);
+	$group_node->taxonomy = array();
+	//firstly, remove all the exist tags for this node,quick and dirty way
+	taxonomy_node_delete($group_node);
+	
+	$nodes_taxonomy =  array();		
+
+	$tag_values = $_POST; 
+	
+	//handle the exist terms for this node
+	foreach ($tag_values as $key => $value) {
+		
+		if(substr($key,0,16) == 'group_exist_tag_'){
+			array_push($nodes_taxonomy, $value);
+			$group_node->taxonomy[] = $value;
+			continue;
+		}
+		
+		
+		if(substr($key,0,10) == 'group_tag_'){
+			if($value != '') {
+				//assign this term to this node
+				$terms_found = taxonomy_get_term_by_name($value);	
+				if (count ($terms_found) > 0) {
+					$tid = $terms_found[0]->tid ; 
+					$group_node->taxonomy[] = $tid;
+				} else {
+				$term = array(
+					'vid' => GROUP_TAGS_VOCABULARY_VID, // Voacabulary ID
+					'name' => $value, // Term Name
+					'synonyms' => NULL, // (Optional) Synonym of this term
+					'parent' => NULL, // (Optional) Term ID of a parent term
+					'relations' => NULL, // (Optional) Related Term IDs
+			   );       
+				taxonomy_save_term($term);
+				$terms_found = taxonomy_get_term_by_name($value);	
+				if (count ($terms_found) > 0) {
+					$tid = $terms_found[0]->tid ; 
+					$group_node->taxonomy[] = $tid;
+				}
+				}
+			continue;	
+			}
+			
+		}
+	} 
+	
+	node_save($group_node);
+	
+   // taxonomy_node_save($gid, $group_node->taxonomy);	
+	/*
+	//first step, we need to insert all the new tags, 
+	foreach($form_state['values'] as $key => $field) {
+		if(substr($key,0,10) == 'group_tag_'){
+			if($values[$key] != '') {
+				$term = array(
+				'vid' => GROUP_TAGS_VOCABULARY_VID, // Voacabulary ID
+				'name' => $values[$key], // Term Name
+				'synonyms' => NULL, // (Optional) Synonym of this term
+				'parent' => NULL, // (Optional) Term ID of a parent term
+				'relations' => NULL, // (Optional) Related Term IDs
+			   );       
+			taxonomy_save_term($term);
+			}   
+		}
+	} 
+	// next step, assigned the term to this group node
+		
+	foreach($form_state['values'] as $key => $field) {
+		if(substr($key,0,10) == 'group_tag_'){
+			if($values[$key] != '') {				
+				$terms_found = taxonomy_get_term_by_name($values[$key] );	
+				if (count ($terms_found) > 0) {
+                $tid = $terms_found[0]->tid ; 
+				
+				if (!in_array($tid, $nodes_taxonomy)) {
+				   $group_node->taxonomy[] = $tid;
+				   node_save($group_node);
+				}
+				} 
+			
+				
+			}   
+		}
+	} 
+*/    drupal_goto($GLOBALS['current_group']->path.'/groupextension/'.$gid.'/manage'); 
+
+} 

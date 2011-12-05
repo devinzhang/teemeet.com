@@ -1,0 +1,104 @@
+#block-heartbeat-siteuseractivity .block-title {
+  width:370px;
+  padding-top:20px;
+  padding-bottom:15px;
+  border-bottom:1px solid #ccc;
+  font-size:2em;
+}
+
+.custom_user_signup_event {
+  width:370px;
+  border-bottom:1px dotted #ccc;
+  margin-top:10px;
+}
+
+.custom_user_signup_event .picture {
+  float:left;
+}
+
+.custom_user_signup_event .picture img {
+  max-width:70px;
+  max-height:70px;
+}
+
+.custom_user_signup_event .teemeet-message-front {
+  width:280px;
+  float:left;
+  margin-left:10px;
+}
+
+.custom_user_signup_event .teemeet-message-front .user {
+  font-size:1.5em;
+}
+
+.custom_user_signup_event .teemeet-message-front .activity-time {
+  float:right;
+  font-size:0.8em;
+  color:#999;
+}
+
+
+#block-heartbeat-ogheartbeat .block-title {
+  padding-bottom:15px;
+}
+
+#block-heartbeat-ogheartbeat .teemeet-message-type {
+  text-transform:uppercase;
+  padding:5px 0;
+}
+
+#block-heartbeat-ogheartbeat .picture {
+  width:30px;
+  float:right;
+}
+
+#block-heartbeat-ogheartbeat .picture img {
+  max-width:30px;
+  max-height:30px;
+}
+
+#block-heartbeat-ogheartbeat .user {
+  font-size:1.3em;
+}
+
+#block-heartbeat-ogheartbeat .activity-time {
+  color:#6f7a8b;
+  font-size:10px;
+}
+
+#block-heartbeat-ogheartbeat .beat-item {
+  border:dotted #ccc;
+  border-width:1px 0;
+}
+
+
+#block-heartbeat-latestactivity .block-title {
+  padding-top:20px;
+  padding-bottom:15px;
+  border-bottom:1px solid #ccc;
+  font-size:1.9em;
+}
+
+#block-heartbeat-latestactivity .picture {
+  width:50px;
+  float:left;
+}
+
+#block-heartbeat-latestactivity .picture img {
+  max-width:50px;
+  max-height:50px;
+  margin-left:55px;
+  padding-right:10px;
+}
+
+#block-heartbeat-latestactivity .teemeet-message-content {
+  border-left:1px #ccc dotted;
+  margin-left:115px;
+  padding-left:10px;
+  font-size:16px;
+}
+
+#block-heartbeat-latestactivity .teemeet-message-content .activity-time {
+  font-size:10px;
+  color:#888b94;
+}

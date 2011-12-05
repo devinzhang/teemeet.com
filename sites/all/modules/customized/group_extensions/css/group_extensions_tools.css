@@ -1,0 +1,10 @@
+#-groupextension-tools-send-message-form label{
+  display: block;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#editMessage  .element  .label{
+font-size: 1.1em;
+    font-weight: bold;
+}

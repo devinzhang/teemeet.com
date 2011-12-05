@@ -1,0 +1,1449 @@
+
+/* Basic Typography & Colors
+-------------------------------------------------------------- */
+/* Add general site styling here for typography and background */
+body {
+  font-size: 75%;   /* also set in fusion_starter.info: settings[base-font-size] = font-size-12 */
+  background: none repeat scroll 0 0 #666666;
+    color: #272727;
+    font-family: verdana,arial,sans-serif;
+    font-size: 75%;
+    font-weight: normal;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    
+}
+
+/* Default link styles - separate a:visited for a different visited link style */
+a,
+a:link,
+a:visited {
+}
+
+/* Hover/active link styles. Don't forget :focus for accessibility */
+a:hover,
+a:focus,
+a:active {
+}
+
+
+/* Specific Typography
+-------------------------------------------------------------- */
+#site-name {
+  font-size: 300%;
+  line-height: 150%;
+}
+
+.footer-message {
+  font-size: 90%;
+}
+
+
+/* HTML Elements
+-------------------------------------------------------------- */
+body {
+}
+
+/* Site Info
+-------------------------------------------------------------- */
+/* Wrapper around logo, site name, and slogan */
+.header-site-info span {
+  display: block;
+}
+
+/* Add float here to put logo and site name side by side, also add margins as
+  needed */
+#logo {
+    left: 1em;
+    margin-top: 10px;
+    width: 20%;
+}
+
+/* Link and hover styles for site name */
+#site-name a:link,
+#site-name a:visited,
+#site-name a:hover,
+#site-name a:active {
+}
+
+/* Typography for site slogan */
+#slogan {
+}
+
+
+/* Regions
+
+  Classes (.region-name) should always be used instead of IDs (#region-name) so
+  that Skinr styles can override them with a class later
+-------------------------------------------------------------- */
+
+/* All Regions
+-------------------------------------------------------------- */
+/* By default this wrapper is set to 100% width and centered -- override here to
+  narrow wrapper or align left or right */
+.page {
+    background-color: #EDEFED;
+}
+
+/* The 0 values here remove padding and spacing at the bottom of the page.
+  Remove to add a gap at the very bottom of the page */
+.page-inner {
+  border: 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+
+/* Header Regions
+-------------------------------------------------------------- */
+/* Header Top region to the bottom of Header region */
+/* For full-width header background, add background image/color here */
+.header-group-wrapper {
+}
+
+.header-group {
+    background: none repeat scroll 0 0 white;
+    border-bottom: 1px solid #BBBBBB;
+    height: 5.4em;
+    width: 100%;
+}
+
+/* Header Top region which sits above the header */
+/* Works well with inline login or inline menu block style */
+.header-top-wrapper {
+}
+
+.header-top {
+}
+
+#header-site-info{
+margin-bottom: 0px;
+width: 100%;
+display:inline; 
+height: 5.4em;
+}
+
+
+/* Primary Menu
+/-------------------------------------------------------------- */
+/* Add general styles for primary menu here, such as typography, borders, floats,
+  or spacing above/below */
+.primary-menu {
+background-color: #4F3C2A;
+}
+
+/* styles for Superfish primary menu */
+.primary-menu-inner ul.sf-menu {
+    
+    min-width: 62em;
+    width: 100%;
+    line-height: 1.5em;
+    
+}
+
+/* Link style for top level menu items, add padding here */
+.primary-menu-inner ul.sf-menu a,
+.primary-menu-inner ul.sf-menu a:visited  {
+background-color: #4F3C2A;
+    color: #FFFFFF;
+}
+
+.primary-menu-inner ul.sf-menu a:hover,
+.primary-menu-inner ul.sf-menu a:active,
+.primary-menu-inner ul.sf-menu a:focus {
+display: block;
+    
+}
+
+/* These are the top level menu items, add border-right here for separators */
+.primary-menu-inner ul.sf-menu li {
+border-right: 1px solid #DDDDDD;
+border-color: #647F4C !important;
+}
+.primary-menu-inner ul.sf-menu li.first {
+border-left: 1px solid #DDDDDD;
+}
+
+/* Add border-right: 0; here to remove separator on last menu item */
+.primary-menu-inner ul.sf-menu li.last {
+float:right;
+border-left: 1px solid #DDDDDD;
+}
+
+/*see tempalte.php, we add unique id for each link*/
+.primary-menu-inner #group-front-42{ 
+float:right;
+border-left: 1px solid #DDDDDD;
+}
+
+/* Style for container of dropdown, add background or border */
+.primary-menu-inner ul.sf-menu ul {
+}
+
+/* Style for individual dropdown menu items, add border-bottom for separators */
+.primary-menu-inner ul.sf-menu li li {
+  background-color: #fff;
+}
+
+.primary-menu-inner ul.sf-menu li li.last {
+
+}
+
+.primary-menu-inner ul.sf-menu li li li {
+}
+
+/* Style for hover of dropdown menu items (add background-color here) */
+.primary-menu-inner ul.sf-menu li ul li:hover,
+.primary-menu-inner ul.sf-menu li ul li.sfHover {
+}
+
+
+/* Secondary menu
+-------------------------------------------------------------- */
+/* This menu usually appears in the header as a set of simple text links */
+.secondary-menu {
+}
+
+/* Set general style for menu here -- background, alignment, etc. */
+.secondary-menu-inner ul.links {
+}
+
+/* Add a border-right here for a separator */
+.secondary-menu-inner ul.links li {
+}
+
+/* Add border-right: 0; here to remove right separator on last menu item */
+.secondary-menu-inner ul.links li.last {
+}
+
+/* Styles for links */
+.secondary-menu-inner ul.links li a:link,
+.secondary-menu-inner ul.links li a:visited {
+  padding: 3px;
+}
+
+.secondary-menu-inner ul.links li a:hover,
+.secondary-menu-inner ul.links li a:focus,
+.secondary-menu-inner ul.links li a.active {
+}
+
+
+/* Header - Search
+-------------------------------------------------------------- */
+.search-box {
+}
+
+.search-box-inner {
+}
+
+.search-box-inner form#search-theme-form {
+}
+
+.search-box-inner input#edit-search-theme-form-header {
+}
+
+
+/*  Preface Regions
+-------------------------------------------------------------- */
+/* The Preface Top region sits between the header and the Main Area
+ (columns, sidebars, and main content).  The Preface Bottom region
+ is inside the Main Area. */
+.preface-top-wrapper {
+}
+
+.preface-top {
+}
+
+.preface-top-inner {
+}
+
+.preface-bottom {
+}
+
+.preface-bottom-inner {
+}
+
+
+/*  Main Area (content + sidebars + preface bottom + postscript top)
+-------------------------------------------------------------- */
+.main-wrapper {
+    min-height: 300px;
+    padding-bottom: 1.25em;
+    padding-top: 1.25em;
+	margin-top: 5.4em;
+}
+
+
+/* Sidebar Regions
+-------------------------------------------------------------- */
+/* Sidebar widths can be controlled through theme settings */
+.sidebar-first {
+}
+
+.sidebar-last {
+}
+
+
+/* Content Regions
+-------------------------------------------------------------- */
+
+.content-top {
+}
+
+.content {
+}
+
+.content-inner {
+}
+
+.content-bottom {
+}
+
+/* This region only appears on full node pages. It's useful for ads or other
+  content between the body of the node and its comments */
+.node-bottom {
+}
+
+/*  Postscript & Footer Regions
+-------------------------------------------------------------- */
+.postscript-top {
+}
+
+.postscript-top-inner {
+}
+
+.postscript-bottom-wrapper {
+}
+
+.postscript-bottom {
+}
+
+.postscript-bottom-inner {
+}
+
+.footer-wrapper {
+line-height: 100%;
+height: auto;
+ background: none repeat scroll 0 0 #666666;
+}
+
+.footer {
+
+    color: #E7E7E7;  
+    width: 100%;
+	line-height: 100%;
+}
+
+.footer-inner {
+}
+
+.footer-message-wrapper {
+}
+
+.footer-message {
+}
+
+.footer-message-inner {
+}
+
+.footer-message-text {
+}
+
+
+/* Page titles
+/-------------------------------------------------------------- */
+/* Page and full node titles */
+h1.title {
+}
+
+
+/* Default node styles
+/-------------------------------------------------------------- */
+/* Change unpublished and preview colors for dark background themes */
+.node-unpublished {
+  background-color: #fff4f4;
+}
+.preview .node {
+  background-color: #ffffea;
+}
+
+/* Typography for node titles */
+h2.title {
+}
+
+/* Colors and styles for linked node titles, ie. teaser listing at /node */
+h2.title a:link,
+h2.title a:visited {
+}
+
+h2.title a:hover,
+h2.title a:focus,
+h2.title a:active {
+}
+
+/* Separators and padding for node teasers */
+.teaser {
+}
+
+/* Author/date info */
+.meta {
+}
+
+.submitted {
+}
+
+/* Links for nodes (taxonomy, commenting, read more, etc) */
+.node ul.links li {
+}
+.node ul.links a {
+}
+
+/* Only more/read more links */
+div.node .read-more a,
+div.node .more-link a {
+}
+
+/* Drupal Messages
+/-------------------------------------------------------------- */
+/* General style for all errors/messages (border, padding, etc.) */
+div.content-messages div.messages,
+div.content-help div.help {
+}
+
+/* Status messages: green */
+div.content-messages-inner div.status {
+}
+
+/* Warning messages: yellow */
+div.content-messages-inner div.warning {
+}
+
+/* Error messages: red */
+div.content-messages-inner div.error {
+}
+
+/* Help messages: blue */
+div.content-help-inner div.help {
+}
+
+/* Error that appears when a required form field is not filled out */
+.form-item input.error,
+.form-item textarea.error,
+.form-item select.error {
+  border: 1px solid #aa1144;
+}
+
+/* "New" text and required form field asterisk (default = red) */
+.marker,
+.form-required {
+  color: #aa1144;
+}
+
+
+/* Default block title styles
+/-------------------------------------------------------------- */
+h2.block-title {
+}
+
+
+/* Breadcrumbs
+-------------------------------------------------------------- */
+.breadcrumbs {
+}
+
+.breadcrumbs a:link,
+.breadcrumbs a:visited {
+}
+
+
+/* Tab Menus
+/-------------------------------------------------------------- */
+#content-tabs {
+margin-bottom:0px;
+}
+
+#content-tabs ul.primary,
+#content-tabs ul.secondary {
+    border-bottom: 1px solid #CCCCCC;
+    font: 12px verdana,arial,sans-serif;
+    list-style-type: none;
+    margin: 1em 0;
+    padding: 3px 10px;
+    text-align: left;
+}
+
+#content-tabs ul.secondary {
+  border-bottom: 1px solid #555;
+  margin-top: 10px;
+  text-transform: lowercase;
+}
+
+#content-tabs ul.primary li,
+#content-tabs ul.secondary li {
+display: inline;
+ padding: 0.25em 0 0;
+ margin:0; 
+}
+
+#content-tabs ul.primary li.active {
+    font-weight: bold;
+}
+
+#content-tabs ul.primary li a:link,
+#content-tabs ul.primary li a:visited,
+#content-tabs ul.secondary li a:link,
+#content-tabs ul.secondary li a:visited {
+
+    background-color: #E7E7E7;
+    border-color: #CCCCCC #CCCCCC -moz-use-text-color;
+    border-style: solid solid none;
+    border-width: 1px 1px medium;
+    color: #666666;
+    margin-right: 1px;
+    padding: 3px 8px;
+    text-decoration: none;
+}
+#content-tabs ul.primary li.active a {
+    background-color: #FFFFFF;
+    color: #000000;
+    padding-top: 4px;
+    position: relative;
+    top: 1px;
+}
+
+
+#content-tabs ul.secondary li a:link,
+#content-tabs ul.secondary li a:visited {
+  color: #555;
+}
+
+#content-tabs ul.primary li a.active:link,
+#content-tabs ul.primary li a.active:visited {
+
+}
+
+#content-tabs ul.secondary li a.active:link,
+#content-tabs ul.secondary li a.active:visited {
+
+}
+
+#content-tabs ul.primary li a:hover,
+#content-tabs ul.primary li a:focus,
+#content-tabs ul.secondary li a:hover,
+#content-tabs ul.secondary li a:focus {
+
+}
+
+/* Pagers
+-------------------------------------------------------------- */
+ul.pager {
+}
+
+ul.pager li {
+}
+
+ul.pager a,
+ul.pager li.pager-current {
+  border-color: #333;
+}
+
+ul.pager li.pager-current {
+  background-color: #777;
+  color: #fff;
+}
+
+ul.pager a:hover,
+ul.pager a:active,
+ul.pager a:focus {
+  background-color: #777;
+  border-color: #333;
+  color: #fff;
+}
+
+/* Forms
+/-------------------------------------------------------------- */
+/* Typography and backgrounds for all form buttons */
+form input.form-submit {
+  margin: 2px;
+  padding: 3px 5px;
+  background: -moz-linear-gradient(center top , #6E1B29, #3B0F17) repeat scroll 0 0 transparent;
+  border-color: #3B0F17;
+  color: #FFFFFF !important;
+  text-shadow: 1px 1px 0 #6E1B29;
+  border: 2px solid #AD0000;
+  border-radius: 4px 4px 4px 4px;
+  text-align: center;
+    text-decoration: none;
+}
+
+/* Hover style for form buttons */
+form input.form-submit:hover,
+form input.form-submit.hover,
+form input.form-submit:focus {
+}
+
+/* Typography, background, borders, padding for form fields */
+.form-item input,
+.form-item select,
+.form-item textarea {
+}
+
+/* Remove backgrounds and border on radios and checkboxes */
+.form-item .form-radio,
+.form-item .form-checkbox {
+  background: none;
+  border: none !important;
+}
+
+/* Fieldset wrapper around groups of form elements -- add border here */
+fieldset {
+}
+
+/* Typography and spacing for legend of fieldsets */
+fieldset legend {
+}
+
+/* Link style for legend of fieldsets */
+fieldset legend,
+legend.collapse-processed,
+legend.collapse-processed a:link,
+legend.collapse-processed a:visited {
+}
+
+/* Custom icons on (open) collapsible fieldsets */
+html.js fieldset.collapsible legend a:link,
+html.js fieldset.collapsible legend a:visited {
+}
+
+/* Custom icons on (closed) collapsible fieldsets */
+html.js fieldset.collapsed legend a:link,
+html.js fieldset.collapsed legend a:visited {
+}
+
+
+/* Tables
+-------------------------------------------------------------- */
+table {
+}
+
+/* Body of tables */
+tbody {
+  border-top: 1px solid #ccc;
+}
+
+/* Header of tables */
+thead th,
+th {
+  border-bottom: 3px solid #ccc;
+}
+
+tbody th {
+  border-bottom: 1px solid #ccc;
+}
+
+/* Alternating row background styles */
+tr.even,
+tr.even td {
+  background-color: #eee;
+  border-bottom: 1px solid #ccc;
+}
+
+tr.odd,
+tr.odd td {
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+td.active {
+}
+
+tr.drag td,
+tr.drag-previous td {
+  color: #000;
+}
+
+
+/* Maintenance Page
+/-------------------------------------------------------------- */
+/* Maintenance page tpl file in Fusion Core has simplified layout, but you can
+  also add specific styles, such as a background, just for your offline page */
+.in-maintenance  {
+}
+
+
+/*--------------------------------------------------------------*/
+/* Module styles
+/-------------------------------------------------------------- */
+
+
+/* Book
+/-------------------------------------------------------------- */
+.book-navigation .menu {
+  border-top: 1px solid #ccc;
+}
+
+.book-navigation .page-links {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+
+/* Comments
+/-------------------------------------------------------------- */
+/* Style for each individual comment */
+div.comment {
+}
+
+/* Subject (title) of each comment */
+div.comment h3.title {
+}
+
+/* Links (edit, reply, delete) for each comment */
+div.comment div.links a,
+div.comment ul.links a {
+}
+
+/* Alternating styles for even/odd comments */
+.comments div.odd {
+  background-color: #fff;
+}
+
+.comments div.even {
+  background-color: #eee;
+}
+
+/* A special highlight style for a comment by the author of the node */
+.comments div.comment-by-author {
+  background-color: #ddd;
+}
+
+/* Comment signatures */
+.signature {
+  border-top: 1px solid #d6ddb9;
+}
+
+/* User avatars in comments */
+.comment-wrapper .picture img {
+}
+
+
+/* Forum
+/-------------------------------------------------------------- */
+#forum .description {
+}
+
+.forum-topic-navigation {
+  border-top: 1px solid #888;
+  border-bottom: 1px solid #888;
+}
+
+
+/* Poll
+/-------------------------------------------------------------- */
+div.poll div.bar {
+  background-color: #ddd;
+}
+
+div.poll div.bar div.foreground {
+  background-color: #999;
+}
+
+
+/* Profiles
+/-------------------------------------------------------------- */
+.profile .picture {
+  float: none;
+}
+
+/* Styles for sub-headings on user profiles */
+.profile dt {
+  background-color: #ccc;
+}
+
+
+/* Ubercart - catalog
+/-------------------------------------------------------------- */
+
+/* Horizontal list of subcategories in catalog */
+ul.uc-categories {
+}
+
+.uc-categories li a {
+  font-weight: bold;
+  padding: 0 5px 0 3px;
+}
+
+/* Product and category names */
+.catalog-grid-title a:link,
+.catalog-grid-title a:visited,
+.category a:link,
+.category a:visited {
+}
+
+.catalog-grid-title a:hover,
+.catalog-grid-title a:focus,
+.category a:hover,
+.category a:focus {
+}
+
+/* Sell price in Ubercart catalog */
+.category-grid-products .catalog-grid-sell-price {
+}
+
+/* Ubercart - add to cart buttons
+/-------------------------------------------------------------- */
+
+/* Add to cart buttons */
+input.node-add-to-cart,
+input.list-add-to-cart {
+}
+
+/* Hover and focus styles, with .hover class added for IE6 support */
+input.node-add-to-cart:hover,
+input.node-add-to-cart.hover,
+input.node-add-to-cart:focus,
+input.list-add-to-cart:hover,
+input.list-add-to-cart.hover,
+input.list-add-to-cart:focus {
+}
+
+/* Ubercart - product nodes
+/-------------------------------------------------------------- */
+
+#field-group {
+}
+
+#price-group {
+}
+
+/* Product images */
+.product-image a img {
+}
+
+.product-image a:hover img,
+.product-image a:focus img {
+}
+
+/* Display price on full product nodes */
+.full-node .product-group .uc-price-display {
+}
+
+/* Product attributes on full nodes */
+.full-node .product-group .attributes {
+}
+
+/* Ubercart - general / checkout
+/-------------------------------------------------------------- */
+
+/* For optional "Powered by Ubercart" footer message */
+#store-footer {
+}
+
+#store-footer a:link,
+#store-footer a:visited {
+}
+
+/* View cart/Checkout links in Ubercart cart block */
+.cart-block-summary-links ul.links li a {
+}
+
+.cart-block-summary-links ul.links li.cart-block-checkout a:link,
+.cart-block-summary-links ul.links li.cart-block-checkout a:visited {
+}
+
+/* Key checkout process buttons: Checkout, Continue, and Submit Order */
+#uc-cart-view-form #edit-checkout,
+#uc-cart-checkout-form #edit-continue,
+#uc-cart-checkout-review-form #edit-submit {
+}
+
+/* Table on final order review page */
+.order-review-table {
+}
+
+#cart-form-products table th {
+  border-bottom: 3px solid #dec2c3;
+}
+
+
+/* Skinr
+/-------------------------------------------------------------- */
+
+/* This is a sample Skinr style to get you started. See fusion_starter.info */
+.fusion-example-stylename .inner {
+  /* When setting the background color, also set foreground colors for text and
+    links, even if it's similar to the default body style. Remember, this block
+    style may be used in regions with other foreground colors, thus making text
+    invisible if left unspecified */
+  background-color: #ccc;
+  color: #000;
+  /* All padding and borders should go on the .inner div, so as not to break
+    the widths of the grid */
+  border: 3px solid #000;
+  padding: 10px;
+}
+
+
+
+/* header top menu */
+#header-site-info-inner{
+width: 100px;
+z-index:200;
+}
+#block-menu-menu-header-top-right-menu{
+float:right; 
+width: 400px;
+margin-top: -60px;
+}
+#block-menu-menu-header-top-right-menu ul{
+    display:inline; 
+    float: right;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    position: relative;
+    list-style: none outside none;
+    margin-top: 5px;
+}
+#block-menu-menu-header-top-right-menu ul li{
+float:left;
+width: auto; 
+display: inline;
+    font-size: 0.9em;
+    margin: 0 0 0 0.8em;
+    padding: 0;
+    
+}
+#site-name-wrapper{
+display:none;
+}
+
+#block-frontpage-0 {
+float:left; 
+width: 500px;
+margin-top: -60px;
+margin-bottom: 0px;
+}
+
+#block-frontpage-0 #C_tabs{
+    border-left: 1px solid #EEEEEE;
+    height: 5.4em;
+    margin-left: 88px;
+}
+
+#block-frontpage-0 #C_tabs a:link, #C_tabs a:visited, #C_tabs a:hover {
+    border-right: 1px solid #EEEEEE;
+    display: block;
+    float: left;
+    font-weight: bold;
+    height: 5.4em;
+    text-align: left;
+    white-space: nowrap;
+    
+}
+#block-frontpage-0 #C_tabs a:link, a:visited, a:hover {
+    color: #3987CB;
+    cursor: pointer;
+    text-decoration: none;
+}
+#C_tabs .C_tabContent {
+    display: block;
+    font-family: arial,sans-serif;
+    padding: 1em 1em 0;
+}
+.C_topBig {
+    color: #E51937;
+    display: block;
+    font-size: 1.833em;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1.2em;
+}
+.C_topSm {
+    color: #BBBBBB;
+    display: block;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+
+
+/* front page */
+
+.front #content-group{
+width: 57.14%;
+margin: 0 0.5em;
+}
+
+.content-group  .inner{
+    -moz-border-radius: 5px 5px 5px 5px;
+    background: none repeat scroll 0 0 white;
+    margin-bottom: 1em;
+    padding: 1px 0 0;
+    position: relative;
+}
+.front #sidebar-last{
+margin-left: 0.5em;
+width: 14.28%;
+}
+.sidebar-last .inner{
+    -moz-border-radius: 5px 5px 5px 5px;
+    background: none repeat scroll 0 0 white;
+    margin-bottom: 1em;
+    padding: 1px 0 0;
+    position: relative;
+}
+.front #sidebar-last .inner .block{
+width: 420px;
+}
+
+/* group home page */
+#C_contextHead {
+    padding: 2em 0 1.25em;
+} 
+#C_contextHead {
+    background-color: #634E91;
+    border-top-color: #463C5E !important;
+    border-top: 5px solid #6B97C0;
+}
+#C_contextHeadBody {
+    max-width: 80em;
+    padding: 0 1em;
+}
+#C_contextTitle {
+    letter-spacing: -0.5px;
+}
+
+#C_contextHead #C_contextTitle {
+    color: #555555;
+    font-family: helvetica,arial,sans-serif;
+    font-size: 1.69em;
+    font-weight: bold;
+    margin: 0;
+}
+#C_contextHead #C_contextTitle  h1
+{
+    
+    font-family: 'Comic sans','Comic Sans MS',sans-serif;
+    font-size: 1.48em;
+}
+#C_contextHead #C_contextTitle  h1 a span{
+    color: #FFFFFF;
+ }
+/* user registar page */
+
+.register #content-group{
+    min-width: 0 !important;
+    width: 30em;
+    position:relative;  
+     left:30%;  
+    
+}
+
+.reginster-header {
+    font-size: 1em;
+    overflow: hidden;
+    padding: 0.5em 0.5em 1em;
+}
+
+.reginster-header h1 {
+    color: #E51937;
+    font-size: 2.5em;
+    line-height: 1.1em;
+    margin: 0;
+    padding: 0;
+}
+
+
+ul.D_actions {
+    font-size: 0.85em;
+    list-style: none outside none;
+    margin: 0.5em 0 0;
+    padding: 0;
+    padding-left: 1.5em;
+}
+ul.D_actions li.canDo, ul.D_actions li.shouldDo, ul.D_actions li.avoidDo {
+    font-weight: bold;
+}
+
+ul.D_actions li {
+    display: inline;
+    line-height: 1em;
+    margin: 0;
+    padding: 0 1.25em 0.25em 0 !important;
+    white-space: nowrap;
+}
+
+ul.D_actions li a {
+    vertical-align: middle;
+}
+
+.linked, a, a:link, a:visited, a:hover {
+    color: #5098E4;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+form#user-register div fieldset,
+form#user-register div fieldset .form-item {
+width: 27em;
+}
+form#user-register div fieldset .form-item input{
+width: 24em;
+}
+form#user-register input.form-submit
+{
+ -moz-border-radius: 4px 4px 4px 4px;
+    background: -moz-linear-gradient(center top , #F10044, #AD0000) repeat scroll 0 0 #AD0000;
+    border: 2px solid #AD0000;
+    color: #FFFFFF !important;
+    cursor: pointer;
+    font-family: arial,sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0.35em 1em;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 0 3px #3E0012;
+}
+
+/* theme user personal page - my photos */
+.sprite {
+    background-image: url("../images/sprite.png");
+    background-repeat: no-repeat;
+}
+.sprite_action {
+    padding: 3px 0 2px 20px !important;
+}
+.add_icon {
+    background-position: 0 0;
+}
+.delete_icon {
+    background-position: 0 -468px;
+}
+.monitor_icon {
+    background-position: 0 -900px;
+}
+.pencil_icon {
+    background-position: 0 -1080px;
+}
+
+
+
+/* sponsor page */
+#sponsorHome{
+display:inline;
+}
+#sponsorHome #sponsorInfo{
+float:left;
+}
+#sponsorHome #sponsorInfo .contactInfo{
+color: #999999;
+    display: block;
+    font-size: 11px;
+    line-height: 1.8em;
+    width:100%;
+}
+
+#sponsorHome #sponsorInfo .sponsoringSince{
+width:100%;
+}
+
+#sponsoringSince {
+    color: #272727;
+    font-size: 1.2em;
+}
+#sponsorHome .editControls{
+float:right;
+}
+#offerStatus {
+    -moz-border-radius: 5px 5px 0 0;
+    background: none repeat scroll 0 0 #F1F2ED;
+    font-size: 1.2em;
+    line-height: 1.3;
+    margin-top: 0.25em;
+    padding: 1em 0.75em 0;
+}
+
+.node-type-sponsor .D_boxsection {
+margin-top:5px;
+float:left;
+width: 100%;
+ -moz-border-radius: 5px 5px 5px 5px;
+ background: none repeat scroll 0 0 #F1F2ED;
+border-top: 0px solid #C2B367;
+} 
+.isSponsor h3 {
+    font-family: verdana,sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+}
+#banner {
+    background: url("../images/banner_blue.gif") no-repeat scroll left bottom transparent;
+    float: left;
+    font-size: 12px;
+    left: -16px;
+    margin: 0;
+    padding: 0 0 0 7px;
+    position: relative;
+    top: 2px;
+    z-index: 100;
+}
+#banner span {
+    background: url("../images/banner_blue.gif") no-repeat scroll right top transparent;
+    color: #FFFFFF;
+    display: block;
+    height: 25px;
+    letter-spacing: normal;
+    padding: 6px 1.5em 0 15px;
+    text-transform: uppercase;
+    width: 580px;
+}
+.lightHeading {
+    display: block;
+    font-family: verdana,sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: normal;
+    margin-bottom: 0.5em;
+}
+h3.lightHeading {
+font-size:20px;
+color: ##272727;
+}
+
+.offerSection #createPerk {
+    float: left;
+    margin: 4px 0 0;
+    font-size: 14px; 
+}
+
+#featuredOffer{
+    margin-top: 20px; 
+}
+
+.offerSection a.D_submit {
+    -moz-border-radius: 4px 4px 4px 4px;
+    background: -moz-linear-gradient(center top , #F10044, #AD0000) repeat scroll 0 0 #AD0000;
+    border: 2px solid #AD0000;
+    color: #FFFFFF !important;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial,sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0.35em 1em;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 0 3px #3E0012;
+}
+
+.offerSection a.D_submit  {
+    background-color: #D22A2C;
+    background-image: url("//img1.meetupstatic.com/img/3753177753332055837/button_gradient.png");
+    background-position: left top;
+    background-repeat: no-repeat;
+    border: 1px solid #333333;
+    cursor: pointer;
+    padding: 0.25em 0.65em 0.15em;
+}
+
+/* theme group front page menu */
+body.humble #C_contextHead {
+    padding: 2em 0 1.25em;
+    background-color: #3E4F2E;
+    border-top-color: #171C13 !important;
+}
+.navTop {
+    border-bottom: 1px solid #647F4C !important;
+    border-top: 1px solid #647F4C !important;
+    background-color: #4F3C2A;
+    color: #FFFFFF;
+}
+.navTop {
+    position: relative;
+    width: 100%;
+    z-index: 4000;
+}
+html > body #C_navTopBody {
+    max-width: 80em;
+    min-width: 62em;
+    width: auto;
+}
+
+#C_navTopBody {
+    height: 100%;
+    margin: 0 auto;
+}
+.navTop ul.C_contextNav {
+    list-style-type: none;
+    padding: 0;
+}
+.C_contextNav, .C_contextNav ul {
+    line-height: 1.5em;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+ul {
+    margin-bottom: 0.75em;
+    padding-left: 1.5em;
+}
+.C_contextNav li {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.navTop ul.C_contextNav li {
+    display: block;
+    height: 1%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.navTop ul.C_contextNav {
+    list-style-type: none;
+}
+#C_page ul.C_contextNav a:link,
+#C_page ul.C_contextNav a:visited, 
+#C_page ul.C_contextNav a, .navTop, 
+.C_contextNav li a, 
+.navTop ul.C_contextNav li span {
+    background-color: #4F3C2A;
+    color: #FFFFFF;
+}
+.navTop ul.C_contextNav li.first a {
+    border-left: 1px solid #DDDDDD;
+}
+.navTop ul.C_contextNav li a :hover{
+color:  #4F3C2A;
+}
+
+.menu ul li a, .menu ul li.first a, .menu ul li.hasKids a:hover, .menu ul li.ie6over li a, .menu ul li:hover li a, .menu ul li span {
+    border-color: #647F4C !important;
+}
+.navTop ul.C_contextNav li a, .navTop ul.C_contextNav li span {
+    background-color: #B5D0F2;
+    border-left: 1px solid #DDDDDD;
+    color: #2A6798;
+    font-weight: bold;
+    margin: 0 !important;
+    padding: 0.6em 1em;
+    text-decoration: none;
+}
+
+#block-usercenter-3 .inner{
+  margin-left: 0px;
+    margin-right: 0px;
+}
+
+#block-views-past_event-block_1,
+#block-views-coming_event-block_1{
+	width: 544px;
+}
+    
+#block-block-4{
+margin-bottom: 0px; 
+}	
+/* theme fancy login box */
+#fancy_login_form_contents  {
+width: 310px;
+}
+#fancy_login_form_contents  .form-item input.form-text{
+  width: 310px;
+}
+#fancy_login_form_contents #edit-submit-2{
+background: -moz-linear-gradient(center top , #F10044, #AD0000) repeat scroll 0 0 #AD0000;
+    border: 2px solid #AD0000;
+    border-radius: 4px 4px 4px 4px;
+    color: #FFFFFF !important;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial,sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0.35em 1em;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 0 3px #3E0012;
+}
+
+#fancy_login_form_contents .D_boxhead{
+  margin: 0.65em;
+    padding: 0.65em 0.35em 0;
+	 border-bottom: 1px solid #CCCCCC;
+
+}
+
+#fancy_login_form_contents h2{
+	color: #E51937;
+    font-size: 2.5em;
+    line-height: 1.1em;
+    margin: 0;
+    padding: 0;
+}
+
+#fancy_login_close_button{
+    
+    top: 30px;
+	   background: none repeat scroll 0 0 #EEEEEE;
+	border-color: #CCCCCC #AAAAAA #AAAAAA #CCCCCC;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    color: #333333;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.25em;
+    position: absolute;
+    right: 2em;
+    text-align: center;
+    top: 0.5em;
+    width: 1em;
+   
+}
+
+#block-sponsor-0 .inner{
+ margin-left:0;
+ margin-right: 0;
+}
+
+/*rsvp form*/
+#rsvp-box-action{
+ height: 50px;
+}
+
+#rsvp-box-action .form-radios  label{
+width: 85px;
+padding-left:3px;
+background-image: none;
+}
+
+#rsvp-box-action .form-radios  .form-item{
+width:85px;
+float:left;
+}
+
+.rsvp-box-block  #edit-guest-wrapper{
+margin-top: 0;
+margin-bottom: 0;
+width:40px;
+}
+.rsvp-box-block  #edit-guest-wrapper input{
+background-color: #FFFFFF;
+    border: 1px solid #848484;
+    border-radius: 2px 2px 2px 2px;
+    box-shadow: 1px 1px 1px 0 rgba(127, 127, 127, 0.2) inset;
+    display: inline-block;
+    font-size: 11px;
+    height: 22px;
+    line-height: 22px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+
+
