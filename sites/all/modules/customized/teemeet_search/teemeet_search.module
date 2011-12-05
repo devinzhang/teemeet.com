@@ -49,7 +49,7 @@ function teemeet_search_form_alter(&$form, &$form_state, $form_id) {
 			
 			$form['address']= array(
 				'#type' => 'textfield',
-				'#title' => t('City or ZIP/postal code'),
+				'#title' => t('城市'),
 				'#size' => 35,
 				'#maxlength' => 255,
 				'#weight' => 1,
@@ -136,7 +136,7 @@ function  teemeet_search_view($type = 'node') {
 				WHERE node.type = 'group' AND node.status <> 0  
 				ORDER BY node.created LIMIT 5";
 		$default_query = db_query($sql);
-;
+
 		$default_array = array();
 		while ($d = db_fetch_array($default_query)) {
 			$node = node_load($d['nid']);
