@@ -167,3 +167,12 @@ function  teemeet_search_view($type = 'node') {
 
   return drupal_get_form('search_form', NULL, empty($keys) ? '' : $keys, $type);
 }
+
+/**
+ * Implementation of hook_init().
+ * @author nemo
+ */
+function teemeet_search_tips_init() {
+	$path = drupal_get_path('module', 'teemeet_search');
+	drupal_add_js($path . '/teemeet_search.js', 'module');   
+}
