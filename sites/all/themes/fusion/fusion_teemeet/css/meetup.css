@@ -236,6 +236,7 @@ body.hasAnnouncement #C_globalNav {
 	margin-bottom:0!important;
 	-webkit-padding-start:0;
 	padding:0 0 0 0!important;
+	width:200px;
 }
 #C_userNav ul {
 	list-style:none;
