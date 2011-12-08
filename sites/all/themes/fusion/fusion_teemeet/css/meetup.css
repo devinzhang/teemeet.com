@@ -15081,6 +15081,7 @@ ul.D_summaryList:after, ul.D_summaryList li:after {
 	vertical-align:middle;
 	height:20px;
 	width:20px;
+	border:none;
 }
 #teemeet-search-top-form #edit-search-top {
 	margin:0;
@@ -15091,4 +15092,8 @@ ul.D_summaryList:after, ul.D_summaryList li:after {
 	padding:2px;
 	height:16px;
 	vertical-align:middle;
+}
+
+#edit-search-top-wrapper {
+	display:inline;
 }
