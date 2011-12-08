@@ -90,7 +90,7 @@
         <a id="tabs_sponsor" class="omnCamp omnrg_perksheader last" href="<?php print url('sponsorships'); ?>"> <span class="C_startContainer C_tabContent"> <span class="C_topBig"> <? echo t('赞助') ?></span> <span class="C_topSm"> <? echo t('一个小组') ?> </span> </span> </a> </div>
     </div>
     <!-- end C_globalNav -->
-    
+    <!--
     <form id="C_globalSearch" method="get" action="/find/">
       <input type="text" name="keywords" autocomplete="off" id="C_globalSearchInput" class="D_topicSearch" maxlength="100" />
       <div class="D_submitInline">
@@ -98,6 +98,8 @@
       </div>
       <input type="submit" style="display:none" />
     </form>
+	-->
+	<?php print drupal_get_form('teemeet_search_top_form'); ?>
   </div>
 </div>
 <!-- end C_header -->

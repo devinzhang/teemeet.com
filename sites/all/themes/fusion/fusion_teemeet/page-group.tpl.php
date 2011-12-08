@@ -201,6 +201,7 @@ $(document).ready(function(){
     </div>
     <!-- end C_globalNav -->
     
+    <!--
     <form id="C_globalSearch" method="get" action="/find/">
       <input type="text" name="keywords" autocomplete="off" id="C_globalSearchInput" class="D_topicSearch" maxlength="100" />
       <div class="D_submitInline">
@@ -208,6 +209,8 @@ $(document).ready(function(){
       </div>
       <input type="submit" style="display:none" />
     </form>
+	-->
+	<?php print drupal_get_form('teemeet_search_top_form'); ?>
   </div>
 </div>
 <!-- end C_header -->
