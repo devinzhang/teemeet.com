@@ -245,3 +245,4 @@ sites/default/
 themes/
 update.php
 xmlrpc.php
+/sites/all/modules/3rd-party/
