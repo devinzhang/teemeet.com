@@ -236,7 +236,7 @@ body.hasAnnouncement #C_globalNav {
 	margin-bottom:0!important;
 	-webkit-padding-start:0;
 	padding:0 0 0 0!important;
-	width:200px;
+	width:250px;
 }
 #C_userNav ul {
 	list-style:none;
@@ -15088,15 +15088,20 @@ ul.D_summaryList:after, ul.D_summaryList li:after {
 #teemeet-search-top-form #edit-search-top {
 	margin:0;
 	border:0;
-	display:inline;
 	width:16em;
-	margin:0;
-	padding:2px;
-	height:16px;
-	vertical-align:middle;
-width:213px;
+	padding:0px;
+	height:18px;
+	display:block;
 }
 
 #edit-search-top-wrapper {
-	display:inline;
+	width:230px;
+	display:block;
+	float:left;
+}
+
+form div input.form-submit {
+	border:none;
+	padding:0;
+	margin:0;
 }
