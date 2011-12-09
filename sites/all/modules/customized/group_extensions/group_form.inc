@@ -83,7 +83,7 @@ function group_create(&$form_state)
             (
                 '#weight' => 1000,
                 '#type' => 'submit',
-                '#value' => 'Next'
+                '#value' => t('Next')
                 
             );
             
