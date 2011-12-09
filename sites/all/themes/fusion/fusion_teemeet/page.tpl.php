@@ -84,7 +84,7 @@
                 </ul>
             </div>
           </li>
-          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>">帐户</a></li>
+          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>"><?php echo t('My Account');?></a></li>
           <li class="C_userNavItem"><a href="<? echo url('logout') ?>"><? echo t('登出') ?></a></li>
         <? endif; ?>
       </ul>

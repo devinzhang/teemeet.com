@@ -76,7 +76,7 @@
                 </ul>
             </div>
           </li>
-          <li class="C_userNavItem"><?php print l('帐户', 'account/'.$user->uid); ?></li>
+          <li class="C_userNavItem"><?php print l(t('My Account'), 'account/'.$user->uid); ?></li>
           <li class="C_userNavItem"><a href="<? echo url('logout') ?>"><? echo t('登出') ?></a></li>
         <? endif; ?>
       </ul>
