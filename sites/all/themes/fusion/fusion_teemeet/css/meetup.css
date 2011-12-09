@@ -236,7 +236,7 @@ body.hasAnnouncement #C_globalNav {
 	margin-bottom:0!important;
 	-webkit-padding-start:0;
 	padding:0 0 0 0!important;
-	width:250px;
+	width:270px;
 }
 #C_userNav ul {
 	list-style:none;
@@ -15076,7 +15076,7 @@ ul.D_summaryList:after, ul.D_summaryList li:after {
 	top:2.75em;
 	margin:0 1em 0 0;
 	height:20px;
-	width:270px;
+	width:250px;
 }
 #teemeet-search-top-form #edit-submit-3 {
 	margin:-1px -1px -1px 0;
