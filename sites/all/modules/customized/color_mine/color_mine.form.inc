@@ -21,16 +21,16 @@ function color_mine_background_settings_form(&$form, $settings)
     '#title' => t('Position'),
     '#description' => t("Positioning of background image."),
     '#options' => array(
-      '' => '< select >',
-      'top left' => 'top left',
-      'top center' => 'top center',
-      'top right' => 'top right',
-      'center left' => 'center left',
-      'center center' => 'center center',
-      'center right' => 'center right',
-      'bottom left' => 'bottom left',
-      'bottom center' => 'bottom center',
-      'bottom right' => 'bottom right'),
+      '' => '< 请选择 >',
+      'top left' => '上 左',
+      'top center' => '上 中',
+      'top right' => '上 右',
+      'center left' => '中 左',
+      'center center' => '中 中',
+      'center right' => '中 右',
+      'bottom left' => '下 左',
+      'bottom center' => '下 中',
+      'bottom right' => '下 右'),
       '#default_value' => $settings['background_position'],
     );
     
@@ -39,11 +39,11 @@ function color_mine_background_settings_form(&$form, $settings)
     '#title' => t('Repeat'),
     '#description' => t("Positioning of background image."),
     '#options' => array(
-      '' => '< select >',
-      'repeat' => 'repeat',
-      'repeat-x' => 'repeat-x',
-      'repeat-y' => 'repeat-y',
-      'no-repeat' => 'no-repeat'),
+      '' => '< 请选择 >',
+      'repeat' => '重复',
+      'repeat-x' => '横向重复',
+      'repeat-y' => '纵向重复',
+      'no-repeat' => '不重复'),
       '#default_value' => $settings['background_repeat'],
     );
     
@@ -52,9 +52,9 @@ function color_mine_background_settings_form(&$form, $settings)
     '#title' => t('Attachment'),
     '#description' => t("Sets whether a background image is fixed or scrolls with the rest of the page."),
     '#options' => array(
-      '' => '< select >',
-      'fixed' => 'fixed',
-      'scroll' => 'scroll'),
+      '' => '< 请选择 >',
+      'fixed' => '固定',
+      'scroll' => '滚动'),
       '#default_value' => $settings['background_attachment'],
     );
     
