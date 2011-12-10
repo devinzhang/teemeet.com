@@ -197,7 +197,7 @@ EOF
             (
                 '#weight' => 1000,
                 '#type' => 'submit',
-                '#value' => 'Next'
+                '#value' => t('Next')
                 
             );
             
@@ -213,7 +213,7 @@ EOF
             (
                 '#weight' => 1000,
                 '#type' => 'submit',
-                '#value' => 'Next'
+                '#value' => t('Next')
                 
             );
          
@@ -225,7 +225,7 @@ EOF
             (
                 '#weight' => 1000,
                 '#type' => 'submit',
-                '#value' => 'Complete'
+                '#value' => t('Complete')
                 
             );
          
