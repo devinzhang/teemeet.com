@@ -319,13 +319,13 @@ function og_album_get_photos($aid, $summary = FALSE) {
 function og_album_get_albums_attributes($aid){
     $attributes = db_fetch_array(db_query("select * from ".OG_ALBUM_TABLE." where aid=%d", $aid));
     $photo_amout = db_result(db_query("select count(*) from ".OG_ALBUM_PHOTOS_TABLE." where aid=%d", $aid));
-    $img_path=db_result(db_query("select f.filepath from {files} as f join {og_album_photos} as ap on ap.fid = f.fid where ap.pid=%d ", $attributes['album_thumbnail']));
+    $img_path=db_result(db_query("select f.filepath from {files} as f where f.fid = %d ", $attributes['album_thumbnail']));
   
     $album=array();
     $album['photo_size'] = $photo_amout ;
     $real_path = $img_path;
     
-   // $album['cover_image_path'] = theme('imagecache','album_cover_150x115', $real_path,'','', array('class'=>'album-thumb'));
+    $album['cover_image_path'] = theme('imagecache','album_cover', $real_path,'','', array('class'=>'album-thumb'));
     $album['cover_image_path'] = $img_path; 
    if(is_array($attributes)){
     $album = array_merge($album, $attributes);

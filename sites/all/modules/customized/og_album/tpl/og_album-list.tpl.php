@@ -5,7 +5,7 @@
             <?php if($is_group_admin): ?>
             <ul class="D_actions">
             <?php 
-            echo '<li>'.l('Upload Photos',$current_group->path.'/album/ingroup/'.$current_group->nid.'/upload').'</li>';
+            echo '<li>'.l(t('上传图片'),$current_group->path.'/album/ingroup/'.$current_group->nid.'/upload').'</li>';
             ?>
             </ul>
             <?php endif; ?>
@@ -21,6 +21,7 @@
                 </div>
 			   -->	
             </div>
+			
             <div id="groupListContainer" class="D_groupList_shopping">
                 <ul class="D_summaryList">
                 <?php foreach($albums as $aid => $album): ?>      
@@ -52,7 +53,7 @@
                                 <?php echo $album->album['photo_size'].t(" photos"); ?>
                                 </p>
                                 <p class="D_less">
-                                    
+                                  <!--  Activity on Aug 16, 2011 -->
                                 </p>
                             </div>
                             <div class="D_primary">

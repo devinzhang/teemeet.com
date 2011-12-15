@@ -1,0 +1,6 @@
+; $Id$ Author Spirit8.com
+name = Downloader
+description = 远程文件下载与解压缩
+package = File
+core = 6.x
+version = "6.x-0.1.1"

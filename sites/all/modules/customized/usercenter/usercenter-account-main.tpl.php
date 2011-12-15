@@ -2,7 +2,7 @@
     <div class="D_box clearfix">
         <div class="D_boxbody">
             <div class="D_boxhead">
-                <h2 id="alerts">你的帐户</h2>
+                <h2 id="alerts">您的帐户信息</h2>
             </div>
         
             <div class="D_boxcols divby3">
@@ -11,19 +11,19 @@
                     <div class="D_colbody">		
                         <table summary="Personal information" class="fields D_personalInformation">
                             <tbody>
-                            <tr> <td class="fieldname"> <strong>名字:</strong> </td>
+                            <tr> <td class="fieldname"> <strong>姓名:</strong> </td>
                             <td><?php print $user->name; ?><a class="D_inlineAction" href="<?php print url('account/' . $user->uid . '/name');?>">编辑</a></td>
                             </tr>
                             <tr>
                             <td class="fieldname">
                             <strong>用户编号:</strong>
                             </td><td>
-                            user <?php print $user->uid ; ?>
+                            # <?php print $user->uid ; ?>
                             </td>
                             </tr>
                             <tr>
                             <td class="fieldname">
-                            <strong>邮箱地址:</strong>
+                            <strong>邮件地址:</strong>
                             </td><td>
                             <?php print $user->mail; ?>
                             <a class="D_inlineAction" href="<?php print url('account/' . $user->uid . '/email');?>">编辑</a>
@@ -39,9 +39,9 @@
                             </tr>
                             <tr>
                             <td class="fieldname">
-                            <strong>所在地:</strong>
-                            </td>shandong<td> 
-                            Potomac, MD
+                            <strong>地址:</strong>
+                            </td><td>
+                           <?php  $account = user_load($user->uid); print '<span class="locality">'.$account->locations[0]['city'].'</span>&nbsp<span class="region">'.$account->locations[0]['province_name'].'</span>'; ?>
                             <a class="D_inlineAction" href="<?php print url('account/' . $user->uid . '/location');?>">编辑</a>
                             </td>
                             </tr>
@@ -86,7 +86,12 @@
                 </div>
                 <div class="D_col spans1 last">
                     <div class="D_colbody">
-                        <a href=""><img title="" alt="Add your photo!" src="<?php global $base_url; print $base_url.'/'.$user->picture;?> "></a>
+                        <?php if($user->picture !=''){
+							print theme('imagecache','avator_50x50',$user->picture );
+							}else{
+							print theme('imagecache','avator_50x50',drupal_get_path('theme','fusion_teemeet').'/images/default_avator.png');
+							}
+							?>
                         <ul class="D_actions">
                             <li class="shouldDo">
                                 <a class="D_meta" href="<?php print url('user/'.$user->uid.'/photos'); ?>"><?php print t('Manage your photos');?></a>

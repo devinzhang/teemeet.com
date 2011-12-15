@@ -106,6 +106,7 @@ $form['submit'] = array(
 
 function og_album_photo_upload_form_submit($form, &$form_state) {
     $value = $form_state['values'];
+	
     if($value['album_select']) { // if this is a new created album
         $title = $value['album_title'];
         global $user; 
@@ -113,7 +114,7 @@ function og_album_photo_upload_form_submit($form, &$form_state) {
         $amout = db_result(db_query("select count(*) from ".OG_ALBUM_TABLE." where gid=%d",$value['gid']));
         $amout =  $amout +1; 
         db_query("INSERT INTO ".OG_ALBUM_TABLE." (aid, uid, gid, album_thumbnail, weight) VALUES (%d, %d, %d, %d, %d)", $aid, $user->uid, $value['gid'], 0, $amout);
-        
+        $new_create = true;
     } else {
         $aid = $value['album'];
     }
@@ -126,6 +127,7 @@ function og_album_photo_upload_form_submit($form, &$form_state) {
        if($value['album_select']) { // if this is a new create album, then the first picture as a cover
         db_query("UPDATE ".OG_ALBUM_TABLE." SET album_thumbnail=%d where aid=%d", $image_id, $aid ); 
        }
+	 
     }
   
   

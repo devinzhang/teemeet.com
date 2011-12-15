@@ -8,8 +8,8 @@
 <div class="D_box">
     <div class="D_boxbody">
         <div class="D_boxhead">
-            <h1>Start new discussion</h1>
-                <p><strong>This discussion will be viewable by everybody.</strong></p>
+            <h1>发起新的讨论贴</h1>
+                <p><strong>这个帖子会被所有的人看到</strong></p>
         </div>
         <div class="D_boxsection">
             <div class="D_form">

@@ -16,7 +16,7 @@
         </span>
         <div class="event-desc" itemprop="description"> 
 <? echo $fields['teaser']->content ?>
-        <a href="<? echo groupfront_url('node/' . $fields['nid_1']->content) ?>" style="text-transform:uppercase;font-size:9px" class="omnCamp omnrv_rv13"><?php echo t('Learn more') ?></a>
+        <a href="<? echo url('node/' . $fields['nid_1']->content) ?>" style="text-transform:uppercase;font-size:9px" class="omnCamp omnrv_rv13"><?php print t('了解详情'); ?></a>
         </div>
         <!--p class="event-hosts secondaryInfo">Hosted by: <a href="http://www.meetup.com/SacSwim/members/10146567/">Myron</a> (Organizer),
           

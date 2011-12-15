@@ -9,10 +9,13 @@ define('NODE_TYPE', 'group'); //节点类型
 function group_extensions_form_alter(&$form, $form_state, $form_id)
 {
     if ($form_id == 'forum_topic_node_form') {
+		
 		  $gid = $_GET['gids'][0];
 		  if($gid) {
-		  $group = node_load($gid);
-		  $form['#redirect'] = $group->path.'/groupextension/223/forum';
+			  $group = node_load($gid);
+			  $form['#redirect'] = $group->path.'/groupextension/'.$gid.'/forum';
+		} else{
+		 $form['#redirect'] = $GLOBALS['current_group']->path.'/groupextension/'.$GLOBALS['current_group']->nid.'/forum'; 
 		}
 	}
 }
@@ -332,7 +335,7 @@ function group_extensions_nodeapi(&$node, $op, $teaser, $page)
  */
 function group_extensions_preprocess_page(&$vars){  
    
-	if(arg(0)=='node' && is_numeric(arg(1)) && arg(3) =='' ) {
+	if(arg(0)=='node' && is_numeric(arg(1)) && arg(2) =='' ) {
 		$node = $vars['node'];
         
         $curr_title = drupal_get_title();
@@ -443,7 +446,7 @@ function _group_extension_forum_topic_header($node, $group){
           //      }
                  $output .= '<li class="canDo">
                     <a class="sprite sprite_action arrow_undo_icon" href="'.url($GLOBALS['current_group']->path.'/groupextension/'.$node->nid.'/reply').'">
-                    Add a reply
+                   回复本贴
                     </a>
                     </li>
 

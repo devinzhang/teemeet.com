@@ -268,22 +268,22 @@ function sponsor_business_summary(){
 		 $output .= '<dl class="sponsorLetterhead clearfix vcard" id="sponsorInfo">';
 
             $output .= '<dt class="fn org url"></dt><h2>'.$my_sponsor->title.'</h2>';
-                $output .= '<dd class="startDate">Sponsor since '.format_date($my_sponsor->created,'custom','Y-m-d').'</dd>';
-                $output .= '<dt class="name">devin</dt>';
+                $output .= '<dd class="startDate">自'.format_date($my_sponsor->created,'custom','Y-m-d').'成为赞助商</dd>';
+                $output .= '<dt class="name">'.$user->name.'</dt>';
                 $output .= '<dd class="adr">';
                 $output .= '<span class="street-address">'.$my_sponsor->field_sponsor_address[0]['street'].'</span>';
-                $output .= '<span class="locality">'.$my_sponsor->field_sponsor_address[0]['city'].'</span>,';
-                $output .= '<abbr title="Maryland" class="region">'.$my_sponsor->field_sponsor_address[0]['province'].'</abbr>,';
+                $output .= '<span class="locality">'.$my_sponsor->field_sponsor_address[0]['city'].'</span>&nbsp';
+                $output .= '<abbr title="Maryland" class="region">'.$my_sponsor->field_sponsor_address[0]['province'].'</abbr>&nbsp';
                 $output .= '<span class="country-name">'.$my_sponsor->field_sponsor_address[0]['country'].'</span>';
                 $output .= '</dd>';
                 $output .= '</dl>';
                 $output .= '<div id="letterheadMeta">';
 			$output .= '<h2 class="lightHeading">';
-			$output .= 'Sponsoring <strong id="count_members">'.$group_summary['member_counter'].'</strong> '.t('members in').' <strong id="count_activeGroups">'.$group_summary['group_counter'].'</strong> '.t('Teemeet Groups');
+			$output .= '赞助了 <strong id="count_members">'.$group_summary['member_counter'].'</strong> '.t('members in').' <strong id="count_activeGroups">'.$group_summary['group_counter'].'</strong> '.t('Teemeet Groups');
 			$output .= '</h2>';
 			$output .= '<a href="'.url('node/'.$my_sponsor->nid).'" id="visitSponsorHome" class="clearfix">
 				<img alt="Home" class="D_icon" src="http://img2.meetupstatic.com/8689168192329930562/img/house.gif"> 
-				<span>View your Sponsor page</span>
+				<span>查看你的赞助商页面</span>
 				<em></em>
 			</a>
 

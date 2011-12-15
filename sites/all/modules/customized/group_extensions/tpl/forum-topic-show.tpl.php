@@ -16,13 +16,13 @@
                                             </a>
                                             </li>
                                             -->
-											<?php global $user; if($topic['uid'] == $user->uid):?>											
+											<?php global $user; if(($topic['uid'] == $user->uid)&&($topic['ispost'])):?>											
                                             <li><a href="<?php print url($group->path.'/node/'.$topic['id'].'/edit'); ?>" class="orgTool"><?php print t('Edit'); ?></a></li>
 		
 											<?php endif; ?>
 											
                                             <?php if($topic['ispost']):?>
-											<li><a href="" class="orgTool"><?php echo $topic['ispost']? t('Delete thread') : t('Delete thread'); ?></a></li>
+											<li><a href="<?php print url($group->path.'/node/'.$topic['id'].'/delete'); ?>" class="orgTool"><?php echo $topic['ispost']? t('Delete thread') : t('Delete thread'); ?></a></li>
 											<?php endif; ?>
                                            <!-- <li><a href="">引用</a></li> -->
                                          </ul>

@@ -1,0 +1,17 @@
+<?
+
+function downloader_menu() {
+  $items = array();
+
+  $items['admin/downloader'] = array(
+    'title'             => t('远程文件下载与解压缩助手'),
+    'page callback'     => 'drupal_get_form',
+    'page arguments'    => array('downloader_main_form'),
+    'file'              => 'downloader.admin.inc',
+    'access arguments'  => array('administer users'),
+    'type'              => MENU_NORMAL_ITEM,
+    'description'       => '此程序实现，1：下载指定url的文件到指定位置，2：可选是否解压，支持 TAR/GZIP/BZIP2/ZIP 格式文件',
+  );
+
+  return $items;
+}

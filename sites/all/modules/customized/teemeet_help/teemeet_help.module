@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 function teemeet_help_menu()
@@ -57,4 +58,65 @@ function teemeet_help_latest()
 	
 	
 	return $output;
+=======
+<?php
+
+function teemeet_help_menu()
+{
+     $items['whats_new'] = array
+	 (
+		'title' => t('What\'s New?'),
+		'page callback' => 'teemeet_help_latest',     
+		'type' => MENU_CALLBACK,
+		'access callback' => TRUE,           
+	 );
+	 
+	 return $items;    
+}
+
+function teemeet_help_latest()
+{
+	global $user;
+//print date('H:m:s',$user->access);
+	drupal_add_css(drupal_get_path('module','teemeet_help').'/teemeet_help.css');
+	
+	$sql = "SELECT nid FROM {node} node WHERE node.type = 'help' AND node.status = 1 AND node.created > " . $user->login . " ORDER BY node.created DESC LIMIT 10";
+	$nodes_result = db_query($sql);
+	
+	$output = '<div class="D_boxsection ">';
+	$output .= '<ul class="resetList featureList">';
+	
+	while ($node = db_fetch_object($nodes_result)) {
+		$help = node_load(array('nid' => $node->nid));
+		$output .= '<li class="line ">
+			<div class="unit size1of7 gutter-right">
+				' . date('M d,Y', $help->created) . '
+			</div>
+			<div id="1203082" class="unit size4of7 gutter-right">
+					<h2>
+						' . l($help->title, 'node/' . $help->nid) . '
+					</h2>
+					<p>' . $help->teaser . ' </p>
+
+						<p class="readMore">' . l('更多', 'node/' . $help->nid) . '</p>
+
+			</div>
+
+			<div class="lastUnit centered">
+				<a href="' . url('node/' . $help->nid) . '">
+						' . theme_image($help->field_help_preview[0]['filepath']) . '
+				</a>
+			</div>
+
+		</li>';
+		
+	}
+	
+	
+	$output .= '</ul>';
+	$output .= '</div>';
+	
+	
+	return $output;
+>>>>>>> origin/master
 }

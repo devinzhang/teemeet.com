@@ -1,0 +1,1713 @@
+<<<<<<< HEAD
+<?php
+
+
+/*  This module define the base of each user type profile, it include the following use cases.
+ *  1) The administrator can create a new node type served as a profile type, this should linked to one of role,
+ *      this should be configurable on the node type edit page.
+ *  2) when this kind of user node was created, then all the profile node should be created. this module store the info into the DB
+ *  3) Display a block 'profile data' to view all the profiels  for a user
+ *  
+*/
+
+
+define('GROUP_NODE_TYPE', 'group'); //节点类型
+
+function usercenter_perm() {
+    return array(
+        'admin user homepage',
+        'has homepage');
+}
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function usercenter_menu() {
+  $items = array();
+  $items['homepage'] = array(
+    	'title' => t('My Home'),
+        'page callback' => 'usercenter_main',
+        'page arguments' => null,
+        'type' => MENU_CALLBACK,       
+        'access arguments' => array('has homepage'),   
+  );
+  $items['account/%'] = array(
+    	'title' => t('My Account'),
+        'page callback' => 'usercenter_account',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+  
+  $items['account/%/name'] = array(
+    	'title' => t('Change Your Name'),
+        'page callback' => 'usercenter_account_name',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+  
+    $items['account/%/email'] = array(
+    	'title' => t('Change Your Email Address'),
+        'page callback' => 'usercenter_account_email',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+	
+	$items['account/%/pass'] = array(
+    	'title' => t('Change Your Password'),
+        'page callback' => 'usercenter_account_pass',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+	
+	$items['account/%/location'] = array(
+    	'title' => t('Change Your Location'),
+        'page callback' => 'usercenter_account_location',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+	
+	$items['account/%/language'] = array(
+    	'title' => t('Change Your Language'),
+        'page callback' => 'usercenter_account_language',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+    
+    $items['user/%user/mygroups'] = array(
+    	'title' => t('My Groups'),
+        'page callback' => 'usercenter_mygroups',
+        'page arguments' => null,        
+        'access callback' => 'usercenter_has_groups',
+        'access arguments' => null,  
+        'type' => MENU_LOCAL_TASK, 
+    );
+  
+
+    
+    /* user profile center based on some group */
+      
+   $items['member/%/ingroup/%'] = array(
+    	'title' => t('Intro'),
+        'page callback' => 'usercenter_group_member_intro',
+        'page arguments' => array(1,3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.groupprofile.inc',        
+        'weight' => -9,
+    );
+    
+    $items['member/%/ingroup/%/intro'] = array(
+    	'title' => t('Intro'),
+        'type' => MENU_DEFAULT_LOCAL_TASK,      
+    );
+    
+    $items['member/%/ingroup/%/rsvp'] = array(
+    	'title' => t('RSVPs'),
+        'page callback' => 'usercenter_group_member_rsvp',
+        'page arguments' => array(1,3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.groupprofile.inc',        
+        'weight' => -8,
+    );
+    
+     $items['member/%/ingroup/%/photos'] = array(
+    	'title' => t('Photos'),
+        'page callback' => 'usercenter_group_member_photos',
+        'page arguments' => array(1,3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.groupprofile.inc',        
+        'weight' => -7,
+    );
+    
+    $items['member/%/ingroup/%/greetings'] = array(
+    	'title' => t('Greetings'),
+        'page callback' => 'usercenter_group_member_greetings',
+        'page arguments' => array(1,3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.groupprofile.inc',        
+        'weight' => -6,
+    );
+    
+    $items['usercenter/ajax/greeting/%/delete'] = array(
+    	'title' => t('Delete Greetings'),
+        'page callback' => 'usercenter_ajax_delete_greetings',
+        'page arguments' => array(3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.greeting.inc',        
+        'weight' => -6,
+    );
+    
+    
+    
+   
+  return $items;
+}
+
+function usercenter_has_groups(){
+    global $user;     
+    return !(empty($user->og_groups));
+}
+
+function usercenter_is_login($uid){
+    return $uid; 
+}
+
+/**
+ * Implementation of hook_theme().
+ *
+ *
+ */
+function usercenter_theme() {
+  return array(
+   'usercenter_home' => array(
+	  'template' => 'usercenter-home',
+      'arguments' => array(
+            'user'=>null,
+            'instruction' => '',
+            'update' => '',
+  			'shortcuts' =>'',
+  			'interest' =>'',
+        ),
+	),
+    
+   
+    
+    'usercenter_account_main' => array(
+	  'template' => 'usercenter-account-main',
+      'arguments' => array(
+            'user'=>null,
+            'profile' => null,
+            
+        ),
+	),
+    
+    'usercenter_account_main_alert' => array(
+	  'template' => 'usercenter-account-main-alert',
+      'arguments' => array(
+            'user'=>null,
+            'alerts' => null,
+            
+        ),
+	),
+    
+    /*member profile themeing */
+    'usercenter_member_intro' => array(
+	  'template' => 'usercenter-member-intro',
+      'arguments' => array(
+            'account'=>null,          
+            'curr_group' =>null,            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    'usercenter_member_rsvp' => array(
+	  'template' => 'usercenter-member-rsvp',
+      'arguments' => array(
+            'account'=>null,
+            'rsvps' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    'usercenter_member_photos' => array(
+	  'template' => 'usercenter-member-photos',
+      'arguments' => array(
+            'user'=>null,
+            'photos' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    'usercenter_member_greetings' => array(
+	  'template' => 'usercenter-member-greetings',
+      'arguments' => array(
+            'account'=>null,
+            'greetings' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+     'greetings' => array(
+      'arguments' => array('uid', 'entries', 'limit'),
+      'file' => drupal_get_path('module','usercenter').'/usercenter.greeting.inc',
+    ),
+    
+     'greeting_entry' => array(
+      'arguments' => array('uid', 'entry', 'zebra', 'confirm_delete'),
+      'file' => drupal_get_path('module','usercenter').'/usercenter.greeting.inc',
+    ),
+    
+ 
+    
+  );
+}
+
+
+/**
+ * Implementation of hook_user().
+ */
+function usercenter_user($op, &$edit, &$account, $category = NULL) {
+	switch($op) {
+		case 'register':
+		
+			break;
+
+        case 'view' :
+           global $user; 
+            if(($user->uid != $account->uid)) {
+                if(empty($account->og_groups)) {
+                    drupal_goto('user/'.$account->uid); 
+                }else{
+                $first_group = array_shift($account->og_groups);
+                
+                drupal_goto('member/'.$account->uid.'/ingroup/'.$first_group['nid']); 
+                }
+            } 
+			
+		break;
+        
+		case 'login':
+                $_REQUEST['destination'] = 'home';
+			break;
+		}
+}
+
+
+/* hook_block
+ *
+ */
+ 
+
+function usercenter_block($op = 'list', $delta = 0, $edit = array()){
+	switch($op){
+		case 'list':			
+			$blocks[0]['info']=t('User Account Menu');
+			$blocks[0]['cache']=BLOCK_NO_CACHE;
+            $blocks[1]['info']=t('User Profile Header');
+			$blocks[1]['cache']=BLOCK_NO_CACHE;
+            
+            $blocks[2]['info']=t('Profile Header in a group');
+			$blocks[2]['cache']=BLOCK_NO_CACHE;
+            
+         
+            
+	
+			return $blocks;
+		case 'view':
+			switch($delta){
+				case 0:
+					$block['subject']=t('User Account Menu');
+					$block['content']= usercenter_account_menu();
+
+					break;				
+                case 1:
+					$block['subject']=t('User Profile Header');
+					$block['content']= usercenter_profile_header();
+
+					break;				
+                
+                case 2:
+					$block['subject']=t('Profile Header in a group');
+					$block['content']= usercenter_profile_header_ingroup();
+
+					break;				
+               		
+
+                    
+			}
+			return $block;
+	}
+}
+
+
+function usercenter_account_menu(){
+
+   drupal_add_js(drupal_get_path('module','usercenter') . '/js/usercenter.js');
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output='';
+    $user_menus=array();
+    
+	global $user;
+	if(arg(0)=='account' &&  is_numeric(arg(1))) {
+		if(arg(1) != $user->uid) { // you are watching other user' space
+            $user_menus[]=l(t('Introduction'),'');
+            $user_menus[]=l(t('Photos'),'');
+            $user_menus[]=l(t('Greetings'),'');
+            
+		} else {
+            $user_menus[]=l(t('Personal Info'),'account/'.$user->uid, array('class'=>'first select'));
+         //   $user_menus[]=l(t('Membership & communication'),'',array('class'=>''));
+         //   $user_menus[]=l(t('Payments Made'),'',array('class'=>'last'));
+       
+        }
+	}
+	   
+    $output .= theme('item_list', $user_menus);
+	
+    return $output; 
+    
+}
+
+/*create a block to show the profile header
+ * This profile header show the user name and avator
+ */
+function usercenter_profile_header(){
+    $output = '';
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    global $user; 
+	$usr = user_load(arg(1));
+    global $base_url;
+
+    $output .= '<div class="D_boxhead">';
+	$output .= '<span id="member_'.$user->uid.'" class="member-header">';
+
+    $output .= '<div class="D_memberProfileHdrThumbnail">';
+    $output .= '<a href="user/'.$usr->uid.'"><img width="85" height="85" alt="'.$usr->name.'" src="'.$base_url.'/'.$usr->picture.'"></a>';
+    $output .= '</span>';
+
+    $output .= '<h1 class="fn">';
+    $output .= l($usr->name, 'user/'.$usr->uid);
+
+    $output .= '</h1>';
+    $output .= '<div id="memberInfo_'.$usr->uid.'"></div>';
+    $output .= '</div>';
+    $output .= '</div>';
+    
+    return $output; 
+}
+
+
+/*create a block to show a member profile header in one group
+ * This profile header show the user name and avator
+ */
+function usercenter_profile_header_ingroup(){
+    $uid = arg(1);
+    $gid = arg(3); 
+    $current_group = $GLOBALS['current_group'];
+    global $user; 
+   
+    
+    $output = '';
+    drupal_add_js(drupal_get_path('module','usercenter') . '/js/usercenter.js');
+    drupal_add_js(drupal_get_path('module','usercenter') . '/js/jquery.editinplace.js');
+    drupal_add_css(drupal_get_path('module','usercenter').'/css/usercenter.css');
+    
+    $account = user_load($uid);
+    $my_groups =  $account->og_groups;
+    $group_node = node_load($gid); 
+    $is_admin = og_is_group_admin($group_node );
+  //  $edit_links = array();
+  //  $edit_links =
+    
+    $group_title = $my_groups[$gid]['title'];
+    $is_group_organizer = $my_groups[$gid]['is_admin'];
+  //  $output .= '<div class="member-profile-header">';
+	$output .= '<div id="member_'. $account->uid.'" class="member-profile-header">';
+        $output .= '<h1 class="fn">';
+            $output .= l( $account->name, $current_group->path.'/member/'. $account->uid.'/ingroup/'.$current_group->nid);
+        $output .= '</h1>';
+        $output .= '<span id="role_'.$account->uid.'" class="D_memberProfileRole">';
+        $output .= $is_group_organizer? t('Organizer'): t('Member'). t(' of '). l($group_title,'node/'.$gid);
+        $output .= '</span>';    
+        $output .= '<ul class="D_actions">';
+            if($user->uid == $uid ) {// the user is view his/her profiles
+                $output .= '<li class="canDo">'.l(t('Edit group profile'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/profile', array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
+            } elseif($is_admin) {
+             //   $output .= '<li class="canDo">'.l(t('Manage member roles'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/settingrole', array('attributes'=>array('class'=>'manageRole J_onClick'))).'</li>';
+            }
+            if($user->uid == $uid ) {// the user is view his/her profiles             
+          //  $output .= '<li class="canDo">'.l(t('Edit communication settings'),'',array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
+            } elseif($is_admin) {
+             $output .= '<li class="canDo">'.l(t('Remove member'),'',array('attributes'=>array('class'=>'removeMember'))).'</li>';
+             }
+              if($user->uid == $uid ) {// the user is view his/her profiles
+                    $output .= '<li class="canDo">'.l(t('Leave this Meetup Group'),$current_group->path.'/og/unsubscribe/'.$uid ).'</li>';
+             } elseif($is_admin) {
+              //  $output .= '<li class="canDo">'.l(t('Remove member from mailing list '),$current_group->path.'/').'</li>';
+             }
+            $output .= '</ul>';
+            
+    $output .= '</div>';
+ //   $output .= '</div>';
+    
+    return $output; 
+}
+
+/*
+* http://drupal.org/node/269913
+*/
+function usercenter_menu_alter(&$items) {
+  // $items['user/%user']['page callback'] = 'usercenter_member_profile';
+   
+}
+
+function usercenter_profile_alter(&$account) {
+/*	foreach ($account->content AS $key => $field) {
+      if ($key=='summary') {
+      unset($account->content['summary']);
+    }
+  }
+  */
+  if (!in_array('administrator', array_values($account->roles))) {
+	
+  }
+}
+
+
+/**
+ *  hook impl. hook_preprocess_user_profile
+ */
+function usercenter_preprocess_user_profile(&$variables) {
+  
+  global $user; 
+  $variables['user'] = $user;
+}
+
+/*menu alater call back 
+*
+* change the behavor of user profile
+* if the user is looking at his own profile, then keep the drupal default behavor
+* if the other user is view your profile , then need to redirect to the profile based on your group.
+*/
+function usercenter_member_profile($user) {
+
+    return $user->name; 
+    
+}
+
+
+
+/*define the impl*/
+function usercenter_main() {
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    global $user;
+    
+    $output = '';
+    $output .= '这部分代码需要替换，需要实现，这个的实现在usercenter 模块的 usercenter_main()函数';
+    return $output; 
+}
+
+/* menu callback*/
+function usercenter_account($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    drupal_set_title('');
+    $output = '';
+    $profile='';
+    $output .= theme('usercenter_account_main',$user, $profile);
+  //  $output .= theme('usercenter_account_main_alert',$user, $alerts);
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_name($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_name_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_email($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_email_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_pass($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_pass_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_location($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_location_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_language($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_language_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+function usercenter_account_name_form(&$form_state, $user) {
+	$form['name'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Change Your Name'),
+		'#required' => TRUE,
+		'#size' => 30,
+		'#prefix' => '<div class="element" style="float:left">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_language_form(&$form_state, $user) {
+	
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_email_form(&$form_state, $user) {
+	$form['email'] = array(
+		'#type' => 'textfield',
+		'#title' => t('New email'),
+		'#required' => TRUE,
+		'#size' => 30,
+		'#prefix' => '<div class="element" style="float:left">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_pass_form(&$form_state, $user) {
+	$form['pass'] = array(
+		'#type' => 'password_confirm',
+		//'#title' => t('Your new password'),
+		'#required' => TRUE,
+		'#size' => 30,
+		'#prefix' => '<div class="element" style="float:left">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_location_form(&$form_state, $user) {
+	
+	$settings = variable_get('location_settings_user', array());
+    $form['locations'] = location_form($settings, $user->locations);
+	//print '<pre>';
+	//print_r($form['locations']);exit;
+	//print '</pre>';
+	$form['locations'][0]['#collapsed'] = 0;
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_name_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+    user_save(user_load(array('uid' => $values['uid'])), array(
+		'name' => $values['name'],	
+	));
+	drupal_goto('account/' . $values['uid'] );
+}
+
+function usercenter_account_email_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+    user_save(user_load(array('uid' => $values['uid'])), array(
+		'mail' => $values['email'],	
+	));
+	drupal_goto('account/' . $values['uid'] );
+}
+
+function usercenter_account_pass_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+
+    user_save(user_load(array('uid' => $values['uid'])), array(
+		'pass' => $values['pass'],	
+	));
+	drupal_goto('account/' . $values['uid'] );
+}
+
+function usercenter_account_location_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+    location_save_locations($values['locations'], array('uid' => $values['uid']));
+	drupal_goto('account/' . $values['uid'] );
+}
+/* menu callback */
+/*
+[1] => Array
+                (
+                    [title] => test group
+                    [type] => group
+                    [status] => 1
+                    [nid] => 1
+                    [og_role] => 0
+                    [is_active] => 1
+                    [is_admin] => 0
+                    [uid] => 55
+                    [created] => 1311426124
+                    [changed] => 1311426124
+                )
+
+*/
+function usercenter_mygroups() {
+    global $user; 
+	drupal_add_css(drupal_get_path('module','usercenter').'/css/group_list.css');
+    $mygroups = $user->og_groups;
+    drupal_set_title($user->name);
+    $output = '';
+	$output .='<h2>'.t('Member of @counter Teemeet groups', array('@counter'=>count($mygroups))).'</h2>';
+    $output .='<div style="width: 310px;" id="groupsMenu">';
+    $output .='<ul class="myGroupsSection">';
+    if(!empty($mygroups)){ 
+        foreach($mygroups as $nid => $grp){
+			$group = node_load($nid);
+			
+            $output .= '<li>'._output_group_list_teaser($group).'</li>';
+        }
+    } else {
+          $output .= t('You didn\'t join any groups');
+    }
+    
+    $output .= '</ul></div>';
+    
+    return $output;
+}
+
+/* intenal function to output a group teaser 
+**
+*/
+function _output_group_list_teaser($group){
+	$output = '';
+	global $base_url;
+	$output .= '<div data-chapterid="'.$group->nid.'" class="D_group clearfix  first groupinfo-widget">';
+	$output .= '<div class="D_image">';
+		$output .= '<a href="'.url($group->path).'" title="'.$group->field_site_title[0]['value'].'"><img src="'.$base_url.'/'.$group->field_logo[0]['filepath'].'"></a>';
+    $output .= '</div>';
+	$output .= '<div class="D_info">';
+		$output .= '<div class="D_name"><a href="'.url($group->path).'" class="omnCamp omngj_sj3">'.$group->field_site_title[0]['value'].'</a></div>';
+			$output .= '<div class="member-role">';
+				$output .= '<a class="omnCamp omngj_sj3" href="'.url($group->path.'/groupextension/allmembers/'.$group->nid).'">'.t('Members').'</a>';
+			$output .= '</div>';
+		$output .= '</div>';
+	$output .= '</div>';
+
+	return $output; 
+}
+
+/* menu callback */
+
+function usercenter_member_greetings(){
+global $user; 
+    
+    
+return 'greetings';
+}
+
+
+/*helper function ,called by other functions */
+
+/* create a new user programmaticlly
+** @param , $values,an input array, keyed by mail, password
+*/
+function usercenter_create_user($values, $roles) {
+    $name = $values['name'];
+   $pass = $values['pass'];
+   $email = $values['mail'];
+   $newUser = array(
+  		'name' =>$name,
+  		'pass' => $pass, // note: do not md5 the password
+  		'mail' => $email,
+  		'roles' => $roles,
+  		'status' => 1,
+   		
+  	);
+	$user=user_save(null, $newUser);
+
+	if(!$user){ //if user save fail
+	$ret = 'fail';
+	$uid = 0;	
+	}
+	else{
+	$uid = $user->uid;
+	$ret = t('uid=').$user->uid;	
+	}
+
+  $return=array(
+  'name' => $name,
+  'email' => $email,
+  'pass' => $pass,
+  'result' => $ret,
+  'uid' => $uid,
+
+  );
+
+  return $return;
+}
+
+/**
+ * Implementation of hook_form_alter().
+ * @author nemo
+ */
+function usercenter_form_alter(&$form, &$form_state, $form_id) {
+	switch ($form_id) {
+		case 'user_register':
+			global $user;
+			$settings = variable_get('location_settings_user', array());
+           $form['locations'] = location_form($settings, $user->locations);
+			break;
+	}
+=======
+<?php
+
+
+/*  This module define the base of each user type profile, it include the following use cases.
+ *  1) The administrator can create a new node type served as a profile type, this should linked to one of role,
+ *      this should be configurable on the node type edit page.
+ *  2) when this kind of user node was created, then all the profile node should be created. this module store the info into the DB
+ *  3) Display a block 'profile data' to view all the profiels  for a user
+ *  
+*/
+
+
+define('GROUP_NODE_TYPE', 'group'); //节点类型
+
+function usercenter_perm() {
+    return array(
+        'admin user homepage',
+        'has homepage');
+}
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function usercenter_menu() {
+  $items = array();
+  $items['homepage'] = array(
+    	'title' => t('My Home'),
+        'page callback' => 'usercenter_main',
+        'page arguments' => null,
+        'type' => MENU_CALLBACK,       
+        'access arguments' => array('has homepage'),   
+  );
+  $items['account/%'] = array(
+    	'title' => t('My Account'),
+        'page callback' => 'usercenter_account',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+  
+  $items['account/%/name'] = array(
+    	'title' => t('Change Your Name'),
+        'page callback' => 'usercenter_account_name',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+  
+    $items['account/%/email'] = array(
+    	'title' => t('Change Your Email Address'),
+        'page callback' => 'usercenter_account_email',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+	
+	$items['account/%/pass'] = array(
+    	'title' => t('Change Your Password'),
+        'page callback' => 'usercenter_account_pass',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+	
+	$items['account/%/location'] = array(
+    	'title' => t('Change Your Location'),
+        'page callback' => 'usercenter_account_location',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+	
+	$items['account/%/language'] = array(
+    	'title' => t('Change Your Language'),
+        'page callback' => 'usercenter_account_language',
+        'page arguments' => array(1), 
+        'access callback' => 'usercenter_is_login',
+        'access arguments' => array(1),   
+    );  
+    
+    $items['user/%user/mygroups'] = array(
+    	'title' => t('My Groups'),
+        'page callback' => 'usercenter_mygroups',
+        'page arguments' => null,        
+        'access callback' => 'usercenter_has_groups',
+        'access arguments' => null,  
+        'type' => MENU_LOCAL_TASK, 
+    );
+  
+
+    
+    /* user profile center based on some group */
+      
+   $items['member/%/ingroup/%'] = array(
+    	'title' => t('Intro'),
+        'page callback' => 'usercenter_group_member_intro',
+        'page arguments' => array(1,3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.groupprofile.inc',        
+        'weight' => -9,
+    );
+    
+    $items['member/%/ingroup/%/intro'] = array(
+    	'title' => t('Intro'),
+        'type' => MENU_DEFAULT_LOCAL_TASK,      
+    );
+    
+    $items['member/%/ingroup/%/rsvp'] = array(
+    	'title' => t('RSVPs'),
+        'page callback' => 'usercenter_group_member_rsvp',
+        'page arguments' => array(1,3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.groupprofile.inc',        
+        'weight' => -8,
+    );
+    
+     $items['member/%/ingroup/%/photos'] = array(
+    	'title' => t('Photos'),
+        'page callback' => 'usercenter_group_member_photos',
+        'page arguments' => array(1,3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.groupprofile.inc',        
+        'weight' => -7,
+    );
+    
+    $items['member/%/ingroup/%/greetings'] = array(
+    	'title' => t('Greetings'),
+        'page callback' => 'usercenter_group_member_greetings',
+        'page arguments' => array(1,3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.groupprofile.inc',        
+        'weight' => -6,
+    );
+    
+    $items['usercenter/ajax/greeting/%/delete'] = array(
+    	'title' => t('Delete Greetings'),
+        'page callback' => 'usercenter_ajax_delete_greetings',
+        'page arguments' => array(3),   
+        'type' => MENU_LOCAL_TASK,                
+        'access arguments' => array('access user profiles'), 
+        'file' => 'usercenter.greeting.inc',        
+        'weight' => -6,
+    );
+    
+    
+    
+   
+  return $items;
+}
+
+function usercenter_has_groups(){
+    global $user;     
+    return !(empty($user->og_groups));
+}
+
+function usercenter_is_login($uid){
+    return $uid; 
+}
+
+/**
+ * Implementation of hook_theme().
+ *
+ *
+ */
+function usercenter_theme() {
+  return array(
+   'usercenter_home' => array(
+	  'template' => 'usercenter-home',
+      'arguments' => array(
+            'user'=>null,
+            'instruction' => '',
+            'update' => '',
+  			'shortcuts' =>'',
+  			'interest' =>'',
+        ),
+	),
+    
+   
+    
+    'usercenter_account_main' => array(
+	  'template' => 'usercenter-account-main',
+      'arguments' => array(
+            'user'=>null,
+            'profile' => null,
+            
+        ),
+	),
+    
+    'usercenter_account_main_alert' => array(
+	  'template' => 'usercenter-account-main-alert',
+      'arguments' => array(
+            'user'=>null,
+            'alerts' => null,
+            
+        ),
+	),
+    
+    /*member profile themeing */
+    'usercenter_member_intro' => array(
+	  'template' => 'usercenter-member-intro',
+      'arguments' => array(
+            'account'=>null,          
+            'curr_group' =>null,            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    'usercenter_member_rsvp' => array(
+	  'template' => 'usercenter-member-rsvp',
+      'arguments' => array(
+            'account'=>null,
+            'rsvps' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    'usercenter_member_photos' => array(
+	  'template' => 'usercenter-member-photos',
+      'arguments' => array(
+            'user'=>null,
+            'photos' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+    'usercenter_member_greetings' => array(
+	  'template' => 'usercenter-member-greetings',
+      'arguments' => array(
+            'account'=>null,
+            'greetings' => null,
+            'current_gid' => '',            
+        ),
+      'path'=>drupal_get_path('module','usercenter').'/tpl',
+	),
+    
+     'greetings' => array(
+      'arguments' => array('uid', 'entries', 'limit'),
+      'file' => drupal_get_path('module','usercenter').'/usercenter.greeting.inc',
+    ),
+    
+     'greeting_entry' => array(
+      'arguments' => array('uid', 'entry', 'zebra', 'confirm_delete'),
+      'file' => drupal_get_path('module','usercenter').'/usercenter.greeting.inc',
+    ),
+    
+ 
+    
+  );
+}
+
+
+/**
+ * Implementation of hook_user().
+ */
+function usercenter_user($op, &$edit, &$account, $category = NULL) {
+	switch($op) {
+		case 'register':
+		
+			break;
+
+        case 'view' :
+           global $user; 
+            if(($user->uid != $account->uid)) {
+                if(empty($account->og_groups)) {
+                    drupal_goto('user/'.$account->uid); 
+                }else{
+                $first_group = array_shift($account->og_groups);
+                
+                drupal_goto('member/'.$account->uid.'/ingroup/'.$first_group['nid']); 
+                }
+            } 
+			
+		break;
+        
+		case 'login':
+                $_REQUEST['destination'] = 'home';
+			break;
+		}
+}
+
+
+/* hook_block
+ *
+ */
+ 
+
+function usercenter_block($op = 'list', $delta = 0, $edit = array()){
+	switch($op){
+		case 'list':			
+			$blocks[0]['info']=t('User Account Menu');
+			$blocks[0]['cache']=BLOCK_NO_CACHE;
+            $blocks[1]['info']=t('User Profile Header');
+			$blocks[1]['cache']=BLOCK_NO_CACHE;
+            
+            $blocks[2]['info']=t('Profile Header in a group');
+			$blocks[2]['cache']=BLOCK_NO_CACHE;
+            
+         
+            
+	
+			return $blocks;
+		case 'view':
+			switch($delta){
+				case 0:
+					$block['subject']=t('User Account Menu');
+					$block['content']= usercenter_account_menu();
+
+					break;				
+                case 1:
+					$block['subject']=t('User Profile Header');
+					$block['content']= usercenter_profile_header();
+
+					break;				
+                
+                case 2:
+					$block['subject']=t('Profile Header in a group');
+					$block['content']= usercenter_profile_header_ingroup();
+
+					break;				
+               		
+
+                    
+			}
+			return $block;
+	}
+}
+
+
+function usercenter_account_menu(){
+
+   drupal_add_js(drupal_get_path('module','usercenter') . '/js/usercenter.js');
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output='';
+    $user_menus=array();
+    
+	global $user;
+	if(arg(0)=='account' &&  is_numeric(arg(1))) {
+		if(arg(1) != $user->uid) { // you are watching other user' space
+            $user_menus[]=l(t('Introduction'),'');
+            $user_menus[]=l(t('Photos'),'');
+            $user_menus[]=l(t('Greetings'),'');
+            
+		} else {
+            $user_menus[]=l(t('Personal Info'),'account/'.$user->uid, array('class'=>'first select'));
+            $user_menus[]=l(t('Membership & communication'),'',array('class'=>''));
+            $user_menus[]=l(t('Payments Made'),'',array('class'=>'last'));
+       
+        }
+	}
+	   
+    $output .= theme('item_list', $user_menus);
+	
+    return $output; 
+    
+}
+
+/*create a block to show the profile header
+ * This profile header show the user name and avator
+ */
+function usercenter_profile_header(){
+    $output = '';
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    global $user; 
+	$usr = user_load(arg(2));
+    global $base_url;
+    $output .= '<div class="D_boxhead">';
+	$output .= '<span id="member_'.$user->uid.'" class="member-header">';
+
+    $output .= '<div class="D_memberProfileHdrThumbnail">';
+    $output .= '<a href="user/'.$usr->uid.'"><img width="85" height="85" alt="'.$usr->name.'" src="'.$base_url.'/'.$usr->picture.'"></a>';
+    $output .= '</span>';
+
+    $output .= '<h1 class="fn">';
+    $output .= l($usr->name, 'user/'.$usr->uid);
+
+    $output .= '</h1>';
+    $output .= '<div id="memberInfo_'.$usr->uid.'"></div>';
+    $output .= '</div>';
+    $output .= '</div>';
+    
+    return $output; 
+}
+
+
+/*create a block to show a member profile header in one group
+ * This profile header show the user name and avator
+ */
+function usercenter_profile_header_ingroup(){
+    $uid = arg(1);
+    $gid = arg(3); 
+    $current_group = $GLOBALS['current_group'];
+    global $user; 
+   
+    
+    $output = '';
+    drupal_add_js(drupal_get_path('module','usercenter') . '/js/usercenter.js');
+    drupal_add_js(drupal_get_path('module','usercenter') . '/js/jquery.editinplace.js');
+    drupal_add_css(drupal_get_path('module','usercenter').'/css/usercenter.css');
+    
+    $account = user_load($uid);
+    $my_groups =  $account->og_groups;
+    $group_node = node_load($gid); 
+    $is_admin = og_is_group_admin($group_node );
+  //  $edit_links = array();
+  //  $edit_links =
+    
+    $group_title = $my_groups[$gid]['title'];
+    $is_group_organizer = $my_groups[$gid]['is_admin'];
+  //  $output .= '<div class="member-profile-header">';
+	$output .= '<div id="member_'. $account->uid.'" class="member-profile-header">';
+        $output .= '<h1 class="fn">';
+            $output .= l( $account->name, $current_group->path.'/member/'. $account->uid.'/ingroup/'.$current_group->nid);
+        $output .= '</h1>';
+        $output .= '<span id="role_'.$account->uid.'" class="D_memberProfileRole">';
+        $output .= $is_group_organizer? t('Organizer'): t('Member'). t(' of '). l($group_title,'node/'.$gid);
+        $output .= '</span>';    
+        $output .= '<ul class="D_actions">';
+            if($user->uid == $uid ) {// the user is view his/her profiles
+                $output .= '<li class="canDo">'.l(t('Edit group profile'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/profile', array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
+            } elseif($is_admin) {
+                $output .= '<li class="canDo">'.l(t('Manage member roles'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/settingrole', array('attributes'=>array('class'=>'manageRole J_onClick'))).'</li>';
+            }
+            if($user->uid == $uid ) {// the user is view his/her profiles             
+            $output .= '<li class="canDo">'.l(t('Edit communication settings'),'',array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
+            } elseif($is_admin) {
+             $output .= '<li class="canDo">'.l(t('Remove member'),'',array('attributes'=>array('class'=>'removeMember'))).'</li>';
+             }
+              if($user->uid == $uid ) {// the user is view his/her profiles
+                    $output .= '<li class="canDo">'.l(t('Leave this Meetup Group'),$current_group->path.'/').'</li>';
+             } elseif($is_admin) {
+                $output .= '<li class="canDo">'.l(t('Remove member from mailing list '),$current_group->path.'/').'</li>';
+             }
+            $output .= '</ul>';
+            
+    $output .= '</div>';
+ //   $output .= '</div>';
+    
+    return $output; 
+}
+
+/*
+* http://drupal.org/node/269913
+*/
+function usercenter_menu_alter(&$items) {
+  // $items['user/%user']['page callback'] = 'usercenter_member_profile';
+   
+}
+
+function usercenter_profile_alter(&$account) {
+/*	foreach ($account->content AS $key => $field) {
+      if ($key=='summary') {
+      unset($account->content['summary']);
+    }
+  }
+  */
+  if (!in_array('administrator', array_values($account->roles))) {
+	
+  }
+}
+
+
+/**
+ *  hook impl. hook_preprocess_user_profile
+ */
+function usercenter_preprocess_user_profile(&$variables) {
+  
+  global $user; 
+  $variables['user'] = $user;
+}
+
+/*menu alater call back 
+*
+* change the behavor of user profile
+* if the user is looking at his own profile, then keep the drupal default behavor
+* if the other user is view your profile , then need to redirect to the profile based on your group.
+*/
+function usercenter_member_profile($user) {
+
+    return $user->name; 
+    
+}
+
+
+
+/*define the impl*/
+function usercenter_main() {
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    global $user;
+    
+    $output = '';
+    $output .= '这部分代码需要替换，需要实现，这个的实现在usercenter 模块的 usercenter_main()函数';
+    return $output; 
+}
+
+/* menu callback*/
+function usercenter_account($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    drupal_set_title('');
+    $output = '';
+    $profile='';
+    $output .= theme('usercenter_account_main',$user, $profile);
+    $output .= theme('usercenter_account_main_alert',$user, $alerts);
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_name($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_name_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_email($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_email_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_pass($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_pass_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_location($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_location_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+/* menu callback*/
+function usercenter_account_language($uid){
+    $user = user_load(array('uid' => $uid)); 
+    drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
+    $output = '<div class="D_boxsection ">';
+	
+	$output .= drupal_get_form('usercenter_account_language_form', $user);
+	
+    $output .= '</div>';
+    
+    return  $output;
+}
+
+function usercenter_account_name_form(&$form_state, $user) {
+	$form['name'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Change Your Name'),
+		'#required' => TRUE,
+		'#size' => 30,
+		'#prefix' => '<div class="element" style="float:left">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_language_form(&$form_state, $user) {
+	
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_email_form(&$form_state, $user) {
+	$form['email'] = array(
+		'#type' => 'textfield',
+		'#title' => t('New email'),
+		'#required' => TRUE,
+		'#size' => 30,
+		'#prefix' => '<div class="element" style="float:left">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_pass_form(&$form_state, $user) {
+	$form['pass'] = array(
+		'#type' => 'password_confirm',
+		//'#title' => t('Your new password'),
+		'#required' => TRUE,
+		'#size' => 30,
+		'#prefix' => '<div class="element" style="float:left">',
+		'#suffix' => '</div>',
+    );
+	
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_location_form(&$form_state, $user) {
+	
+	$settings = variable_get('location_settings_user', array());
+    $form['locations'] = location_form($settings, $user->locations);
+	//print '<pre>';
+	//print_r($form['locations']);exit;
+	//print '</pre>';
+	$form['locations'][0]['#collapsed'] = 0;
+	$form['submit'] = array(
+		'#type' => 'submit', 
+		'#value' => t('Submit'),
+		'#attributes' => array('class' => 'D_submit'),
+		'#prefix' => '<div class="footElement" style="float:left; margin:25px 0 0 5px;">',
+		'#suffix' => l('Cancel', 'account/' . $user->uid).'</div>',
+	);
+	
+	$form['uid'] = array(
+		'#type' => 'hidden', 
+		'#value' => $user->uid, 
+    );
+ 
+  return $form;
+}
+
+function usercenter_account_name_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+    user_save(user_load(array('uid' => $values['uid'])), array(
+		'name' => $values['name'],	
+	));
+	drupal_goto('account/' . $values['uid'] );
+}
+
+function usercenter_account_email_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+    user_save(user_load(array('uid' => $values['uid'])), array(
+		'mail' => $values['email'],	
+	));
+	drupal_goto('account/' . $values['uid'] );
+}
+
+function usercenter_account_pass_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+
+    user_save(user_load(array('uid' => $values['uid'])), array(
+		'pass' => $values['pass'],	
+	));
+	drupal_goto('account/' . $values['uid'] );
+}
+
+function usercenter_account_location_form_submit($form, &$form_state) {
+	$values = $form_state['values'];
+    location_save_locations($values['locations'], array('uid' => $values['uid']));
+	drupal_goto('account/' . $values['uid'] );
+}
+/* menu callback */
+/*
+[1] => Array
+                (
+                    [title] => test group
+                    [type] => group
+                    [status] => 1
+                    [nid] => 1
+                    [og_role] => 0
+                    [is_active] => 1
+                    [is_admin] => 0
+                    [uid] => 55
+                    [created] => 1311426124
+                    [changed] => 1311426124
+                )
+
+*/
+function usercenter_mygroups() {
+    global $user; 
+	drupal_add_css(drupal_get_path('module','usercenter').'/css/group_list.css');
+    $mygroups = $user->og_groups;
+    drupal_set_title($user->name);
+    $output = '';
+	$output .='<h2>'.t('Member of @counter Teemeet groups', array('@counter'=>count($mygroups))).'</h2>';
+    $output .='<div style="width: 310px;" id="groupsMenu">';
+    $output .='<ul class="myGroupsSection">';
+    if(!empty($mygroups)){ 
+        foreach($mygroups as $nid => $grp){
+			$group = node_load($nid);
+			
+            $output .= '<li>'._output_group_list_teaser($group).'</li>';
+        }
+    } else {
+          $output .= t('You didn\'t join any groups');
+    }
+    
+    $output .= '</ul></div>';
+    
+    return $output;
+}
+
+/* intenal function to output a group teaser 
+**
+*/
+function _output_group_list_teaser($group){
+	$output = '';
+	global $base_url;
+	$output .= '<div data-chapterid="'.$group->nid.'" class="D_group clearfix  first groupinfo-widget">';
+	$output .= '<div class="D_image">';
+		$output .= '<a href="'.url($group->path).'" title="'.$group->field_site_title[0]['value'].'"><img src="'.$base_url.'/'.$group->field_logo[0]['filepath'].'"></a>';
+    $output .= '</div>';
+	$output .= '<div class="D_info">';
+		$output .= '<div class="D_name"><a href="'.url($group->path).'" class="omnCamp omngj_sj3">'.$group->field_site_title[0]['value'].'</a></div>';
+			$output .= '<div class="member-role">';
+				$output .= '<a class="omnCamp omngj_sj3" href="'.url($group->path.'/groupextension/allmembers/'.$group->nid).'">'.t('Members').'</a>';
+			$output .= '</div>';
+		$output .= '</div>';
+	$output .= '</div>';
+
+	return $output; 
+}
+
+/* menu callback */
+
+function usercenter_member_greetings(){
+global $user; 
+    
+    
+return 'greetings';
+}
+
+
+/*helper function ,called by other functions */
+
+/* create a new user programmaticlly
+** @param , $values,an input array, keyed by mail, password
+*/
+function usercenter_create_user($values, $roles) {
+    $name = $values['name'];
+   $pass = $values['pass'];
+   $email = $values['mail'];
+   $newUser = array(
+  		'name' =>$name,
+  		'pass' => $pass, // note: do not md5 the password
+  		'mail' => $email,
+  		'roles' => $roles,
+  		'status' => 1,
+   		
+  	);
+	$user=user_save(null, $newUser);
+
+	if(!$user){ //if user save fail
+	$ret = 'fail';
+	$uid = 0;	
+	}
+	else{
+	$uid = $user->uid;
+	$ret = t('uid=').$user->uid;	
+	}
+
+  $return=array(
+  'name' => $name,
+  'email' => $email,
+  'pass' => $pass,
+  'result' => $ret,
+  'uid' => $uid,
+
+  );
+
+  return $return;
+}
+
+/**
+ * Implementation of hook_form_alter().
+ * @author nemo
+ */
+function usercenter_form_alter(&$form, &$form_state, $form_id) {
+	switch ($form_id) {
+		case 'user_register':
+			global $user;
+			$settings = variable_get('location_settings_user', array());
+           $form['locations'] = location_form($settings, $user->locations);
+			break;
+	}
+>>>>>>> origin/master
+}

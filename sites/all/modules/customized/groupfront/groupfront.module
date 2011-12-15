@@ -808,7 +808,9 @@ function groupfront_page($gid)
 	$output = '<div class="D_box chapterPage"><div class="D_boxbody">';
 	$output .= '<div class="D_boxhead"><h1>' . $group->title . ' ' . t('pages') . '</h1>';
 	$output .= '<ul class="D_actions hasIcons">';
-	$output .= '<li class="canDo"><a class="sprite sprite_action page_add_icon" href="' . url($group_alias .'/node/add/group-page') . '?gids[]='.$group->nid.'">添加文档</a></li>';
+	if (og_is_group_member($gid)) {
+		$output .= '<li class="canDo"><a class="sprite sprite_action page_add_icon" href="' . url($group_alias .'/node/add/group-page') . '?destination='. $group_alias . '/about/' . $gid . '">' . t('Add a page') . '</a></li>';
+	}
 	$output .= '</ul>';
 	$output .= '</div>';
 	$output .= '</div></div>';
@@ -817,9 +819,9 @@ function groupfront_page($gid)
 	$output .= '<div class="D_boxhead"><h2>' . t('Table of Contents') . '</h2></div>';
 	$output .= '<div class="D_boxsection " style="width:700px;"><table class="D_tabular" >';
 	$output .= '<thead><tr>
-				<th class="main">文档标题</th>
-				<th class="date last">最新更新时间</th>
-				<th class="main sender">最后编辑者</th>
+				<th class="main">文章标题</th>
+				<th class="date last">最后更新时间</th>
+				<th class="main sender">最后编辑</th>
 				<th class="main sender">操作</th>
 				</tr></thead>';
 	$output .= '<tbody>';
@@ -841,27 +843,7 @@ function groupfront_page($gid)
    return $output;
 }
 
-function groupfront_form_alter(&$form, &$form_state, $form_id) {
- 
-	 if ($form_id == 'group_page_node_form') {
-			$form['group_path'] = array(
-				'#type' => 'hidden', 
-				'#value' =>$GLOBALS['current_group']->path, 
-		
-			);
-			$form['gid'] = array(
-				'#type' => 'hidden', 
-				'#value' =>$GLOBALS['current_group']->nid, 
-		
-			);
-			
-		    $form['#submit'][] = 'groupfront_group_page_form_submit';
-	 }
-	
+function groupfront_form__alter()
+{
     
-}
-
-function groupfront_group_page_form_submit($form, &$form_state) {
-	
-	drupal_goto($form_state['values']['group_path'].'/about/'.$form_state['values']['gid']);
 }

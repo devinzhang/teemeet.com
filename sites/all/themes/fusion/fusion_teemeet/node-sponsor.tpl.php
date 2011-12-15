@@ -14,7 +14,7 @@
             </div>
 
             <ul class="D_actions editControls">
-            <li style="padding: 0.5em ! important;" class="canDo new-control"> <a class="sprite sprite_action pencil_icon" href="<?php print url('node/'.$node->nid.'/edit'); ?>">Edit Your Info</a> </li>
+            <li style="padding: 0.5em ! important;" class="canDo new-control"> <a class="sprite sprite_action pencil_icon" href="<?php print url('node/'.$node->nid.'/edit'); ?>">编辑您的信息</a> </li>
             </ul>
         </div>
         <div class="D_boxsection isNotDivided ">
@@ -51,7 +51,7 @@
                             <a class="D_submit" href="<?php echo url('sponsor/findgroup'); ?>">
                             <?php echo t('Find a group to sponsor'); ?>
                             </a>
-                            <a class="alternate" href="#"><?php echo t('Learn more'); ?></a>
+                           <!-- <a class="alternate" href="#"><?php echo t('Learn more'); ?></a> -->
                         </div>
                     </div>
                 </div>

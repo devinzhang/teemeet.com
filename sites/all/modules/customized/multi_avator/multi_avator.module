@@ -132,7 +132,7 @@ function multi_avator_member_photos() {
                 <li class="canDo">
                     <a id="add-profile-picture" class="colorbox-inline D_signal D_signal_appear_to_addProfilePhoto sprite sprite_action add_icon" 
                     href="?width=600&height=350&inline=true#add-profile-avator">
-                        添加头像
+                        添加个人头像
                     </a>
                 </li>';
 

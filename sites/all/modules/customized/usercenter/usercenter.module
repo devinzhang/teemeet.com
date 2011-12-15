@@ -107,7 +107,7 @@ function usercenter_menu() {
         'type' => MENU_DEFAULT_LOCAL_TASK,      
     );
     
-    $items['member/%/ingroup/%/rsvp'] = array(
+  /*  $items['member/%/ingroup/%/rsvp'] = array(
     	'title' => t('RSVPs'),
         'page callback' => 'usercenter_group_member_rsvp',
         'page arguments' => array(1,3),   
@@ -116,7 +116,7 @@ function usercenter_menu() {
         'file' => 'usercenter.groupprofile.inc',        
         'weight' => -8,
     );
-    
+   */ 
      $items['member/%/ingroup/%/photos'] = array(
     	'title' => t('Photos'),
         'page callback' => 'usercenter_group_member_photos',
@@ -335,7 +335,7 @@ function usercenter_block($op = 'list', $delta = 0, $edit = array()){
 
 function usercenter_account_menu(){
 
-   drupal_add_js(drupal_get_path('module','usercenter') . '/js/usercenter.js');
+    drupal_add_js(drupal_get_path('module','usercenter') . '/js/usercenter.js');
     drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
     $output='';
     $user_menus=array();
@@ -368,9 +368,8 @@ function usercenter_profile_header(){
     $output = '';
     drupal_add_css(drupal_get_path('module','usercenter').'/usercenter.css');
     global $user; 
-	$usr = user_load(arg(1));
+	$usr = user_load(arg(2));
     global $base_url;
-
     $output .= '<div class="D_boxhead">';
 	$output .= '<span id="member_'.$user->uid.'" class="member-header">';
 
@@ -426,17 +425,17 @@ function usercenter_profile_header_ingroup(){
             if($user->uid == $uid ) {// the user is view his/her profiles
                 $output .= '<li class="canDo">'.l(t('Edit group profile'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/profile', array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
             } elseif($is_admin) {
-             //   $output .= '<li class="canDo">'.l(t('Manage member roles'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/settingrole', array('attributes'=>array('class'=>'manageRole J_onClick'))).'</li>';
+                $output .= '<li class="canDo">'.l(t('Manage member roles'),$current_group->path.'/member/'.$uid.'/ingroup/'.$gid.'/settingrole', array('attributes'=>array('class'=>'manageRole J_onClick'))).'</li>';
             }
             if($user->uid == $uid ) {// the user is view his/her profiles             
           //  $output .= '<li class="canDo">'.l(t('Edit communication settings'),'',array('attributes'=>array('class'=>'sprite sprite_action pencil_icon'))).'</li>';
             } elseif($is_admin) {
-             $output .= '<li class="canDo">'.l(t('Remove member'),'',array('attributes'=>array('class'=>'removeMember'))).'</li>';
+         //    $output .= '<li class="canDo">'.l(t('Remove member'),'',array('attributes'=>array('class'=>'removeMember'))).'</li>';
              }
               if($user->uid == $uid ) {// the user is view his/her profiles
-                    $output .= '<li class="canDo">'.l(t('Leave this Meetup Group'),$current_group->path.'/og/unsubscribe/'.$uid ).'</li>';
+         //           $output .= '<li class="canDo">'.l(t('Leave this Meetup Group'),$current_group->path.'/').'</li>';
              } elseif($is_admin) {
-              //  $output .= '<li class="canDo">'.l(t('Remove member from mailing list '),$current_group->path.'/').'</li>';
+          //      $output .= '<li class="canDo">'.l(t('Remove member from mailing list '),$current_group->path.'/').'</li>';
              }
             $output .= '</ul>';
             
@@ -508,7 +507,7 @@ function usercenter_account($uid){
     $output = '';
     $profile='';
     $output .= theme('usercenter_account_main',$user, $profile);
-  //  $output .= theme('usercenter_account_main_alert',$user, $alerts);
+ //   $output .= theme('usercenter_account_main_alert',$user, $alerts);
     
     return  $output;
 }

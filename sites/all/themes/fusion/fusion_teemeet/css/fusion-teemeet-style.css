@@ -296,6 +296,7 @@ border-left: 1px solid #DDDDDD;
 }
 
 .content-inner {
+margin-left: 10px;
 }
 
 .content-bottom {
@@ -451,6 +452,11 @@ h2.block-title {
 /* Breadcrumbs
 -------------------------------------------------------------- */
 .breadcrumbs {
+margin-left: 1em;
+margin-top: 1em;
+}
+.content-region{
+margin-left: 1em;
 }
 
 .breadcrumbs a:link,
@@ -568,14 +574,26 @@ ul.pager a:focus {
 form input.form-submit {
   margin: 2px;
   padding: 3px 5px;
-  background: -moz-linear-gradient(center top , #6E1B29, #3B0F17) repeat scroll 0 0 transparent;
+ /*background: -moz-linear-gradient(center top , #6E1B29, #3B0F17) repeat scroll 0 0 transparent; */
   border-color: #3B0F17;
   color: #FFFFFF !important;
   text-shadow: 1px 1px 0 #6E1B29;
   border: 2px solid #AD0000;
   border-radius: 4px 4px 4px 4px;
   text-align: center;
-    text-decoration: none;
+  text-decoration: none;
+  width: 6em;
+  height:2em;
+  background: url("../../images/common/side_line.gif") no-repeat scroll 0 0 #6E1B29;
+}
+
+input#edit-submit-og{
+  width: 6em;
+  height:2em;
+}
+form#teemeet-search-top-form input.form-submit{
+width: 20px;
+height: 20px;
 }
 
 /* Hover style for form buttons */
@@ -975,6 +993,15 @@ margin-bottom: 0px;
 width: 57.14%;
 margin: 0 0.5em;
 }
+#block-usercenter-0{
+   -moz-border-radius: 5px 5px 5px 5px;
+    background: none repeat scroll 0 0 white;
+    margin-bottom: 1em;
+    padding: 1px 0 0;
+	margin-right: 2px;
+    position: relative;
+	min-height: 14em;
+}
 
 .content-group  .inner{
     -moz-border-radius: 5px 5px 5px 5px;
@@ -987,15 +1014,47 @@ margin: 0 0.5em;
 margin-left: 0.5em;
 width: 14.28%;
 }
+
 .sidebar-last .inner{
+  /*  -moz-border-radius: 5px 5px 5px 5px;
+    background: none repeat scroll 0 0 white; */
+    margin-bottom: 1em;
+    padding: 1px 0 0;
+    position: relative;
+	width: 100%;
+}
+
+.front #sidebar-last .inner .block,
+.front #sidebar-last-inner{
+width: 420px;
+
+}
+
+ .node-type-sponsor .D_boxsection{
+ width: 940px;
+ }
+
+
+
+#findMeetup,
+#block-heartbeat-siteuseractivity{
     -moz-border-radius: 5px 5px 5px 5px;
     background: none repeat scroll 0 0 white;
     margin-bottom: 1em;
     padding: 1px 0 0;
-    position: relative;
+	color:#272727;
 }
-.front #sidebar-last .inner .block{
-width: 420px;
+#findMeetup .D_boxbody {
+   background: none repeat scroll 0 0 white;
+    
+}
+#findMeetup .element label{
+color:#272727;
+}
+#findMeetup  .footElement input{
+width: 80px;
+height: 1.3em;
+line-height: 1.3em;
 }
 
 /* group home page */
@@ -1035,9 +1094,9 @@ width: 420px;
 
 .register #content-group{
     min-width: 0 !important;
-    width: 30em;
+    width: 34em;
     position:relative;  
-     left:30%;  
+    left:30%;  
     
 }
 
@@ -1087,11 +1146,26 @@ ul.D_actions li a {
 
 form#user-register div fieldset,
 form#user-register div fieldset .form-item {
-width: 27em;
+width: 34em;
 }
 form#user-register div fieldset .form-item input{
 width: 24em;
 }
+
+#gmap-auto1map-locpick_latitude0-wrapper,
+#gmap-auto1map-locpick_longitude0-wrapper{
+display:none;
+}
+.location .description {
+    display:none;
+}
+form#user-register .fieldset-wrapper{
+width: 34em;
+}
+form#user-register div fieldset.location .form-item input {
+    width: 12em;
+}
+
 form#user-register input.form-submit
 {
  -moz-border-radius: 4px 4px 4px 4px;
@@ -1169,7 +1243,7 @@ float:right;
 .node-type-sponsor .D_boxsection {
 margin-top:5px;
 float:left;
-width: 100%;
+width: 920px;
  -moz-border-radius: 5px 5px 5px 5px;
  background: none repeat scroll 0 0 #F1F2ED;
 border-top: 0px solid #C2B367;
@@ -1289,6 +1363,9 @@ html > body #C_navTopBody {
 ul {
     margin-bottom: 0.75em;
     padding-left: 1.5em;
+
+    list-style-type: none;
+
 }
 .C_contextNav li {
     float: left;
@@ -1445,5 +1522,17 @@ background-color: #FFFFFF;
     text-align: center;
 }
 
-
-
+.messages,
+.status{
+  background: none repeat scroll 0 0 white;
+    border-radius: 5px 5px 5px 5px;
+    margin-bottom: 1em;
+    padding: 1px 0 0;
+    position: relative;
+}
+.money .D_boxsection {
+width: 100%;
+}
+.transBox .D_box .D_boxbody .D_boxsection {
+width: 100%;
+}

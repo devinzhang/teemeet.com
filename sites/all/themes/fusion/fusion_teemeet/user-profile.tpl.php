@@ -46,13 +46,15 @@
         <div class="DD_colbody">		
             <div id="D_memberProfileAside">
                 <div id="image_<?php print $user->uid; ?>">
-                    <?php print $profile['user_picture']; ?>
+                    <?php // print $profile['user_picture']; ?>
+					<?php print theme('imagecache','avator_90x60',$user->picture);  ?>
                     <span class="D_inlineAction D_firstInlineAction"><?php print l(t('Manage Photos'), 'user/'.$user->uid.'/photos');?></span>
                 </div>
-                <div class="D_memberProfileContentChunk">
+             <!--   <div class="D_memberProfileContentChunk">
                     <h4>Follow me on:</h4>
                     <p class="D_less"><a href="">Add/edit links</a></p>
                 </div>
+			-->	
             </div>
         </div>    
     </div>

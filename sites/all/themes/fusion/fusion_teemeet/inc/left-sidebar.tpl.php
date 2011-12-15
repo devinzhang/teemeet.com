@@ -1,6 +1,6 @@
 <div id="C_metabox" class="D_box newBox">
           <div class="D_boxsection isNotDivided ">
-            <!-- logo -->
+            <!-- logo --> 
             <div class="D_metasection groupPhotoMeta">
             <? if($group->field_logo[0]['filepath']): ?>
                 <a href="<? echo $group->path ?>">

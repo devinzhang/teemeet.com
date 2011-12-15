@@ -84,7 +84,7 @@
                 </ul>
             </div>
           </li>
-          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>">帐户</a></li>
+          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>"><?php echo t('My Account');?></a></li>
           <li class="C_userNavItem"><a href="<? echo url('logout') ?>"><? echo t('登出') ?></a></li>
         <? endif; ?>
       </ul>
@@ -99,6 +99,7 @@
     </div>
     <!-- end C_globalNav -->
     
+    <!--
     <form id="C_globalSearch" method="get" action="/find/">
       <input type="text" name="keywords" autocomplete="off" id="C_globalSearchInput" class="D_topicSearch" maxlength="100" />
       <div class="D_submitInline">
@@ -106,6 +107,8 @@
       </div>
       <input type="submit" style="display:none" />
     </form>
+	-->
+	<?php print drupal_get_form('teemeet_search_top_form'); ?>
   </div>
 </div>
 <!-- end C_header -->

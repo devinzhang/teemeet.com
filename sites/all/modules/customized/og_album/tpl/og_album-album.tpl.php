@@ -15,17 +15,8 @@
 </li>
 
 <?php if($is_album_admin): ?>
-<!--
-<li class="canDo">
-<a class="sprite sprite_action pencil_icon" title="Rename album" href="">Rename album</a>
-</li>
-<li class="canDo">
-<a class="sprite sprite_action bin_icon" title="Delete album" href="">Delete album</a>
-</li>
-<li class="canDo">
-<a class="sprite sprite_action photos_icon" title="Reorder album" href="">Reorder album</a>
-</li>
--->
+
+
 <?php endif; ?>
 
 </ul>
@@ -67,9 +58,9 @@
 <?php print $set_photo_form; ?>
 
 </li>
-<!--
-<li><a class="D_signal D_signal_appear_to_D_photoGallery_confirmDeletePhotoDialog" href="">删除</a></li>
 
+<li><a class="D_signal D_signal_appear_to_D_photoGallery_confirmDeletePhotoDialog" href="">删除</a></li>
+<!--
 <li class="D_dropdown" id="D_photoGallery_movePhoto">
 <span><a class="J_onClick D_dropdownToggler D_dropdownParent" id="D_photoGallery_movePhotoToggler" href="">
 Move
@@ -91,7 +82,7 @@ Move
 	
 	<a class="J_onClick D_dropdownToggler D_dropdownParent hasIcon" id="shareThis" href="javascript:;"><span class="sprite sprite_action_right drop_down">Share<br><img style="height: 12px;" class="D_icon J_onClick D_dropdownToggler" src="./Photos - Beijing Soccer Lovers (Beijing) - Meetup_files/share_facebook_twitter.png"></span></a>
 	<ul id="shareThisDropdown" class="jsStartHidden D_dropdownContent D_dropdownRight">
-		<li><strong>Share photo on:</strong></li>
+		<li><strong></strong></li>
 		<li class="calendarOption hasIcon">
 			<a class="hasIcon" id="facebookShare" href="javascript:;"><img width="16" height="16" title="Facebook" alt="Facebook" src="./Photos - Beijing Soccer Lovers (Beijing) - Meetup_files/icon_facebook_16.png"> <span>Facebook</span></a>
 		</li>
@@ -125,7 +116,7 @@ Move
     </div>
     <div id="D_photoGallery_meta">
         <div style="display: block;" id="D_photoTags">
-        <h4>In this photo</h4>
+        <h4></h4>
         </div>
         <div id="D_photoGallery_uploadCredit">
             <div id="D_photoGallery_uploadCredit_inner">

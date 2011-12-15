@@ -65,14 +65,14 @@ function group_create(&$form_state)
                 '#required' => TRUE,           
             );
             
-            $form['agreement'] = array
+          /*  $form['agreement'] = array
             (
                 '#type' => 'checkboxes',
                 '#title' => t('服务条款'),                
                 '#required' => TRUE,         
                 '#options' => array('遵守建立以真实人员参与的小组'),  
             );     
-            
+           */ 
             $form['theme'] = array
             (
                 '#type' => 'hidden',
@@ -83,7 +83,7 @@ function group_create(&$form_state)
             (
                 '#weight' => 1000,
                 '#type' => 'submit',
-                '#value' => 'Next'
+                '#value' => t('Next')
                 
             );
             
@@ -197,7 +197,7 @@ EOF
             (
                 '#weight' => 1000,
                 '#type' => 'submit',
-                '#value' => 'Next'
+                '#value' => t('Next')
                 
             );
             
@@ -208,7 +208,7 @@ EOF
         break;
         
         case 4:
-            $q = db_query("SELECT node.nid AS nid, node_data_field_price.field_price_value AS node_data_field_price_field_price_value, node.language AS node_language, node.type AS node_type, node.vid AS node_vid, node_data_field_price.field_period_valuable_value AS node_data_field_price_field_period_valuable_value, node.title AS node_title, node_revisions.body AS node_revisions_body, node_revisions.format AS node_revisions_format FROM node node  LEFT JOIN content_type_service node_data_field_price ON node.vid = node_data_field_price.vid LEFT JOIN node_revisions node_revisions ON node.vid = node_revisions.vid WHERE node.type in ('service')");
+        $q = db_query("SELECT node.nid AS nid, node_data_field_price.field_price_value AS node_data_field_price_field_price_value, node.language AS node_language, node.type AS node_type, node.vid AS node_vid, node_data_field_price.field_period_valuable_value AS node_data_field_price_field_period_valuable_value, node.title AS node_title, node_revisions.body AS node_revisions_body, node_revisions.format AS node_revisions_format FROM node node  LEFT JOIN content_type_service node_data_field_price ON node.vid = node_data_field_price.vid LEFT JOIN node_revisions node_revisions ON node.vid = node_revisions.vid WHERE node.type in ('service')");
 
             $form['service-order'] = array
             (
@@ -238,7 +238,7 @@ EOF
             (
                 '#weight' => 1000,
                 '#type' => 'submit',
-                '#value' => 'Complete'
+                '#value' => t('Complete')
                 
             );
          

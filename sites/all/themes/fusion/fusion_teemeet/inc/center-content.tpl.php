@@ -35,17 +35,13 @@
     <div class="D_box calltoaction variant_fbonly">
       <div class="D_boxbody">
         <div class="D_boxhead">
-          <h2><? echo t('加入这个小组'); ?></h2>
+          <h2><a class="showJoin J_signupLink J_onClick inAlienNudgeSignup omnCamp omnrg_ghurf" href="og/subscribe/<? echo $group->nid ?>"><? echo t('加入这个小组'); ?><a></h2>
           <!--p style="font-size: 10px;">You can join groups on Meetup using your Facebook account.</p-->
         </div>
         <div class="D_boxsection isFacebook">
           <div class="isFacebook_button">
-		  <?php global $user; if($user->uid <1):?>
-            <p><strong><a class="showJoin J_signupLink J_onClick inAlienNudgeSignup omnCamp omnrg_ghurf" href="<? echo url('user/register'); ?>"><?php print t('Join Teemeet here'); ?></a>.</strong></p>
-          <?php else:?>
-		   <p><strong><a class="showJoin J_signupLink J_onClick inAlienNudgeSignup omnCamp omnrg_ghurf" href="og/subscribe/<? echo $group->nid ?>"><?php print t('Join Teemeet here'); ?></a>.</strong></p>
-		  <?php endif; ?>
-		  </div>
+           <!-- <p><strong><a class="showJoin J_signupLink J_onClick inAlienNudgeSignup omnCamp omnrg_ghurf" href="og/subscribe/<? echo $group->nid ?>"><?php print t('Join Meetup here');?></a>.</strong></p> -->
+          </div>
         </div>
         <!--div class="D_boxsection tos"> By clicking the "Sign up using Facebook" button above, you agree to Meetup's <a href="http://www.meetup.com/terms/" target="_blank">Terms of Service</a> </div-->
       </div>

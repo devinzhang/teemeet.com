@@ -30,11 +30,11 @@ function _groupextension_tools_send_message_form(&$form_state, $gid) {
  $form=array();  
  $select_options = array(
     t('All members of this Meetup Group'), 
- //   t('A custom list'),
- //   t('Members active within the last'),
- //   t('Members inactive for'),
- //   t('The Leadership Team'),
-//    t('Related to a specific Meetup event')
+    t('A custom list'),
+    t('Members active within the last'),
+    t('Members inactive for'),
+    t('The Leadership Team'),
+    t('Related to a specific Meetup event')
     
 ); 
 global $user; 
@@ -438,12 +438,12 @@ function _groupextension_tools_group_dues_form_submit($form, &$form_state) {
 function _groupextension_tools_manage_output(){
     $output='';
     $current_group = $GLOBALS['current_group'];
-	$basic_link = l('Basics',$current_group->path.'/node/'.$current_group->nid.'/edit');
+	$basic_link = l(t('基本'),$current_group->path.'/node/'.$current_group->nid.'/edit');
     $member_link = l(t('Your Memebers'),$current_group->path.'/grouptool/'.$current_group->nid.'/manage/settings/members');
     $theme_link = url($current_group->path.'/theme/color_mine',array('query'=>array('styleid'=>$current_group->path)));
 	$tags_link = l(t('Topics'), $current_group->path.'/groupextension/'.$current_group->nid.'/tags');
-    $group_due_link = l(t('Membership Dues'),$current_group->path.'/groupextension/'.$current_group->nid.'/dues');
-	$sponsors_list_link = l(t('Sponsors and Perks'),$current_group->path.'/sponsor/'.$current_group->nid.'/list');
+    $group_due_link = l(t('会员费用'),$current_group->path.'/groupextension/'.$current_group->nid.'/dues');
+	$sponsors_list_link = l(t('赞助与福利'),$current_group->path.'/sponsor/'.$current_group->nid.'/list');
 	$output.= <<<EOF
    <h3>基本信息</h3>
 <div class="D_boxcols divby3">
@@ -454,13 +454,14 @@ function _groupextension_tools_manage_output(){
 					<li class="D_category">
 						<div class="D_name">$basic_link</div>
 						<ul class="D_bullet">
-							<li>小组名字</li>
+							<li>小组名称</li>
 							<li>小组标题</li>
 							<li>小组描述</li>
-							<li>小组成员的叫什么？</li>
+							<li>小组成员昵称</li>
 							<li>所在地</li>
-							<li>网络地址</li>							
-							<li>小组的LOGO</li>
+							<li>网站</li>
+						
+							<li>小组照片<span class="D_new">New!</span></li>
 						</ul>
 					</li>
 				</ul>
@@ -475,9 +476,9 @@ function _groupextension_tools_manage_output(){
                     <div class="D_name">$member_link</div>
 						<ul class="D_bullet">
 							<li>档案问题</li>
-							<li>会员信息</li>
-							<li>入会准则</li>
-							<li>新会员欢迎信息</li>
+							<li>小组会员</li>
+							<li>新成员档案要求</li>
+							<li>欢迎新会员消息</li>
 						</ul>
 					</li>
 				</ul>
@@ -490,7 +491,7 @@ function _groupextension_tools_manage_output(){
 				<ul class="D_list">
 					<li class="D_category">
 						<div class="D_name">$tags_link</div>
-						<p>选择合适的主题以便其他人能够方便找到小组.</p>
+						<p>选择合适的题目以便让其他人找到小组</p>
 					</li>
 				</ul>
 			
@@ -498,27 +499,17 @@ function _groupextension_tools_manage_output(){
 </div>		
 </div>
 <div class="D_boxcols divby3">
-<div class="D_col first">
-	<div class="D_colbody">
-		
-				<ul class="D_list">
-					<li class="D_category">
-                   
-					</li>
-				</ul>
-			
-	</div>
-</div>
+
 <div class="D_col">
 	<div class="D_colbody">
 		
 				<ul class="D_list">
 					<li class="D_category">
-					<div class="D_name"><a href="$theme_link">Appearance</a></div>
+					<div class="D_name"><a href="$theme_link">外观</a></div>
 						<ul class="D_bullet">
-							<li>设置小组主页的色调和字体</li>
-							<li>选择预设的小组外观</li>
-							<li>创建自己的小组外观</li>
+							<li>个性化你的小组主页外观，颜色</li>
+							<li>选择预先定制的主题</li>
+							<li>定做您自己个性化主题</li>
 						</ul>
 					</li>
 				</ul>
@@ -526,52 +517,24 @@ function _groupextension_tools_manage_output(){
 	</div>
 </div>
 <div class="D_col last">
-	<div class="D_colbody">
-		
-				<ul class="D_list">
-					
-				</ul>
-			
-	</div>
+	
 </div>
 </div>
 <div class="D_boxcols divby3">
 <div class="D_col first">
-	<div class="D_colbody">
-		
-				<ul class="D_list">
-					<li class="D_category">
-						
-					</li>
-				</ul>
-			
-	</div>
+	
 </div>
 <div class="D_col">
-	<div class="D_colbody">
-		
-					<ul class="D_list">
-					<li class="D_category">
-						
-					</li>
-				</ul>
-			
-	</div>
+	
 </div>
 <div class="D_col last">
-	<div class="D_colbody">
-		
-				<ul class="D_list">
-				
-				</ul>
-			
-	</div>
+	
 </div>
 
 		
 </div>
 <div class="D_boxsection ">	
-<h3>财务</h3>
+<h3>小组财务</h3>
 <div class="D_boxcols divby3">
 <div class="D_col first">
 	<div class="D_colbody">
@@ -579,8 +542,8 @@ function _groupextension_tools_manage_output(){
 <li class="D_category">
 <div class="D_name">$group_due_link</div>
 <ul class="D_bullet">
-<li>管理如何收费</li>
-<li>设置返还机制</li>
+<li>管理你来如何收费</li>
+<li>设置返还原则</li>
 </ul>
 </li>
 </ul>
@@ -593,8 +556,8 @@ function _groupextension_tools_manage_output(){
 <li class="D_category">
 <div class="D_name">$sponsors_list_link</div>
 <ul class="D_bullet">
+<li>管理福利，赞助信息</li>
 
-<li>添加自己的赞助商</li>
 </ul>
 </li>
 </ul>
@@ -645,15 +608,7 @@ function groupextension_tools_money($gid){
 					t('Manage your group\'s money. Keep track of the money coming in to your Meetup Group &mdash; Meetup event payments, Dues and Sponsorships &mdash; as well as all the Expenses going out. Filter by date and transaction type, export transactions and more.') . ' 
 					</p>
 					<ul class="D_actions hasIcons">
-						<li id="shareaction" class="canDo shareaction">
-							<form name="shareForm" id="shareForm" method="post" action="">
-							<a class="share sprite sprite_action book_open_icon" id="sharing" href="http://www.meetup.com/Beijing-Soccer-Lovers/money/?op=public_ledger&amp;public=yes">Make public to members</a> 
-							<span id="whatsThisSharing" class="D_less">(<a id="wsAction" href="javascript:void(0);">what\'s this?</a>)</span>
-							</form>
-						</li>
-						<li class="canDo">
-							<a class="share sprite sprite_action page_delete_icon" id="sharing" href="http://www.meetup.com/Beijing-Soccer-Lovers/money/?op=hide_before_today">Hide transactions prior to today</a>
-						</li>
+						
 					</ul>
 				</div>' ;
 	
@@ -663,37 +618,33 @@ function groupextension_tools_money($gid){
 	$output .= '<div class="D_boxsection divby2 ">
 				<div class="D_col first"><div class="D_colbody"><div id="upsell">
 					<div style="text-align:center; display:none;" id="charts"><img style="margin-bottom: 10px;border: 1px solid #ccc" src="http://chart.apis.google.com/chart?cht=bvs&amp;chs=300x150&amp;chxt=x,y&amp;chd=s:AA,AA,AA,AA&amp;chxl=0:|Cash+In|Expenses|1:||$1&amp;chtt=Cash+In+vs.+Expenses&amp;chco=866D1D|AD0014,F39039|AD0014,5A9B2C|AD0014,1F3884&amp;chbh=85"></div>
-					<p class="D_less" id="upsellCopy">It\'s easier than ever to get help with the financial side of organizing your Meetup. You can manage your group\'s money as well as:</p>
+					<p class="D_less" id="upsellCopy">更加方便的来管理您的小组财务，更好的来组织您的聚会活动:</p>
 					<ul class="D_actions hasIcons">
-						<li class="canDo D_less">' . l('Set up Membership dues', $group_alias . '/groupextension/' . $gid . '/dues') . '
+						<li class="canDo D_less">' . l('设置会员费', $group_alias . '/groupextension/' . $gid . '/dues') . '
 						<p class="sprite_action">
-						If you want members to pay for group membership.<br>
+						如果你想让会员付费加入本小组.<br>
 						</p>
 						</li>
 						<li class="canDo D_less">
-						<li class="canDo D_less">' . l('Schedule paid Meetup Events','') . '
-						<p class="sprite_action">If you need members to pay for a one-off Meetup Event.</p>
-						</li>
-						<li class="canDo D_less">' . l('Manage your Sponsors','') . '
-						<p class="sprite_action">Promote your Sponsor or get help finding one.</p>
-						</li>
+						
+						
 					</ul>
 				</div></div></div>
 
 				<div class="D_col last"><div class="D_colbody"><div id="rollup">
 					<ul>
-						<li class="borderBottom"><p style="margin:0 0.5em;font-weight:bold;" class="moneyIn">Cash In</p></li>
+						<li class="borderBottom"><p style="margin:0 0.5em;font-weight:bold;" class="moneyIn">现金流入</p></li>
 						<li>
 						<ul class="allcash">
-							<li><p class="label"><span>Membership dues</span></p><p class="total"><span id="duesTotal">￥ ' .  $_dues  . '</span></p></li>
-							<li><p class="label"><span>Meetup Events</span></p><p class="total"><span id="eventTotal">￥ ' .  $_event  . '</span></p></li>
-							<li><p class="label"><span>Sponsor payments</span></p><p class="total"><span id="sponsorTotal">￥ ' .  $_sponsor  . '</span></p></li>
-							<li><p class="label"><span>Other Income</span></p><p class="total"><span id="otherTotal">￥ ' . $_other  . '</span></p></li>
+							<li><p class="label"><span>会员费</span></p><p class="total"><span id="duesTotal">￥ ' .  $_dues  . '</span></p></li>
+							<li><p class="label"><span>聚会费用</span></p><p class="total"><span id="eventTotal">￥ ' .  $_event  . '</span></p></li>
+							<li><p class="label"><span>赞助费用</span></p><p class="total"><span id="sponsorTotal">￥ ' .  $_sponsor  . '</span></p></li>
+							<li><p class="label"><span>其他收入</span></p><p class="total"><span id="otherTotal">￥ ' . $_other  . '</span></p></li>
 						</ul>
 						</li>
-						<li><p class="moneyIn label">Total Cash In</p><p id="cashInTotal" class="moneyIn total">￥ ' . $_gain . '</p></li>
-						<li class="borderTop"><p class="moneyOut label">Expenses</p><p id="expenseTotal" class="moneyOut total">￥ ' . $_expense . '</p></li>
-						<li class="borderTopDouble"><p class="label" id="netLabel">Net</p><p id="netTotal" class="total">￥ ' . $_total . '</p></li>
+						<li><p class="moneyIn label">总现金收入</p><p id="cashInTotal" class="moneyIn total">￥ ' . $_gain . '</p></li>
+						<li class="borderTop"><p class="moneyOut label">支出</p><p id="expenseTotal" class="moneyOut total">￥ ' . $_expense . '</p></li>
+						<li class="borderTopDouble"><p class="label" id="netLabel">净资金</p><p id="netTotal" class="total">￥ ' . $_total . '</p></li>
 					</ul>
 					<div style="margin-top:0.5em"></div>
 				</div></div></div>
@@ -711,18 +662,16 @@ function groupextension_tools_money($gid){
 	
 	// .D_filterHead
 	$output .= '<div class="D_filterHead clr"><ul class="D_actions hasIcons">';
-	$output .= '<li id="addActions" class="canDo isdropDown"><a class="addPayments dropDown sprite sprite_action add_icon" id="adder" href="javascript:void(0);" style="display: block;">Record a transaction</a><div class="dd D_less" id="addMenu" style="display: none;">
+	$output .= '<li id="addActions" class="canDo isdropDown"><a class="addPayments dropDown sprite sprite_action add_icon" id="adder" href="javascript:void(0);" style="display: block;">记录交易</a><div class="dd D_less" id="addMenu" style="display: none;">
 					<ul>
-						<li><a class="D_signal D_signal_appear_to_setupDuesDialog sprite sprite_action money_add_icon colorbox-load" href="' . url('colorbox/form/dues_form/' . $gid, array('query' => 'width=500&height=300')) . '">Record Membership dues Received</a></li>
-						<li><a class="addable sprite sprite_action money_add_icon colorbox-load" href="' . url('colorbox/form/event_payment_form/' . $gid, array('query' => 'width=500&height=500')) . '">Record Event Payment Received</a></li>
-						<li><a class="addable sprite sprite_action money_add_icon colorbox-load" href="' . url('colorbox/form/sponsor_payment_form/' . $gid, array('query' => 'width=500&height=400')) . '">Record Sponsor Payment Received</a></li>
-						<li><a class="addable sprite sprite_action money_add_icon colorbox-load" href="' . url('colorbox/form/other_payment_form/' . $gid, array('query' => 'width=500&height=400')) . '">Record Other Income Received</a></li>
-						<li><a class="addable sprite sprite_action money_delete_icon colorbox-load" href="' . url('colorbox/form/expense_form/' . $gid, array('query' => 'width=500&height=400')) . '">Record an Expense Paid</a></li>
+						<li><a class="D_signal D_signal_appear_to_setupDuesDialog sprite sprite_action money_add_icon colorbox-load" href="' . url('colorbox/form/dues_form/' . $gid, array('query' => 'width=500&height=300')) . '">录入收到的会员费</a></li>
+						<li><a class="addable sprite sprite_action money_add_icon colorbox-load" href="' . url('colorbox/form/event_payment_form/' . $gid, array('query' => 'width=500&height=500')) . '">录入收到的聚会费用</a></li>
+						<li><a class="addable sprite sprite_action money_add_icon colorbox-load" href="' . url('colorbox/form/sponsor_payment_form/' . $gid, array('query' => 'width=500&height=400')) . '">记录赞助费用</a></li>
+						<li><a class="addable sprite sprite_action money_add_icon colorbox-load" href="' . url('colorbox/form/other_payment_form/' . $gid, array('query' => 'width=500&height=400')) . '">记录其他收入</a></li>
+						<li><a class="addable sprite sprite_action money_delete_icon colorbox-load" href="' . url('colorbox/form/expense_form/' . $gid, array('query' => 'width=500&height=400')) . '">记录一笔支出</a></li>
 					</ul>
 				</div></li>';
-	$output .= '<li class="canDo isdropDown disabled" id="filterAction"><a class="dropDown sprite sprite_action page_find_icon" id="filterItem" href="javascript:void(0);">Filter Transactions</a></li>';
-	$output .= '<li class="canDo isdropDown disabled" id="exportActions"><a class="dropDown sprite sprite_action disk_icon" id="exporter" href="javascript:void(0);">Export all transactions</a></li>';
-	// .D_filterHead end
+		// .D_filterHead end
 	$output .= '</ul></div>';
 	
 	//table
@@ -730,17 +679,17 @@ function groupextension_tools_money($gid){
 	$output .= '<table class="D_ledger">
 		<thead>
 			<tr>
-				<th class="ledgerDate">Date</th>
-				<th>Transaction</th>
-				<th class="ledgerAmount">Amount</th>
-				<th class="">Actions</th>
+				<th class="ledgerDate">日期</th>
+				<th>交易</th>
+				<th class="ledgerAmount">数量</th>
+				<th class="">操作</th>
 			</tr>
 		</thead>
 		<tbody id="ledger_body">';
 	if(empty($transactions)) {
 	$output .=	'<tr id="emptytrans">
 				<td style="margin-top: 1em; text-align: center;" colspan="4">
-				<p>There are no transactions. <br><br>Click "<a style="font-weight:bold;" onclick="" href="javascript:void(0);">Record a transaction</a>" above to keep track of all the money coming in and out of your Meetup Group.</p>
+				<p>当前无任何交易 <br><br>Click "<a style="font-weight:bold;" onclick="" href="javascript:void(0);">记录交易</a>" 来跟组小组的现金收入与支出.</p>
 				</td>
 			</tr>';
 	}else{
@@ -812,11 +761,17 @@ function groupextension_tools_poll($gid){
 	$output .= '<div class="D_box"><div class="D_boxbody">';	
    
 	$output .= '<div class="D_boxhead">
-					<h1>' . t('Polls') . '</h1>
-					<span>' . l('Suggest a poll' , $group_alias . '/groupextension/' . $gid . '/suggest') . '</span>
-					<ul class="tabs primary">
-						<li class="' . $open_class . '">' . l('Open polls', $group_alias . '/groupextension/' . $gid . '/poll') . '</li>
-						<li class="' . $closed_class . '">' . l('Closed polls', $group_alias . '/groupextension/' . $gid . '/poll/closed') . '</li>
+					<h1>' . t('Polls') . '</h1>';
+	
+	if(group_extensions_is_group_admin($gid)){
+		$output .='<span>' . l(t('Suggest a poll') , $group_alias . '/node/add/poll', array('query'=>array('gids[]'=>$gid))) . '</span>';
+	} else {
+		$output .='<span>' . l(t('Suggest a poll') , $group_alias . '/groupextension/' . $gid . '/suggest') . '</span>';
+	}
+	
+	$output .='<ul class="tabs primary">
+						<li class="' . $open_class . '">' . l(t('Open polls'), $group_alias . '/groupextension/' . $gid . '/poll') . '</li>
+						<li class="' . $closed_class . '">' . l(t('Closed polls'), $group_alias . '/groupextension/' . $gid . '/poll/closed') . '</li>
 					</ul></div>';
 	
 	// poll table
@@ -838,7 +793,7 @@ function groupextension_tools_poll($gid){
 	}else{
 		foreach($group_polls as $gp) {	
 			$output .= '<tr>
-					<td>' . l($gp['title'], 'node/' . $gp['nid']) . '</td>
+					<td>' . l($gp['title'], $group_alias.'/node/' . $gp['nid']) . '</td>
 					<td>' . $gp['votes'] . '</td>
 					<td>' . date('d/m/Y', $gp['created']) . '</td>
 				</tr>';

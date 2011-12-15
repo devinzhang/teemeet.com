@@ -44,29 +44,29 @@ function scheduleMeetup()
 <div class="lma-form" id="lma-form">
   <form action="#" method="post" id="lmaform">
     <div class="lma-field line  lma-hide">
-      <p class="lma-question lma-hide edit "> What should we do? <span class="required">(required)</span> </p>
+      <p class="lma-question lma-hide edit "> 我们干点啥? <span class="required">(必填)</span> </p>
       <input type="text" name="title" id="title" value="" class="textInputTip hasMaxLen maxChars80 require ghost maxLenAdded validate" title="Let's Meetup and...">
       <div style="display: none; " class="limit-container"><span class="limit" id="charCount_title">61 characters left</span></div>
     </div>
     <div class="lma-field line  lma-hide" id="lma_descr">
-      <p class="lma-question">More details:</p>
+      <p class="lma-question">详细信息:</p>
       <textarea name="descr" id="descr" class="hasMaxLen maxChars50000 maxLenAdded"></textarea>
       <div style="display: none; " class="limit-container"><span class="limit" id="charCount_descr">50,000 characters left</span></div>
     </div>
     <div class="lma-field line  lma-hide" id="lma_when">
-      <p class="unit size3of5 lma-question"><span class="">When:</span> <input type='text' name='when' id='date' /> 
+      <p class="unit size3of5 lma-question"><span class="">时间:</span> <input type='text' name='when' id='date' /> 
       
       </p>
       <p class="unit lastUnit"></p>
     </div>
     <div class="lma-field line lma-hide" id="lma_where">
-      <p class="unit size3of5 lma-question"><span class="">Where:</span> <input type='text' name='where' id='where'/></p>
+      <p class="unit size3of5 lma-question"><span class="">地点:</span> <input type='text' name='where' id='where'/></p>
     </div>
     
     <div class="lma-hide lma-foot">      
       <input type="hidden" name="gid" id="gid" value="{$_GET[gid]}">
-      <input type="submit" id="lma-submit" class="D_submit_grad" value="Schedule this Meetup">
-      <input type="button" id="lma-close" class="D_submit_grad" value="Close">
+      <input type="submit" id="lma-submit" class="D_submit_grad" value="创建这个活动">
+      <input type="button" id="lma-close" class="D_submit_grad" value="取消">
     </div>
   </form>
   <div id="dialog" style="position: fixed; width: 340px; height: auto; top: 162.5px; left: 504.5px; color: black; background-color: white; border: 3px solid black; z-index: 101; padding-left: 15px; padding-right: 15px; display: none;">

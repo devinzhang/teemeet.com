@@ -19,10 +19,10 @@ function group_extensions_all_group_members($nid) {
      }
      $output .= '<ul class="D_actions hasIcons">
                 <li class="canDo">
-                    <a class="sprite sprite_action user_green_icon" href="'.url($current_group->path.'/member/'.$user->uid.'/ingroup/'.$current_group->nid).'">'.t('View your profile').'</a>
-                </li>';
-  //   $output .= '<li class="canDo"><a class="sprite sprite_action email_edit_icon" href="">Edit communication settings</a></li>';
-      $output .= '</ul>';
+                    <a class="sprite sprite_action user_green_icon" href="'.url($current_group->path.'/member/'.$user->uid.'/ingroup/'.$current_group->nid).'">查看你的档案</a>
+                </li>
+               
+                </ul>';
       $output.=_group_extensions_members_tabmenu($arg);
      $output .= group_extensions_all_show_members($arg); 
     return '<div class="D_box">' . $output . '</div>'; 
@@ -94,7 +94,7 @@ function group_extensions_all_leadship_members($gid){
      }
      $output .= '<ul class="D_actions hasIcons">
                 <li class="canDo">
-                    <a class="sprite sprite_action user_green_icon" href="'.url($current_group->path.'/member/'.$user->uid.'/ingroup/'.$current_group->nid).'">'.t('View your profile').'</a>
+                    <a class="sprite sprite_action user_green_icon" href="'.url($current_group->path.'/member/'.$user->uid.'/ingroup/'.$current_group->nid).'">查看你的档案</a>
                 </li>
               
                 </ul>';
@@ -103,11 +103,12 @@ function group_extensions_all_leadship_members($gid){
      
    
         $uid =  $current_group->uid;
-        $output .= '<li id="member_'.$user->uid.'">'.theme('group_extensions_member',$user ).'</li>';  
+		$usr = user_load($uid);
+        $output .= '<li id="member_'.$user->uid.'">'.theme('group_extensions_member',$usr ).'</li>';  
    
      $output .= '</ul>';
 	 
-   return '<div class="D_box">' . $output . '</div>'; 
+    return '<div class="D_box">' . $output . '</div>'; 
 }
 
 
@@ -148,9 +149,9 @@ $output .= '<span id="role_20252341" class="memRole">
 </span>
 
 <ul class="D_less memStats">';
-$output .= '<li><span class="bold">'.t('Joined').'</span>: '.format_date($user->created).'</li>';
+$output .= '<li><span class="bold">加入时间</span>: '.format_date($user->created).'</li>';
 
-$output .= '<li><span class="bold">'.t('Last visited').'</span>:'.format_date($user->login,'small').'</li>';
+$output .= '<li><span class="bold">上次访问时间</span>:'.format_date($user->login,'small').'</li>';
 $output .= '</ul><p class="D_less">"'.$member_profile->introduction.'"</p></div></div></div>';     
      return $output; 
 }

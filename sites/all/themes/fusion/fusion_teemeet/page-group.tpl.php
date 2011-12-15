@@ -111,7 +111,8 @@ $(document).ready(function(){
     <div id="C_context">
       <div id="C_document" > 
         
-        <? echo $preface_bottom; ?>        
+        <? echo $preface_bottom; ?> 
+		<?php if ($show_messages && $messages && arg(0) != 'search'): print $messages; endif; ?>		
         <? 
             if(strstr(request_uri(),'group/admin/themes/settings/fusion_teemeet'))
             {
@@ -138,7 +139,7 @@ $(document).ready(function(){
                 echo $content;
             }
         ?>
-        <?php if ($show_messages && $messages && arg(0) != 'search'): print $messages; endif; ?>
+       
 
       </div>
       
@@ -186,7 +187,7 @@ $(document).ready(function(){
                 </ul>
             </div>
           </li>
-          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>">帐户</a></li>
+          <li class="C_userNavItem"><a href="<?php echo url('account/'.$user->uid);?>"><?php echo t('My Account');?></a></li>
           <li class="C_userNavItem"><a href="<? echo url('logout') ?>"><? echo t('登出') ?></a></li>
         <? endif; ?>
       </ul>
@@ -201,6 +202,7 @@ $(document).ready(function(){
     </div>
     <!-- end C_globalNav -->
     
+    <!--
     <form id="C_globalSearch" method="get" action="/find/">
       <input type="text" name="keywords" autocomplete="off" id="C_globalSearchInput" class="D_topicSearch" maxlength="100" />
       <div class="D_submitInline">
@@ -208,6 +210,8 @@ $(document).ready(function(){
       </div>
       <input type="submit" style="display:none" />
     </form>
+	-->
+	<?php print drupal_get_form('teemeet_search_top_form'); ?>
   </div>
 </div>
 <!-- end C_header -->
@@ -223,12 +227,12 @@ $(document).ready(function(){
         <li><a href="">Meetup API</a></li> -->
       </ul>
       <ul class="utility C_footerSection">
-      <!--  <li><a href="http://www.meetup.com/everywhere/">Meetup Everywhere</a></li>
+      <!--  <li><a href="http://www.meetup.com/everywhere/">Meetup Everywhere</a></li> -->
         <li><a href="<?php print url('sponsorships'); ?>" class="omnCamp omnrg_perksfooter">赞助Teemeet小组</a></li>
         <li><a href="">快速帮助</a></li>
         <li><a href="<?php print url('privacy');?>"><span style="color:#FFFF99;">隐私说明</span></a> <span class="D_less">最后更新 10/15/2011</span></li>
         <li><a href="<?php print url('terms'); ?>"><span style="color:#FFFF99;">使用须知</span></a> <span class="D_less">最后更新 10/15/2011</span></li>
-      --> </ul>
+      </ul>
       <ul class="meta C_footerSection">
         <li>&copy; 2011 Teemeet <br />
         <!--  <a href="http://www.meetup.com/terms/#tm">Trademarks</a> 

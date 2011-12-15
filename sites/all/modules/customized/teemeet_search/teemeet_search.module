@@ -49,7 +49,7 @@ function teemeet_search_form_alter(&$form, &$form_state, $form_id) {
 			
 			$form['address']= array(
 				'#type' => 'textfield',
-				'#title' => t('City or ZIP/postal code'),
+				'#title' => t('城市'),
 				'#size' => 35,
 				'#maxlength' => 255,
 				'#weight' => 1,
@@ -136,7 +136,7 @@ function  teemeet_search_view($type = 'node') {
 				WHERE node.type = 'group' AND node.status <> 0  
 				ORDER BY node.created LIMIT 5";
 		$default_query = db_query($sql);
-;
+
 		$default_array = array();
 		while ($d = db_fetch_array($default_query)) {
 			$node = node_load($d['nid']);
@@ -166,4 +166,46 @@ function  teemeet_search_view($type = 'node') {
   }
 
   return drupal_get_form('search_form', NULL, empty($keys) ? '' : $keys, $type);
+}
+
+/**
+ * Implementation of hook_init().
+ * @author nemo
+ */
+function teemeet_search_tips_init() {
+	$path = drupal_get_path('module', 'teemeet_search');
+	drupal_add_js($path . '/teemeet_search.js', 'module');   
+}
+
+
+function teemeet_search_top_form(&$form_state) {
+	$form['search_top'] = array(
+		'#type' => 'textfield',
+		'#size' => 15,
+		'#default_value' => '',
+		'#attributes' => array('title' => t('Enter the terms you wish to search for.')),
+	);
+	$form['submit'] = array('#type' => 'image_button', '#src' => drupal_get_path('theme', 'fusion_teemeet') .'/images/search_20.png');
+	$form['#submit'][] = 'search_top_form_submit';
+
+	return $form;
+}
+
+/**
+ * Process a block search form submission.
+ */
+function search_top_form_submit($form, &$form_state) {
+  // The search form relies on control of the redirect destination for its
+  // functionality, so we override any static destination set in the request,
+  // for example by drupal_access_denied() or drupal_not_found()
+  // (see http://drupal.org/node/292565).
+  if (isset($_REQUEST['destination'])) {
+    unset($_REQUEST['destination']);
+  }
+  if (isset($_REQUEST['edit']['destination'])) {
+    unset($_REQUEST['edit']['destination']);
+  }
+
+  $form_id = 'search_top';
+  $form_state['redirect'] = 'search/node/'. trim($form_state['values'][$form_id]);
 }
