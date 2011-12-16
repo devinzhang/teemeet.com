@@ -1,0 +1,649 @@
+<?php
+
+
+/*  This module allow each group has its own albums, it includes the following.
+ *  1) The orgnazor can create a new album,
+ *  2) all the groups members can add photo into the album.
+ *  3)  tag a picture. see http://djpate.com/2011/01/14/jtag-a-jquery-plugin-to-tag-pictures-more/
+ *  4) 
+ * how this was designed?
+ * 1) firstly, create a new content type named 'album', 
+ * 2) create a new new content type named "photo", which a cck filed  imagefiled, why need this ? since each photo need to be commentd.
+ * 3) table 1:  associate the group with the albums table 2:  associate the album and photo node,  
+ *  
+ * before use this module, you must create two node type , one was 'album' , the other is 'photo', in the future , this module
+ * should create them automatically.
+*/
+
+define("OG_ALBUM_TABLE", "og_album");
+define("OG_ALBUM_PHOTOS_TABLE", "og_album_photos");
+define("OG_ALBUM_PHOTO_TAG)TABLE", "og_album_photo_tag");
+define('OG_ALBUM_MODULE_PATH', drupal_get_path('module', 'og_album'));
+
+
+
+function og_album_perm() {
+    return array(
+        'admin group album',
+        'create group album',
+        'upload photo',
+        );
+}
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function og_album_menu() {
+    
+    $items['album/ingroup/%'] = array(
+    	'title' => t('Album'),
+        'page callback' => 'og_album_album_list',
+        'page arguments' => array(2),   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('access content'), 
+        'file' => 'og_album.page.inc',     
+        
+    );
+    
+    $items['album/ingroup/%/upload'] = array(
+    	'title' => t('Album'),
+        'page callback' => 'og_album_photo_upload',
+        'page arguments' => array(2),   
+        'type' => MENU_CALLBACK,
+        'access callback' => 'og_album_is_group_admin',        
+        'access arguments' => array(2), 
+        'file' => 'og_album.page.inc',     
+        
+    );
+    $items['album/%/upload'] = array(
+    	'title' => t('Upload photo'),
+        'page callback' => 'og_album_upload_directly',
+        'page arguments' => array(1),   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('upload photo'), 
+        'file' => 'og_album.page.inc',     
+        
+    );
+    
+    $items['album/ajax/photo/%'] = array(
+    	'title' => t('Get a photo node information'),
+        'page callback' => 'og_album_ajax_get_photo',
+        'page arguments' => array(3),   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('upload photo'), 
+        'file' => 'og_album.page.inc',     
+        
+    );
+    
+    $items['album/ajax/photo/%'] = array(
+    	'title' => t('Get a photo node information'),
+        'page callback' => 'og_album_ajax_get_photo',
+        'page arguments' => array(3),   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('upload photo'), 
+        'file' => 'og_album.page.inc',     
+        
+    );
+    //ahah callback to set the photo priority
+    $items['album/ajax/setgroupphoto'] = array(
+    	'title' => t('set photo as group photo'),
+        'page callback' => 'og_album_ahah_set_group_photo',
+        'page arguments' => null,   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('upload photo'), 
+        
+        
+    );
+    //ahah callback to set the album thumbnail
+    $items['album/ajax/setthumbnail'] = array(
+    	'title' => t('set photo as album thumbnail'),
+        'page callback' => 'og_album_ahah_set_album_thumbnail',
+        'page arguments' => null,   
+        'type' => MENU_CALLBACK,                
+        'access arguments' => array('upload photo'), 
+       
+        
+    );
+    
+    
+    
+    /*admin part*/
+     $items['admin/settings/og_album'] = array(
+	    'title' => t('Group Albums'),
+	    
+	    'page callback' => 'drupal_get_form',
+	    'page arguments' => array('og_album_admin_setting_form'),
+	    'access arguments' => array('admin multi avator'),
+  );
+  
+  
+  return $items;
+}
+
+/* if the current use is the group admin 
+*
+*/
+
+function og_album_is_group_admin($gid){
+$node = node_load($gid); 
+return og_is_group_admin($node); 
+}
+
+function og_album_is_login($uid){
+    return $uid; 
+}
+
+/* if the user is the image owner */
+function og_album_is_owner($uid,$fid){
+    global $user;
+    return $user->uid == $uid; 
+}
+
+/* if the user is the image owner */
+function og_album_is_album_admin($uid,$node){
+    
+    return $node->uid == $uid; 
+}
+
+
+/**
+ * Implementation of hook_theme().
+ *
+ *
+ */
+function og_album_theme() {
+  return array(
+   'og_album_list' => array(  // theme one album list
+	  'template' => 'og_album-list',
+      'arguments' => array(
+            'current_group'=>null,
+            'albums'=>null, 
+            'is_group_admin'=>FALSE, // if the current user was the group onwer
+            
+        ),
+       'path'=>drupal_get_path('module','og_album').'/tpl',
+	),
+  'og_album_album' => array(  // theme one album
+	  'template' => 'og_album-album',
+      'arguments' => array(
+            'album'=>null,             
+            'photos'=>null, 
+            'first_node'=>null, 
+            'set_photo_form' =>null, 
+            'is_album_admin'=>FALSE, // if the current user was a album admin
+        ),
+       'path'=>drupal_get_path('module','og_album').'/tpl',
+	),
+	
+  );
+}
+
+
+/*hook_nodeapi
+**
+**
+*/
+function og_album_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
+  switch ($op) {
+    case 'delete':
+    if($node->type == 'photo'){
+        db_query("DELETE FROM ".OG_ALBUM_PHOTOS_TABLE." where pid=%d", $node->nid);
+    }
+    if($node->type == 'album'){
+        db_query("DELETE FROM ".OG_ALBUM_TABLE." where aid=%d", $node->nid);
+    }    
+    
+      break;
+    case 'load':    
+        if($node->type == 'album'){
+            
+            $node->album = og_album_get_albums_attributes($node->nid);
+        }
+        if($node->type == 'photo'){
+            $node->photo = og_album_get_photo_attributes($node->nid);
+        }
+        
+    break;
+    
+    case 'view':    
+        if($node->type == 'album'){
+            drupal_set_title('');
+            drupal_add_js(drupal_get_path('module', 'og_album').'/js/jcarousellite_1.0.1.min.js');
+            drupal_add_js(drupal_get_path('module', 'og_album').'/js/og_album.js');
+            drupal_add_css(drupal_get_path('module','og_album').'/css/og_album.css');
+            $photos = og_album_get_photos($node->nid);  
+            global $user; 
+            $is_album_admin = og_album_is_album_admin($user->uid, $node); 
+            $first_node = array_shift($photos); 
+            $set_photo_form = og_album_set_photo_property($node->nid, $first_node->nid); 
+            $node->content['slider']= array(
+                '#value'=> '<div style="display:none;"> <div id="add-album-photo" >'.drupal_get_form('og_album_upload_photo_directly_form', $node->nid).'</div></div>'. theme('og_album_album', $node, $photos, $first_node, $set_photo_form, $is_album_admin),
+                
+            );
+        }
+        
+        if($node->nid ==144){
+        
+        $img_path = $node->field_group_photo[0]['filepath'];
+         $node->content['slider']= array(
+                '#value'=> theme('imagecache','album_cover_150x115', $img_path,'','', array('class'=>'album-thumb')),
+                
+            ); 
+        }
+      break;      
+      
+    }
+}
+
+
+/**
+ * Implementation of hook_user().
+ * loading the group photos
+ */
+function og_album_user($op, &$edit, &$account, $category = NULL) {
+	switch($op) {		
+        case 'load' : 
+           
+            if(!empty($account->og_groups)){          
+                $groups = $account->og_groups ;
+                $member_profile = array();
+                foreach($groups as $gid => $group) {
+                    $group_photo_path = og_album_get_group_photo($gid);
+                    $account->og_groups[$gid]['group_photo_path'] = $group_photo_path;
+                    
+                }    
+              
+            }            
+		break;        
+		}
+}
+
+
+/*Helper function to retrieve the information  */
+
+/*  retrieve one groups's all albums
+ *  @param $gid, the group node nid
+ *  @param $summary, if TRUE, only return the album nid and title, otherwise, return all the node object
+ *  @return , an array, keyed by album nid, the value depend on the $summary
+*/
+function og_album_get_albums($gid, $summary = FALSE) {
+   
+   $sql_result = db_query("SELECT * FROM ".OG_ALBUM_TABLE." where gid=%d ", $gid);
+
+  $rows=array();
+  if($sql_result) {
+      while ($data = db_fetch_object($sql_result)) {  
+        
+      $node = node_load($data->aid); 
+          if($summary) {
+            $rows[$data->aid]= $node->title;
+          }else{
+            $rows[$data->aid]= $node;
+          } 
+        }
+    }      
+    return $rows;
+}
+
+/* get album photos
+** @param $aid, the album nid
+**  @param $summary, if TRUE, only return the album nid and title, otherwise, return all the node object
+ *  @return , an array, keyed by photo nid, the value depend on the $summary
+*
+*/
+function og_album_get_photos($aid, $summary = FALSE) {
+   
+  $sql_result = db_query("SELECT * FROM ".OG_ALBUM_PHOTOS_TABLE." where aid=%d order by aid DESC", $aid);
+
+  $rows=array();
+  if($sql_result) {
+      while ($data = db_fetch_object($sql_result)) {  
+        
+      $node = node_load($data->pid); 
+          if($summary) {
+            $rows[$data->pid]= $node->title;
+          }else{
+            $rows[$data->pid]= $node;
+          } 
+        }
+    }      
+    return $rows;
+}
+
+/* return the albums attributes. 
+ ** such photo number, cover_image path
+ 
+ **
+*/ 
+function og_album_get_albums_attributes($aid){
+    $attributes = db_fetch_array(db_query("select * from ".OG_ALBUM_TABLE." where aid=%d", $aid));
+    $photo_amout = db_result(db_query("select count(*) from ".OG_ALBUM_PHOTOS_TABLE." where aid=%d", $aid));
+    $img_path=db_result(db_query("select f.filepath from {files} as f where f.fid = %d ", $attributes['album_thumbnail']));
+  
+    $album=array();
+    $album['photo_size'] = $photo_amout ;
+    $real_path = $img_path;
+    
+    $album['cover_image_path'] = theme('imagecache','album_cover', $real_path,'','', array('class'=>'album-thumb'));
+    $album['cover_image_path'] = $img_path; 
+   if(is_array($attributes)){
+    $album = array_merge($album, $attributes);
+    }
+    return $album;
+}
+
+
+/* return the photo attributes. 
+ ** such photo filepath 
+ **
+*/ 
+function og_album_get_photo_attributes($pid){
+    $attributes = db_fetch_array(db_query("select * from ".OG_ALBUM_PHOTOS_TABLE." where pid=%d", $pid));
+    
+    $img_path=db_result(db_query("select f.filepath from {files} as f where f.fid=%d ", $attributes['fid']));
+    $photo=array();
+    $photo['cover_image_path'] = theme('imagecache','album_cover_150x115', $real_path,'','', array('class'=>'album-thumb'));
+    $photo['filepath'] = $img_path; 
+   if(is_array($attributes)){
+    $photo = array_merge($photo, $attributes);
+    }
+    return $photo;
+}
+
+
+
+/* submit a new image form 
+ *
+ */
+ 
+function og_album_upload_photo_directly_form(&$form_state, $aid) {
+ $form=array();   
+ $form['image'] = array(
+    '#type' => 'image_upload_element',
+    '#title' => t('Add photo'),
+    '#default_value' => '', // {files} object
+    '#image_preview_size' => '200x200',
+    '#file_validators' => array(         
+    'file_validate_extensions' => array('txt gif jpg jpeg'),
+        ),
+  );
+  $form['aid'] = array(
+    '#type' => 'hidden', 
+    '#value' => $aid
+    
+  );
+  
+$form['submit'] = array(
+    '#type' => 'submit', 
+    '#value' => t('Submit'),
+);
+
+  return $form;
+}
+
+function og_album_upload_photo_directly_form_submit($form, &$form_state) {
+    $value = $form_state['values'];
+    $aid = $value['aid'];
+    global $user; 
+    
+    if($value['image']) {
+      $image_id = upload_element_save($value['image'], 'upload_element', FILE_EXISTS_RENAME, 'imagecache_preset');
+      $img_path=db_result(db_query("select f.filepath from {files} as f where f.fid=%d ", $image_id));
+      $pid = og_album_create_photo_node($img_path,$user); 
+      db_query("INSERT INTO ".OG_ALBUM_PHOTOS_TABLE." (pid, aid, fid) VALUES (%d, %d, %d)", $pid, $aid, $image_id);
+      
+    }
+  
+  drupal_goto($GLOBALS['current_group']->path.'/node/'.$aid);
+                    
+}
+
+
+
+/* set a photo as a group cover page or a album thumbnail
+ * @param , $pid, the photo nid
+ **
+ */
+function og_album_set_photo_property($aid,$pid){
+    $output = '';
+    $output .= '<div id="photo_controls" style="display:none;">';
+    $output .= drupal_get_form('og_album_set_photo_property_form',$aid, $pid); 
+    $output .= '</div>';
+    return $output; 
+}
+
+function og_album_set_photo_property_form(&$form_state, $aid, $pid) {
+ $form=array();   
+ $album_thumbnail = db_result(db_query("select album_thumbnail from ".OG_ALBUM_TABLE." where aid=%d",$pid )); 
+ $is_group_photo = db_result(db_query("select is_group_photo from ".OG_ALBUM_PHOTOS_TABLE." where pid =%d", $pid) ); 
+ 
+  $form['pid'] = array(
+    '#type' => 'hidden', 
+    '#value' => $pid   
+  );
+  $form['aid'] = array(
+    '#type' => 'hidden', 
+    '#value' => $aid   
+  );
+  
+  $form['group_cover'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Group Photo'),
+    '#default_value' => $is_group_photo,
+    '#ahah' => array(
+      'path' => 'album/ajax/setgroupphoto',
+      'wrapper' => 'checkboxe',
+      'effect' => 'fade',
+    ), 
+   
+   );
+    
+  $form['album_thumbnail'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Album thumbnail'),
+    '#ahah' => array(
+      'path' => 'album/ajax/setthumbnail',
+      'wrapper' => 'checkboxe',
+      'effect' => 'fade',
+    ), 
+    '#default_value' => ($album_thumbnail == $pid),
+    
+    );
+   
+    $form['close'] = array(
+    //'#type' => '',
+    
+    '#value' => l(t('Close'),'',array('attributes'=>array('id'=>'close-set-photo'))),
+); 
+ return $form; 
+}
+/* ahah call back
+**
+*/
+function og_album_ahah_set_group_photo() {   
+  $form_state = array('storage' => NULL, 'submitted' => FALSE);  
+  $form_build_id = $_POST['form_build_id'];  
+  $form = form_get_cache($form_build_id, $form_state);      
+  // Preparing for #5.
+  $args = $form['#parameters'];
+  $form_id = array_shift($args);
+  $form_state['post'] = $form['#post'] = $_POST;
+  $form['#programmed'] = $form['#redirect'] = FALSE;
+
+  // Step #5.
+  $form = drupal_rebuild_form($form_id, $form_state, $args, $form_build_id);
+  $pid = $form['#parameters'][1]['post']['pid'];
+  $aid = $form['#parameters'][1]['post']['aid'];
+  $is_group_photo = isset($form['#parameters'][1]['post']['group_cover']) ? 1 : 0 ;  
+  $is_album_thumbnail = isset($form['#parameters'][1]['post']['album_thumbnail']) ? 1 : 0 ;  
+   
+   
+  //first need to clear all the exist group photo in all the albums of this group
+  $gid = db_result(db_query("select gid from ".OG_ALBUM_TABLE." where aid=%d", $aid));
+     //update the field_logo cck field
+  $group_node = node_load($gid);
+   
+  $attributes = db_fetch_array(db_query("select * from ".OG_ALBUM_PHOTOS_TABLE." where pid=%d", $pid));
+  
+  
+   if($attributes['fid']) {
+   $file =db_fetch_object(db_query("select * from {files} as f where f.fid=%d ", $attributes['fid']));
+  
+  
+  $group_node->field_logo[0]['fid'] = $attributes['fid']; 
+  $group_node = node_submit($group_node);
+  node_save($group_node);
+  }
+  $aids = db_fetch_array(db_query('select aid from '.OG_ALBUM_TABLE.' where gid=%d',$gid));
+   
+   db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where aid in ( ".implode( ',' ,  $aids ).")", 0 ); 
+   db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where pid=%d", $is_group_photo, $pid ); 
+   
+   
+ drupal_json(array('status' => TRUE, 'data' => 'g-p='.$is_group_photo.'pid'.$pid.'aiid'.$aid.'al_th'.$is_album_thumbnail));   
+ 
+ } 
+ 
+/* ahah call back
+**
+*/
+function og_album_ahah_set_album_thumbnail() {   
+  $form_state = array('storage' => NULL, 'submitted' => FALSE);  
+  $form_build_id = $_POST['form_build_id'];  
+  $form = form_get_cache($form_build_id, $form_state);      
+  // Preparing for #5.
+  $args = $form['#parameters'];
+  $form_id = array_shift($args);
+  $form_state['post'] = $form['#post'] = $_POST;
+  $form['#programmed'] = $form['#redirect'] = FALSE;
+
+  // Step #5.
+  $form = drupal_rebuild_form($form_id, $form_state, $args, $form_build_id);
+  $pid = $form['#parameters'][1]['post']['pid'];
+  $aid = $form['#parameters'][1]['post']['aid'];
+  $is_group_photo = isset($form['#parameters'][1]['post']['group_cover']) ? 1 : 0 ;  
+  $is_album_thumbnail = isset($form['#parameters'][1]['post']['album_thumbnail']) ? 1 : 0 ;  
+  if($is_album_thumbnail) { // if this photo was set as a album thumbnail
+        db_query("UPDATE ".OG_ALBUM_TABLE." SET album_thumbnail=%d where aid=%d", $pid, $aid ); 
+  } 
+    
+ drupal_json(array('status' => TRUE, 'data' => 'g-p='.$is_group_photo.'pid'.$pid.'aiid'.$aid.'al_th'.$is_album_thumbnail));   
+ 
+ } 
+/* Get the group photos
+ * @param, $gid, the group nid
+ * @return , image path; 
+ */
+ 
+function og_album_get_group_photo($gid){
+    $img_path='';
+    $aids = db_fetch_array(db_query('select aid from '.OG_ALBUM_TABLE.' where gid=%d',$gid));
+    if(!empty($aids)){
+    $fid = db_result(db_query("select fid from ".OG_ALBUM_PHOTOS_TABLE." where is_group_photo=%d and aid in ( ".implode( ',' ,  $aids ).")",1));
+    if($fid) {
+         $img_path=db_result(db_query("select f.filepath from {files} as f where f.fid=%d ", $fid));
+    }
+    }
+   
+   return $img_path;
+}
+
+
+function og_album_set_photo_property_form_submit($form, &$form_state) {
+    $value = $form_state['values'];
+    $pid = $value['pid'];
+    
+    $p = db_fetch_object(db_query("select fid,aid from ".OG_ALBUM_PHOTOS_TABLE." where pid=%d", $pid));
+    if($value['album_thumbnail']) { // if this photo was set as a album thumbnail
+        db_query("UPDATE ".OG_ALBUM_TABLE." SET album_thumbnail=%d where aid=%d", $pid, $p->aid ); 
+    } 
+    db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d", 0 ); 
+    db_query("UPDATE ".OG_ALBUM_PHOTOS_TABLE." SET is_group_photo=%d where pid=%d", $value['group_cover'], $pid ); 
+   
+}
+
+
+
+
+/*create a album node
+**
+*/
+
+function og_album_create_album_node($title,$user) {
+     // add node properties
+    $newNode = new StdClass;
+    $newNode->type = 'album';
+    $newNode->title = $title;
+    $newNode->uid = $user->uid;
+    $newNode->name = $user->name;
+    $newNode->created = strtotime("now");
+    $newNode->changed = strtotime("now");
+    $newNode->status = 1;
+    $newNode->comment = 0;
+    $newNode->promote = 0;
+    $newNode->moderate = 0;
+    $newNode->sticky = 0;
+
+    // add CCK field data
+ //   $newNode->field_donor_status[0]['value']='Available';
+  
+    // save node
+    node_save($newNode);
+    return $newNode->nid;
+}
+
+
+/*create a album node
+**
+*/
+
+function og_album_create_photo_node($file_path,$user) {
+     // add node properties
+    $newNode = new StdClass;
+    $newNode->type = 'photo';
+    $newNode->title = '';
+    $newNode->uid = $user->uid;
+    $newNode->name = $user->name;
+    $newNode->created = strtotime("now");
+    $newNode->changed = strtotime("now");
+    $newNode->status = 1;
+    $newNode->comment = 1;
+    $newNode->promote = 0;
+    $newNode->moderate = 0;
+    $newNode->sticky = 0;
+
+   /* // add CCK field data
+ /////// FIELD_PHOTO ///////////////////////////////////////
+	// Image file path.
+	//$image = file_directory_path() . '/panstar/' . $item[1];
+    $image = $file_path; 
+	// Load up the CCK field. First parameter image field name and second parameter node type. It can be chnaged to any field name and also and node type.
+	$field = content_fields('field_photo', 'photo');
+	// Load up the appropriate validators
+	$validators = array_merge(filefield_widget_upload_validators($field), imagefield_widget_upload_validators($field));
+	// Store file path.
+	$files_path = filefield_widget_file_path($field);
+	// Create the file object, replace existing file with new file as source and dest are the same
+	$file = field_file_save_file($image, $validators, $files_path, FILE_EXISTS_REPLACE);
+	// put the file into node image field.
+	$node->field_photo = array( 0 => $file);
+*/
+  
+    // save node
+    node_save($newNode);
+    return $newNode->nid;
+}
+
+
+/* admin part */
+function og_album_admin_setting_form(){
+  $form = array();
+  $form['group_album_limit'] = array(
+        '#type' => 'textfield',
+        '#title' => t('How many albums allowed for each group?'),
+        '#default_value' => variable_get('group_album_limit',0),
+        '#description' => t('This setting lets you set how many group album can be created by user, 0 means no limitation'),
+   );
+  return system_settings_form($form);
+}

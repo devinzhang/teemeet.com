@@ -1,0 +1,7 @@
+; $Id: devel.info,v 1.5.2.1 2008/06/13 03:25:20 weitzman Exp $
+name = Group Tags
+dependencies[] = taxonomy
+description = Each group can set max 15 tags, each tags was a group topic
+package = teemeet.com
+version = "6.x-0.1"
+core = "6.x"

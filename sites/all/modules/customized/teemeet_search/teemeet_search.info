@@ -1,0 +1,6 @@
+;$Id$
+name = "teemeet_search"
+description = "teemeet search"
+package = teemeet.com
+dependencies[] = search
+core = 6.x

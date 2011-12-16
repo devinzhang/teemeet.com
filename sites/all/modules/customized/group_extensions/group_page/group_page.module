@@ -1,0 +1,61 @@
+<?php
+function group_page_menu()
+{
+      $items = array();  
+  $items['home/%'] = array(
+    'title' => t('Welcome to Home'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );
+/*$items['sponsor'] = array(
+    'title' => t('Sponsors'),
+    'page callback' => 'groupfront_sponsor',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );  
+  
+  $items['photos'] = array(
+    'title' => t('photo'),
+    'page callback' => 'groupfront_photos',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );
+  
+  $items['grouptools'] = array(
+    'title' => t('Group Tools'),
+    'page callback' => 'groupfront_grouptools',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );
+  
+  $items['grouptools/emailmembers'] = array(
+    'title' => t('Email Members'),
+    'page callback' => 'groupfront_send_to_memebers',
+    'page arguments' => null,
+	'access arguments'=>array('access content'),
+  );
+  
+  
+  $items['groupfront/ajax/upcoming/%'] = array(
+    'title' => t('Suggested Meetups'),
+    'page callback' => 'groupfront_ajax_upcoming_meetup',
+    'page arguments' => array(3),
+    'type' => MENU_CALLBACK,
+	'access arguments'=>array('access content'),
+  );
+  
+   $items['groupfront/ajax/suggestedmeetup/%'] = array(
+    'title' => t('Suggested Meetups'),
+    'page callback' => 'groupfront_ajax_suggested_meetup',
+    'page arguments' => array(3),
+    'type' => MENU_CALLBACK,
+	'access arguments'=>array('access content'),
+  );
+    */
+  
+   
+    
+   
+  return $items;
+}

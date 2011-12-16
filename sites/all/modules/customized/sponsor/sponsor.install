@@ -1,0 +1,100 @@
+<?php
+// $Id$
+
+/**
+ * Implementation of hook_install().
+ */
+function sponsor_install() {
+   drupal_install_schema('sponsor');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function sponsor_uninstall() {
+   drupal_uninstall_schema('sponsor');
+   
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function sponsor_schema() {
+    $schema['sponsorships'] = array(
+        'description' => 'Stores the sponsorships ',
+        'fields' => array(
+            'sid' => array(
+               'type' => 'serial',
+               'size' => 'medium',
+               'unsigned' => TRUE,
+               'not null' => TRUE,
+               'description' => t("The serial number for a  record."),
+            ),
+            
+            'uid' => array(
+                'type' => 'int', 
+                'unsigned' => TRUE, 
+                'not null' => TRUE, 
+                'default' => 0,
+                'description' => t(" the sponsor user uid"),
+            ),
+            
+            
+            'nid' => array(
+                'type' => 'int', 
+                'unsigned' => TRUE, 
+                'not null' => TRUE, 
+                'default' => 0,
+                'description' => t(" the sponsor node nid"),
+            ),
+            
+            'message' => array(
+                'type' => 'text', 
+                'not null' => TRUE
+            ),
+                
+			
+            'gid' => array(
+			    'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "group nid",
+				
+			),	
+            'approver' => array(
+                'type' => 'int', 
+                'unsigned' => TRUE, 
+                'not null' => TRUE, 
+                'default' => 0,
+                'description' => t(" the person approve this sponsorship, usually is group admin"),
+            ),
+            
+            'status' => array(
+                'type' => 'int', 
+                'unsigned' => TRUE, 
+                'not null' => TRUE, 
+                'default' => 0,
+                'description' => "the status of this sponsorships, 0 for expire, 1 for ok, 2 for pendding",
+             ),
+             
+            'created' => array(
+                'type' => 'int', 
+                'unsigned' => TRUE, 
+                'not null' => TRUE, 
+                'default' => 0
+             ),
+             
+            
+		),		
+
+      'indexes' => array(
+        'nid' => array('nid'),      
+        'gid' => array('gid'),
+       ),
+     'primary key' => array('sid'),
+    
+    );
+    return $schema;
+}
+

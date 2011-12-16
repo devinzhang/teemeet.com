@@ -1,0 +1,6 @@
+; $Id$ Author Spirit8.com
+name = Teemeet Ajax
+description = Ajax module of Teemeet
+core = 6.x
+version = "6.x-0.1.1"
+package = "teemeet.com"

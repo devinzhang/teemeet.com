@@ -1,0 +1,165 @@
+# $Id$
+#
+# Chinese, Simplified translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  og_album.page.inc: n/a
+#  og_album.module: n/a
+#  og_album.install: n/a
+#  og_album.info: n/a
+#  tpl/og_album-album.tpl.php: n/a
+#  tpl/og_album-list.tpl.php: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2011-10-17 16:07+0800\n"
+"PO-Revision-Date: 2011-10-17 16:07+0800\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Chinese, Simplified <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=0; plural=;\n"
+
+#: og_album.page.inc:18
+msgid "Since there are no albums, photos can't be added"
+msgstr "在没有创建专辑之前不能添加照片"
+
+#: og_album.page.inc:46
+msgid "Use Exist Album"
+msgstr "使用已经存在的专辑"
+
+#: og_album.page.inc:47
+msgid "Create a new Album"
+msgstr "创建一个新专辑"
+
+#: og_album.page.inc:59
+msgid "Choose your album"
+msgstr "选择你的专辑"
+
+#: og_album.page.inc:66
+msgid "Select Album"
+msgstr "选择专辑"
+
+#: og_album.page.inc:73
+msgid "Album title"
+msgstr "专辑标题"
+
+#: og_album.page.inc:85
+msgid "Add profile photo"
+msgstr "添加概况照片"
+
+#: og_album.page.inc:101 og_album.module:379
+msgid "Submit"
+msgstr "提交"
+
+#: og_album.module:40;50
+msgid "Album"
+msgstr "专辑"
+
+#: og_album.module:60
+msgid "Upload photo"
+msgstr "上传照片"
+
+#: og_album.module:70;80
+msgid "Get a photo node information"
+msgstr "获取一个照片节点信息"
+
+#: og_album.module:90
+msgid "set photo as group photo"
+msgstr "将该照片设为群组照片"
+
+#: og_album.module:100
+msgid "set photo as album thumbnail"
+msgstr "将该照片设为专辑封面"
+
+#: og_album.module:113
+msgid "Group Albums"
+msgstr "群组专辑"
+
+#: og_album.module:364
+msgid "Add photo"
+msgstr "添加照片"
+
+#: og_album.module:432
+msgid "Group Photo"
+msgstr "群组照片"
+
+#: og_album.module:444
+msgid "Album thumbnail"
+msgstr "专辑封面"
+
+#: og_album.module:457
+msgid "Close"
+msgstr "关闭"
+
+#: og_album.module:644
+msgid "How many albums allowed for each group?"
+msgstr "每个专辑允许多少张照片？"
+
+#: og_album.module:646
+msgid "This setting lets you set how many group album can be created by user, 0 means no limitation"
+msgstr "这个设置项让你可以设定每个用户可以创建多少个专辑，0表示没有限制"
+
+#: og_album.module:27
+msgid "admin group album"
+msgstr "管理群组专辑"
+
+#: og_album.module:28
+msgid "create group album"
+msgstr "创建群组专辑"
+
+#: og_album.module:29
+msgid "upload photo"
+msgstr "上传照片"
+
+#: og_album.install:73
+msgid "the orders in the albums list"
+msgstr "专辑顺序"
+
+#: og_album.install:89
+msgid "the photo node nid"
+msgstr "照片节点nid"
+
+#: og_album.info:0
+msgid "group albums"
+msgstr "群组专辑"
+
+#: og_album.info:0
+msgid "each group can crate some albums, typically, after each meetup, the memebers need to upload photos ."
+msgstr "每个群组都可以创建一些专辑，一般说来，每次聚会结束之后，会员都需要上传照片。"
+
+#: og_album.info:0
+msgid "teemeet.com"
+msgstr ""
+
+#: tpl/og_album-album.tpl.php:2
+msgid "Back to all photo albums"
+msgstr "返回所有照片专辑"
+
+#: tpl/og_album-album.tpl.php:13
+msgid "Add photos"
+msgstr "添加照片"
+
+#: tpl/og_album-album.tpl.php:57
+msgid "of"
+msgstr "关于"
+
+#: tpl/og_album-album.tpl.php:60
+msgid "Play slideshow"
+msgstr "幻灯片放映"
+
+#: tpl/og_album-album.tpl.php:65
+msgid "Use photo as"
+msgstr "将照片作为"
+
+#: tpl/og_album-list.tpl.php:4
+msgid "Photos"
+msgstr "照片"
+
+#: tpl/og_album-list.tpl.php:52
+msgid " photos"
+msgstr "照片"
+
