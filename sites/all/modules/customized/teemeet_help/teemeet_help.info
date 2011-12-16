@@ -1,5 +1,0 @@
-name = Teemeet Help
-description = Control the display of the "help" Content type
-package = teemeet.com
-version = "6.x-0.1"
-core = "6.x"

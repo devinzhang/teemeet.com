@@ -1,4 +1,0 @@
-name = Group Front page
-description = This module provide some basic contents for a group front page
-package = "teemeet.com"
-core = 6.x

@@ -1,6 +1,0 @@
-; $Id$
-name = Sponsor
-description = This module provide the function for sponsor.
-package = "teemeet.com"
-
-core = 6.x

@@ -1,4 +1,0 @@
-name = Teemeet Frontpage
-description = This provide some misc function for teemeet front page
-package = "teemeet.com"
-core = 6.x

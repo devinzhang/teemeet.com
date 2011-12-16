@@ -1,5 +1,0 @@
-name = alipay
-description = 使用支付宝来处理支付.
-package = Payment
-core = 6.x
-

@@ -1,6 +1,0 @@
-name = Group Page
-description = Group Page Menu
-package = Meet Up
-version = "6.x-0.1"
-core = "6.x"
-
