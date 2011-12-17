@@ -1,0 +1,565 @@
+<?php
+/* this file extended the event module . devin zhang, 2011/10/15
+**
+*
+*/
+
+
+module_load_include('inc', 'group_extensions', 'group.comment');
+function teemeet_event_menu()
+{
+  $items['teemeetevent/upcoming/%'] = array(
+		'title' => t('upcoming events'),
+		'page callback' => 'teemeet_event_upcoming_list',     
+		'page arguments' => array(2),
+		'type' => MENU_CALLBACK,
+		'access callback' => TRUE,   
+		'file' => 'teemeet_event.page.inc',        
+ );
+ 
+ $items['teemeetevent/past/%'] = array(
+		'title' => t('Past Events'),
+		'page callback' => 'teemeet_event_past_list',     
+		'page arguments' => array(2),
+		'type' => MENU_CALLBACK,
+		'access callback' => TRUE,   
+		'file' => 'teemeet_event.page.inc',        
+ );
+ 
+ 
+ $items['teemeet/checkout/%'] = array(
+		'title' => t('出勤表'),
+		'page callback' => 'teemeet_event_checkout_list',     
+		'page arguments' => array(2),
+		'type' => MENU_CALLBACK,
+		'access callback' => TRUE,   
+		'file' => 'teemeet_event.page.inc',        
+ );
+ 
+ $items['teemeet/set/%/%/%'] = array(
+		'title' => t('设置出勤还是未出勤'),
+		'page callback' => 'teemeet_event_set_attendance',     
+		'page arguments' => array(2,3,4),
+		'type' => MENU_CALLBACK,
+		'access callback' => TRUE,   
+		'file' => 'teemeet_event.page.inc',        
+ );
+ 
+	 
+	 return $items;    
+	 
+}
+
+
+/* hook_theme
+**
+*/
+
+function teemeet_event_theme() {
+    return array(		
+		   			
+			'teemeet_event_rsvp_form' => array(
+                    'template' => 'teemeet_event-rsvp-form',
+                    'arguments' => array (
+                            'form' => NULL,
+                    ),                   
+            ), 
+			'teemeet_event_cancel_rsvp_form' => array(
+                    'template' => 'teemeet_event-cancel-rsvp-form',
+                    'arguments' => array (
+                            'form' => NULL,
+                    ),                   
+            ), 
+			
+
+    );
+}
+
+
+/*hook_nodeapi
+*/
+function teemeet_event_nodeapi(&$node, $op, $teaser, $page) 
+{
+    
+    switch ($op) {
+	case  'insert':
+		if($node->type == 'event'){			
+			$exist = db_result(db_query("select nid from {event_extension} where nid=%d",$node->nid));
+			if(!$exist) {
+				db_query("INSERT INTO {event_extension} (nid, is_featured, meetup_open, how_find_us, grouppath, attendee_limit, quests_number, email_reminder, notify_host ) VALUES (%d, %d, %d, '%s', '%s', %d, %d , %d , %d)", $node->nid, 0,$node->meetup_open, $node->how_find_us, $node->group_path,  $node->attendee_limit, $node->quests_number,$node->email_setting_auto_reminder,$node->email_setting_email_rsvp );
+			}
+			//the below code auto sign up an event owner
+			$signup_form = array();
+            $signup_form['nid'] = $node->nid;
+            $signup_form['uid'] = $node->uid;
+            signup_sign_up_user($signup_form, FALSE);
+			
+		//	node_save($node); //some bug here, keep this code
+			//drupal_goto($node->group_path.'/node/'.$node->nid);
+		}
+		
+		
+	break;
+	case 'delete':
+	db_query("delete from {event_extension} where nid=".$node->nid);
+	break; 
+    case 'load':    
+         if($node->type == 'event'){
+			$node->event_extra = db_fetch_array(db_query('select * from {event_extension} where nid=%d', $node->nid));			
+		}
+		
+		if($node->type == 'group'){
+			$past_query  = "SELECT count(*) FROM {signup} as sp left join {og_ancestry} as oa on sp.nid=oa.nid WHERE sp.status = 0 and oa.group_nid=%d";
+			$comingMeetups =  db_result(db_query("SELECT count(node.nid )
+							FROM node node  
+							LEFT JOIN og_ancestry og_ancestry ON node.nid = og_ancestry.nid 
+							LEFT JOIN node node_og_ancestry ON og_ancestry.group_nid = node_og_ancestry.nid 
+							LEFT JOIN event event ON node.nid = event.nid 
+							WHERE (node.type in ('event')) AND (event.unix_event_start < UNIX_TIMESTAMP()) AND (node_og_ancestry.nid = %d)", $node->nid));
+
+			$suggest_query  = "SELECT count(*) FROM {signup} as sp left join {og_ancestry} as oa on sp.nid=oa.nid WHERE sp.status = 2 and oa.group_nid=%d";
+			
+			$node->meetup = array(
+				'upcoming'=>$comingMeetups ,
+				'suggest'=>db_result(db_query($suggest_query ,$node->nid)),
+				'past'=>db_result(db_query($past_query,$node->nid)),
+			);			
+		}
+		
+        
+        
+    break;
+	case 'view':    
+        if($node->type == 'event'){
+	
+		$gid = array_shift($node->og_groups);
+		$node->content['signup_users'] = array(
+              '#value' => _teemeet_event_output_signup_users($node->nid, $gid),
+              '#weight' => 9,
+            );
+		
+		
+		if(og_is_group_member($gid)){
+			$comment_contents = drupal_get_form('teemeet_event_comment_event_form',$node->nid); 
+		} else {
+			$comment_contents = '<p class="commentPostExplain"> <a href="'.url('og/subscribe/'.$gid).'">加入</a> 这个小组来评论或提问. </p>';
+		}
+		
+		$node->content['event_comment_form'] = array(
+              '#value' => $comment_contents,
+              '#weight' => 9,
+            ); 
+			
+		$rsvp_form ='';	
+		global $user;
+		$startime = strtotime($node->event['start']);		
+		$reminder_days = round(($startime- time())/3600/24); 
+		
+		$sid = db_result(db_query("SELECT sid from {signup_log} WHERE uid = %d AND nid = %d", $user->uid, $node->nid));
+		
+		if($sid) {
+			$rsvp_form = drupal_get_form('teemeet_event_cancel_signup_form', $node->nid,$sid );
+		} else {
+			$rsvp_form = drupal_get_form('teemeet_event_signup_form', $node->nid, $reminder_days);
+		}
+		
+		
+		$node->content['rsvp_form'] = array(
+              '#value' => $rsvp_form,
+              '#weight' => 10,
+            ); 
+		
+		}
+		
+		
+    break;
+    }
+    
+}
+
+
+/* impl. of hook_preprocess_page
+ * this function only used to cutomized the the group home page 
+ *
+ */
+ /*
+function teemeet_event_preprocess_page(&$vars){  
+  
+    $action = arg(2); 
+	if(arg(0)=='node' && is_numeric(arg(1)) && !isset($action) ) {
+		$node = $vars['node'];
+        $curr_title = drupal_get_title();
+        if($node->type == 'event') {
+			print_r($vars);
+			exit;
+        }
+   }
+}
+*/
+
+
+function teemeet_event_comment_event_form(&$form_state, $nid) {
+    $form=array();   
+    $form['message'] = array(
+              '#type' => 'textarea',
+              '#title' => t(''),
+              '#default_value' =>'' ,             
+              '#required' => false,
+            );
+    $form['nid'] = array(
+        '#type' => 'hidden',
+        '#value' => $nid,
+    );
+            
+    $form['submit'] = array(
+        '#type' => 'submit', 
+        '#value' =>  t('Submit'),
+        '#weight' =>13,
+    );
+    return $form;
+ }
+
+function teemeet_event_comment_event_form_submit($form, &$form_state) {
+    $nid = $form_state['values']['nid'];
+    $message = $form_state['values']['message'];
+    group_extensions_save_comment($message, $nid);
+    $current_group = $GLOBALS['current_group'];
+    
+    drupal_goto($current_group->path.'/node/'.$nid);
+}
+/* sign up form */
+ 
+function  teemeet_event_signup_form(&$form_state, $nid, $reminder_days){
+	$form = array();
+	
+	$form['gpath'] = array(
+		'#type' => 'hidden', 
+		'#value' =>$GLOBALS['current_group']->path, 
+		
+	);
+	
+	$form['reminder_days'] = array(
+		'#type' => 'value', 
+		'#value' =>$reminder_days, 
+		
+	);
+	
+	
+	$form['nid'] = array(
+		'#type' => 'hidden', 
+		'#value' =>$nid, 
+		
+	);
+	
+	
+	$form['attend'] = array(
+      '#type' => 'radios', 
+      '#title' => t(''), 
+      '#default_value' =>1, 
+      '#options' => array(
+			'1'=>t('Yes'), 
+			'0'=> t('No')
+		),
+
+    );
+	$form['guest'] = array (
+	 
+        '#type' => 'textfield',
+        '#title' => t(''),
+        '#default_value' =>'0' , 
+		'#size'=>3,
+        '#required' => false,
+      
+	);
+	$form['message'] = array(
+              '#type' => 'textarea',
+              '#title' => t(''),
+              '#default_value' =>'' ,             
+              '#required' => false,
+    );
+	$form['rsvp_submit'] = array(
+	'#type' => 'submit',
+	'#value' => t('RSVP'),
+	'#weight' => 4,
+	);
+	
+	$form['#theme'] = 'teemeet_event_rsvp_form';		
+	return $form;
+
+}
+
+
+function teemeet_event_signup_form_submit($form, &$form_state) {
+    $values = $form_state['values'];
+	$nid = $values['nid'];
+	global $user; 
+   //the below code auto sign up an user
+	$signup_form = array();
+    $signup_form['nid'] = $nid;
+    $signup_form['uid'] = $user->uid;
+	$signup_form['signup_form_data']=array(
+		'message'=>$values['message'],
+	);
+    signup_sign_up_user($signup_form, TRUE);
+    
+			
+    drupal_goto($values['gpath'].'/node/'.$nid);
+}
+/* cancel sign up form 
+**
+*/
+function teemeet_event_cancel_signup_form(&$form_state, $nid, $sid){
+	$form = array();
+	
+	$form['gpath'] = array(
+		'#type' => 'hidden', 
+		'#value' =>$GLOBALS['current_group']->path, 
+		
+	);
+	
+	
+	$form['nid'] = array(
+		'#type' => 'hidden', 
+		'#value' =>$nid, 
+		
+	);
+	
+	$form['sid'] = array(
+		'#type' => 'hidden', 
+		'#value' =>$sid, 
+		
+	);
+	
+	
+	
+	$form['cancel_rsvp_submit'] = array(
+	'#type' => 'submit',
+	'#value' => t('Change RSVP'),
+	'#weight' => 4,
+	);
+	
+	$form['#theme'] = 'teemeet_event_cancel_rsvp_form';		
+	return $form;
+
+}
+
+
+function teemeet_event_cancel_signup_form_submit($form, &$form_state) {
+    $nid = $form_state['values']['nid'];
+	
+   //the below code calcel sign up an user
+	
+    signup_cancel_signup($form_state['values']['sid']);
+    drupal_goto($form_state['values']['gpath'].'/node/'.$nid);
+}
+
+/* private function to output signuped users;
+**
+*/
+function _teemeet_event_output_signup_users($event_nid, $gid){
+	$output = '';
+	$group = node_load($gid);
+	$output .='<ul id="rsvp-list" class="resetList">';
+	
+	$sql_result = db_query("SELECT uid FROM {signup_log} WHERE nid = %d", $event_nid);
+	$has_result = FALSE; 
+	$list = ''; 
+	global $base_url; 
+	$default_avator = variable_get('user_picture_default', 'sites/all/modules/customized/usercenter/images/default_avator.png');
+	while($item=db_fetch_object($sql_result)) {
+		$usr = user_load($item->uid);
+		if($usr->picture == ''){
+			$usr->picture = 'sites/all/modules/customized/usercenter/images/default_avator.png'; 
+		}
+		
+		$list .='<li id="rsvp_'.$usr->uid.'" class="memberinfo-widget feed-item-small clearfix rsvp-list">'; 
+		$list .= '<a style="background-image: url('.url($base_url.'/'.$usr->picture).'); display: block; " data-src="http://photos2.meetupstatic.com/photos/member/9/f/d/6/thumb_10660918.jpeg" class="mem-photo-small mem-photo-background-60 square-50" id="image_'.$usr->uid.'" href="'.url($group->path.'/member/'.$usr->uid.'/ingroup/'.$gid).'">';
+		$list .= '<img alt="'.$usr->name.'" src="http://img1.meetupstatic.com/6297749526911517292/img/blank.gif">'.$usr->name.'</a>';
+        $list .= '      <div class="feed-item-content-small">';
+        $list .= '        <div class="event-host">';
+        $list .= '          <div class="event-host-wrap">';
+        $list .= '<div class="event-host-text"> Event Host </div>';
+        $list .= '            <div class="event-host-pointer top"></div>';
+        $list .= '            <div class="event-host-pointer bottom"></div>';
+        $list .= '          </div>';
+        $list .= '          <div class="event-host-ribbon"></div>';
+        $list .= '        </div>';
+        $list .= '        <a class="mem-name" href="'.url($group->path.'/member/'.$usr->uid.'/ingroup/'.$gid).'"></a>';
+        $list .= '        <div class="event-role"> '.og_is_group_admin($gid) ? t('Organizer'): ''.' </div>';
+        $list .= '        <div class="rsvp-comment"> </div>';
+        $list .= '      </div>';
+         $list .= '</li>';
+		$has_result = TRUE;
+	}
+	if($has_result){
+		$output .= $list;
+	} else {
+		$output .= '<li id="rsvp_0" class="memberinfo-widget feed-item-small clearfix rsvp-list">'.t('当前暂无人报名').'</li>';
+	}
+	$output .= '</ul>';
+	return $output; 
+}
+
+
+/* get a  sign up list of a events 
+** @param, $count, TRUE,only get the amount of signups , FALSE, get a list
+*/
+
+function teemeet_event_get_signups($nid, $count=false){
+	$signup_view = variable_get('signup_user_list_view', 'signup_user_list:default');
+    $signup_view_parts = explode(':', $signup_view);
+    $view_name = $signup_view_parts[0];
+    $view_display = $signup_view_parts[1];
+       
+    $result = views_get_view_result($view_name,$view_display, $nid);  
+    if($count){
+        return count($result);
+    }else{
+        return $result; 
+    }
+}
+
+/* impl. hook_form_alter
+**  change some event  create form 
+**
+*/
+
+function teemeet_event_form_alter(&$form, &$form_state, $form_id) {
+ 
+
+ 
+  if ($form_id == 'event_node_form') {
+	drupal_add_js(drupal_get_path('module','teemeet_event').'/teemeet_event.js');
+    $gid = $form['gid']['#value'];
+/*	
+	$form['event_basic'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('The Basics'),
+      '#weight' => 5,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+	$form['event_basic']['title']= $form['title'];
+	unset($form['title']);
+	$form['event_who_hosting'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Who\'s hosting this Meetup?'),
+      '#weight' => 6,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+	
+	$form['event_automatic_repeat'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Automatically repeat this Meetup'),
+      '#weight' => 7,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+	
+	$form['event_charge'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Charging for this Meetup?'),
+      '#weight' => 8,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+	
+	$form['event_rsvp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('RSVP settings'),
+      '#weight' => 9,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+	$form['event_email_settings'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Email settings'),
+      '#weight' => 10,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+
+	$form['event_ask_question'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Ask questions when memebers RSVP'),
+      '#weight' => 11,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+	*/
+	$form['group_path'] = array(
+		'#type' => 'hidden', 
+		'#value' =>$GLOBALS['current_group']->path, 
+		
+	);
+	
+	$form['meetup_open'] = array(
+		'#type' => 'checkbox', 
+		'#default_value' =>0, 
+		'#title' => t('Only my members can see where this Meetup is happening'),
+	);
+	
+	$form['how_find_us'] = array(
+		'#type' => 'textfield', 
+		'#title' => t(''),
+		'#default_value' =>'', 
+		
+	);
+	
+	
+	$form['attendee_limit'] = array(
+		'#type' => 'textfield', 
+		'#title' => t(''),
+		'#default_value' =>0, 
+		
+	);
+	
+	$form['quests_number'] = array(
+		'#type' => 'textfield', 
+		'#default_value' =>2, 
+		'#title' => t(''),
+	);
+	
+    $form['email_setting_auto_reminder'] = array(
+		'#type' => 'checkbox', 
+		'#default_value' =>1, 
+		'#title' => t('Email members automatic reminders'),
+	);
+	
+	$form['email_setting_email_rsvp'] = array(
+		'#type' => 'checkbox', 
+		'#default_value' =>1, 
+		'#title' => t('Email Event Hosts when members RSVP'),
+	);
+	
+
+
+   
+    
+    $form['#submit'][] = 'teemeet_event_form_submit';
+    
+   
+   
+   $form['og_nodeapi'] +=array(
+	'#prefix' => '<div style="display:none;">', 
+	'#suffix' => '</div>', 
+
+   );
+   }
+   
+   
+}
+
+
+function teemeet_event_form_submit($form, &$form_state) {
+   /* $values = $form_state['values'];
+	
+    $exist = db_result(db_query("select nid from {event_extension} where nid=%d",$user->uid));
+    if(!$exist) {
+    db_query("INSERT INTO {event_extension} (gid, uid, introduction, photo_fid, show_photo, notifyme ) VALUES (%d, %d , '%s', %d , %d, %d)", $gid,$user->uid, $introduce,'',1, $notifyme);
+    }
+    */
+	
+}
+

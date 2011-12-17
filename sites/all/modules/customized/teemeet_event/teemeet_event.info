@@ -1,0 +1,8 @@
+name = Teemeet Event
+description = Extend the default event module function, special for teemeet.cc
+package = teemeet.com
+dependencies[] = "event"
+dependencies[] = "heartbeat"
+dependencies[] = "og"
+version = "6.x-0.1"
+core = "6.x"
